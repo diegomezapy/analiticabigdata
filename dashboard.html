@@ -513,6 +513,109 @@
                 .replace(/'/g, '&#039;');
         }
 
+        function jsArg(value) {
+            return JSON.stringify(value ?? '').replace(/</g, '\\u003c');
+        }
+
+        function resourceIcon(kind) {
+            if (kind === 'activity') return '📝';
+            if (kind === 'course') return '📖';
+            if (kind === 'tool') return '⌨️';
+            return '📚';
+        }
+
+        function resourceButtonHTML(resource, index, unit, kind) {
+            const active = index === 0 ? 'active' : '';
+            const download = resource.download || '';
+            return `
+      <button class="resource-list-button ${active}" onclick="openEmbeddedResource(${jsArg(unit)}, ${jsArg(resource.file)}, ${jsArg(resource.name)}, ${jsArg(download)}, ${jsArg(kind)}, this)">
+        <span class="resource-list-icon">${resourceIcon(kind)}</span>
+        <span>
+          <strong>${escapeHtml(resource.name)}</strong>
+          <small>${kind === 'activity' ? 'Consigna embebida' : 'Lectura dentro del aula'}</small>
+        </span>
+      </button>`;
+        }
+
+        function renderEmbeddedResources(resources, options = {}) {
+            const {
+                unit = '',
+                kind = 'read',
+                title = 'Recursos de lectura',
+                intro = 'Selecciona un recurso para leerlo sin salir del aula.',
+                empty = 'No hay recursos disponibles.'
+            } = options;
+            if (!resources.length) {
+                return `<div class="card" style="text-align:center;padding:3rem"><p>${escapeHtml(empty)}</p></div>`;
+            }
+            const first = resources[0];
+            return `
+      <div class="resource-workspace">
+        <aside class="resource-list-panel">
+          <div class="resource-list-heading">
+            <h3>${escapeHtml(title)}</h3>
+            <p>${escapeHtml(intro)}</p>
+          </div>
+          <div id="embeddedResourceList" class="resource-list">
+            ${resources.map((resource, index) => resourceButtonHTML(resource, index, unit, kind)).join('')}
+          </div>
+        </aside>
+        <section class="resource-reader-panel">
+          <div class="resource-reader-toolbar">
+            <div>
+              <span class="doc-status-pill">${kind === 'activity' ? 'Actividad' : 'Lectura'}</span>
+              <h3 id="embeddedResourceTitle">${escapeHtml(first.name)}</h3>
+            </div>
+            <div class="resource-reader-actions">
+              <a id="embeddedResourceOpen" class="btn-secondary as-link" href="${first.file}" target="_blank">Abrir aparte</a>
+              <a id="embeddedResourceDownload" class="btn-secondary as-link ${first.download ? '' : 'is-hidden'}" href="${first.download || '#'}" download>PDF</a>
+            </div>
+          </div>
+          <iframe
+            id="embeddedResourceFrame"
+            class="resource-reader-frame"
+            src="${first.file}"
+            title="${escapeHtml(first.name)}"
+            data-unit="${escapeHtml(unit)}"
+            data-kind="${escapeHtml(kind)}"
+            data-file="${escapeHtml(first.file)}"
+            data-name="${escapeHtml(first.name)}"
+            onload="trackEmbeddedResourceLoad()"></iframe>
+        </section>
+      </div>`;
+        }
+
+        function openEmbeddedResource(unit, file, name, download, kind, button) {
+            document.querySelectorAll('#embeddedResourceList .resource-list-button').forEach(item => item.classList.remove('active'));
+            button?.classList.add('active');
+            const iframe = document.getElementById('embeddedResourceFrame');
+            const title = document.getElementById('embeddedResourceTitle');
+            const open = document.getElementById('embeddedResourceOpen');
+            const pdf = document.getElementById('embeddedResourceDownload');
+            if (!iframe || !title || !open || !pdf) return;
+            iframe.dataset.unit = unit || '';
+            iframe.dataset.kind = kind || 'read';
+            iframe.dataset.file = file;
+            iframe.dataset.name = name;
+            iframe.title = name;
+            iframe.src = file;
+            title.textContent = name;
+            open.href = file;
+            pdf.href = download || '#';
+            pdf.classList.toggle('is-hidden', !download);
+        }
+
+        function trackEmbeddedResourceLoad() {
+            const iframe = document.getElementById('embeddedResourceFrame');
+            if (!iframe) return;
+            const unit = iframe.dataset.unit || '';
+            const kind = iframe.dataset.kind || 'read';
+            const file = iframe.dataset.file || '';
+            const name = iframe.dataset.name || 'Recurso embebido';
+            if (kind === 'read' && unit) markRead(unit, file);
+            else trackResourceOpen(unit, file, name);
+        }
+
         function formatDatePY(value) {
             if (!value) return 'Sin fecha';
             const [year, month, day] = value.split('-').map(Number);
@@ -849,51 +952,22 @@
 
             if (activeTab === 'materiales') {
                 const all = [...(files.orientaciones || []), ...(files.materiales || [])];
-                if (all.length === 0) {
-                    tabContent.innerHTML = `<div class="card" style="text-align:center;padding:3rem"><p>📂 Los materiales de esta unidad estarán disponibles próximamente.</p></div>`;
-                } else {
-                    tabContent.innerHTML = `
-        <div class="materials-list">
-          ${all.map(f => `
-            <div class="material-item">
-              <a href="${f.file}" target="_blank" class="material-open" onclick="markRead(${n},'${f.file}')">
-                <div class="material-icon" style="background:${f.type === 'html' ? 'rgba(20,184,166,0.1)' : 'rgba(239,68,68,0.1)'}">${f.type === 'html' ? '🌐' : '📄'}</div>
-                <div class="material-info">
-                  <h4>${f.name}</h4>
-                  <p>Documento HTML embebible — click para abrir</p>
-                </div>
-                <span class="material-badge ${f.type === 'html' ? 'badge-act' : 'badge-pdf'}">${f.type.toUpperCase()}</span>
-              </a>
-              ${f.download ? `<a href="${f.download}" class="material-download-btn" download onclick="trackResourceOpen(${n}, '${f.download}', 'Descarga PDF: ${f.name.replace(/'/g, "\\'")}')">PDF ↓</a>` : ''}
-            </div>
-          `).join('')}
-        </div>
-      `;
-                }
+                tabContent.innerHTML = renderEmbeddedResources(all, {
+                    unit: n,
+                    kind: 'read',
+                    title: 'Orientaciones y lecturas',
+                    intro: 'Lee la orientación y los materiales de la unidad sin abrir nuevas pestañas.',
+                    empty: '📂 Los materiales de esta unidad estarán disponibles próximamente.'
+                });
             } else if (activeTab === 'actividades') {
                 const acts = files.actividades || [];
-                if (acts.length === 0) {
-                    tabContent.innerHTML = `<div class="card" style="text-align:center;padding:3rem"><p>🎯 Las actividades de esta unidad estarán disponibles próximamente.</p></div>`;
-                } else {
-                    tabContent.innerHTML = `
-        <p style="margin-bottom:1rem">Descarga y completa las siguientes actividades:</p>
-        <div class="materials-list">
-          ${acts.map((f, i) => `
-            <div class="material-item">
-              <a href="${f.file}" target="_blank" class="material-open" onclick="trackResourceOpen(${n}, '${f.file}', '${f.name.replace(/'/g, "\\'")}')">
-                <div class="material-icon" style="background:rgba(20,184,166,0.1)">📝</div>
-                <div class="material-info">
-                  <h4>${f.name}</h4>
-                  <p>Documento HTML de actividad — Unidad ${n}</p>
-                </div>
-                <span class="material-badge badge-act">HTML</span>
-              </a>
-              ${f.download ? `<a href="${f.download}" class="material-download-btn" download onclick="trackResourceOpen(${n}, '${f.download}', 'Descarga PDF: ${f.name.replace(/'/g, "\\'")}')">PDF ↓</a>` : ''}
-            </div>
-          `).join('')}
-        </div>
-      `;
-                }
+                tabContent.innerHTML = renderEmbeddedResources(acts, {
+                    unit: n,
+                    kind: 'activity',
+                    title: 'Consignas de actividades',
+                    intro: 'Revisa cada consigna dentro del aula y descarga el PDF cuando necesites trabajar offline.',
+                    empty: '🎯 Las actividades de esta unidad estarán disponibles próximamente.'
+                });
             } else if (activeTab === 'quiz') {
                 if (quizDone) {
                     tabContent.innerHTML = `
@@ -1777,50 +1851,25 @@
         // ================================================================
         function renderGuia() {
             const content = document.getElementById('pageContent');
+            const courseResources = [
+                { name: 'Guía Académica y Didáctica — Analítica de Big Data', file: 'guia_didactica/index.html', download: 'guia_didactica/BigData_GuiaDid.pdf' },
+                { name: 'Índice de documentos HTML', file: 'documentos.html' },
+                { name: 'Prácticas guiadas embebibles', file: 'practicas/index.html' },
+                { name: 'Laboratorio R/Python', file: 'laboratorio/index.html' },
+            ];
             content.innerHTML = `
-    <h2 style="margin-bottom:1rem">📖 Guía Didáctica</h2>
-    <div class="materials-list">
-      <a href="guia_didactica/index.html" target="_blank" class="material-item" onclick="trackResourceOpen('', 'guia_didactica/index.html', 'Guía Académica y Didáctica')">
-        <div class="material-icon" style="background:rgba(20,184,166,0.1)">📖</div>
-        <div class="material-info">
-          <h4>Guía Académica y Didáctica — Analítica de Big Data</h4>
-          <p>Documento HTML completo de la asignatura — Primer Período 2026</p>
-        </div>
-        <span class="material-badge badge-act">HTML</span>
-      </a>
-      <a href="guia_didactica/BigData_GuiaDid.pdf" target="_blank" download class="material-item" onclick="trackResourceOpen('', 'guia_didactica/BigData_GuiaDid.pdf', 'Descarga PDF Guía Didáctica')">
-        <div class="material-icon" style="background:rgba(239,68,68,0.1)">📄</div>
-        <div class="material-info">
-          <h4>Guía Académica y Didáctica — PDF</h4>
-          <p>Archivo descargable para lectura offline</p>
-        </div>
-        <span class="material-badge badge-pdf">PDF</span>
-      </a>
-      <a href="practicas/index.html" target="_blank" class="material-item" onclick="trackResourceOpen('', 'practicas/index.html', 'Prácticas guiadas embebibles')">
-        <div class="material-icon" style="background:rgba(20,184,166,0.1)">💻</div>
-        <div class="material-info">
-          <h4>Prácticas guiadas embebibles</h4>
-          <p>Laboratorios con datos CSV y código R listos para insertar por URL</p>
-        </div>
-        <span class="material-badge badge-quiz">HTML</span>
-      </a>
-      <a href="laboratorio/index.html" target="_blank" class="material-item" onclick="trackResourceOpen('', 'laboratorio/index.html', 'Laboratorio R/Python')">
-        <div class="material-icon" style="background:rgba(41,128,185,0.1)">⌨️</div>
-        <div class="material-info">
-          <h4>Laboratorio R/Python</h4>
-          <p>Ejecutor webR + data.table y Pyodide + Polars para prácticas en vivo</p>
-        </div>
-        <span class="material-badge badge-act">HTML</span>
-      </a>
-      <a href="documentos.html" target="_blank" class="material-item" onclick="trackResourceOpen('', 'documentos.html', 'Índice de documentos HTML')">
-        <div class="material-icon" style="background:rgba(249,115,22,0.1)">🌐</div>
-        <div class="material-info">
-          <h4>Índice de documentos HTML</h4>
-          <p>Rutas listas para abrir, enlazar o insertar desde GitHub Pages</p>
-        </div>
-        <span class="material-badge badge-quiz">HTML</span>
-      </a>
+    <div class="page-heading">
+      <div>
+        <h2>📖 Guía y recursos del curso</h2>
+        <p>Consulta la guía, el índice de documentos, las prácticas y el laboratorio sin abandonar el aula.</p>
+      </div>
     </div>
+    ${renderEmbeddedResources(courseResources, {
+        unit: '',
+        kind: 'course',
+        title: 'Recursos generales',
+        intro: 'Selecciona un bloque para verlo embebido en esta misma vista.'
+    })}
   `;
         }
 
