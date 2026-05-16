@@ -159,6 +159,9 @@
             quizTimeLeft: 0,
             currentPractice: null,
             currentPracticeStep: 0,
+            calendarView: localStorage.getItem('abd_calendar_view') || 'month',
+            calendarCursor: localStorage.getItem('abd_calendar_cursor') || '',
+            calendarSelectedDate: localStorage.getItem('abd_calendar_selected_date') || '',
         };
 
         const COURSE_CONFIG = {
@@ -171,7 +174,7 @@
         const DEFAULT_SEMESTER_CONFIG = {
             semesterName: 'Primer período 2026',
             startDate: '2026-03-03',
-            endDate: '2026-06-20',
+            endDate: '2026-08-03',
             activities: [
                 { id: 'u1_af', unit: 1, title: 'U1 AF - Estudio de materiales', type: 'actividad', start: '2026-03-03', due: '2026-03-05', resource: 'unidades/unidad1/actividad-1.html' },
                 { id: 'u1_ai', unit: 1, title: 'U1 AI - Foro de aplicación', type: 'actividad', start: '2026-03-06', due: '2026-03-11', resource: 'unidades/unidad1/actividad-2.html' },
@@ -181,12 +184,23 @@
                 { id: 'u2_aa', unit: 2, title: 'U2 AA - Cuestionario', type: 'quiz', start: '2026-03-30', due: '2026-04-03', resource: 'dashboard.html#u2' },
                 { id: 'u3_af', unit: 3, title: 'U3 AF - Estudio de materiales', type: 'actividad', start: '2026-04-27', due: '2026-05-02', resource: 'unidades/unidad3/actividad-1.html' },
                 { id: 'u3_ai', unit: 3, title: 'U3 AI - Foro de aplicación', type: 'actividad', start: '2026-05-02', due: '2026-05-05', resource: 'unidades/unidad3/actividad-2.html' },
-                { id: 'parcial_1', unit: '', title: 'Examen parcial - fecha configurable', type: 'examen', start: '2026-05-06', due: '2026-05-06', resource: 'dashboard.html#calendar' },
+                { id: 'parcial_1', unit: '', title: 'Primer parcial', type: 'examen', start: '2026-04-21', due: '2026-04-24', resource: 'dashboard.html#calendar' },
                 { id: 'u3_aa', unit: 3, title: 'U3 AA - Cuestionario', type: 'quiz', start: '2026-05-06', due: '2026-05-08', resource: 'dashboard.html#u3' },
                 { id: 'u4_af', unit: 4, title: 'U4 AF - Estudio de materiales', type: 'actividad', start: '2026-05-09', due: '2026-05-13', resource: 'unidades/unidad4/actividad-1.html' },
                 { id: 'u4_ai', unit: 4, title: 'U4 AI - Foro de aplicación', type: 'actividad', start: '2026-05-14', due: '2026-05-17', resource: 'unidades/unidad4/actividad-2.html' },
                 { id: 'u4_aa', unit: 4, title: 'U4 AA - Cuestionario', type: 'quiz', start: '2026-05-18', due: '2026-05-26', resource: 'dashboard.html#u4' },
-                { id: 'final_1', unit: '', title: 'Examen final - fecha configurable', type: 'examen', start: '2026-06-20', due: '2026-06-20', resource: 'dashboard.html#calendar' }
+                { id: 'parcial_2', unit: '', title: 'Segundo parcial', type: 'examen', start: '2026-06-10', due: '2026-06-10', resource: 'dashboard.html#calendar' },
+                { id: 'final_1', unit: '', title: 'Primer final', type: 'examen', start: '2026-06-30', due: '2026-06-30', resource: 'dashboard.html#calendar' },
+                { id: 'final_2', unit: '', title: 'Segundo final', type: 'examen', start: '2026-07-26', due: '2026-07-26', resource: 'dashboard.html#calendar' },
+                { id: 'tutoria_1', unit: '', title: '1ra tutoría sincrónica', type: 'tutoria', start: '2026-03-07', due: '2026-03-07', resource: 'https://meet.google.com/moz-njfj-pey' },
+                { id: 'tutoria_2', unit: '', title: '2da tutoría sincrónica', type: 'tutoria', start: '2026-03-14', due: '2026-03-14', resource: 'dashboard.html#calendar' },
+                { id: 'tutoria_3', unit: '', title: '3ra tutoría sincrónica', type: 'tutoria', start: '2026-03-21', due: '2026-03-21', resource: 'dashboard.html#calendar' },
+                { id: 'tutoria_4', unit: '', title: '4ta tutoría sincrónica', type: 'tutoria', start: '2026-03-28', due: '2026-03-28', resource: 'dashboard.html#calendar' },
+                { id: 'tutoria_5', unit: '', title: '5ta tutoría sincrónica', type: 'tutoria', start: '2026-04-25', due: '2026-04-25', resource: 'dashboard.html#calendar' },
+                { id: 'tutoria_6', unit: '', title: '6ta tutoría sincrónica', type: 'tutoria', start: '2026-05-02', due: '2026-05-02', resource: 'dashboard.html#calendar' },
+                { id: 'tutoria_7', unit: '', title: '7ma tutoría sincrónica', type: 'tutoria', start: '2026-05-09', due: '2026-05-09', resource: 'dashboard.html#calendar' },
+                { id: 'tutoria_8', unit: '', title: '8va tutoría sincrónica', type: 'tutoria', start: '2026-05-16', due: '2026-05-16', resource: 'dashboard.html#calendar' },
+                { id: 'tutoria_9', unit: '', title: '9na tutoría sincrónica', type: 'tutoria', start: '2026-05-23', due: '2026-05-23', resource: 'dashboard.html#calendar' }
             ]
         };
 
@@ -528,7 +542,7 @@
             const active = index === 0 ? 'active' : '';
             const download = resource.download || '';
             return `
-      <button class="resource-list-button ${active}" onclick="openEmbeddedResource(${jsArg(unit)}, ${jsArg(resource.file)}, ${jsArg(resource.name)}, ${jsArg(download)}, ${jsArg(kind)}, this)">
+      <button class="resource-list-button ${active}" data-file="${escapeHtml(resource.file)}" onclick="openEmbeddedResource(${jsArg(unit)}, ${jsArg(resource.file)}, ${jsArg(resource.name)}, ${jsArg(download)}, ${jsArg(kind)}, this)">
         <span class="resource-list-icon">${resourceIcon(kind)}</span>
         <span>
           <strong>${escapeHtml(resource.name)}</strong>
@@ -587,7 +601,9 @@
 
         function openEmbeddedResource(unit, file, name, download, kind, button) {
             document.querySelectorAll('#embeddedResourceList .resource-list-button').forEach(item => item.classList.remove('active'));
-            button?.classList.add('active');
+            const activeButton = button || Array.from(document.querySelectorAll('#embeddedResourceList .resource-list-button'))
+                .find(item => item.dataset.file === file);
+            activeButton?.classList.add('active');
             const iframe = document.getElementById('embeddedResourceFrame');
             const title = document.getElementById('embeddedResourceTitle');
             const open = document.getElementById('embeddedResourceOpen');
@@ -614,6 +630,42 @@
             const name = iframe.dataset.name || 'Recurso embebido';
             if (kind === 'read' && unit) markRead(unit, file);
             else trackResourceOpen(unit, file, name);
+        }
+
+        function openResourceInAula(resource, unit = '') {
+            if (!resource) return;
+            if (/^https?:\/\//i.test(resource)) {
+                window.open(resource, '_blank', 'noopener');
+                return;
+            }
+            const routeMatch = resource.match(/^dashboard\.html#u([1-4])$/);
+            if (routeMatch) {
+                showUnit(Number(routeMatch[1]));
+                return;
+            }
+            if (resource === 'dashboard.html#calendar') {
+                showPage('calendar');
+                return;
+            }
+            const unitMatch = resource.match(/unidades\/unidad([1-4])\//);
+            if (unitMatch) {
+                const unitNum = Number(unitMatch[1]);
+                const files = UNIT_FILES[unitNum];
+                const groups = [
+                    ['actividades', 'activity', files.actividades || []],
+                    ['materiales', 'read', [...(files.orientaciones || []), ...(files.materiales || [])]]
+                ];
+                for (const [tab, kind, list] of groups) {
+                    const found = list.find(item => item.file === resource);
+                    if (found) {
+                        STATE.currentUnit = unitNum;
+                        renderUnitDetail(unitNum, tab);
+                        openEmbeddedResource(unitNum, found.file, found.name, found.download || '', kind);
+                        return;
+                    }
+                }
+            }
+            window.open(resource, '_blank', 'noopener');
         }
 
         function formatDatePY(value) {
@@ -1542,7 +1594,7 @@
       </div>
       <div class="stat-card success">
         <div class="sc-label">Fichas paso a paso</div>
-        <div class="sc-value" style="color:#86efac">${PRACTICES.reduce((sum, lab) => sum + lab.steps.length, 0)}</div>
+        <div class="sc-value" style="color:var(--success)">${PRACTICES.reduce((sum, lab) => sum + lab.steps.length, 0)}</div>
         <div class="sc-sub">microactividades</div>
       </div>
     </div>
@@ -1670,11 +1722,227 @@
         // ================================================================
         // CALENDAR AND REMINDERS
         // ================================================================
+        function parseDateISO(value) {
+            const [year, month, day] = value.split('-').map(Number);
+            return new Date(year, month - 1, day);
+        }
+
+        function dateToISO(date) {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        function addDays(value, days) {
+            const date = parseDateISO(value);
+            date.setDate(date.getDate() + days);
+            return dateToISO(date);
+        }
+
+        function firstOfMonth(value) {
+            const date = parseDateISO(value);
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-01`;
+        }
+
+        function monthLabel(value) {
+            const date = parseDateISO(firstOfMonth(value));
+            return date.toLocaleDateString('es-PY', { month: 'long', year: 'numeric' });
+        }
+
+        function ensureCalendarCursor(config) {
+            if (!STATE.calendarCursor) {
+                const today = todayISO();
+                const anchor = today >= config.startDate && today <= config.endDate ? today : config.startDate;
+                STATE.calendarCursor = firstOfMonth(anchor);
+                STATE.calendarSelectedDate = anchor;
+                saveCalendarPreferences();
+            }
+        }
+
+        function saveCalendarPreferences() {
+            localStorage.setItem('abd_calendar_view', STATE.calendarView);
+            localStorage.setItem('abd_calendar_cursor', STATE.calendarCursor);
+            localStorage.setItem('abd_calendar_selected_date', STATE.calendarSelectedDate || '');
+        }
+
+        function setCalendarView(view) {
+            STATE.calendarView = view;
+            saveCalendarPreferences();
+            renderCalendar();
+        }
+
+        function moveCalendarMonth(delta) {
+            const date = parseDateISO(STATE.calendarCursor || todayISO());
+            date.setMonth(date.getMonth() + delta);
+            STATE.calendarCursor = firstOfMonth(dateToISO(date));
+            saveCalendarPreferences();
+            renderCalendar();
+        }
+
+        function setCalendarSelectedDate(value, jumpToWeek = false) {
+            STATE.calendarSelectedDate = value;
+            STATE.calendarCursor = firstOfMonth(value);
+            if (jumpToWeek) STATE.calendarView = 'week';
+            saveCalendarPreferences();
+            renderCalendar();
+        }
+
+        function eventOccursOn(event, value) {
+            return event.start <= value && event.due >= value;
+        }
+
+        function eventTypeLabel(type) {
+            return {
+                actividad: 'Actividad',
+                quiz: 'Cuestionario',
+                examen: 'Examen',
+                tutoria: 'Tutoría'
+            }[type] || type;
+        }
+
+        function eventTypeIcon(type) {
+            return {
+                actividad: 'T',
+                quiz: 'Q',
+                examen: 'E',
+                tutoria: 'S'
+            }[type] || '•';
+        }
+
+        function calendarEventChip(event) {
+            const status = eventStatus(event);
+            return `
+      <button class="calendar-event-chip ${status.className} type-${event.type}" onclick="openCalendarEvent('${event.id}')" title="${escapeHtml(event.title)}">
+        <span>${eventTypeIcon(event.type)}</span>${escapeHtml(event.title)}
+      </button>`;
+        }
+
+        function openCalendarEvent(eventId) {
+            const event = getSemesterConfig().activities.find(item => item.id === eventId);
+            if (!event) return;
+            trackEvent('calendario_recurso', { recurso: event.id, detalle: event.title });
+            if (event.resource) openResourceInAula(event.resource, event.unit || '');
+        }
+
+        function calendarToolbar(config, events) {
+            const view = STATE.calendarView || 'month';
+            const currentMonth = monthLabel(STATE.calendarCursor || config.startDate);
+            return `
+    <div class="calendar-toolbar">
+      <div class="calendar-month-nav">
+        <button class="icon-btn" onclick="moveCalendarMonth(-1)" title="Mes anterior">‹</button>
+        <strong>${currentMonth}</strong>
+        <button class="icon-btn" onclick="moveCalendarMonth(1)" title="Mes siguiente">›</button>
+      </div>
+      <div class="calendar-view-toggle" role="group" aria-label="Vista de calendario">
+        <button class="${view === 'month' ? 'active' : ''}" onclick="setCalendarView('month')">Mes</button>
+        <button class="${view === 'week' ? 'active' : ''}" onclick="setCalendarView('week')">Semana</button>
+        <button class="${view === 'list' ? 'active' : ''}" onclick="setCalendarView('list')">Lista</button>
+      </div>
+      <div class="calendar-count">${events.length} eventos</div>
+    </div>`;
+        }
+
+        function calendarMonthDays(cursor) {
+            const first = parseDateISO(firstOfMonth(cursor));
+            const startOffset = (first.getDay() + 6) % 7;
+            const start = new Date(first);
+            start.setDate(first.getDate() - startOffset);
+            return Array.from({ length: 42 }, (_, index) => {
+                const date = new Date(start);
+                date.setDate(start.getDate() + index);
+                return dateToISO(date);
+            });
+        }
+
+        function renderCalendarMonthView(events) {
+            const cursorMonth = firstOfMonth(STATE.calendarCursor || todayISO()).slice(0, 7);
+            const today = todayISO();
+            const days = calendarMonthDays(STATE.calendarCursor || today);
+            return `
+    <div class="calendar-month-grid">
+      ${['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map(day => `<div class="calendar-weekday">${day}</div>`).join('')}
+      ${days.map(value => {
+                const dayEvents = events.filter(event => eventOccursOn(event, value));
+                const visible = dayEvents.slice(0, 3);
+                const outside = value.slice(0, 7) !== cursorMonth ? 'outside' : '';
+                const isToday = value === today ? 'today' : '';
+                return `
+        <div class="calendar-day ${outside} ${isToday}">
+          <button class="calendar-day-number" onclick="setCalendarSelectedDate('${value}', true)">${Number(value.slice(8, 10))}</button>
+          <div class="calendar-day-events">
+            ${visible.map(calendarEventChip).join('')}
+            ${dayEvents.length > visible.length ? `<span class="calendar-more">+${dayEvents.length - visible.length} más</span>` : ''}
+          </div>
+        </div>`;
+            }).join('')}
+    </div>`;
+        }
+
+        function renderCalendarWeekView(events) {
+            const anchor = STATE.calendarSelectedDate || todayISO();
+            const parsed = parseDateISO(anchor);
+            const offset = (parsed.getDay() + 6) % 7;
+            const weekStart = addDays(anchor, -offset);
+            const days = Array.from({ length: 7 }, (_, index) => addDays(weekStart, index));
+            return `
+    <div class="calendar-week-strip">
+      ${days.map(value => {
+                const dayEvents = events.filter(event => eventOccursOn(event, value));
+                return `
+        <div class="calendar-week-day ${value === todayISO() ? 'today' : ''}">
+          <div class="calendar-week-date">
+            <strong>${formatDatePY(value)}</strong>
+            <button class="btn-secondary" onclick="setCalendarSelectedDate('${value}', false)">Fijar día</button>
+          </div>
+          <div class="calendar-week-events">
+            ${dayEvents.length ? dayEvents.map(calendarEventChip).join('') : '<span class="calendar-empty">Sin eventos</span>'}
+          </div>
+        </div>`;
+            }).join('')}
+    </div>`;
+        }
+
+        function renderCalendarListView(events) {
+            return `
+    <div class="calendar-list">
+      ${events.map(event => {
+                const status = eventStatus(event);
+                return `
+        <div class="calendar-item type-${event.type}">
+          <div class="calendar-date">
+            <span>${formatDatePY(event.due).split(' ')[0]}</span>
+            <small>${formatDatePY(event.due).replace(formatDatePY(event.due).split(' ')[0], '').trim()}</small>
+          </div>
+          <div class="calendar-body">
+            <div class="calendar-title-row">
+              <h3>${escapeHtml(event.title)}</h3>
+              <span class="status-pill ${status.className}">${status.label}</span>
+            </div>
+            <p>Inicio: ${formatDatePY(event.start)} · Entrega: ${formatDatePY(event.due)} · Tipo: ${eventTypeLabel(event.type)}</p>
+            <div class="calendar-actions">
+              ${event.resource ? `<button class="btn-secondary" onclick="openCalendarEvent('${event.id}')">Abrir recurso</button>` : ''}
+              <button class="btn-secondary" onclick="setEventDone('${event.id}', ${!isEventComplete(event)})">${isEventComplete(event) ? 'Marcar pendiente' : 'Marcar al día'}</button>
+            </div>
+          </div>
+        </div>`;
+            }).join('')}
+    </div>`;
+        }
+
         function renderCalendar() {
             const config = getSemesterConfig();
+            ensureCalendarCursor(config);
             const remindersEnabled = localStorage.getItem('abd_reminders_enabled') === 'true';
             const events = [...config.activities].sort((a, b) => a.due.localeCompare(b.due));
             const next = getUpcomingEvents(1)[0];
+            const view = STATE.calendarView || 'month';
+            const calendarBody = view === 'week'
+                ? renderCalendarWeekView(events)
+                : view === 'list'
+                    ? renderCalendarListView(events)
+                    : renderCalendarMonthView(events);
             document.getElementById('pageContent').innerHTML = `
     <div class="page-heading">
       <div>
@@ -1689,7 +1957,7 @@
           <strong>Próximo hito</strong>
           <p>${next ? `${next.title} · vence ${formatDatePY(next.due)}` : 'Sin pendientes inmediatos.'}</p>
         </div>
-        ${next?.resource ? `<a class="btn-secondary as-link" href="${next.resource}" target="_blank">Abrir</a>` : ''}
+        ${next?.resource ? `<button class="btn-secondary" onclick="openCalendarEvent('${next.id}')">Abrir</button>` : ''}
       </div>
       <div class="smart-card">
         <div>
@@ -1699,29 +1967,8 @@
         <button class="btn-secondary" onclick="checkReminders(true)">Revisar ahora</button>
       </div>
     </div>
-    <div class="calendar-list">
-      ${events.map(event => {
-                const status = eventStatus(event);
-                return `
-        <div class="calendar-item">
-          <div class="calendar-date">
-            <span>${formatDatePY(event.due).split(' ')[0]}</span>
-            <small>${formatDatePY(event.due).replace(formatDatePY(event.due).split(' ')[0], '').trim()}</small>
-          </div>
-          <div class="calendar-body">
-            <div class="calendar-title-row">
-              <h3>${event.title}</h3>
-              <span class="status-pill ${status.className}">${status.label}</span>
-            </div>
-            <p>Inicio: ${formatDatePY(event.start)} · Entrega: ${formatDatePY(event.due)} · Tipo: ${event.type}</p>
-            <div class="calendar-actions">
-              ${event.resource ? `<a class="btn-secondary as-link" href="${event.resource}" target="_blank">Abrir recurso</a>` : ''}
-              <button class="btn-secondary" onclick="setEventDone('${event.id}', ${!isEventComplete(event)})">${isEventComplete(event) ? 'Marcar pendiente' : 'Marcar al día'}</button>
-            </div>
-          </div>
-        </div>`;
-            }).join('')}
-    </div>`;
+    ${calendarToolbar(config, events)}
+    ${calendarBody}`;
         }
 
         async function enableReminders() {
@@ -1790,7 +2037,7 @@
       </div>
       <div class="stat-card success">
         <div class="sc-label">Logros Ganados</div>
-        <div class="sc-value" style="color:#86efac">${STATE.badges.length}</div>
+        <div class="sc-value" style="color:var(--success)">${STATE.badges.length}</div>
         <div class="sc-sub">de ${BADGES_DEF.length} disponibles</div>
       </div>
       <div class="stat-card warning">

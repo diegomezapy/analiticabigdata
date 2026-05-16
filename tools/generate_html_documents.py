@@ -4,6 +4,7 @@ import html
 import json
 import re
 import zipfile
+from datetime import date, datetime
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
@@ -14,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_BASE = "https://diegomezapy.github.io/analiticabigdata/"
 COURSE_NAME = "Analítica de Big Data"
 TABLE_PREFIX = "__ABD_TABLE__:"
+PLAN_XLSX = Path(r"G:\Mi unidad\FACEN_Software_Estadistico\Materiales_v2\Analitica_Big_Data\planificacion\FACEN_BigData_GD_1erPer_2026.xlsx")
 COURSE_CONTEXT = {
     "Carrera": "Matemática Estadística",
     "Modalidad": "Virtual",
@@ -143,6 +145,182 @@ DOCUMENTS = [
 ]
 
 
+def load_plan_rows() -> list[dict[str, object]]:
+    if not PLAN_XLSX.exists():
+        return []
+    try:
+        import openpyxl
+    except Exception:
+        return []
+    workbook = openpyxl.load_workbook(PLAN_XLSX, data_only=True)
+    sheet = workbook["cronograma"]
+    rows: list[dict[str, object]] = []
+    for row in sheet.iter_rows(min_row=19, max_row=44, values_only=True):
+        unit = row[0]
+        if unit in (None, ""):
+            continue
+        try:
+            unit_num = int(unit)
+        except (TypeError, ValueError):
+            continue
+        start = format_plan_date(row[9])
+        end = format_plan_date(row[10])
+        if not start or not end:
+            continue
+        rows.append({
+            "unit": unit_num,
+            "unit_name": normalize(str(row[1] or "")),
+            "unit_objective": normalize(str(row[2] or "")),
+            "content": normalize(str(row[3] or "")),
+            "activity": normalize(str(row[4] or "")),
+            "type": normalize(str(row[5] or "")),
+            "points": normalize(str(row[6] if row[6] is not None else "")),
+            "activity_objective": normalize(str(row[7] or "")),
+            "duration": normalize(str(row[8] if row[8] is not None else "")),
+            "start": start,
+            "end": end,
+        })
+    return rows
+
+
+def format_plan_date(value: object) -> str:
+    if isinstance(value, datetime):
+        return value.date().isoformat()
+    if isinstance(value, date):
+        return value.isoformat()
+    if value is None:
+        return ""
+    text = str(value).strip()
+    if not text or text == "00:00:00":
+        return ""
+    try:
+        return datetime.fromisoformat(text).date().isoformat()
+    except ValueError:
+        return text
+
+
+def format_plan_display_date(value: object) -> str:
+    text = str(value or "").strip()
+    if not text:
+        return ""
+    try:
+        return datetime.fromisoformat(text).strftime("%d/%m/%Y")
+    except ValueError:
+        return text
+
+
+def display_plan_cell(row: dict[str, object], key: str) -> str:
+    value = row.get(key, "")
+    if key in {"start", "end"}:
+        return format_plan_display_date(value)
+    return str(value)
+
+
+def plan_rows_for_unit(unit: int) -> list[dict[str, object]]:
+    return [row for row in PLAN_ROWS if row["unit"] == unit]
+
+
+def plan_row_for_activity(unit: int, act: int) -> dict[str, object] | None:
+    prefix = f"{act}."
+    for row in plan_rows_for_unit(unit):
+        if str(row["activity"]).strip().startswith(prefix):
+            return row
+    return None
+
+
+def render_plan_table(rows: list[dict[str, object]], columns: list[tuple[str, str]], compact: bool = True) -> str:
+    if not rows:
+        return ""
+    header = "".join(f"<th>{html.escape(label)}</th>" for _, label in columns)
+    body_rows = []
+    for row in rows:
+        cells = "".join(f"<td>{html.escape(display_plan_cell(row, key))}</td>" for key, _ in columns)
+        body_rows.append(f"<tr>{cells}</tr>")
+    class_name = "doc-table doc-table-compact" if compact else "doc-table"
+    return f'<div class="doc-table-wrap"><table class="{class_name}"><tr>{header}</tr>{"".join(body_rows)}</table></div>'
+
+
+def render_planning_frontmatter(spec: dict[str, str]) -> str:
+    unit = spec_unit(spec)
+    act = spec_activity(spec)
+    if spec["kind"] == "Guía del curso":
+        schedule_rows = [row for row in PLAN_ROWS if row["unit"] in {1, 2, 3, 4}]
+        exam_rows = [row for row in PLAN_ROWS if row["unit"] == 5]
+        tutoring_rows = [row for row in PLAN_ROWS if row["unit"] == 9]
+        schedule = render_plan_table(schedule_rows, [
+            ("unit", "Unidad"),
+            ("content", "Contenido"),
+            ("activity", "Actividad"),
+            ("type", "Tipo"),
+            ("points", "Puntaje"),
+            ("start", "Inicio"),
+            ("end", "Fin"),
+        ])
+        exams = render_plan_table(exam_rows, [
+            ("activity", "Evaluación"),
+            ("type", "Tipo"),
+            ("points", "Puntaje"),
+            ("start", "Inicio"),
+            ("end", "Fin"),
+        ])
+        tutoring = render_plan_table(tutoring_rows, [
+            ("activity", "Tutoría"),
+            ("start", "Fecha"),
+            ("type", "Tipo"),
+        ])
+        return f"""
+    <section class="doc-study-note">
+      <h2>Cronograma oficial de la planificación</h2>
+      <p>La siguiente tabla proviene de la planilla de planificación del primer período 2026 y reemplaza los cuadros extraídos automáticamente del PDF.</p>
+      {schedule}
+    </section>
+    <section class="doc-study-note">
+      <h2>Evaluaciones parciales y finales</h2>
+      {exams}
+    </section>
+    <section class="doc-study-note">
+      <h2>Tutorías sincrónicas</h2>
+      {tutoring}
+    </section>
+"""
+    if unit and not act:
+        schedule = render_plan_table(plan_rows_for_unit(unit), [
+            ("content", "Contenido"),
+            ("activity", "Actividad"),
+            ("type", "Tipo"),
+            ("points", "Puntaje"),
+            ("duration", "Días"),
+            ("start", "Inicio"),
+            ("end", "Fin"),
+        ])
+        if schedule:
+            return f"""
+    <section class="doc-study-note">
+      <h2>Actividades oficiales de la unidad</h2>
+      {schedule}
+    </section>
+"""
+    if unit and act:
+        row = plan_row_for_activity(unit, act)
+        if row:
+            schedule = render_plan_table([row], [
+                ("content", "Contenido"),
+                ("activity", "Actividad"),
+                ("type", "Tipo"),
+                ("points", "Puntaje"),
+                ("duration", "Días"),
+                ("start", "Inicio"),
+                ("end", "Fin"),
+            ], compact=False)
+            return f"""
+    <section class="doc-study-note">
+      <h2>Datos oficiales de la actividad</h2>
+      {schedule}
+    </section>
+"""
+    return ""
+
+
 def extract_pdf(path: Path) -> list[str]:
     doc = fitz.open(path)
     lines: list[str] = []
@@ -264,6 +442,9 @@ def collapse_repeated(lines: list[str]) -> list[str]:
     return collapsed
 
 
+PLAN_ROWS = load_plan_rows()
+
+
 def line_to_html(line: str, index: int) -> str:
     if line.startswith(TABLE_PREFIX):
         return render_table_html(line)
@@ -283,6 +464,51 @@ def line_to_html(line: str, index: int) -> str:
     if is_heading(line):
         return f"<h2>{escaped}</h2>"
     return f"<p>{escaped}</p>"
+
+
+def filter_source_lines(lines: list[str], spec: dict[str, str]) -> list[str]:
+    filtered: list[str] = []
+    skip_next_meta = False
+    for line in lines:
+        if line.startswith(TABLE_PREFIX) and is_planning_table_marker(line):
+            continue
+        if is_planning_noise_line(line):
+            skip_next_meta = True
+            continue
+        if skip_next_meta and re.match(r"^(Referencias: AA|AA: Actividad|AI: Actividad|AF: Actividad)", line, re.I):
+            skip_next_meta = False
+            continue
+        filtered.append(line)
+    return collapse_repeated(filtered)
+
+
+def is_planning_noise_line(line: str) -> bool:
+    patterns = [
+        r"^5\.\s*Cronograma\b",
+        r"^Unidad\s+Nro\b",
+        r"^Unidad\s+Descripción\b",
+        r"^Actividad\s+Descripción\s+Tipo",
+        r"^Puntaje\s+Fecha\s+inicio",
+        r"^\d\.0\s+",
+        r"^(Primer|Segundo)\s+(parcial|final)$",
+    ]
+    return any(re.search(pattern, line, re.I) for pattern in patterns)
+
+
+def is_planning_table_marker(marker: str) -> bool:
+    try:
+        rows = json.loads(marker.removeprefix(TABLE_PREFIX))
+    except json.JSONDecodeError:
+        return False
+    text = " ".join(" ".join(str(cell) for cell in row) for row in rows)
+    signals = [
+        "Fecha inicio",
+        "Fecha fin",
+        "Actividad Descripción",
+        "Tipo act",
+        "Unidad Descripción",
+    ]
+    return sum(1 for signal in signals if signal.lower() in text.lower()) >= 2
 
 
 def render_table_html(marker: str) -> str:
@@ -447,7 +673,9 @@ def render_document(spec: dict[str, str], lines: list[str]) -> str:
         download_href = "../" * depth + download
         download_link = f'<a class="doc-download" href="{download_href}" download>Descargar PDF</a>'
     frontmatter = render_academic_frontmatter(spec, asset_path)
-    body = "\n".join(line_to_html(line, i) for i, line in enumerate(lines))
+    planning = render_planning_frontmatter(spec)
+    body_lines = filter_source_lines(lines, spec)
+    body = "\n".join(line_to_html(line, i) for i, line in enumerate(body_lines))
     return f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -476,7 +704,8 @@ def render_document(spec: dict[str, str], lines: list[str]) -> str:
         {download_link}
       </div>
     </header>
-    {frontmatter}
+{frontmatter}
+{planning}
     <article class="doc-content">
       <h2>Contenido del documento fuente</h2>
       {body}

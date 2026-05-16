@@ -1,12 +1,12 @@
 :root {
-  --bg: #edf1f5;
+  --bg: #f1f4f8;
   --paper: #ffffff;
   --ink: #1f2933;
-  --muted: #667085;
-  --line: #d6dde8;
-  --primary: #384250;
-  --accent: #d99112;
-  --accent-dark: #9a6100;
+  --muted: #4b5565;
+  --line: #cbd5e1;
+  --primary: #26384f;
+  --accent: #b96f06;
+  --accent-dark: #7a4400;
   --soft: #f8fafc;
 }
 
@@ -297,8 +297,8 @@ h1 {
 }
 
 .doc-table th {
-  background: #4b5563;
-  border: 1px solid #4b5563;
+  background: #26384f;
+  border: 1px solid #26384f;
   color: #ffffff;
   font-size: 0.82rem;
   padding: 9px 10px;
@@ -308,13 +308,29 @@ h1 {
 
 .doc-table td {
   border: 1px solid var(--line);
+  color: #111827;
   font-size: 0.84rem;
   padding: 9px 10px;
   vertical-align: top;
 }
 
 .doc-table tr:nth-child(even) td {
-  background: #f9fafb;
+  background: #f8fafc;
+}
+
+.doc-table-compact {
+  min-width: 760px;
+}
+
+.doc-table-compact th {
+  font-size: 0.76rem;
+  line-height: 1.28;
+}
+
+.doc-table-compact td {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  padding: 7px 8px;
 }
 
 .doc-equation {

@@ -11,38 +11,38 @@
    ================================================ */
 :root {
   /* Colors */
-  --primary:        hsl(207, 48%, 34%);
-  --primary-light:  hsl(207, 42%, 46%);
-  --primary-dark:   hsl(209, 55%, 24%);
-  --accent:         hsl(38, 82%, 42%);
-  --accent-light:   hsl(40, 76%, 50%);
-  --tertiary:       hsl(151, 44%, 35%);
-  --success:        hsl(142, 71%, 45%);
-  --warning:        hsl(38,  92%, 50%);
-  --danger:         hsl(0,   72%, 51%);
+  --primary:        hsl(210, 48%, 28%);
+  --primary-light:  hsl(208, 44%, 36%);
+  --primary-dark:   hsl(212, 56%, 18%);
+  --accent:         hsl(37, 86%, 36%);
+  --accent-light:   hsl(38, 78%, 42%);
+  --tertiary:       hsl(156, 45%, 29%);
+  --success:        hsl(145, 62%, 30%);
+  --warning:        hsl(36,  90%, 38%);
+  --danger:         hsl(355, 70%, 42%);
 
   /* Unit Colors */
   --u1-color: hsl(207, 48%, 34%);
-  --u2-color: hsl(38, 82%, 42%);
-  --u3-color: hsl(263, 34%, 43%);
-  --u4-color: hsl(151, 44%, 35%);
+  --u2-color: hsl(37, 86%, 36%);
+  --u3-color: hsl(262, 32%, 36%);
+  --u4-color: hsl(156, 45%, 29%);
   --u5-color: hsl(48,  92%, 52%);
 
   /* Dark Background System */
-  --bg-dark:        hsl(214, 32%, 94%);
+  --bg-dark:        hsl(212, 30%, 96%);
   --bg-surface:     hsl(0, 0%, 100%);
   --bg-elevated:    hsl(0, 0%, 100%);
-  --bg-hover:       hsl(210, 28%, 96%);
+  --bg-hover:       hsl(210, 30%, 94%);
 
   /* Glass */
   --glass-bg:       rgba(255, 255, 255, 0.86);
-  --glass-border:   rgba(31, 41, 55, 0.13);
+  --glass-border:   rgba(31, 41, 55, 0.17);
   --glass-shine:    rgba(255, 255, 255, 0.7);
 
   /* Text */
   --text-primary:   hsl(215, 28%, 17%);
-  --text-secondary: hsl(215, 18%, 34%);
-  --text-muted:     hsl(215, 14%, 45%);
+  --text-secondary: hsl(215, 20%, 28%);
+  --text-muted:     hsl(215, 16%, 36%);
   --text-disabled:  hsl(215, 10%, 62%);
 
   /* Spacing */
@@ -242,9 +242,9 @@ a:hover { text-decoration: underline; }
 }
 
 .nav-item.active {
-  background: rgba(99, 102, 241, 0.15);
+  background: rgba(38, 88, 130, 0.12);
   color: var(--primary-light);
-  border-color: rgba(99, 102, 241, 0.2);
+  border-color: rgba(38, 88, 130, 0.22);
 }
 
 .nav-item.active::before {
@@ -635,10 +635,10 @@ a:hover { text-decoration: underline; }
 .material-open:hover { text-decoration: none; }
 
 .material-download-btn {
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(153, 27, 27, 0.08);
+  border: 1px solid rgba(153, 27, 27, 0.25);
   border-radius: var(--radius-full);
-  color: #fecaca;
+  color: #991b1b;
   flex-shrink: 0;
   font-size: 0.75rem;
   font-weight: 800;
@@ -673,7 +673,7 @@ a:hover { text-decoration: underline; }
   flex-shrink: 0;
 }
 
-.badge-pdf { background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
+.badge-pdf { background: rgba(153,27,27,0.12); color: #991b1b; border: 1px solid rgba(153,27,27,0.24); }
 .badge-act { background: rgba(20,184,166,0.15); color: var(--primary-light); border: 1px solid rgba(20,184,166,0.2); }
 .badge-quiz { background: rgba(249,115,22,0.15); color: var(--accent-light); border: 1px solid rgba(249,115,22,0.2); }
 
@@ -843,7 +843,7 @@ a:hover { text-decoration: underline; }
 .quiz-timer.warning { 
   border-color: rgba(239,68,68,0.4);
   animation: pulse 1s ease infinite;
-  color: #fca5a5;
+  color: #991b1b;
 }
 
 @keyframes pulse {
@@ -945,13 +945,13 @@ a:hover { text-decoration: underline; }
 .explanation-box.correct { 
   background: rgba(34,197,94,0.1);
   border: 1px solid rgba(34,197,94,0.2);
-  color: #86efac;
+  color: #166534;
 }
 
 .explanation-box.wrong {
   background: rgba(239,68,68,0.1);
   border: 1px solid rgba(239,68,68,0.2);
-  color: #fca5a5;
+  color: #991b1b;
 }
 
 .quiz-actions { display: flex; gap: 1rem; align-items: center; }
@@ -989,6 +989,26 @@ a:hover { text-decoration: underline; }
 
 .btn-secondary:hover { border-color: var(--primary); color: var(--primary-light); }
 
+.icon-btn {
+  align-items: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.25rem;
+  font-weight: 800;
+  height: 38px;
+  justify-content: center;
+  width: 38px;
+}
+
+.icon-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary);
+}
+
 /* Quiz Result */
 .quiz-result {
   text-align: center;
@@ -1013,9 +1033,9 @@ a:hover { text-decoration: underline; }
   margin-bottom: 2rem;
 }
 
-.result-badge.excellent { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); color: #86efac; }
+.result-badge.excellent { background: rgba(22,101,52,0.12); border: 1px solid rgba(22,101,52,0.26); color: #166534; }
 .result-badge.good { background: rgba(20,184,166,0.15); border: 1px solid rgba(20,184,166,0.3); color: var(--primary-light); }
-.result-badge.needs-work { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; }
+.result-badge.needs-work { background: rgba(153,27,27,0.12); border: 1px solid rgba(153,27,27,0.26); color: #991b1b; }
 
 /* ================================================
    Flashcards Activity
@@ -1330,7 +1350,7 @@ a:hover { text-decoration: underline; }
 }
 
 .step-dot.active { border-color: var(--primary); color: var(--primary-light); }
-.step-dot.done { background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.35); color: #86efac; }
+.step-dot.done { background: rgba(22,101,52,0.12); border-color: rgba(22,101,52,0.3); color: #166534; }
 
 .practice-detail {
   display: grid;
@@ -1395,6 +1415,203 @@ a:hover { text-decoration: underline; }
   gap: 0.75rem;
 }
 
+.calendar-toolbar {
+  align-items: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+}
+
+.calendar-month-nav,
+.calendar-view-toggle {
+  align-items: center;
+  display: flex;
+  gap: 0.55rem;
+}
+
+.calendar-month-nav strong {
+  color: var(--text-primary);
+  font-size: 1rem;
+  min-width: 170px;
+  text-transform: capitalize;
+}
+
+.calendar-view-toggle {
+  background: var(--bg-hover);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 0.18rem;
+}
+
+.calendar-view-toggle button {
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 0.45rem 0.75rem;
+}
+
+.calendar-view-toggle button.active {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.calendar-count {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.calendar-month-grid {
+  background: var(--bg-elevated);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  overflow: hidden;
+}
+
+.calendar-weekday {
+  background: hsl(213, 28%, 91%);
+  border-bottom: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.65rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.calendar-day {
+  border-bottom: 1px solid var(--glass-border);
+  border-right: 1px solid var(--glass-border);
+  min-height: 136px;
+  padding: 0.55rem;
+}
+
+.calendar-day:nth-child(7n + 7) {
+  border-right: 0;
+}
+
+.calendar-day.outside {
+  background: hsl(210, 25%, 98%);
+  color: var(--text-disabled);
+}
+
+.calendar-day.today {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.calendar-day-number {
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-weight: 800;
+  margin-bottom: 0.45rem;
+  padding: 0.15rem 0.35rem;
+}
+
+.calendar-day-number:hover {
+  background: var(--bg-hover);
+}
+
+.calendar-day-events,
+.calendar-week-events {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.calendar-event-chip {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  gap: 0.32rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  min-height: 28px;
+  overflow: hidden;
+  padding: 0.28rem 0.38rem;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-event-chip span {
+  align-items: center;
+  border-radius: 50%;
+  display: inline-flex;
+  flex: 0 0 18px;
+  font-size: 0.65rem;
+  height: 18px;
+  justify-content: center;
+}
+
+.calendar-event-chip.type-actividad { background: #e8f1fb; border-color: #bfdbfe; color: #1e3a8a; }
+.calendar-event-chip.type-quiz { background: #fff4d6; border-color: #f8cf72; color: #854d0e; }
+.calendar-event-chip.type-examen { background: #fee2e2; border-color: #ef9a9a; color: #991b1b; }
+.calendar-event-chip.type-tutoria { background: #e7f7ef; border-color: #9fd7b6; color: #14532d; }
+
+.calendar-event-chip.done {
+  background: #dcfce7;
+  border-color: #7bcf95;
+  color: #166534;
+}
+
+.calendar-more,
+.calendar-empty {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.calendar-week-strip {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.calendar-week-day {
+  background: var(--bg-elevated);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  min-height: 260px;
+  padding: 0.8rem;
+}
+
+.calendar-week-day.today {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.calendar-week-date {
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.calendar-week-date strong {
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  text-transform: capitalize;
+}
+
 .calendar-item {
   display: grid;
   grid-template-columns: 96px minmax(0, 1fr);
@@ -1437,10 +1654,10 @@ a:hover { text-decoration: underline; }
   white-space: nowrap;
 }
 
-.status-pill.done { background: rgba(34,197,94,0.15); color: #86efac; border-color: rgba(34,197,94,0.25); }
-.status-pill.active { background: rgba(20,184,166,0.14); color: var(--primary-light); border-color: rgba(20,184,166,0.25); }
-.status-pill.soon { background: rgba(245,158,11,0.15); color: #fcd34d; border-color: rgba(245,158,11,0.25); }
-.status-pill.late { background: rgba(239,68,68,0.15); color: #fca5a5; border-color: rgba(239,68,68,0.25); }
+.status-pill.done { background: rgba(22,101,52,0.12); color: #166534; border-color: rgba(22,101,52,0.26); }
+.status-pill.active { background: rgba(15,118,110,0.12); color: #0f766e; border-color: rgba(15,118,110,0.26); }
+.status-pill.soon { background: rgba(146,64,14,0.12); color: #92400e; border-color: rgba(146,64,14,0.26); }
+.status-pill.late { background: rgba(153,27,27,0.12); color: #991b1b; border-color: rgba(153,27,27,0.26); }
 .status-pill.future { background: rgba(148,163,184,0.12); color: var(--text-secondary); border-color: rgba(148,163,184,0.2); }
 
 .form-grid {
@@ -1600,6 +1817,7 @@ a:hover { text-decoration: underline; }
 
   .page-heading,
   .smart-card,
+  .calendar-toolbar,
   .calendar-title-row {
     align-items: flex-start;
     flex-direction: column;
@@ -1611,6 +1829,34 @@ a:hover { text-decoration: underline; }
   .resource-workspace,
   .form-row.two-cols {
     grid-template-columns: 1fr;
+  }
+
+  .calendar-month-grid,
+  .calendar-week-strip {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .calendar-weekday {
+    display: none;
+  }
+
+  .calendar-day {
+    border-right: 0;
+    min-height: 118px;
+  }
+
+  .calendar-month-nav,
+  .calendar-view-toggle {
+    width: 100%;
+  }
+
+  .calendar-month-nav {
+    justify-content: space-between;
+  }
+
+  .calendar-view-toggle button {
+    flex: 1;
   }
 
   .resource-workspace {
