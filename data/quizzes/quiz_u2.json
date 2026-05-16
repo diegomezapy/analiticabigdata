@@ -1,0 +1,131 @@
+{
+    "unidad": 2,
+    "titulo": "Visualización y exploración de datos",
+    "descripcion": "Autoevaluación sobre exploración, preparación y transformación de datos para Big Data.",
+    "tiempo_minutos": 15,
+    "intentos_max": 3,
+    "preguntas": [
+        {
+            "id": 1,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Cuál es el propósito central del análisis exploratorio de datos?",
+            "opciones": [
+                "Ocultar valores atípicos",
+                "Comprender estructura, patrones, relaciones y problemas de calidad",
+                "Elegir un modelo al azar",
+                "Reducir el análisis a una tabla final"
+            ],
+            "respuesta": 1,
+            "explicacion": "La exploración permite conocer los datos antes de tomar decisiones de modelado o interpretación.",
+            "puntos": 10
+        },
+        {
+            "id": 2,
+            "tipo": "verdadero_falso",
+            "pregunta": "La visualización ayuda a detectar patrones, anomalías y relaciones entre variables.",
+            "respuesta": true,
+            "explicacion": "Los gráficos facilitan una lectura rápida de distribuciones, tendencias y posibles problemas de los datos.",
+            "puntos": 10
+        },
+        {
+            "id": 3,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué significa binarizar una variable cualitativa?",
+            "opciones": [
+                "Convertir categorías en variables indicadoras numéricas",
+                "Eliminar todos los textos de una base",
+                "Ordenar una columna de menor a mayor",
+                "Transformar una variable continua en fecha"
+            ],
+            "respuesta": 0,
+            "explicacion": "La binarización permite representar categorías como 0/1 para usarlas en algoritmos y modelos.",
+            "puntos": 10
+        },
+        {
+            "id": 4,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Para qué se divide un conjunto de datos en entrenamiento y prueba?",
+            "opciones": [
+                "Para duplicar filas sin necesidad",
+                "Para ajustar el modelo en una parte y evaluar su desempeño en datos no usados para entrenar",
+                "Para cambiar el nombre de las variables",
+                "Para evitar toda visualización"
+            ],
+            "respuesta": 1,
+            "explicacion": "La división ayuda a estimar cómo funcionará el modelo ante datos nuevos.",
+            "puntos": 10
+        },
+        {
+            "id": 5,
+            "tipo": "opcion_multiple",
+            "pregunta": "La imputación se utiliza principalmente para:",
+            "opciones": [
+                "Crear gráficos con colores",
+                "Tratar valores faltantes",
+                "Convertir todos los números a texto",
+                "Aumentar artificialmente el puntaje de un modelo"
+            ],
+            "respuesta": 1,
+            "explicacion": "Imputar consiste en reemplazar o estimar valores faltantes de forma razonada.",
+            "puntos": 10
+        },
+        {
+            "id": 6,
+            "tipo": "verdadero_falso",
+            "pregunta": "Estandarizar variables puede ser útil cuando están medidas en escalas muy diferentes.",
+            "respuesta": true,
+            "explicacion": "La estandarización ayuda a que las variables sean comparables, especialmente en algoritmos sensibles a escala.",
+            "puntos": 10
+        },
+        {
+            "id": 7,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué operación transforma valores a un rango comparable, por ejemplo entre 0 y 1?",
+            "opciones": [
+                "Escalado",
+                "Concatenación",
+                "Submuestreo textual",
+                "Indexación manual"
+            ],
+            "respuesta": 0,
+            "explicacion": "El escalado cambia el rango de las variables para facilitar comparaciones y ciertos métodos de modelado.",
+            "puntos": 10
+        },
+        {
+            "id": 8,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Por qué conviene revisar valores faltantes antes de modelar?",
+            "opciones": [
+                "Porque los modelos siempre los interpretan correctamente",
+                "Porque pueden afectar resultados, reducir datos disponibles o introducir sesgos",
+                "Porque todos los faltantes deben convertirse en cero",
+                "Porque no influyen en ningún algoritmo"
+            ],
+            "respuesta": 1,
+            "explicacion": "Los faltantes mal tratados pueden distorsionar análisis y predicciones.",
+            "puntos": 10
+        },
+        {
+            "id": 9,
+            "tipo": "verdadero_falso",
+            "pregunta": "La visualización de datos es solo estética y no influye en la interpretación.",
+            "respuesta": false,
+            "explicacion": "Una visualización adecuada puede revelar comportamientos que una tabla no muestra con claridad.",
+            "puntos": 10
+        },
+        {
+            "id": 10,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué resultado se espera después de preparar y explorar los datos?",
+            "opciones": [
+                "Un conjunto más comprensible y listo para análisis o modelado",
+                "Una base sin documentación",
+                "Un modelo final sin evaluación",
+                "Una eliminación completa de variables"
+            ],
+            "respuesta": 0,
+            "explicacion": "La preparación deja los datos en mejores condiciones para análisis, modelos y comunicación de resultados.",
+            "puntos": 10
+        }
+    ]
+}

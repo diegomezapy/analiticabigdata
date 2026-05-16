@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analítica de Big Data — FACEN | Plataforma</title>
+    <meta name="description"
+        content="Plataforma educativa Analítica de Big Data FACEN. Materiales, cuestionarios y actividades de aprendizaje.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Overlay for mobile -->
+    <div id="overlay"></div>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="app-wrapper">
+        <!-- ========== SIDEBAR ========== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <div class="sidebar-logo-icon">🧠</div>
+                    <div class="sidebar-logo-text">
+                        <h2>Analítica de Big Data</h2>
+                        <p>FACEN · 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <span class="nav-section-label">General</span>
+                <div class="nav-item active" onclick="showPage('home')" id="nav-home">
+                    <span class="nav-item-icon">🏠</span>
+                    <span>Inicio</span>
+                </div>
+                <div class="nav-item" onclick="showPage('progress')" id="nav-progress">
+                    <span class="nav-item-icon">📈</span>
+                    <span>Mi Progreso</span>
+                </div>
+                <div class="nav-item" onclick="showPage('badges')" id="nav-badges">
+                    <span class="nav-item-icon">🏆</span>
+                    <span>Mis Logros</span>
+                </div>
+
+                <span class="nav-section-label">Unidades</span>
+                <div class="nav-item" onclick="showUnit(1)" id="nav-u1">
+                    <span class="nav-item-icon">📌</span>
+                    <span>Unidad 1 — Manejo de datos</span>
+                    <span class="nav-unit-indicator" style="background:var(--u1-color)"></span>
+                </div>
+                <div class="nav-item" onclick="showUnit(2)" id="nav-u2">
+                    <span class="nav-item-icon">📊</span>
+                    <span>Unidad 2 — Visualización</span>
+                    <span class="nav-unit-indicator" style="background:var(--u2-color)"></span>
+                </div>
+                <div class="nav-item" onclick="showUnit(3)" id="nav-u3">
+                    <span class="nav-item-icon">📉</span>
+                    <span>Unidad 3 — Machine Learning</span>
+                    <span class="nav-unit-indicator" style="background:var(--u3-color)"></span>
+                </div>
+                <div class="nav-item" onclick="showUnit(4)" id="nav-u4">
+                    <span class="nav-item-icon">🔬</span>
+                    <span>Unidad 4 — Modelos</span>
+                    <span class="nav-unit-indicator" style="background:var(--u4-color)"></span>
+                </div>
+
+                <span class="nav-section-label">Herramientas</span>
+                <div class="nav-item" onclick="showPage('flashcards')" id="nav-flashcards">
+                    <span class="nav-item-icon">🃏</span>
+                    <span>Flashcards</span>
+                </div>
+                <div class="nav-item" onclick="showPage('matching')" id="nav-matching">
+                    <span class="nav-item-icon">🔗</span>
+                    <span>Emparejar Conceptos</span>
+                </div>
+                <div class="nav-item" onclick="showPage('guia')" id="nav-guia">
+                    <span class="nav-item-icon">📖</span>
+                    <span>Guía Didáctica</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">E</div>
+                <div class="user-info">
+                    <strong id="userName">Estudiante</strong>
+                    <small id="userXP">⭐ 0 XP</small>
+                </div>
+                <button class="btn-logout" onclick="logout()" title="Cerrar sesión">🚪</button>
+            </div>
+        </aside>
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main class="main-content">
+            <header class="topbar">
+                <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+                <div class="topbar-title" id="topbarTitle">Inicio</div>
+                <div class="topbar-actions">
+                    <div class="xp-pill" id="xpDisplay">⭐ 0 XP</div>
+                </div>
+            </header>
+
+            <div class="page-content" id="pageContent">
+                <!-- Content injected by JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+    <script>
+        // ================================================================
+        // APP STATE
+        // ================================================================
+        const STATE = {
+            user: null,
+            xp: 0,
+            completedActivities: {},   // { 'u1_quiz': true, 'u1_read': true ... }
+            quizResults: {},            // { 'u1': { score: 80, date: '...' } }
+            badges: [],
+            currentUnit: null,
+            currentQuiz: null,
+            quizData: null,
+            quizAnswers: [],
+            quizTimer: null,
+            quizTimeLeft: 0,
+        };
+
+        const TOTAL_UNITS = 4;
+
+        const UNITS = [
+            {
+                id: 1, title: 'Manejo de datos', subtitle: 'Fundamentos, entorno R y operaciones básicas', icon: '🧭', color: 'var(--u1-color)',
+                desc: 'Introduce los orígenes y características del Big Data, la configuración de R y RStudio, y las primeras operaciones con datos y gráficos.',
+                activities: 3
+            },
+            {
+                id: 2, title: 'Visualización y exploración', subtitle: 'Librerías, preparación y análisis exploratorio', icon: '📊', color: 'var(--u2-color)',
+                desc: 'Trabaja carga y procesamiento con librerías de R, binarización de variables, división de datos, imputación, estandarización y escalado.',
+                activities: 3
+            },
+            {
+                id: 3, title: 'Machine Learning', subtitle: 'Modelos predictivos, KNN y regresión logística', icon: '🤖', color: 'var(--u3-color)',
+                desc: 'Implementa modelos predictivos en R y compara algoritmos supervisados como K-Nearest Neighbor y regresión logística.',
+                activities: 3
+            },
+            {
+                id: 4, title: 'Interpretación de modelos', subtitle: 'Selección de resultados, LDA y proyecto final', icon: '🔎', color: 'var(--u4-color)',
+                desc: 'Interpreta resultados de modelos estadísticos, aplica Análisis Discriminante Lineal y comunica hallazgos en un proyecto final.',
+                activities: 3
+            },
+        ];
+
+        const BADGES_DEF = [
+            { id: 'first_login', emoji: '👋', name: 'Bienvenido', desc: 'Primer acceso a la plataforma' },
+            { id: 'quiz_u1', emoji: '🎯', name: 'Base Big Data', desc: 'Completar quiz Unidad 1' },
+            { id: 'quiz_u2', emoji: '📊', name: 'Explorador Visual', desc: 'Completar quiz Unidad 2' },
+            { id: 'quiz_u3', emoji: '🤖', name: 'Modelador ML', desc: 'Completar quiz Unidad 3' },
+            { id: 'quiz_u4', emoji: '🔎', name: 'Intérprete', desc: 'Completar quiz Unidad 4' },
+            { id: 'perfect_score', emoji: '💯', name: 'Perfecto', desc: 'Obtener 100% en cualquier quiz' },
+            { id: 'all_units', emoji: '🏅', name: 'Analista Big Data', desc: 'Completar todos los quizzes' },
+            { id: 'flashcard_master', emoji: '🃏', name: 'Flash Master', desc: 'Revisar todas las flashcards' },
+            { id: 'early_bird', emoji: '🌅', name: 'Madrugador', desc: 'Acceder antes de las 8 AM' },
+        ];
+
+        // ================================================================
+        // INIT
+        // ================================================================
+        function init() {
+            // Auth check
+            const stored = sessionStorage.getItem('abd_user');
+            if (!stored) { window.location.href = 'index.html'; return; }
+            STATE.user = JSON.parse(stored);
+
+            // Load saved progress from localStorage
+            const saved = localStorage.getItem(`abd_progress_${STATE.user.username}`);
+            if (saved) {
+                const p = JSON.parse(saved);
+                STATE.xp = p.xp || 0;
+                STATE.completedActivities = p.completedActivities || {};
+                STATE.quizResults = p.quizResults || {};
+                STATE.badges = p.badges || [];
+            }
+
+            // Update UI
+            const initial = (STATE.user.nombre || STATE.user.username).charAt(0).toUpperCase();
+            document.getElementById('userAvatar').textContent = initial;
+            document.getElementById('userName').textContent = STATE.user.nombre || STATE.user.username;
+            updateXPDisplay();
+
+            // Early bird badge
+            const hour = new Date().getHours();
+            if (hour < 8) earnBadge('early_bird');
+
+            // First login badge
+            earnBadge('first_login');
+
+            showPage('home');
+        }
+
+        function saveProgress() {
+            localStorage.setItem(`abd_progress_${STATE.user.username}`, JSON.stringify({
+                xp: STATE.xp,
+                completedActivities: STATE.completedActivities,
+                quizResults: STATE.quizResults,
+                badges: STATE.badges,
+            }));
+        }
+
+        function addXP(amount, reason) {
+            STATE.xp += amount;
+            updateXPDisplay();
+            saveProgress();
+            showToast(`+${amount} XP — ${reason}`, 'xp');
+        }
+
+        function updateXPDisplay() {
+            const xpText = `⭐ ${STATE.xp} XP`;
+            document.getElementById('xpDisplay').textContent = xpText;
+            document.getElementById('userXP').textContent = xpText;
+        }
+
+        function earnBadge(id) {
+            if (STATE.badges.includes(id)) return;
+            const badge = BADGES_DEF.find(b => b.id === id);
+            if (!badge) return;
+            STATE.badges.push(id);
+            saveProgress();
+            showToast(`🏆 Badge desbloqueado: ${badge.emoji} ${badge.name}`, 'xp');
+        }
+
+        function logout() {
+            sessionStorage.removeItem('abd_user');
+            window.location.href = 'index.html';
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('show');
+        }
+
+        document.getElementById('overlay').onclick = toggleSidebar;
+
+        // ================================================================
+        // NAVIGATION
+        // ================================================================
+        function showPage(page) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            const nav = document.getElementById(`nav-${page}`);
+            if (nav) nav.classList.add('active');
+
+            const content = document.getElementById('pageContent');
+            content.innerHTML = '';
+            content.style.animation = 'none';
+            content.offsetHeight; // reflow
+            content.style.animation = '';
+
+            const titles = {
+                home: 'Inicio', progress: 'Mi Progreso', badges: 'Mis Logros',
+                flashcards: 'Flashcards', matching: 'Emparejar Conceptos', guia: 'Guía Didáctica'
+            };
+            document.getElementById('topbarTitle').textContent = titles[page] || page;
+
+            if (page === 'home') renderHome();
+            else if (page === 'progress') renderProgress();
+            else if (page === 'badges') renderBadges();
+            else if (page === 'flashcards') renderFlashcards();
+            else if (page === 'matching') renderMatching();
+            else if (page === 'guia') renderGuia();
+        }
+
+        function showUnit(n) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById(`nav-u${n}`)?.classList.add('active');
+            STATE.currentUnit = n;
+            document.getElementById('topbarTitle').textContent = `Unidad ${n}`;
+            const content = document.getElementById('pageContent');
+            content.innerHTML = '';
+            renderUnitDetail(n, 'materiales');
+        }
+
+        // ================================================================
+        // HOME PAGE
+        // ================================================================
+        function renderHome() {
+            const totalQuizzes = Object.keys(STATE.quizResults).length;
+            const level = Math.floor(STATE.xp / 100) + 1;
+            const nextLevelXP = level * 100;
+
+            const content = document.getElementById('pageContent');
+            content.innerHTML = `
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1 class="text-gradient">¡Hola, ${STATE.user.nombre || STATE.user.username}! 👋</h1>
+        <p>Bienvenido/a a la plataforma de <strong>Analítica de Big Data</strong>. Explora materiales, practica con datos y completa los cuestionarios de cada unidad.</p>
+        <div class="progress-grid">
+          <div class="progress-stat">
+            <div class="stat-value text-gradient">${STATE.xp}</div>
+            <div class="stat-label">Puntos XP</div>
+          </div>
+          <div class="progress-stat">
+            <div class="stat-value" style="color:var(--warning)">Nv.${level}</div>
+            <div class="stat-label">Nivel actual</div>
+          </div>
+          <div class="progress-stat">
+            <div class="stat-value" style="color:var(--accent)">${totalQuizzes}/${TOTAL_UNITS}</div>
+            <div class="stat-label">Quizzes completados</div>
+          </div>
+          <div class="progress-stat">
+            <div class="stat-value" style="color:var(--success)">${STATE.badges.length}</div>
+            <div class="stat-label">Logros obtenidos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="margin-bottom:1rem;">📚 Unidades del Curso</h2>
+    <div class="units-grid">
+      ${UNITS.map(u => {
+                const done = STATE.quizResults[`u${u.id}`];
+                const pct = done ? (done.score) : 0;
+                return `
+        <div class="unit-card" data-unit="${u.id}" onclick="showUnit(${u.id})">
+          <div class="unit-card-header">
+            <div class="unit-number">Unidad ${u.id}</div>
+            <h3>${u.title}</h3>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.3rem;">${u.subtitle}</p>
+            <div class="unit-icon-big">${u.icon}</div>
+          </div>
+          <div class="unit-card-body">
+            <div class="unit-progress-bar">
+              <div class="unit-progress-fill" style="width:${pct}%"></div>
+            </div>
+            <div class="unit-meta">
+              <span>📄 Materiales</span>
+              <span>🎯 ${u.activities} actividades</span>
+              <span>${done ? `✅ ${done.score}%` : '⏳ Pendiente'}</span>
+            </div>
+            <button class="btn-unit">Ver Unidad →</button>
+          </div>
+        </div>`;
+            }).join('')}
+    </div>
+
+    <h2 style="margin:1.5rem 0 1rem;">⚡ Actividades Rápidas</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+      <div class="card" style="cursor:pointer" onclick="showPage('flashcards')">
+        <div style="font-size:2rem;margin-bottom:0.5rem">🃏</div>
+        <h3>Flashcards</h3>
+        <p style="font-size:0.8rem;margin-top:0.3rem">Repasa conceptos clave con tarjetas interactivas</p>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="showPage('matching')">
+        <div style="font-size:2rem;margin-bottom:0.5rem">🔗</div>
+        <h3>Emparejar Conceptos</h3>
+        <p style="font-size:0.8rem;margin-top:0.3rem">Arrastra y suelta para emparejar términos</p>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="showPage('badges')">
+        <div style="font-size:2rem;margin-bottom:0.5rem">🏆</div>
+        <h3>Mis Logros</h3>
+        <p style="font-size:0.8rem;margin-top:0.3rem">${STATE.badges.length}/${BADGES_DEF.length} badges desbloqueados</p>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="showPage('guia')">
+        <div style="font-size:2rem;margin-bottom:0.5rem">📖</div>
+        <h3>Guía Didáctica</h3>
+        <p style="font-size:0.8rem;margin-top:0.3rem">Consulta la guía completa del curso</p>
+      </div>
+    </div>
+  `;
+        }
+
+        // ================================================================
+        // UNIT DETAIL
+        // ================================================================
+        const UNIT_FILES = {
+            1: {
+                materiales: [
+                    { name: 'Material de lectura — Unidad 1', file: 'unidades/unidad1/Material_Lectura_Unidad1.pdf', type: 'pdf' },
+                    { name: 'Material extendido — Unidad 1', file: 'unidades/unidad1/Material_Lectura_Unidad1_Extendido.docx', type: 'docx' },
+                ],
+                actividades: [
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad1/Descripcion_Actividad_Unidad1_Act1.pdf', type: 'act' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad1/Descripcion_Actividad_Unidad1_Act2.pdf', type: 'act' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad1/Descripcion_Actividad_Unidad1_Act3.pdf', type: 'act' },
+                ],
+                orientaciones: [
+                    { name: 'Orientaciones — Unidad 1', file: 'unidades/unidad1/Orientaciones_Unidad_Unidad1.pdf', type: 'pdf' },
+                ]
+            },
+            2: {
+                materiales: [
+                    { name: 'Material extendido — Unidad 2', file: 'unidades/unidad2/Material_Lectura_Unidad2_Extendido.docx', type: 'docx' },
+                ],
+                actividades: [
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad2/Descripcion_Actividad_Unidad2_Act1.pdf', type: 'act' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad2/Descripcion_Actividad_Unidad2_Act2.pdf', type: 'act' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad2/Descripcion_Actividad_Unidad2_Act3.pdf', type: 'act' },
+                ],
+                orientaciones: [
+                    { name: 'Orientaciones — Unidad 2', file: 'unidades/unidad2/Orientaciones_Unidad_Unidad2.pdf', type: 'pdf' },
+                ]
+            },
+            3: {
+                materiales: [
+                    { name: 'Material extendido — Unidad 3', file: 'unidades/unidad3/Material_Lectura_Unidad3_Extendido.docx', type: 'docx' },
+                ],
+                actividades: [
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad3/Descripcion_Actividad_Unidad3_Act1.pdf', type: 'act' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad3/Descripcion_Actividad_Unidad3_Act2.pdf', type: 'act' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad3/Descripcion_Actividad_Unidad3_Act3.pdf', type: 'act' },
+                ],
+                orientaciones: [
+                    { name: 'Orientaciones — Unidad 3', file: 'unidades/unidad3/Orientaciones_Unidad_Unidad3.pdf', type: 'pdf' },
+                ]
+            },
+            4: {
+                materiales: [
+                    { name: 'Material extendido — Unidad 4', file: 'unidades/unidad4/Material_Lectura_Unidad4_Extendido.docx', type: 'docx' },
+                ],
+                actividades: [
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad4/Descripcion_Actividad_Unidad4_Act1.pdf', type: 'act' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad4/Descripcion_Actividad_Unidad4_Act2.pdf', type: 'act' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad4/Descripcion_Actividad_Unidad4_Act3.pdf', type: 'act' },
+                ],
+                orientaciones: [
+                    { name: 'Orientaciones — Unidad 4', file: 'unidades/unidad4/Orientaciones_Unidad_Unidad4.pdf', type: 'pdf' },
+                ]
+            },
+        };
+
+        function renderUnitDetail(n, activeTab) {
+            const unit = UNITS[n - 1];
+            const files = UNIT_FILES[n];
+            const quizKey = `u${n}`;
+            const quizDone = STATE.quizResults[quizKey];
+
+            const content = document.getElementById('pageContent');
+            content.innerHTML = `
+    <div class="unit-detail-header">
+      <button class="btn-back" onclick="showPage('home')">← Volver</button>
+      <div>
+        <h2 style="font-size:1.2rem;margin-bottom:0.2rem">${unit.icon} Unidad ${n}: ${unit.title}</h2>
+        <p style="font-size:0.8rem;color:var(--text-muted)">${unit.subtitle}</p>
+      </div>
+    </div>
+
+    <div class="unit-tabs">
+      <button class="unit-tab ${activeTab === 'materiales' ? 'active' : ''}" onclick="renderUnitDetail(${n},'materiales')">📄 Materiales</button>
+      <button class="unit-tab ${activeTab === 'actividades' ? 'active' : ''}" onclick="renderUnitDetail(${n},'actividades')">🎯 Actividades</button>
+      <button class="unit-tab ${activeTab === 'quiz' ? 'active' : ''}" onclick="renderUnitDetail(${n},'quiz')">🧠 Cuestionario</button>
+      <button class="unit-tab ${activeTab === 'info' ? 'active' : ''}" onclick="renderUnitDetail(${n},'info')">ℹ️ Información</button>
+    </div>
+
+    <div id="unitTabContent"></div>
+  `;
+
+            const tabContent = document.getElementById('unitTabContent');
+
+            if (activeTab === 'materiales') {
+                const all = [...(files.orientaciones || []), ...(files.materiales || [])];
+                if (all.length === 0) {
+                    tabContent.innerHTML = `<div class="card" style="text-align:center;padding:3rem"><p>📂 Los materiales de esta unidad estarán disponibles próximamente.</p></div>`;
+                } else {
+                    tabContent.innerHTML = `
+        <div class="materials-list">
+          ${all.map(f => `
+            <a href="${f.file}" target="_blank" class="material-item" onclick="markRead(${n},'${f.file}')">
+              <div class="material-icon" style="background:${f.type === 'docx' ? 'rgba(20,184,166,0.1)' : 'rgba(239,68,68,0.1)'}">${f.type === 'docx' ? '📝' : '📄'}</div>
+              <div class="material-info">
+                <h4>${f.name}</h4>
+                <p>Archivo ${f.type.toUpperCase()} — click para abrir</p>
+              </div>
+              <span class="material-badge ${f.type === 'docx' ? 'badge-act' : 'badge-pdf'}">${f.type.toUpperCase()}</span>
+            </a>
+          `).join('')}
+        </div>
+      `;
+                }
+            } else if (activeTab === 'actividades') {
+                const acts = files.actividades || [];
+                if (acts.length === 0) {
+                    tabContent.innerHTML = `<div class="card" style="text-align:center;padding:3rem"><p>🎯 Las actividades de esta unidad estarán disponibles próximamente.</p></div>`;
+                } else {
+                    tabContent.innerHTML = `
+        <p style="margin-bottom:1rem">Descarga y completa las siguientes actividades:</p>
+        <div class="materials-list">
+          ${acts.map((f, i) => `
+            <a href="${f.file}" target="_blank" class="material-item">
+              <div class="material-icon" style="background:rgba(20,184,166,0.1)">📝</div>
+              <div class="material-info">
+                <h4>${f.name}</h4>
+                <p>Descripción de actividad — Unidad ${n}</p>
+              </div>
+              <span class="material-badge badge-act">ACTIVIDAD</span>
+            </a>
+          `).join('')}
+        </div>
+      `;
+                }
+            } else if (activeTab === 'quiz') {
+                if (quizDone) {
+                    tabContent.innerHTML = `
+        <div class="quiz-container">
+          <div class="card" style="text-align:center;padding:2rem">
+            <div style="font-size:3rem;margin-bottom:1rem">✅</div>
+            <h3>Quiz completado</h3>
+            <p style="margin:0.5rem 0">Puntaje: <strong style="color:var(--primary-light);font-size:1.3rem">${quizDone.score}%</strong></p>
+            <p style="font-size:0.8rem;color:var(--text-muted)">Completado el ${new Date(quizDone.date).toLocaleDateString('es-PY')}</p>
+            <div style="margin-top:1.5rem;display:flex;gap:1rem;justify-content:center">
+              <button class="btn-primary" onclick="startQuiz(${n})">🔄 Reintentar</button>
+            </div>
+          </div>
+        </div>
+      `;
+                } else {
+                    tabContent.innerHTML = `
+        <div class="quiz-container">
+          <div class="card" style="padding:2rem">
+            <h3 style="margin-bottom:1rem">🧠 Cuestionario — Unidad ${n}: ${unit.title}</h3>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem">
+              <div style="text-align:center;padding:1rem;background:var(--bg-surface);border-radius:var(--radius-md)">
+                <div style="font-size:1.5rem;font-weight:800">10</div>
+                <div style="font-size:0.75rem;color:var(--text-muted)">Preguntas</div>
+              </div>
+              <div style="text-align:center;padding:1rem;background:var(--bg-surface);border-radius:var(--radius-md)">
+                <div style="font-size:1.5rem;font-weight:800">15'</div>
+                <div style="font-size:0.75rem;color:var(--text-muted)">Tiempo</div>
+              </div>
+              <div style="text-align:center;padding:1rem;background:var(--bg-surface);border-radius:var(--radius-md)">
+                <div style="font-size:1.5rem;font-weight:800">100</div>
+                <div style="font-size:0.75rem;color:var(--text-muted)">XP máx.</div>
+              </div>
+            </div>
+            <p style="margin-bottom:1.5rem">Responde las preguntas en el tiempo indicado. Recibirás retroalimentación inmediata y tu puntaje se guardará automáticamente.</p>
+            <button class="btn-primary" onclick="startQuiz(${n})">🚀 Comenzar Quiz</button>
+          </div>
+        </div>
+      `;
+                }
+            } else if (activeTab === 'info') {
+                tabContent.innerHTML = `
+      <div class="card">
+        <h3 style="margin-bottom:1rem">${unit.icon} ${unit.title}</h3>
+        <p style="margin-bottom:1rem">${unit.desc}</p>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+          <span class="material-badge badge-pdf">3 Actividades</span>
+          <span class="material-badge badge-act">Cuestionario 10 preguntas</span>
+          <span class="material-badge badge-quiz">100 XP disponibles</span>
+        </div>
+      </div>
+    `;
+            }
+        }
+
+        function markRead(unit, file) {
+            const key = `u${unit}_read`;
+            if (!STATE.completedActivities[key]) {
+                STATE.completedActivities[key] = true;
+                addXP(10, 'Material de lectura abierto');
+                saveProgress();
+            }
+        }
+
+        // ================================================================
+        // QUIZ ENGINE
+        // ================================================================
+        async function startQuiz(unitNum) {
+            STATE.currentUnit = unitNum;
+            try {
+                const resp = await fetch(`data/quizzes/quiz_u${unitNum}.json`);
+                STATE.quizData = await resp.json();
+            } catch (e) {
+                showToast('Error al cargar el cuestionario', 'error');
+                return;
+            }
+            STATE.quizAnswers = new Array(STATE.quizData.preguntas.length).fill(null);
+            STATE.currentQuestion = 0;
+            STATE.quizTimeLeft = STATE.quizData.tiempo_minutos * 60;
+            renderQuizQuestion();
+            startTimer();
+        }
+
+        function startTimer() {
+            clearInterval(STATE.quizTimer);
+            STATE.quizTimer = setInterval(() => {
+                STATE.quizTimeLeft--;
+                updateTimerDisplay();
+                if (STATE.quizTimeLeft <= 0) {
+                    clearInterval(STATE.quizTimer);
+                    finishQuiz(true);
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const el = document.getElementById('quizTimerEl');
+            if (!el) return;
+            const m = Math.floor(STATE.quizTimeLeft / 60).toString().padStart(2, '0');
+            const s = (STATE.quizTimeLeft % 60).toString().padStart(2, '0');
+            el.textContent = `⏱ ${m}:${s}`;
+            if (STATE.quizTimeLeft <= 60) el.parentElement?.classList.add('warning');
+        }
+
+        function renderQuizQuestion() {
+            const q = STATE.quizData.preguntas[STATE.currentQuestion];
+            const total = STATE.quizData.preguntas.length;
+            const pct = Math.round((STATE.currentQuestion / total) * 100);
+            const content = document.getElementById('pageContent');
+
+            let optionsHTML = '';
+            if (q.tipo === 'opcion_multiple') {
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                optionsHTML = q.opciones.map((o, i) => `
+      <button class="option-btn" id="opt_${i}" onclick="selectOption(${i})">
+        <span class="option-letter">${letters[i]}</span>
+        ${o}
+      </button>
+    `).join('');
+            } else if (q.tipo === 'verdadero_falso') {
+                optionsHTML = `
+      <button class="option-btn" id="opt_0" onclick="selectOption(0)">
+        <span class="option-letter">V</span> Verdadero ✅
+      </button>
+      <button class="option-btn" id="opt_1" onclick="selectOption(1)">
+        <span class="option-letter">F</span> Falso ❌
+      </button>
+    `;
+            }
+
+            content.innerHTML = `
+    <div class="quiz-container">
+      <div class="quiz-header">
+        <div>
+          <h3>🧠 Quiz — Unidad ${STATE.currentUnit}</h3>
+          <p style="font-size:0.8rem;color:var(--text-muted)">Pregunta ${STATE.currentQuestion + 1} de ${total}</p>
+        </div>
+        <div class="quiz-timer" id="quizTimerEl">⏱ --:--</div>
+      </div>
+      <div class="quiz-progress-bar-wrap">
+        <div class="quiz-progress-bar-fill" style="width:${pct}%"></div>
+      </div>
+      <div class="question-card">
+        <div class="question-number">Pregunta ${STATE.currentQuestion + 1} / ${total} · ${q.puntos} pts</div>
+        <div class="question-text">${q.pregunta}</div>
+        <div class="options-list" id="optionsList">${optionsHTML}</div>
+        <div class="explanation-box" id="explanationBox"></div>
+      </div>
+      <div class="quiz-actions">
+        <button class="btn-primary" id="btnConfirm" onclick="confirmAnswer()" disabled>Confirmar →</button>
+        <button class="btn-secondary" onclick="skipQuestion()">Saltar</button>
+        <span style="font-size:0.8rem;color:var(--text-muted);margin-left:auto">
+          ⭐ ${STATE.quizData.preguntas.slice(0, STATE.currentQuestion).filter((_, i) => STATE.quizAnswers[i] !== null).length * 10} / ${STATE.currentQuestion * 10} pts
+        </span>
+      </div>
+    </div>
+  `;
+            updateTimerDisplay();
+        }
+
+        let selectedOpt = null;
+
+        function selectOption(idx) {
+            selectedOpt = idx;
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            document.getElementById(`opt_${idx}`)?.classList.add('selected');
+            document.getElementById('btnConfirm').disabled = false;
+        }
+
+        function confirmAnswer() {
+            if (selectedOpt === null) return;
+            const q = STATE.quizData.preguntas[STATE.currentQuestion];
+            let correct;
+            if (q.tipo === 'verdadero_falso') {
+                correct = selectedOpt === (q.respuesta ? 0 : 1);
+            } else {
+                correct = selectedOpt === q.respuesta;
+            }
+            STATE.quizAnswers[STATE.currentQuestion] = correct ? 1 : 0;
+
+            // Visual feedback
+            document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+            const selBtn = document.getElementById(`opt_${selectedOpt}`);
+            selBtn.classList.remove('selected');
+            selBtn.classList.add(correct ? 'correct' : 'wrong');
+
+            let correctIdx = q.tipo === 'verdadero_falso' ? (q.respuesta ? 0 : 1) : q.respuesta;
+            if (!correct) {
+                document.getElementById(`opt_${correctIdx}`)?.classList.add('correct');
+            }
+
+            const expBox = document.getElementById('explanationBox');
+            expBox.textContent = (correct ? '✅ ¡Correcto! ' : '❌ Incorrecto. ') + q.explicacion;
+            expBox.className = `explanation-box ${correct ? 'correct' : 'wrong'}`;
+            expBox.style.display = 'block';
+
+            // Change button to next
+            const btn = document.getElementById('btnConfirm');
+            btn.textContent = STATE.currentQuestion + 1 < STATE.quizData.preguntas.length ? 'Siguiente →' : 'Ver Resultados';
+            btn.onclick = nextQuestion;
+            selectedOpt = null;
+        }
+
+        function nextQuestion() {
+            STATE.currentQuestion++;
+            if (STATE.currentQuestion >= STATE.quizData.preguntas.length) {
+                finishQuiz(false);
+            } else {
+                renderQuizQuestion();
+            }
+        }
+
+        function skipQuestion() {
+            STATE.quizAnswers[STATE.currentQuestion] = 0;
+            STATE.currentQuestion++;
+            if (STATE.currentQuestion >= STATE.quizData.preguntas.length) {
+                finishQuiz(false);
+            } else {
+                renderQuizQuestion();
+            }
+        }
+
+        function finishQuiz(timeout) {
+            clearInterval(STATE.quizTimer);
+            const correct = STATE.quizAnswers.filter(a => a === 1).length;
+            const total = STATE.quizData.preguntas.length;
+            const pct = Math.round((correct / total) * 100);
+            const xpEarned = pct;
+
+            const quizKey = `u${STATE.currentUnit}`;
+            STATE.quizResults[quizKey] = { score: pct, date: new Date().toISOString(), correct, total };
+            addXP(xpEarned, `Quiz Unidad ${STATE.currentUnit} completado`);
+            earnBadge(`quiz_u${STATE.currentUnit}`);
+            if (pct === 100) earnBadge('perfect_score');
+            if (Object.keys(STATE.quizResults).length >= TOTAL_UNITS) earnBadge('all_units');
+            saveProgress();
+
+            // Send to Google Sheets
+            sendToSheets({
+                usuario: STATE.user.username,
+                nombre: STATE.user.nombre,
+                unidad: STATE.currentUnit,
+                actividad: 'Quiz',
+                puntaje: pct,
+                correctas: correct,
+                total: total,
+                fecha: new Date().toLocaleString('es-PY'),
+                tiempo_restante: STATE.quizTimeLeft,
+                xp: xpEarned
+            });
+
+            let grade, gradeClass;
+            if (pct >= 90) { grade = '¡Excelente! 🌟'; gradeClass = 'excellent'; }
+            else if (pct >= 70) { grade = '¡Muy bien! 👍'; gradeClass = 'good'; }
+            else { grade = 'Sigue practicando 💪'; gradeClass = 'needs-work'; }
+
+            document.getElementById('pageContent').innerHTML = `
+    <div class="quiz-container">
+      <div class="card quiz-result">
+        <div style="font-size:4rem;margin-bottom:1rem">${pct >= 90 ? '🏆' : pct >= 70 ? '🎯' : '📚'}</div>
+        <div class="result-score text-gradient">${pct}%</div>
+        <p style="margin-bottom:1rem;color:var(--text-muted)">${correct} de ${total} respuestas correctas</p>
+        <div class="result-badge ${gradeClass}">${grade}</div>
+        ${timeout ? '<p style="color:var(--warning);margin-bottom:1rem">⏰ El tiempo se agotó</p>' : ''}
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+          <button class="btn-primary" onclick="startQuiz(${STATE.currentUnit})">🔄 Reintentar</button>
+          <button class="btn-secondary" onclick="showUnit(${STATE.currentUnit})">← Volver a la unidad</button>
+          <button class="btn-secondary" onclick="showPage('home')">🏠 Inicio</button>
+        </div>
+        <div style="margin-top:1.5rem;padding:1rem;background:var(--bg-surface);border-radius:var(--radius-md);font-size:0.85rem">
+          <strong>+${xpEarned} XP ganados</strong> · Total: ${STATE.xp} XP
+        </div>
+      </div>
+    </div>
+  `;
+        }
+
+        // ================================================================
+        // FLASHCARDS
+        // ================================================================
+        const FLASHCARD_DATA = [
+            { front: '¿Qué caracteriza al Big Data?', back: 'El trabajo con datos de gran volumen, variedad y velocidad, orientado a apoyar decisiones mediante procesamiento, visualización e interpretación.' },
+            { front: '¿Por qué configurar R y RStudio al inicio?', back: 'Porque el curso usa R como entorno práctico para manipular datos, construir gráficos y ejecutar modelos reproducibles.' },
+            { front: '¿Qué es el análisis exploratorio de datos?', back: 'Es la revisión inicial de estructura, distribución, valores faltantes, relaciones y patrones antes de modelar.' },
+            { front: '¿Para qué sirve la binarización?', back: 'Convierte variables cualitativas en indicadores numéricos que pueden usarse en modelos estadísticos o de aprendizaje automático.' },
+            { front: '¿Qué busca la imputación?', back: 'Completar valores faltantes mediante reglas o estimaciones para no perder observaciones y reducir sesgos de análisis.' },
+            { front: '¿Qué diferencia hay entre estandarizar y escalar?', back: 'Estandarizar centra y mide en desviaciones estándar; escalar transforma valores a rangos comparables, útil en algoritmos sensibles a magnitudes.' },
+            { front: '¿Qué hace K-Nearest Neighbor?', back: 'Clasifica o predice usando los casos más cercanos a una nueva observación según una medida de distancia.' },
+            { front: '¿Qué modela la regresión logística?', back: 'Estima la probabilidad de pertenecer a una clase, usualmente binaria, a partir de variables explicativas.' },
+            { front: '¿Qué es LDA?', back: 'El Análisis Discriminante Lineal separa grupos mediante combinaciones lineales de variables y ayuda a clasificar observaciones.' },
+            { front: '¿Qué debe comunicar un proyecto final?', back: 'El problema, los datos, la preparación, el modelo elegido, los resultados, sus límites y una interpretación clara para la toma de decisiones.' },
+        ];
+
+        let currentCard = 0;
+        let cardFlipped = false;
+
+        function renderFlashcards() {
+            const content = document.getElementById('pageContent');
+            content.innerHTML = `
+    <div style="max-width:600px;margin:0 auto">
+      <h2 style="margin-bottom:0.5rem">🃏 Flashcards</h2>
+      <p style="margin-bottom:1.5rem">Haz click en la tarjeta para ver la respuesta. Navega entre tarjetas con los botones.</p>
+      
+      <div style="text-align:center;margin-bottom:1rem;color:var(--text-muted);font-size:0.85rem">
+        Tarjeta <span id="cardNum">1</span> de ${FLASHCARD_DATA.length}
+      </div>
+      
+      <div class="flashcard-container" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+          <div class="card-face card-front">
+            <div>
+              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:1rem">PREGUNTA 💭</div>
+              <h3 id="cardFrontText">${FLASHCARD_DATA[0].front}</h3>
+              <p style="margin-top:1rem;font-size:0.8rem;color:var(--text-muted)">Haz click para ver la respuesta</p>
+            </div>
+          </div>
+          <div class="card-face card-back">
+            <div>
+              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--primary-light);margin-bottom:1rem">RESPUESTA ✅</div>
+              <p id="cardBackText" style="font-size:0.95rem;line-height:1.6;color:var(--text-primary)">${FLASHCARD_DATA[0].back}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:1rem;justify-content:center;margin-top:1.5rem">
+        <button class="btn-secondary" onclick="prevCard()">← Anterior</button>
+        <button class="btn-secondary" onclick="flipCard()">🔄 Voltear</button>
+        <button class="btn-secondary" onclick="nextCard()">Siguiente →</button>
+      </div>
+
+      <div style="margin-top:2rem">
+        <div class="quiz-progress-bar-wrap">
+          <div class="quiz-progress-bar-fill" id="fcProgress" style="width:${Math.round(1 / FLASHCARD_DATA.length * 100)}%"></div>
+        </div>
+        <p style="text-align:center;font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem">
+          Progreso de revisión
+        </p>
+      </div>
+    </div>
+  `;
+        }
+
+        function flipCard() {
+            cardFlipped = !cardFlipped;
+            document.getElementById('flashcard')?.classList.toggle('flipped', cardFlipped);
+        }
+
+        function nextCard() {
+            currentCard = (currentCard + 1) % FLASHCARD_DATA.length;
+            cardFlipped = false;
+            updateCard();
+            if (currentCard === FLASHCARD_DATA.length - 1) earnBadge('flashcard_master');
+        }
+
+        function prevCard() {
+            currentCard = (currentCard - 1 + FLASHCARD_DATA.length) % FLASHCARD_DATA.length;
+            cardFlipped = false;
+            updateCard();
+        }
+
+        function updateCard() {
+            const card = FLASHCARD_DATA[currentCard];
+            document.getElementById('cardFrontText').textContent = card.front;
+            document.getElementById('cardBackText').textContent = card.back;
+            document.getElementById('cardNum').textContent = currentCard + 1;
+            document.getElementById('flashcard')?.classList.remove('flipped');
+            document.getElementById('fcProgress').style.width = `${Math.round((currentCard + 1) / FLASHCARD_DATA.length * 100)}%`;
+        }
+
+        // ================================================================
+        // MATCHING ACTIVITY (DRAG & DROP)
+        // ================================================================
+        const MATCH_DATA = [
+            { concept: 'Volumen', definition: 'Cantidad masiva de datos que exige almacenamiento y procesamiento adecuados' },
+            { concept: 'Variedad', definition: 'Datos con múltiples formatos, fuentes y estructuras' },
+            { concept: 'Binarización', definition: 'Transformación de categorías en variables indicadoras' },
+            { concept: 'Imputación', definition: 'Tratamiento de valores faltantes mediante reemplazo razonado' },
+            { concept: 'KNN', definition: 'Modelo que predice usando las observaciones más cercanas' },
+            { concept: 'LDA', definition: 'Método que discrimina grupos con combinaciones lineales de variables' },
+        ];
+
+        let dragSource = null;
+
+        function renderMatching() {
+            const shuffled = [...MATCH_DATA].sort(() => Math.random() - 0.5);
+            const defs = [...MATCH_DATA].sort(() => Math.random() - 0.5);
+
+            const content = document.getElementById('pageContent');
+            content.innerHTML = `
+    <div style="max-width:800px">
+      <h2 style="margin-bottom:0.5rem">🔗 Emparejar Conceptos</h2>
+      <p style="margin-bottom:1.5rem">Arrastra los conceptos de la izquierda hacia la definición correcta de la derecha.</p>
+      
+      <div class="dnd-container">
+        <div class="dnd-column">
+          <h4>📌 Conceptos</h4>
+          <div id="concepts-col">
+            ${shuffled.map(item => `
+              <div class="draggable-item" draggable="true" data-concept="${item.concept}"
+                ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+                🏷️ ${item.concept}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div class="dnd-column">
+          <h4>📖 Definiciones</h4>
+          ${defs.map(item => `
+            <div class="drop-zone" data-answer="${item.concept}"
+              ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="drop(event)">
+              ${item.definition}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem;display:flex;gap:1rem">
+        <button class="btn-primary" onclick="checkMatching()">✅ Verificar</button>
+        <button class="btn-secondary" onclick="renderMatching()">🔄 Reiniciar</button>
+      </div>
+      <div id="matchResult" style="margin-top:1rem"></div>
+    </div>
+  `;
+        }
+
+        function dragStart(e) {
+            dragSource = e.target;
+            e.target.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', e.target.dataset.concept);
+        }
+
+        function dragEnd(e) { e.target.classList.remove('dragging'); }
+
+        function dragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('drag-over');
+        }
+
+        function dragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+
+        function drop(e) {
+            e.preventDefault();
+            const zone = e.currentTarget;
+            zone.classList.remove('drag-over');
+            const concept = e.dataTransfer.getData('text/plain');
+            zone.dataset.dropped = concept;
+            zone.style.borderStyle = 'solid';
+            zone.style.background = 'rgba(20,184,166,0.1)';
+            zone.style.borderColor = 'var(--primary)';
+            zone.style.color = 'var(--primary-light)';
+        }
+
+        function checkMatching() {
+            const zones = document.querySelectorAll('.drop-zone');
+            let correct = 0;
+            zones.forEach(z => {
+                if (z.dataset.dropped === z.dataset.answer) {
+                    z.style.borderColor = 'var(--success)';
+                    z.style.background = 'rgba(34,197,94,0.1)';
+                    correct++;
+                } else if (z.dataset.dropped) {
+                    z.style.borderColor = 'var(--danger)';
+                    z.style.background = 'rgba(239,68,68,0.1)';
+                }
+            });
+            const total = zones.length;
+            const pct = Math.round(correct / total * 100);
+            document.getElementById('matchResult').innerHTML = `
+    <div class="card" style="text-align:center;padding:1.5rem">
+      <p><strong>${correct}/${total}</strong> emparejados correctamente — <strong>${pct}%</strong></p>
+      ${correct === total ? '<p style="color:var(--success)">🎉 ¡Perfecto! ¡Los emparejaste todos!</p>' : ''}
+    </div>
+  `;
+            if (correct === total) addXP(20, 'Actividad de emparejamiento completada');
+        }
+
+        // ================================================================
+        // PROGRESS PAGE
+        // ================================================================
+        function renderProgress() {
+            const totalQuizzes = Object.keys(STATE.quizResults).length;
+            const avgScore = totalQuizzes > 0
+                ? Math.round(Object.values(STATE.quizResults).reduce((s, r) => s + r.score, 0) / totalQuizzes)
+                : 0;
+
+            const content = document.getElementById('pageContent');
+            content.innerHTML = `
+    <h2 style="margin-bottom:1.5rem">📈 Mi Progreso</h2>
+    <div class="stats-row">
+      <div class="stat-card primary">
+        <div class="sc-label">Puntos XP Totales</div>
+        <div class="sc-value" style="color:var(--primary-light)">${STATE.xp}</div>
+        <div class="sc-sub">Nivel ${Math.floor(STATE.xp / 100) + 1}</div>
+      </div>
+      <div class="stat-card accent">
+        <div class="sc-label">Promedio Quizzes</div>
+        <div class="sc-value" style="color:var(--accent-light)">${avgScore}%</div>
+        <div class="sc-sub">${totalQuizzes}/${TOTAL_UNITS} completados</div>
+      </div>
+      <div class="stat-card success">
+        <div class="sc-label">Logros Ganados</div>
+        <div class="sc-value" style="color:#86efac">${STATE.badges.length}</div>
+        <div class="sc-sub">de ${BADGES_DEF.length} disponibles</div>
+      </div>
+      <div class="stat-card warning">
+        <div class="sc-label">Actividades Vistas</div>
+        <div class="sc-value" style="color:var(--warning)">${Object.keys(STATE.completedActivities).length}</div>
+        <div class="sc-sub">materiales abiertos</div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:1rem">Desempeño por Unidad</h3>
+    <div style="display:flex;flex-direction:column;gap:0.75rem">
+      ${UNITS.map(u => {
+                const r = STATE.quizResults[`u${u.id}`];
+                return `
+          <div class="card" style="display:flex;align-items:center;gap:1rem">
+            <span style="font-size:1.3rem">${u.icon}</span>
+            <div style="flex:1">
+              <div style="font-size:0.85rem;font-weight:600;margin-bottom:0.3rem">U${u.id}: ${u.title}</div>
+              <div class="unit-progress-bar" style="margin:0">
+                <div class="unit-progress-fill" style="width:${r ? r.score : 0}%;background:${u.color}"></div>
+              </div>
+            </div>
+            <div style="text-align:right;min-width:60px">
+              ${r ? `<strong style="color:${u.color}">${r.score}%</strong>` : '<span style="color:var(--text-disabled);font-size:0.8rem">Pendiente</span>'}
+            </div>
+          </div>
+        `;
+            }).join('')}
+    </div>
+  `;
+        }
+
+        // ================================================================
+        // BADGES PAGE
+        // ================================================================
+        function renderBadges() {
+            const content = document.getElementById('pageContent');
+            content.innerHTML = `
+    <h2 style="margin-bottom:0.5rem">🏆 Mis Logros</h2>
+    <p style="margin-bottom:1.5rem">${STATE.badges.length} de ${BADGES_DEF.length} badges desbloqueados</p>
+    <div class="badges-grid">
+      ${BADGES_DEF.map(b => {
+                const earned = STATE.badges.includes(b.id);
+                return `
+          <div class="badge-item ${earned ? 'earned' : 'locked'}" title="${b.desc}">
+            <div class="badge-emoji">${b.emoji}</div>
+            <div class="badge-name">${b.name}</div>
+            ${!earned ? '<div style="font-size:0.65rem;color:var(--text-disabled);margin-top:0.2rem">🔒 Bloqueado</div>' : ''}
+          </div>
+        `;
+            }).join('')}
+    </div>
+  `;
+        }
+
+        // ================================================================
+        // GUIA DIDACTICA
+        // ================================================================
+        function renderGuia() {
+            const content = document.getElementById('pageContent');
+            content.innerHTML = `
+    <h2 style="margin-bottom:1rem">📖 Guía Didáctica</h2>
+    <div class="materials-list">
+      <a href="guia_didactica/BigData_GuiaDid.pdf" target="_blank" class="material-item">
+        <div class="material-icon" style="background:rgba(239,68,68,0.1)">📖</div>
+        <div class="material-info">
+          <h4>Guía Didáctica — Analítica de Big Data</h4>
+          <p>Documento completo de la asignatura — Primer Período 2026</p>
+        </div>
+        <span class="material-badge badge-pdf">PDF</span>
+      </a>
+    </div>
+  `;
+        }
+
+        // ================================================================
+        // GOOGLE SHEETS INTEGRATION
+        // ================================================================
+        async function sendToSheets(data) {
+            const SHEETS_URL = 'TU_APPS_SCRIPT_URL_AQUI'; // Completar después de configurar Apps Script
+            if (!SHEETS_URL || SHEETS_URL.includes('TU_APPS')) return;
+            try {
+                await fetch(SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } catch (e) {
+                console.warn('Google Sheets sync skipped:', e.message);
+            }
+        }
+
+        // ================================================================
+        // TOAST NOTIFICATIONS
+        // ================================================================
+        function showToast(msg, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${msg}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'none';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                toast.style.transition = 'all 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // ================================================================
+        // START
+        // ================================================================
+        init();
+    </script>
+</body>
+
+</html>

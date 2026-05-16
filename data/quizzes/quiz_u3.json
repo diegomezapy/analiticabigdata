@@ -1,0 +1,131 @@
+{
+    "unidad": 3,
+    "titulo": "Machine Learning",
+    "descripcion": "Autoevaluación sobre modelos predictivos, KNN y regresión logística.",
+    "tiempo_minutos": 15,
+    "intentos_max": 3,
+    "preguntas": [
+        {
+            "id": 1,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué busca un modelo predictivo?",
+            "opciones": [
+                "Explicar el pasado sin usar datos",
+                "Aprender patrones en datos para estimar resultados en nuevos casos",
+                "Convertir todas las variables a texto",
+                "Eliminar la necesidad de validar resultados"
+            ],
+            "respuesta": 1,
+            "explicacion": "Un modelo predictivo aprende relaciones en datos disponibles y las aplica a observaciones nuevas.",
+            "puntos": 10
+        },
+        {
+            "id": 2,
+            "tipo": "verdadero_falso",
+            "pregunta": "La Unidad 3 incluye la creación de modelos predictivos en R.",
+            "respuesta": true,
+            "explicacion": "La guía lista la creación de modelos predictivos en R como parte del contenido de Machine Learning.",
+            "puntos": 10
+        },
+        {
+            "id": 3,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué significa KNN?",
+            "opciones": [
+                "K-Nearest Neighbor",
+                "Kernel Numeric Network",
+                "Knowledge Normalization Node",
+                "Key Number Notation"
+            ],
+            "respuesta": 0,
+            "explicacion": "KNN significa K-Nearest Neighbor, o k vecinos más cercanos.",
+            "puntos": 10
+        },
+        {
+            "id": 4,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Cómo toma decisiones KNN?",
+            "opciones": [
+                "Usando únicamente el primer registro",
+                "Comparando la nueva observación con casos cercanos según una distancia",
+                "Ignorando todas las variables numéricas",
+                "Aplicando siempre una línea recta"
+            ],
+            "respuesta": 1,
+            "explicacion": "KNN se basa en la cercanía entre observaciones para clasificar o predecir.",
+            "puntos": 10
+        },
+        {
+            "id": 5,
+            "tipo": "opcion_multiple",
+            "pregunta": "La regresión logística se usa frecuentemente para:",
+            "opciones": [
+                "Estimar probabilidades de pertenecer a una clase",
+                "Comprimir archivos PDF",
+                "Crear contraseñas",
+                "Ordenar nombres alfabéticamente"
+            ],
+            "respuesta": 0,
+            "explicacion": "La regresión logística modela probabilidades, especialmente en problemas de clasificación binaria.",
+            "puntos": 10
+        },
+        {
+            "id": 6,
+            "tipo": "verdadero_falso",
+            "pregunta": "En KNN, la escala de las variables puede influir en el cálculo de distancias.",
+            "respuesta": true,
+            "explicacion": "Si una variable tiene magnitudes mucho mayores, puede dominar la distancia; por eso el escalado suele ser importante.",
+            "puntos": 10
+        },
+        {
+            "id": 7,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué es el conjunto de entrenamiento?",
+            "opciones": [
+                "La parte de datos usada para ajustar el modelo",
+                "La hoja donde se anotan las calificaciones finales",
+                "El archivo de instalación de R",
+                "Una lista de referencias bibliográficas"
+            ],
+            "respuesta": 0,
+            "explicacion": "El conjunto de entrenamiento permite estimar los parámetros o reglas del modelo.",
+            "puntos": 10
+        },
+        {
+            "id": 8,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué describe mejor el sobreajuste?",
+            "opciones": [
+                "Un modelo que aprende demasiado los detalles del entrenamiento y generaliza mal",
+                "Un modelo sin ninguna variable",
+                "Un gráfico con demasiados colores",
+                "Una base de datos con pocos nombres"
+            ],
+            "respuesta": 0,
+            "explicacion": "El sobreajuste ocurre cuando el modelo captura ruido o detalles específicos y pierde capacidad de generalización.",
+            "puntos": 10
+        },
+        {
+            "id": 9,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Cuál de estas métricas puede usarse para evaluar clasificación?",
+            "opciones": [
+                "Exactitud",
+                "Tamaño de letra",
+                "Fecha de creación del archivo",
+                "Número de hojas del cuaderno"
+            ],
+            "respuesta": 0,
+            "explicacion": "La exactitud mide la proporción de clasificaciones correctas, aunque puede complementarse con otras métricas.",
+            "puntos": 10
+        },
+        {
+            "id": 10,
+            "tipo": "verdadero_falso",
+            "pregunta": "Un modelo debe evaluarse con datos que permitan valorar su desempeño, no solo construirse y aceptarse automáticamente.",
+            "respuesta": true,
+            "explicacion": "La evaluación es necesaria para interpretar la utilidad y límites de un modelo predictivo.",
+            "puntos": 10
+        }
+    ]
+}

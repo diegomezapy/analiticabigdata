@@ -1,0 +1,131 @@
+{
+    "unidad": 1,
+    "titulo": "Introducción al manejo de datos en Big Data",
+    "descripcion": "Autoevaluación sobre fundamentos de Big Data, entorno de trabajo y operaciones iniciales en R.",
+    "tiempo_minutos": 15,
+    "intentos_max": 3,
+    "preguntas": [
+        {
+            "id": 1,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Cuál combinación resume mejor las características habituales del Big Data?",
+            "opciones": [
+                "Volumen, variedad y velocidad",
+                "Media, mediana y moda",
+                "Importar, guardar y cerrar",
+                "Texto, audio e imagen únicamente"
+            ],
+            "respuesta": 0,
+            "explicacion": "La guía presenta Big Data como un campo asociado a grandes volúmenes, diversas fuentes y generación rápida de datos.",
+            "puntos": 10
+        },
+        {
+            "id": 2,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Cuál es el objetivo general de la asignatura?",
+            "opciones": [
+                "Memorizar comandos sin aplicarlos",
+                "Aplicar técnicas de analítica de Big Data con herramientas estadísticas y de aprendizaje automático",
+                "Estudiar solo teoría de bases de datos",
+                "Reemplazar todo análisis estadístico por planillas"
+            ],
+            "respuesta": 1,
+            "explicacion": "El objetivo general indica aplicar técnicas de Big Data para procesar, visualizar e interpretar grandes conjuntos de datos.",
+            "puntos": 10
+        },
+        {
+            "id": 3,
+            "tipo": "verdadero_falso",
+            "pregunta": "La instalación y configuración de R y RStudio forma parte de la primera unidad.",
+            "respuesta": true,
+            "explicacion": "La Unidad 1 incluye la configuración de R y RStudio como base para el trabajo práctico del curso.",
+            "puntos": 10
+        },
+        {
+            "id": 4,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Para qué se usa RStudio en el curso?",
+            "opciones": [
+                "Para diseñar diapositivas exclusivamente",
+                "Como entorno de trabajo para escribir código, ejecutar análisis y revisar resultados",
+                "Para administrar contraseñas de Moodle",
+                "Para reemplazar todos los navegadores web"
+            ],
+            "respuesta": 1,
+            "explicacion": "RStudio organiza código, consola, datos, gráficos y archivos, facilitando el análisis reproducible.",
+            "puntos": 10
+        },
+        {
+            "id": 5,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué práctica inicial se espera al comenzar con datos en R?",
+            "opciones": [
+                "Crear modelos complejos sin revisar los datos",
+                "Realizar operaciones básicas y gráficos para comprender la estructura de los datos",
+                "Eliminar todas las variables cualitativas",
+                "Trabajar solo con datos simulados"
+            ],
+            "respuesta": 1,
+            "explicacion": "La guía menciona operaciones básicas y gráficos en R dentro del arranque de la asignatura.",
+            "puntos": 10
+        },
+        {
+            "id": 6,
+            "tipo": "verdadero_falso",
+            "pregunta": "La analítica de Big Data busca apoyar la toma de decisiones mediante procesamiento, visualización e interpretación de datos.",
+            "respuesta": true,
+            "explicacion": "Ese enfoque aparece en la presentación del curso y conecta la teoría con problemas reales.",
+            "puntos": 10
+        },
+        {
+            "id": 7,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Cuál es la modalidad de la asignatura según la guía?",
+            "opciones": [
+                "Presencial",
+                "Virtual",
+                "Mixta sin plataforma",
+                "Autogestionada sin tutorías"
+            ],
+            "respuesta": 1,
+            "explicacion": "Los datos generales de la asignatura indican modalidad virtual.",
+            "puntos": 10
+        },
+        {
+            "id": 8,
+            "tipo": "opcion_multiple",
+            "pregunta": "En Big Data, la velocidad se relaciona principalmente con:",
+            "opciones": [
+                "La rapidez con que se generan, reciben o procesan datos",
+                "El tamaño de la pantalla del analista",
+                "La cantidad de colores en un gráfico",
+                "La antigüedad del software"
+            ],
+            "respuesta": 0,
+            "explicacion": "Velocidad alude al ritmo de producción, flujo o procesamiento de los datos.",
+            "puntos": 10
+        },
+        {
+            "id": 9,
+            "tipo": "verdadero_falso",
+            "pregunta": "Las Actividades de Fijación son no sumativas, pero ayudan a consolidar el aprendizaje.",
+            "respuesta": true,
+            "explicacion": "La guía aclara que las AF no son sumativas, aunque son fundamentales para prepararse.",
+            "puntos": 10
+        },
+        {
+            "id": 10,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué tipo de datos propone usar la metodología del curso?",
+            "opciones": [
+                "Solo ejemplos escritos en el pizarrón",
+                "Datos reales y casos de aplicación",
+                "Únicamente datos perfectos sin errores",
+                "Datos que no requieren interpretación"
+            ],
+            "respuesta": 1,
+            "explicacion": "La metodología enfatiza casos reales, datasets reales y experimentación mediante código.",
+            "puntos": 10
+        }
+    ]
+}

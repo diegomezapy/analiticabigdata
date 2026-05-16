@@ -1,0 +1,12 @@
+{
+    "usuarios": [
+        {
+            "username": "user",
+            "password_hash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+            "nombre": "Estudiante",
+            "rol": "estudiante"
+        }
+    ],
+    "_nota": "Passwords hasheados con SHA-256. Para agregar usuarios ejecute: echo -n 'contraseña' | sha256sum",
+    "_hash_generador": "https://emn178.github.io/online-tools/sha256.html"
+}

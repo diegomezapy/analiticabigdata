@@ -1,0 +1,131 @@
+{
+    "unidad": 4,
+    "titulo": "Interpretación de resultados y modelos estadísticos",
+    "descripcion": "Autoevaluación sobre interpretación, selección de resultados, LDA y proyecto final.",
+    "tiempo_minutos": 15,
+    "intentos_max": 3,
+    "preguntas": [
+        {
+            "id": 1,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué implica interpretar un modelo estadístico?",
+            "opciones": [
+                "Reportar solo el nombre del algoritmo",
+                "Explicar resultados, desempeño, límites y sentido de las variables para el problema",
+                "Cambiar los datos hasta que el resultado guste",
+                "Omitir toda validación"
+            ],
+            "respuesta": 1,
+            "explicacion": "Interpretar exige conectar resultados técnicos con el problema, la evidencia y las limitaciones.",
+            "puntos": 10
+        },
+        {
+            "id": 2,
+            "tipo": "verdadero_falso",
+            "pregunta": "La selección de resultados debe considerar criterios de desempeño y pertinencia para el objetivo de análisis.",
+            "respuesta": true,
+            "explicacion": "No basta con elegir el resultado más llamativo; debe ser útil, válido y coherente con el objetivo.",
+            "puntos": 10
+        },
+        {
+            "id": 3,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué significa LDA en el contexto del curso?",
+            "opciones": [
+                "Análisis Discriminante Lineal",
+                "Lectura Directa de Archivos",
+                "Listado de Datos Agrupados",
+                "Lenguaje de Diseño Analítico"
+            ],
+            "respuesta": 0,
+            "explicacion": "La Unidad 4 incluye el Análisis Discriminante Lineal como técnica de modelado e interpretación.",
+            "puntos": 10
+        },
+        {
+            "id": 4,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Cuál es una finalidad del Análisis Discriminante Lineal?",
+            "opciones": [
+                "Separar o clasificar grupos mediante combinaciones lineales de variables",
+                "Eliminar automáticamente todas las observaciones",
+                "Crear contraseñas para estudiantes",
+                "Convertir gráficos en documentos"
+            ],
+            "respuesta": 0,
+            "explicacion": "LDA busca discriminar grupos y puede usarse para clasificación con base en variables explicativas.",
+            "puntos": 10
+        },
+        {
+            "id": 5,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Qué debe incluir una comunicación responsable de resultados?",
+            "opciones": [
+                "Solo capturas de pantalla",
+                "Contexto, método, resultados principales, límites y conclusiones claras",
+                "Únicamente el puntaje más alto",
+                "Una lista de comandos sin explicación"
+            ],
+            "respuesta": 1,
+            "explicacion": "La comunicación debe permitir que otra persona comprenda qué se hizo, qué se encontró y qué tan confiable es.",
+            "puntos": 10
+        },
+        {
+            "id": 6,
+            "tipo": "verdadero_falso",
+            "pregunta": "El proyecto final integra datos, preparación, modelos, interpretación y comunicación de resultados.",
+            "respuesta": true,
+            "explicacion": "La guía incluye el desarrollo de un proyecto de investigación final dentro de la Unidad 4.",
+            "puntos": 10
+        },
+        {
+            "id": 7,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Para qué sirve una matriz de confusión en clasificación?",
+            "opciones": [
+                "Para comparar aciertos y errores entre clases predichas y reales",
+                "Para escribir referencias bibliográficas",
+                "Para calcular el tamaño del archivo",
+                "Para ocultar resultados incorrectos"
+            ],
+            "respuesta": 0,
+            "explicacion": "La matriz de confusión permite ver dónde el modelo acierta y dónde se equivoca.",
+            "puntos": 10
+        },
+        {
+            "id": 8,
+            "tipo": "verdadero_falso",
+            "pregunta": "Un buen informe debe evitar conclusiones más fuertes que la evidencia disponible.",
+            "respuesta": true,
+            "explicacion": "La interpretación responsable reconoce alcance, supuestos y limitaciones.",
+            "puntos": 10
+        },
+        {
+            "id": 9,
+            "tipo": "opcion_multiple",
+            "pregunta": "¿Cuál es una buena práctica al seleccionar un modelo final?",
+            "opciones": [
+                "Comparar desempeño, interpretabilidad y adecuación al problema",
+                "Elegir siempre el modelo más difícil de explicar",
+                "Ignorar la calidad de los datos",
+                "Usar solo el primer resultado obtenido"
+            ],
+            "respuesta": 0,
+            "explicacion": "El modelo final debe equilibrar calidad predictiva, interpretación y pertinencia práctica.",
+            "puntos": 10
+        },
+        {
+            "id": 10,
+            "tipo": "opcion_multiple",
+            "pregunta": "Según la guía, ¿qué peso tienen las evaluaciones finales en la calificación?",
+            "opciones": [
+                "10 %",
+                "15 %",
+                "40 %",
+                "60 %"
+            ],
+            "respuesta": 3,
+            "explicacion": "La guía indica que las evaluaciones finales tienen una ponderación del 60 %.",
+            "puntos": 10
+        }
+    ]
+}
