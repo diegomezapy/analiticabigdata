@@ -1304,8 +1304,343 @@
             ]
         };
 
+        const STAGE_SEQUENCE = [
+            'Inicio', 'Conceptos', 'Funciones', 'Procedimiento', 'Practica', 'Aplicacion', 'Evaluacion'
+        ];
+
+        const UNIT_SUBLEVELS = {
+            1: [
+                {
+                    title: 'Origen e introduccion a la Analitica de Big Data',
+                    focus: 'Comprender que es Big Data, por que importa y como se convierte en una pregunta analitica trabajable.',
+                    dataset: 'data/datasets/clientes_compras.csv',
+                    practiceId: 'lab_datos',
+                    concepts: ['Volumen, variedad, velocidad, veracidad y valor.', 'Diferencia entre dato, informacion y conocimiento.', 'Pregunta analitica: problema, dato disponible y decision esperada.'],
+                    formulas: [{ label: 'Marco de valor', value: 'dato + contexto + metodo = informacion util', note: 'Sin contexto, el dato no orienta una decision.' }],
+                    functionCode: [
+                        { label: 'R data.table', code: `library(data.table)\nclientes <- fread("data/datasets/clientes_compras.csv")\nstr(clientes)\nclientes[, .N]` },
+                        { label: 'Python Polars', code: `import polars as pl\nclientes = pl.read_csv("data/datasets/clientes_compras.csv")\nprint(clientes.schema)\nprint(clientes.height)` }
+                    ],
+                    procedureCode: [
+                        { label: 'R data.table', code: `clientes[, .(\n  clientes = .N,\n  monto_promedio = mean(monto_total)\n)]` },
+                        { label: 'Python Polars', code: `clientes.select(\n    pl.len().alias("clientes"),\n    pl.col("monto_total").mean().alias("monto_promedio")\n)` }
+                    ],
+                    application: ['Describe un problema academico o institucional que pueda responderse con datos.', 'Indica que datos necesitarias y que decision podria mejorar.'],
+                    assessment: ['Explica las 5V con un ejemplo.', 'Formula una pregunta analitica simple.', 'Distingue dato bruto e informacion util.']
+                },
+                {
+                    title: 'Entorno de trabajo con R, RStudio y datos',
+                    focus: 'Preparar una forma ordenada de trabajar con archivos, librerias y rutas reproducibles.',
+                    dataset: 'data/datasets/clientes_compras.csv',
+                    practiceId: 'lab_datos',
+                    concepts: ['Proyecto reproducible: carpetas, datos, codigo y resultados.', 'Librerias como extensiones del lenguaje.', 'Ruta relativa para que el trabajo funcione en otros equipos.'],
+                    formulas: [{ label: 'Reproducibilidad', value: 'mismo dato + mismo codigo = mismo resultado', note: 'La organizacion del proyecto reduce errores.' }],
+                    functionCode: [
+                        { label: 'R data.table', code: `library(data.table)\nclientes <- fread("data/datasets/clientes_compras.csv")\nhead(clientes, 5)\nnames(clientes)` },
+                        { label: 'Python Polars', code: `import polars as pl\nclientes = pl.read_csv("data/datasets/clientes_compras.csv")\nprint(clientes.head(5))\nprint(clientes.columns)` }
+                    ],
+                    procedureCode: [
+                        { label: 'R data.table', code: `clientes[, .(\n  columnas = length(names(clientes)),\n  filas = .N\n)]` },
+                        { label: 'Python Polars', code: `resumen = {\"filas\": clientes.height, \"columnas\": len(clientes.columns)}\nprint(resumen)` }
+                    ],
+                    application: ['Prepara una carpeta de trabajo con datos y codigo.', 'Documenta el origen del archivo usado.'],
+                    assessment: ['Identifica filas, columnas y nombres de variables.', 'Explica por que se usa una ruta relativa.', 'Reconoce si una libreria ya fue cargada.']
+                },
+                {
+                    title: 'Operaciones basicas, resumenes y graficos',
+                    focus: 'Realizar los primeros resumenes para describir datos y detectar patrones visibles.',
+                    dataset: 'data/datasets/clientes_compras.csv',
+                    practiceId: 'lab_datos',
+                    concepts: ['Resumen numerico para variables cuantitativas.', 'Frecuencias para variables cualitativas.', 'Grafico como forma de inspeccion, no como decoracion.'],
+                    formulas: [
+                        { label: 'Promedio', value: 'media = suma(x) / n', note: 'Resume el centro de una variable numerica.' },
+                        { label: 'Frecuencia', value: 'f(categoria) = cantidad de casos', note: 'Cuenta casos por grupo.' }
+                    ],
+                    functionCode: [
+                        { label: 'R data.table', code: `clientes[, .(monto_promedio = mean(monto_total)), by = canal_preferido]\nhist(clientes$monto_total)` },
+                        { label: 'Python Polars', code: `clientes.group_by("canal_preferido").agg(\n    pl.col("monto_total").mean().alias("monto_promedio")\n)` }
+                    ],
+                    procedureCode: [
+                        { label: 'R data.table', code: `clientes[, alto_valor := monto_total >= median(monto_total)]\nclientes[, .N, by = alto_valor]` },
+                        { label: 'Python Polars', code: `clientes = clientes.with_columns(\n    (pl.col("monto_total") >= pl.col("monto_total").median()).alias("alto_valor")\n)\nclientes.group_by("alto_valor").len()` }
+                    ],
+                    application: ['Construye un resumen por canal preferido.', 'Redacta una conclusion breve sobre los clientes de mayor valor.'],
+                    assessment: ['Calcula un promedio.', 'Interpreta una tabla de frecuencias.', 'Explica que representa alto_valor.']
+                }
+            ],
+            2: [
+                {
+                    title: 'Librerias para carga y procesamiento eficiente',
+                    focus: 'Usar herramientas de alto rendimiento para leer datos y producir primeras verificaciones.',
+                    dataset: 'data/datasets/estudiantes_ead.csv',
+                    practiceId: 'lab_visualizacion',
+                    concepts: ['Carga eficiente de datos tabulares.', 'Inspeccion de tipos y dimensiones.', 'Resumen inicial antes de transformar.'],
+                    formulas: [{ label: 'Dimension de tabla', value: 'tabla = filas x columnas', note: 'La dimension orienta el volumen inicial del analisis.' }],
+                    functionCode: [
+                        { label: 'R data.table', code: `library(data.table)\nead <- fread("data/datasets/estudiantes_ead.csv")\nstr(ead)\nead[, .N]` },
+                        { label: 'Python Polars', code: `import polars as pl\nead = pl.read_csv("data/datasets/estudiantes_ead.csv")\nprint(ead.schema)\nprint(ead.shape)` }
+                    ],
+                    procedureCode: [
+                        { label: 'R data.table', code: `ead[, .(\n  nota_media = mean(nota_final),\n  horas_media = mean(horas_semana)\n)]` },
+                        { label: 'Python Polars', code: `ead.select(\n    pl.col("nota_final").mean().alias("nota_media"),\n    pl.col("horas_semana").mean().alias("horas_media")\n)` }
+                    ],
+                    application: ['Detecta que variables son numericas y cuales categoricas.', 'Propone una variable para seguimiento del curso.'],
+                    assessment: ['Carga el archivo.', 'Identifica cantidad de filas y columnas.', 'Explica por que conviene inspeccionar antes de limpiar.']
+                },
+                {
+                    title: 'Binarizacion y division entrenamiento-prueba',
+                    focus: 'Convertir condiciones en variables binarias y separar datos para evitar evaluaciones engañosas.',
+                    dataset: 'data/datasets/estudiantes_ead.csv',
+                    practiceId: 'lab_visualizacion',
+                    concepts: ['Variable binaria como indicador 0/1.', 'Conjunto de entrenamiento para construir reglas.', 'Conjunto de prueba para revisar desempeno.'],
+                    formulas: [{ label: 'Indicador binario', value: 'I(condicion) = 1 si se cumple, 0 si no', note: 'Simplifica una decision o condicion.' }],
+                    functionCode: [
+                        { label: 'R data.table', code: `ead[, riesgo := fifelse(nota_final < 70, 1, 0)]\nead[, .N, by = riesgo]` },
+                        { label: 'Python Polars', code: `ead = ead.with_columns(\n    (pl.col("nota_final") < 70).cast(pl.Int8).alias("riesgo")\n)\nead.group_by("riesgo").len()` }
+                    ],
+                    procedureCode: [
+                        { label: 'R data.table', code: `set.seed(2026)\nead[, grupo := fifelse(runif(.N) < 0.7, "entrenamiento", "prueba")]\nead[, .N, by = grupo]` },
+                        { label: 'Python Polars', code: `ead = ead.with_row_index("fila").with_columns(\n    (pl.col("fila") % 10 < 7).alias("es_train")\n)` }
+                    ],
+                    application: ['Define una condicion para estudiante en riesgo.', 'Justifica por que no todo el dato debe usarse para entrenar.'],
+                    assessment: ['Crea una variable 0/1.', 'Diferencia entrenamiento y prueba.', 'Interpreta una tabla por grupo.']
+                },
+                {
+                    title: 'Imputacion, estandarizacion y escalado',
+                    focus: 'Preparar variables para compararlas y reducir problemas por faltantes o escalas muy distintas.',
+                    dataset: 'data/datasets/estudiantes_ead.csv',
+                    practiceId: 'lab_visualizacion',
+                    concepts: ['Imputar es reemplazar faltantes con un criterio declarado.', 'Estandarizar permite comparar variables con unidades distintas.', 'Escalar ayuda a que una variable no domine por su magnitud.'],
+                    formulas: [{ label: 'Puntaje z', value: 'z = (x - media) / desviacion_estandar', note: 'Indica cuantas desviaciones se aleja un valor de la media.' }],
+                    functionCode: [
+                        { label: 'R data.table', code: `ead[, horas_z := (horas_semana - mean(horas_semana)) / sd(horas_semana)]\nead[, summary(horas_z)]` },
+                        { label: 'Python Polars', code: `ead = ead.with_columns(\n    ((pl.col("horas_semana") - pl.col("horas_semana").mean()) / pl.col("horas_semana").std()).alias("horas_z")\n)` }
+                    ],
+                    procedureCode: [
+                        { label: 'R data.table', code: `ead[is.na(horas_semana), horas_semana := median(ead$horas_semana, na.rm = TRUE)]` },
+                        { label: 'Python Polars', code: `ead = ead.with_columns(\n    pl.col("horas_semana").fill_null(pl.col("horas_semana").median())\n)` }
+                    ],
+                    application: ['Elige una variable que conviene estandarizar.', 'Explica que riesgo tiene imputar sin documentar el criterio.'],
+                    assessment: ['Interpreta z = 0.', 'Explica una imputacion con mediana.', 'Reconoce cuando una escala puede distorsionar.']
+                }
+            ],
+            3: [
+                {
+                    title: 'Creacion de un modelo predictivo',
+                    focus: 'Definir objetivo, predictores y una primera regla predictiva interpretable.',
+                    dataset: 'data/datasets/modelos_credito.csv',
+                    practiceId: 'lab_modelos',
+                    concepts: ['Variable objetivo como resultado a predecir.', 'Predictores como informacion disponible.', 'Modelo como regla que transforma entradas en prediccion.'],
+                    formulas: [{ label: 'Estructura predictiva', value: 'y = f(x1, x2, ..., xk)', note: 'La salida depende de variables de entrada.' }],
+                    functionCode: [
+                        { label: 'R data.table', code: `credito <- fread("data/datasets/modelos_credito.csv")\ncredito[, .N, by = aprobado]` },
+                        { label: 'Python Polars', code: `credito = pl.read_csv("data/datasets/modelos_credito.csv")\ncredito.group_by("aprobado").len()` }
+                    ],
+                    procedureCode: [
+                        { label: 'R data.table', code: `credito[, score_alto := score_credito >= median(score_credito)]\ncredito[, .N, by = .(score_alto, aprobado)]` },
+                        { label: 'Python Polars', code: `credito = credito.with_columns(\n    (pl.col("score_credito") >= pl.col("score_credito").median()).alias("score_alto")\n)` }
+                    ],
+                    application: ['Define una variable objetivo para un problema propio.', 'Lista tres predictores posibles y sus limites.'],
+                    assessment: ['Distingue objetivo y predictor.', 'Reconoce una prediccion binaria.', 'Explica que significa entrenar.']
+                },
+                {
+                    title: 'K-Nearest Neighbor (KNN)',
+                    focus: 'Clasificar un caso usando la cercania con casos conocidos.',
+                    dataset: 'data/datasets/modelos_credito.csv',
+                    practiceId: 'lab_modelos',
+                    concepts: ['Vecino cercano como caso similar.', 'k como cantidad de vecinos consultados.', 'Escalado como paso importante para calcular distancias.'],
+                    formulas: [{ label: 'Distancia euclidiana', value: 'd(a,b) = sqrt(suma((a_i - b_i)^2))', note: 'Menor distancia implica mayor semejanza.' }],
+                    functionCode: [
+                        { label: 'R data.table', code: `credito[, ingreso_z := (ingreso_mensual - mean(ingreso_mensual)) / sd(ingreso_mensual)]\ncredito[, score_z := (score_credito - mean(score_credito)) / sd(score_credito)]` },
+                        { label: 'Python Polars', code: `cols = [\"ingreso_mensual\", \"score_credito\"]\ncredito.select(cols).head()` }
+                    ],
+                    procedureCode: [
+                        { label: 'R idea KNN', code: `# 1. escalar variables\n# 2. calcular distancias\n# 3. ordenar vecinos\n# 4. votar la clase mas frecuente` },
+                        { label: 'Python sklearn', code: `from sklearn.neighbors import KNeighborsClassifier\nmodelo = KNeighborsClassifier(n_neighbors=3)` }
+                    ],
+                    application: ['Explica que variables deben estar en la misma escala.', 'Describe que ocurriria si k es demasiado pequeno.'],
+                    assessment: ['Interpreta una distancia.', 'Explica el rol de k.', 'Justifica por que se escala antes de KNN.']
+                },
+                {
+                    title: 'Regresion logistica',
+                    focus: 'Estimar probabilidades para una variable objetivo binaria y convertirlas en decisiones.',
+                    dataset: 'data/datasets/modelos_credito.csv',
+                    practiceId: 'lab_modelos',
+                    concepts: ['Probabilidad entre 0 y 1.', 'Umbral de decision.', 'Coeficiente como direccion del efecto, con cautela interpretativa.'],
+                    formulas: [{ label: 'Funcion logistica', value: 'p = 1 / (1 + exp(-z))', note: 'Convierte un puntaje en probabilidad.' }],
+                    functionCode: [
+                        { label: 'R glm', code: `modelo <- glm(aprobado ~ ingreso_mensual + score_credito + deuda_actual,\n              data = credito, family = binomial)\nsummary(modelo)` },
+                        { label: 'Python sklearn', code: `from sklearn.linear_model import LogisticRegression\nmodelo = LogisticRegression()` }
+                    ],
+                    procedureCode: [
+                        { label: 'R prediccion', code: `credito[, prob_aprobacion := predict(modelo, type = "response")]\ncredito[, prediccion := as.integer(prob_aprobacion >= 0.5)]` },
+                        { label: 'Python prediccion', code: `prob = modelo.predict_proba(X)[:, 1]\npred = (prob >= 0.5).astype(int)` }
+                    ],
+                    application: ['Elige un umbral y justifica el riesgo de cambiarlo.', 'Identifica un falso positivo y un falso negativo.'],
+                    assessment: ['Interpreta una probabilidad.', 'Explica el umbral 0.5.', 'Lee una tabla predicho vs real.']
+                }
+            ],
+            4: [
+                {
+                    title: 'Seleccion e interpretacion de resultados',
+                    focus: 'Elegir resultados relevantes y explicar que significan para la decision.',
+                    dataset: 'data/datasets/modelos_credito.csv',
+                    practiceId: 'lab_interpretacion',
+                    concepts: ['Resultado relevante segun el objetivo.', 'Metrica como resumen parcial.', 'Limite como condicion de uso responsable.'],
+                    formulas: [{ label: 'Exactitud', value: 'accuracy = aciertos / total', note: 'Resume aciertos globales, pero puede ocultar errores importantes.' }],
+                    functionCode: [
+                        { label: 'R metricas', code: `matriz <- table(Predicho = credito$prediccion, Real = credito$aprobado)\naccuracy <- sum(diag(matriz)) / sum(matriz)` },
+                        { label: 'Python idea', code: `# comparar predicciones con valores reales\n# contar aciertos y errores\n# interpretar limites` }
+                    ],
+                    procedureCode: [
+                        { label: 'R casos dudosos', code: `credito[order(abs(prob_aprobacion - 0.5))][1:5]` },
+                        { label: 'Python casos dudosos', code: `resultado.sort((pl.col("prob_aprobacion") - 0.5).abs()).head(5)` }
+                    ],
+                    application: ['Selecciona una metrica y explica por que no alcanza sola.', 'Describe un caso que requiere revision humana.'],
+                    assessment: ['Calcula accuracy.', 'Explica un limite.', 'Distingue resultado de recomendacion.']
+                },
+                {
+                    title: 'Analisis Discriminante Lineal (LDA)',
+                    focus: 'Comprender LDA como tecnica de clasificacion basada en separar grupos.',
+                    dataset: 'data/datasets/modelos_credito.csv',
+                    practiceId: 'lab_interpretacion',
+                    concepts: ['Grupo o clase como categoria a separar.', 'Combinacion lineal de variables.', 'Separacion entre grupos e interpretacion cautelosa.'],
+                    formulas: [{ label: 'Discriminante', value: 'D = a1*x1 + a2*x2 + ... + ak*xk', note: 'Combina variables para favorecer la separacion de grupos.' }],
+                    functionCode: [
+                        { label: 'R MASS', code: `# library(MASS)\n# modelo_lda <- lda(grupo ~ x1 + x2, data = datos)` },
+                        { label: 'Python sklearn', code: `from sklearn.discriminant_analysis import LinearDiscriminantAnalysis\nlda = LinearDiscriminantAnalysis()` }
+                    ],
+                    procedureCode: [
+                        { label: 'Procedimiento LDA', code: `# 1. definir grupos\n# 2. seleccionar variables\n# 3. entrenar LDA\n# 4. revisar clasificacion` },
+                        { label: 'Revision', code: `# comparar clase predicha contra clase real\n# describir errores frecuentes` }
+                    ],
+                    application: ['Propone un caso donde separar grupos sea util.', 'Indica que variable podria ayudar a discriminar.'],
+                    assessment: ['Explica que es una clase.', 'Reconoce una combinacion lineal.', 'Indica un limite de LDA.']
+                },
+                {
+                    title: 'Proyecto final de investigacion aplicada',
+                    focus: 'Integrar pregunta, datos, metodo, resultados, limites y recomendacion final.',
+                    dataset: 'data/datasets/modelos_credito.csv',
+                    practiceId: 'lab_interpretacion',
+                    concepts: ['Pregunta investigable.', 'Metodo reproducible.', 'Resultado comunicado para tomar decisiones.'],
+                    formulas: [{ label: 'Estructura de informe', value: 'pregunta -> datos -> metodo -> resultado -> limite -> recomendacion', note: 'Ordena la comunicacion final.' }],
+                    functionCode: [
+                        { label: 'R cierre', code: `cat("Pregunta: ...\\n")\ncat("Metodo: ...\\n")\ncat("Resultado principal: ...\\n")` },
+                        { label: 'Python cierre', code: `reporte = {\n    \"pregunta\": \"...\",\n    \"resultado\": \"...\",\n    \"limite\": \"...\"\n}` }
+                    ],
+                    procedureCode: [
+                        { label: 'Checklist final', code: `# pregunta clara\n# datos descritos\n# codigo reproducible\n# resultado interpretado\n# limite declarado` },
+                        { label: 'Recomendacion', code: `# accion sugerida\n# evidencia que la respalda\n# advertencia de uso` }
+                    ],
+                    application: ['Redacta el objetivo del proyecto.', 'Conecta un resultado con una recomendacion concreta.'],
+                    assessment: ['Presenta pregunta y datos.', 'Explica metodo y resultado.', 'Declara limites y recomendacion.']
+                }
+            ]
+        };
+
+        function buildSublevelSlides(unitNum) {
+            const sublevels = UNIT_SUBLEVELS[unitNum] || [];
+            return sublevels.flatMap((sublevel, subIndex) => {
+                const sublevelIndex = subIndex + 1;
+                const activityResource = `activity${Math.min(sublevelIndex, 3)}`;
+                const practiceStepIndex = Math.min(subIndex, 2);
+                const base = {
+                    sublevelIndex,
+                    sublevelTitle: sublevel.title,
+                    dataset: sublevel.dataset,
+                    practiceId: sublevel.practiceId,
+                    practiceStepIndex,
+                };
+                return [
+                    {
+                        ...base,
+                        kind: 'intro',
+                        stage: 'Inicio',
+                        stageOrder: 1,
+                        title: `Subnivel ${sublevelIndex}: ${sublevel.title}`,
+                        lead: sublevel.focus,
+                        bullets: [
+                            'Que se estudiara en este subnivel.',
+                            'Que producto parcial debera poder explicar el estudiante.',
+                            'Que recurso oficial acompana este tramo de la unidad.'
+                        ],
+                        checks: ['Lee el objetivo del subnivel.', 'Ubica el recurso oficial relacionado.', 'Identifica el producto parcial esperado.'],
+                        resources: sublevelIndex === 1 ? ['orientation', 'materials'] : ['materials']
+                    },
+                    {
+                        ...base,
+                        kind: 'concept',
+                        stage: 'Conceptos',
+                        stageOrder: 2,
+                        title: `Conceptos: ${sublevel.title}`,
+                        lead: 'Divide el tema en ideas pequenas antes de pasar a codigo o formulas.',
+                        bullets: sublevel.concepts,
+                        checks: ['Define el concepto central con tus palabras.', 'Reconoce un ejemplo y un contraejemplo.', 'Relaciona el concepto con el objetivo de la unidad.'],
+                        resources: ['materials']
+                    },
+                    {
+                        ...base,
+                        kind: 'function',
+                        stage: 'Funciones',
+                        stageOrder: 3,
+                        title: `Funciones: ${sublevel.title}`,
+                        lead: 'Observa que hace cada funcion, que dato recibe y que resultado devuelve.',
+                        codeBlocks: sublevel.functionCode,
+                        checks: ['Identifica la entrada del codigo.', 'Identifica la salida del codigo.', 'Modifica una variable sin romper el procedimiento.']
+                    },
+                    {
+                        ...base,
+                        kind: 'formula',
+                        stage: 'Procedimiento',
+                        stageOrder: 4,
+                        title: `Procedimiento: ${sublevel.title}`,
+                        lead: 'Ordena el metodo como una receta: preparar, transformar, calcular, revisar e interpretar.',
+                        formulas: sublevel.formulas,
+                        codeBlocks: sublevel.procedureCode,
+                        checks: ['Enumera los pasos del procedimiento.', 'Explica por que ese orden importa.', 'Detecta que podria salir mal.']
+                    },
+                    {
+                        ...base,
+                        kind: 'practice',
+                        stage: 'Practica',
+                        stageOrder: 5,
+                        title: `Practica guiada: ${sublevel.title}`,
+                        lead: 'Ejecuta solo la ficha asociada a este subnivel para practicar sin mezclar todo el contenido.',
+                        checks: ['Abre la ficha practica correspondiente.', 'Ejecuta o lee el codigo paso a paso.', 'Anota una conclusion breve.'],
+                        resources: [activityResource]
+                    },
+                    {
+                        ...base,
+                        kind: 'activity',
+                        stage: 'Aplicacion',
+                        stageOrder: 6,
+                        title: `Aplicacion: ${sublevel.title}`,
+                        lead: 'Transfiere lo aprendido a una situacion concreta antes de avanzar.',
+                        bullets: sublevel.application,
+                        checks: ['Responde la consigna parcial.', 'Justifica con un concepto tecnico.', 'Escribe una conclusion verificable.'],
+                        resources: [activityResource]
+                    },
+                    {
+                        ...base,
+                        kind: 'assessment',
+                        stage: 'Evaluacion',
+                        stageOrder: 7,
+                        title: `Evaluacion parcial: ${sublevel.title}`,
+                        lead: 'Comprueba este subnivel antes de pasar al siguiente. La evaluacion es por partes, no al final de toda la unidad.',
+                        bullets: sublevel.assessment,
+                        checks: ['Responde los criterios del subnivel.', 'Revisa errores antes de avanzar.', 'Registra esta evaluacion parcial.'],
+                        resources: sublevelIndex === 3 ? ['activity3'] : [activityResource]
+                    }
+                ].map((slide, localIndex) => ({
+                    ...slide,
+                    globalIndex: (subIndex * STAGE_SEQUENCE.length) + localIndex
+                }));
+            });
+        }
+
         function getUnitLearningPath(unitNum) {
-            return UNIT_LEARNING_PATHS[unitNum] || [];
+            const generated = buildSublevelSlides(unitNum);
+            return generated.length ? generated : (UNIT_LEARNING_PATHS[unitNum] || []);
         }
 
         function unitPathStorageKey(unitNum) {
@@ -1323,8 +1658,17 @@
             return done.length >= lab.steps.length;
         }
 
+        function isPracticeStepComplete(labId, stepIndex) {
+            if (!labId || !Number.isInteger(stepIndex)) return false;
+            const done = getPracticeProgress()[labId] || [];
+            return done.includes(stepIndex);
+        }
+
         function isUnitPathSlideComplete(unitNum, slide, slideIndex) {
             if (STATE.completedActivities[unitPathSlideKey(unitNum, slideIndex)]) return true;
+            if (slide.kind === 'practice' && Number.isInteger(slide.practiceStepIndex)) {
+                return isPracticeStepComplete(slide.practiceId, slide.practiceStepIndex);
+            }
             if (slide.kind === 'practice' && slide.practiceId) return isPracticeComplete(slide.practiceId);
             if (slide.kind === 'quiz') return Boolean(STATE.quizResults[`u${unitNum}`]);
             return false;
@@ -1367,11 +1711,35 @@
                 startQuiz(unitNum);
                 return;
             }
+            if (slide.kind === 'practice' && slide.practiceId && !isUnitPathSlideComplete(unitNum, slide, slideIndex)) {
+                openPractice(slide.practiceId, slide.practiceStepIndex || 0);
+                return;
+            }
             const key = unitPathSlideKey(unitNum, slideIndex);
             const wasNew = !STATE.completedActivities[key];
             STATE.completedActivities[key] = true;
             if (wasNew) addXP(8, 'Bloque de unidad completado');
             else saveProgress();
+            if (wasNew && slide.kind === 'assessment') {
+                sendToSheets({
+                    kind: 'calificacion',
+                    timestamp: new Date().toISOString(),
+                    usuario: STATE.user.username,
+                    nombre: STATE.user.nombre,
+                    unidad: unitNum,
+                    actividad: slide.title,
+                    tipo: 'evaluacion_parcial_ruta',
+                    puntaje: 100,
+                    porcentaje: 100,
+                    correctas: 1,
+                    total: 1,
+                    xp: 8,
+                    detalle: {
+                        subnivel: slide.sublevelIndex || '',
+                        criterios: slide.bullets || []
+                    }
+                });
+            }
             trackEvent('ruta_unidad', {
                 unidad: unitNum,
                 recurso: key,
@@ -1531,6 +1899,11 @@
                     text: 'Antes del cuestionario, repasa los niveles previos. El objetivo es comprobar comprension, no adivinar respuestas.',
                     example: 'Ejemplo: si una pregunta menciona una funcion, piensa primero que entrada recibe y que salida produce.',
                     practice: 'Haz un repaso rapido: tres conceptos, una formula y un ejemplo de codigo.'
+                },
+                assessment: {
+                    text: 'Esta evaluacion parcial solo revisa el subnivel actual. Si algo no esta claro, vuelve a conceptos, funciones o procedimiento antes de registrar avance.',
+                    example: 'Ejemplo: responde primero que significa el concepto, luego muestra una funcion o formula y finalmente interpreta un resultado.',
+                    practice: 'Escribe una respuesta breve para cada criterio antes de marcar el subnivel como evaluado.'
                 }
             };
             return base[slide.kind] || base.concept;
@@ -1605,19 +1978,24 @@
             const lab = PRACTICES.find(item => item.id === slide.practiceId);
             if (!lab) return '';
             const done = getPracticeProgress()[lab.id] || [];
-            const pct = Math.round((done.length / lab.steps.length) * 100);
+            const targetStep = Number.isInteger(slide.practiceStepIndex)
+                ? Math.max(0, Math.min(slide.practiceStepIndex, lab.steps.length - 1))
+                : Math.min(done.length, lab.steps.length - 1);
+            const step = lab.steps[targetStep];
+            const stepDone = done.includes(targetStep);
+            const pct = stepDone ? 100 : 0;
             return `
       <div class="learning-practice-card">
         <div>
-          <span class="material-badge badge-act">${done.length}/${lab.steps.length} fichas</span>
-          <h4>${escapeHtml(lab.title)}</h4>
-          <p>${escapeHtml(lab.goal)}</p>
+          <span class="material-badge badge-act">${stepDone ? '1/1' : '0/1'} ficha del subnivel</span>
+          <h4>${escapeHtml(step?.title || lab.title)}</h4>
+          <p>${escapeHtml(step?.task || lab.goal)}</p>
           <div class="unit-progress-bar">
             <div class="unit-progress-fill" style="width:${pct}%"></div>
           </div>
         </div>
         <div class="practice-actions">
-          <button class="btn-primary" onclick="openPractice('${lab.id}', ${Math.min(done.length, lab.steps.length - 1)})">Abrir practica</button>
+          <button class="btn-primary" onclick="openPractice('${lab.id}', ${targetStep})">Abrir ficha practica</button>
           <a class="btn-secondary as-link" href="${lab.dataset}" download>Descargar datos</a>
           <a class="btn-secondary as-link" href="laboratorio/index.html" target="_blank">Laboratorio R/Python</a>
         </div>
@@ -1652,13 +2030,17 @@
             const status = done ? 'Completado' : 'En curso';
             const primaryLabel = slide.kind === 'quiz' && !STATE.quizResults[`u${unitNum}`]
                 ? 'Iniciar evaluacion'
-                : (isLast ? (done ? 'Unidad completada' : 'Ya lei y comprendi') : (done ? 'Seguir al siguiente nivel' : 'Ya lei y comprendi'));
+                : (slide.kind === 'practice' && !done
+                    ? 'Abrir practica'
+                    : (slide.kind === 'assessment' && !done
+                        ? 'Registrar evaluacion parcial'
+                        : (isLast ? (done ? 'Unidad completada' : 'Ya lei y comprendi') : (done ? 'Seguir al siguiente nivel' : 'Ya lei y comprendi'))));
             return `
       <article class="learning-slide">
         <header class="learning-slide-top">
           <div class="learning-slide-heading">
             <div class="learning-slide-kicker">
-              <span>${String(slideIndex + 1).padStart(2, '0')}</span>
+              <span>${slide.sublevelIndex ? `${slide.sublevelIndex}.${slide.stageOrder}` : String(slideIndex + 1).padStart(2, '0')}</span>
               <strong>${escapeHtml(slide.stage)}</strong>
               <em>${status}</em>
             </div>
@@ -1690,11 +2072,38 @@
       </article>`;
         }
 
+        function renderSublevelNavigator(unitNum, slides, current, maxUnlocked) {
+            const currentSlide = slides[current] || slides[0];
+            const sublevels = [...new Set(slides.map(slide => slide.sublevelIndex).filter(Boolean))];
+            if (!sublevels.length) return '';
+            return `
+        <div class="learning-sublevels" aria-label="Subniveles de la unidad">
+          ${sublevels.map(sublevelIndex => {
+                const group = slides.filter(slide => slide.sublevelIndex === sublevelIndex);
+                const firstIndex = slides.findIndex(slide => slide.sublevelIndex === sublevelIndex);
+                const completed = group.filter(slide => isUnitPathSlideComplete(unitNum, slide, slide.globalIndex)).length;
+                const locked = firstIndex > maxUnlocked;
+                const active = currentSlide?.sublevelIndex === sublevelIndex;
+                return `
+            <button class="learning-sublevel-card ${active ? 'active' : ''} ${locked ? 'locked' : ''}"
+              onclick="goToUnitPathSlide(${unitNum}, ${firstIndex})" ${locked ? 'disabled' : ''}>
+              <span>Subnivel ${sublevelIndex}</span>
+              <strong>${escapeHtml(group[0]?.sublevelTitle || `Subnivel ${sublevelIndex}`)}</strong>
+              <em>${completed}/${group.length} pasos</em>
+            </button>`;
+            }).join('')}
+        </div>`;
+        }
+
         function renderLearningPath(unitNum) {
             const unit = UNITS[unitNum - 1];
             const slides = getUnitLearningPath(unitNum);
             if (!slides.length) return '<div class="card">La ruta secuencial de esta unidad estara disponible proximamente.</div>';
             const current = getCurrentUnitPathSlide(unitNum, slides);
+            const currentSlide = slides[current] || slides[0];
+            const visibleSlides = currentSlide?.sublevelIndex
+                ? slides.filter(slide => slide.sublevelIndex === currentSlide.sublevelIndex)
+                : slides;
             const completed = slides.filter((slide, index) => isUnitPathSlideComplete(unitNum, slide, index)).length;
             const pct = Math.round((completed / slides.length) * 100);
             const maxUnlocked = maxUnlockedPathSlide(unitNum, slides);
@@ -1717,14 +2126,16 @@
         <div class="unit-progress-bar">
           <div class="unit-progress-fill" style="width:${pct}%"></div>
         </div>
+        ${renderSublevelNavigator(unitNum, slides, current, maxUnlocked)}
         <div class="learning-stepper" aria-label="Bloques de la unidad">
-          ${slides.map((slide, index) => {
+          ${visibleSlides.map((slide) => {
+                const index = slide.globalIndex ?? slides.indexOf(slide);
                 const locked = index > maxUnlocked;
                 const done = isUnitPathSlideComplete(unitNum, slide, index);
                 return `
             <button class="learning-step ${index === current ? 'active' : ''} ${done ? 'done' : ''} ${locked ? 'locked' : ''}"
               onclick="goToUnitPathSlide(${unitNum}, ${index})" ${locked ? 'disabled' : ''}>
-              <span>${index + 1}</span>
+              <span>${slide.stageOrder || index + 1}</span>
               <small>${escapeHtml(slide.stage)}</small>
             </button>`;
             }).join('')}
