@@ -630,6 +630,14 @@ a:hover { text-decoration: underline; }
 
 /* Sequential learning path */
 .learning-path-shell {
+  --unit-color: var(--primary);
+  --unit-color-dark: var(--primary-dark);
+  --unit-soft: #edf6fb;
+  --unit-border: rgba(38, 86, 132, 0.32);
+  --sublevel-color: var(--unit-color);
+  --sublevel-color-dark: var(--unit-color-dark);
+  --sublevel-soft: color-mix(in srgb, var(--sublevel-color) 11%, white);
+  --sublevel-border: color-mix(in srgb, var(--sublevel-color) 34%, transparent);
   background: var(--bg-elevated);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
@@ -639,9 +647,58 @@ a:hover { text-decoration: underline; }
   overflow: hidden;
 }
 
+.unit-theme-u1 {
+  --unit-color: #2d5f87;
+  --unit-color-dark: #173e5f;
+  --unit-soft: #e8f2f8;
+  --unit-border: rgba(45, 95, 135, 0.34);
+}
+
+.unit-theme-u2 {
+  --unit-color: #b96f06;
+  --unit-color-dark: #744403;
+  --unit-soft: #fff3dc;
+  --unit-border: rgba(185, 111, 6, 0.34);
+}
+
+.unit-theme-u3 {
+  --unit-color: #65508d;
+  --unit-color-dark: #3f315d;
+  --unit-soft: #f0ecf7;
+  --unit-border: rgba(101, 80, 141, 0.34);
+}
+
+.unit-theme-u4 {
+  --unit-color: #2f6f58;
+  --unit-color-dark: #1f4c3c;
+  --unit-soft: #e9f5f0;
+  --unit-border: rgba(47, 111, 88, 0.34);
+}
+
+.sublevel-theme-s1 {
+  --sublevel-color: var(--unit-color);
+  --sublevel-color-dark: var(--unit-color-dark);
+  --sublevel-soft: var(--unit-soft);
+  --sublevel-border: var(--unit-border);
+}
+
+.sublevel-theme-s2 {
+  --sublevel-color: color-mix(in srgb, var(--unit-color) 74%, #111827);
+  --sublevel-color-dark: color-mix(in srgb, var(--unit-color-dark) 80%, #111827);
+  --sublevel-soft: color-mix(in srgb, var(--unit-color) 17%, white);
+  --sublevel-border: color-mix(in srgb, var(--unit-color) 44%, transparent);
+}
+
+.sublevel-theme-s3 {
+  --sublevel-color: color-mix(in srgb, var(--unit-color) 68%, #6b7280);
+  --sublevel-color-dark: color-mix(in srgb, var(--unit-color-dark) 78%, #374151);
+  --sublevel-soft: color-mix(in srgb, var(--unit-color) 9%, #f8fafc);
+  --sublevel-border: color-mix(in srgb, var(--unit-color) 28%, transparent);
+}
+
 .learning-path-head {
   align-items: flex-start;
-  background: linear-gradient(180deg, #ffffff, #f6f8fb);
+  background: linear-gradient(180deg, #ffffff, var(--unit-soft));
   border-bottom: 1px solid var(--glass-border);
   display: flex;
   gap: 1rem;
@@ -678,7 +735,7 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-path-progress strong {
-  color: var(--primary);
+  color: var(--unit-color);
   display: block;
   font-size: 1.45rem;
   line-height: 1;
@@ -692,7 +749,7 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-sublevels {
-  background: #f8fafc;
+  background: color-mix(in srgb, var(--unit-soft) 74%, white);
   border-bottom: 1px solid var(--glass-border);
   display: grid;
   gap: 0.75rem;
@@ -715,14 +772,14 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-sublevel-card:hover:not(:disabled) {
-  border-color: var(--primary);
+  border-color: var(--sublevel-color);
   box-shadow: var(--shadow-sm);
 }
 
 .learning-sublevel-card.active {
-  background: #edf6fb;
-  border-color: rgba(38, 86, 132, 0.42);
-  color: var(--primary-dark);
+  background: var(--sublevel-soft);
+  border-color: var(--sublevel-border);
+  color: var(--sublevel-color-dark);
 }
 
 .learning-sublevel-card.locked {
@@ -731,7 +788,7 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-sublevel-card span {
-  color: var(--accent);
+  color: var(--sublevel-color);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -778,7 +835,7 @@ a:hover { text-decoration: underline; }
   align-items: center;
   background: #e7edf4;
   border-radius: 50%;
-  color: var(--primary);
+  color: var(--sublevel-color);
   display: inline-flex;
   flex: 0 0 24px;
   font-size: 0.75rem;
@@ -794,9 +851,14 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-step.active {
-  background: #edf6fb;
-  border-color: rgba(38, 86, 132, 0.42);
-  color: var(--primary-dark);
+  background: var(--sublevel-soft);
+  border-color: var(--sublevel-border);
+  color: var(--sublevel-color-dark);
+}
+
+.learning-step.active span {
+  background: var(--sublevel-color);
+  color: #fff;
 }
 
 .learning-step.done {
@@ -844,9 +906,9 @@ a:hover { text-decoration: underline; }
 .learning-slide-top {
   align-items: center;
   align-self: start;
-  background: #f8fafc;
+  background: var(--sublevel-soft);
   border: 1px solid var(--glass-border);
-  border-left: 4px solid var(--primary);
+  border-left: 4px solid var(--sublevel-color);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   display: grid;
@@ -891,7 +953,7 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-slide-kicker span {
-  background: var(--primary);
+  background: var(--sublevel-color);
   border-radius: var(--radius-sm);
   color: #fff;
   font-size: 0.78rem;
@@ -900,7 +962,7 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-slide-kicker strong {
-  color: var(--primary-dark);
+  color: var(--sublevel-color-dark);
   font-size: 0.76rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -939,7 +1001,7 @@ a:hover { text-decoration: underline; }
 
 .learning-bullets li {
   background: var(--bg-surface);
-  border-left: 3px solid var(--primary);
+  border-left: 3px solid var(--sublevel-color);
   border-radius: var(--radius-sm);
   color: var(--text-secondary);
   line-height: 1.45;
@@ -960,7 +1022,7 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-formula strong {
-  color: var(--primary-dark);
+  color: var(--sublevel-color-dark);
   display: block;
   font-size: 0.78rem;
   margin-bottom: 0.45rem;
@@ -1047,7 +1109,7 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-official-toolbar span {
-  color: var(--accent);
+  color: var(--sublevel-color);
   display: block;
   font-size: 0.68rem;
   font-weight: 800;
@@ -1073,7 +1135,9 @@ a:hover { text-decoration: underline; }
   background: #eef2f7;
   border: 0;
   display: block;
-  height: 520px;
+  height: 78vh;
+  max-height: 1040px;
+  min-height: 760px;
   width: 100%;
 }
 
@@ -1146,7 +1210,7 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-resource-row button:hover {
-  border-color: var(--primary);
+  border-color: var(--sublevel-color);
 }
 
 .learning-resource-row strong,
@@ -1205,8 +1269,8 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-support {
-  background: #fff8e8;
-  border-color: rgba(185, 111, 6, 0.28);
+  background: var(--sublevel-soft);
+  border-color: var(--sublevel-border);
   display: none;
   margin-top: 1rem;
 }
@@ -1222,7 +1286,7 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-support h4 {
-  color: var(--accent-dark);
+  color: var(--sublevel-color-dark);
   font-size: 0.82rem;
   margin-bottom: 0.45rem;
 }
@@ -1234,7 +1298,7 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-support-actions {
-  border-top: 1px solid rgba(185, 111, 6, 0.2);
+  border-top: 1px solid var(--sublevel-border);
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
@@ -1339,7 +1403,7 @@ a:hover { text-decoration: underline; }
   display: grid;
   grid-template-columns: 320px minmax(0, 1fr);
   gap: 1rem;
-  min-height: 720px;
+  min-height: 900px;
 }
 
 .resource-list-panel,
@@ -1464,7 +1528,9 @@ a:hover { text-decoration: underline; }
   background: #edf1f5;
   border: 0;
   flex: 1;
-  min-height: 660px;
+  height: 82vh;
+  max-height: 1100px;
+  min-height: 820px;
   width: 100%;
 }
 
@@ -2565,7 +2631,9 @@ a:hover { text-decoration: underline; }
   }
 
   .learning-official-doc iframe {
-    height: 620px;
+    height: 78vh;
+    max-height: none;
+    min-height: 720px;
   }
 
   .learning-resource-row {
@@ -2614,6 +2682,7 @@ a:hover { text-decoration: underline; }
   }
 
   .resource-reader-frame {
+    height: 78vh;
     min-height: 720px;
   }
 

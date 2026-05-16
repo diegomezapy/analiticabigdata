@@ -2036,7 +2036,7 @@
                         ? 'Registrar evaluacion parcial'
                         : (isLast ? (done ? 'Unidad completada' : 'Ya lei y comprendi') : (done ? 'Seguir al siguiente nivel' : 'Ya lei y comprendi'))));
             return `
-      <article class="learning-slide">
+      <article class="learning-slide unit-theme-u${unitNum} sublevel-theme-s${slide.sublevelIndex || 1}">
         <header class="learning-slide-top">
           <div class="learning-slide-heading">
             <div class="learning-slide-kicker">
@@ -2085,7 +2085,7 @@
                 const locked = firstIndex > maxUnlocked;
                 const active = currentSlide?.sublevelIndex === sublevelIndex;
                 return `
-            <button class="learning-sublevel-card ${active ? 'active' : ''} ${locked ? 'locked' : ''}"
+            <button class="learning-sublevel-card sublevel-theme-s${sublevelIndex} ${active ? 'active' : ''} ${locked ? 'locked' : ''}"
               onclick="goToUnitPathSlide(${unitNum}, ${firstIndex})" ${locked ? 'disabled' : ''}>
               <span>Subnivel ${sublevelIndex}</span>
               <strong>${escapeHtml(group[0]?.sublevelTitle || `Subnivel ${sublevelIndex}`)}</strong>
@@ -2108,7 +2108,7 @@
             const pct = Math.round((completed / slides.length) * 100);
             const maxUnlocked = maxUnlockedPathSlide(unitNum, slides);
             return `
-      <section class="learning-path-shell">
+      <section class="learning-path-shell unit-theme-u${unitNum} sublevel-theme-s${currentSlide?.sublevelIndex || 1}">
         <div class="learning-path-head">
           <div>
             <span class="doc-status-pill">Ruta secuencial</span>
