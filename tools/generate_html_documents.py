@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import html
+import json
 import re
 import zipfile
 from pathlib import Path
@@ -12,6 +13,7 @@ import fitz
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_BASE = "https://diegomezapy.github.io/analiticabigdata/"
 COURSE_NAME = "Analítica de Big Data"
+TABLE_PREFIX = "__ABD_TABLE__:"
 COURSE_CONTEXT = {
     "Carrera": "Matemática Estadística",
     "Modalidad": "Virtual",
@@ -147,15 +149,31 @@ def extract_pdf(path: Path) -> list[str]:
     for page_index, page in enumerate(doc, start=1):
         if page_index > 1:
             lines.append(f"Página {page_index}")
+        page_items: list[tuple[float, str]] = []
+        table_rects: list[fitz.Rect] = []
+        try:
+            tables = page.find_tables().tables
+        except Exception:
+            tables = []
+        for table in tables:
+            rows = clean_table_rows(table.extract())
+            if rows:
+                table_rect = fitz.Rect(table.bbox)
+                table_rects.append(table_rect)
+                page_items.append((table_rect.y0, table_marker(rows)))
         for block in page.get_text("blocks"):
+            block_rect = fitz.Rect(block[:4])
+            if any(overlap_ratio(block_rect, table_rect) > 0.2 for table_rect in table_rects):
+                continue
             raw_lines = [normalize(raw) for raw in block[4].splitlines()]
             raw_lines = [line for line in raw_lines if line]
             if not raw_lines:
                 continue
             if len(raw_lines) > 1 and all(is_heading_or_meta(line) for line in raw_lines):
-                lines.extend(raw_lines)
+                page_items.extend((block_rect.y0, line) for line in raw_lines)
             else:
-                lines.append(normalize(" ".join(raw_lines)))
+                page_items.append((block_rect.y0, normalize(" ".join(raw_lines))))
+        lines.extend(item for _, item in sorted(page_items, key=lambda item: item[0]))
     return collapse_repeated(lines)
 
 
@@ -174,6 +192,7 @@ def extract_docx(path: Path) -> list[str]:
             if text:
                 lines.append(text)
         elif tag == "tbl":
+            rows = []
             for row in element.findall(".//w:tr", ns):
                 cells = []
                 for cell in row.findall("./w:tc", ns):
@@ -184,8 +203,37 @@ def extract_docx(path: Path) -> list[str]:
                     if text:
                         cells.append(text)
                 if cells:
-                    lines.append(" | ".join(cells))
+                    rows.append(cells)
+            if rows:
+                lines.append(table_marker(rows))
     return collapse_repeated(lines)
+
+
+def table_marker(rows: list[list[str]]) -> str:
+    return TABLE_PREFIX + json.dumps(rows, ensure_ascii=False)
+
+
+def clean_table_rows(rows: list[list[str | None]]) -> list[list[str]]:
+    cleaned: list[list[str]] = []
+    for row in rows:
+        cells: list[str] = []
+        previous = ""
+        for cell in row:
+            text = normalize(str(cell or ""))
+            if not text or text == previous:
+                continue
+            cells.append(text)
+            previous = text
+        if cells and cells not in cleaned:
+            cleaned.append(cells)
+    return cleaned
+
+
+def overlap_ratio(a: fitz.Rect, b: fitz.Rect) -> float:
+    intersection = a & b
+    if intersection.is_empty or a.get_area() == 0:
+        return 0.0
+    return intersection.get_area() / a.get_area()
 
 
 def paragraph_text(element: ET.Element, ns: dict[str, str]) -> str:
@@ -217,6 +265,8 @@ def collapse_repeated(lines: list[str]) -> list[str]:
 
 
 def line_to_html(line: str, index: int) -> str:
+    if line.startswith(TABLE_PREFIX):
+        return render_table_html(line)
     escaped = html.escape(line)
     if not line:
         return ""
@@ -227,11 +277,131 @@ def line_to_html(line: str, index: int) -> str:
     if re.match(r"^•\s+", line):
         return f'<p class="doc-bullet">{escaped}</p>'
     if " | " in line:
-        cells = "".join(f"<td>{html.escape(cell.strip())}</td>" for cell in line.split(" | "))
-        return f'<table class="doc-table"><tr>{cells}</tr></table>'
+        return render_table_html(table_marker([line.split(" | ")]))
+    if is_equation(line):
+        return f'<div class="doc-equation">{escaped}</div>'
     if is_heading(line):
         return f"<h2>{escaped}</h2>"
     return f"<p>{escaped}</p>"
+
+
+def render_table_html(marker: str) -> str:
+    try:
+        rows = json.loads(marker.removeprefix(TABLE_PREFIX))
+    except json.JSONDecodeError:
+        return ""
+    if looks_like_code_rows(rows):
+        return render_code_html(rows)
+    html_rows = []
+    for row_index, row in enumerate(rows):
+        tag = "th" if row_index == 0 else "td"
+        cells = "".join(f"<{tag}>{html.escape(str(cell))}</{tag}>" for cell in row)
+        html_rows.append(f"<tr>{cells}</tr>")
+    return f'<div class="doc-table-wrap"><table class="doc-table">{"".join(html_rows)}</table></div>'
+
+
+def looks_like_code_rows(rows: list[list[str]]) -> bool:
+    if not rows:
+        return False
+    max_cols = max(len(row) for row in rows)
+    text = "\n".join(" ".join(str(cell) for cell in row) for row in rows)
+    code_tokens = [
+        "library(", "import ", "from ", "<-", "#", "print(", "head(",
+        "summary(", "install.packages", "read.csv", "read_csv", "pd.",
+        "pl.", "ggplot(", "sns.", "plt.", "```", "knitr::", "set.seed(",
+        "data.frame(", "function(", "confusionMatrix(", "fread(",
+        "hist(", "plot(", "boxplot(", "abline(", "mean(", "sd(",
+        "getwd(", "list.files(",
+    ]
+    tree_tokens = ["├", "└", "│", ".Rproj", "/"]
+    code_score = sum(1 for token in code_tokens if token in text)
+    if max_cols == 1 and code_score >= 2:
+        return True
+    if max_cols == 1 and len(rows) >= 2 and str(rows[0][0]).lstrip().startswith("#"):
+        return True
+    if max_cols == 1 and len(rows) >= 3 and any(token in text for token in tree_tokens):
+        return True
+    return False
+
+
+def render_code_html(rows: list[list[str]]) -> str:
+    lines: list[str] = []
+    for row in rows:
+        joined = " ".join(str(cell) for cell in row).strip()
+        if joined:
+            lines.extend(split_compacted_code_line(joined))
+    code = "\n".join(line for line in lines if line.strip())
+    return f'<pre class="doc-code"><code>{html.escape(code)}</code></pre>'
+
+
+def split_compacted_code_line(line: str) -> list[str]:
+    if len(line) < 90:
+        return [line]
+    attached_starts = [
+        r"df\s*=", r"df\s*<-", r"df_", r"datos\s*<-", r"ggplot\(", r"ggcorr\(",
+        r"sns\.", r"plt\.", r"print\(", r"head\(", r"summary\(",
+        r"corr\s*=", r"imputer\s*=", r"trainIndex\b", r"model\s*<-",
+        r"predictions\s*<-", r"hist\(", r"plot\(", r"boxplot\(",
+    ]
+    formatted = line
+    for start in attached_starts:
+        formatted = re.sub(r"(# [^\n#]*?)(?=" + start + ")", r"\1\n", formatted)
+    break_patterns = [
+        r"(?<!^)(?=import\s)",
+        r"(?<!^)(?=from\s)",
+        r"(?<!^)(?=library\()",
+        r"(?<!^)(?=install\.packages\()",
+        r"(?<!^)(?=#\s)",
+        r"(?<!^)(?=data\()",
+        r"(?<!^)(?=set\.seed\()",
+        r"(?<!^)(?=trainIndex\b)",
+        r"(?<!^)(?=train\s*<-)",
+        r"(?<!^)(?=test\s*<-)",
+        r"(?<!^)(?=model\s*<-)",
+        r"(?<!^)(?=predictions\s*<-)",
+        r"(?<!^)(?=normalize\s*<-)",
+        r"(?<!^)(?=iris_norm\s*<-)",
+        r"(?<!^)(?=imputer\s*=)",
+        r"(?<!^)(?=df(?:_|\s*=|\s*<-))",
+        r"(?<!^)(?=datos(?:_|\s*<-))",
+        r"(?<!^)(?=corr\s*=)",
+        r"(?<![\w.])(?=print\()",
+        r"(?<![\w.])(?=head\()",
+        r"(?<![\w.])(?=summary\()",
+        r"(?<![\w.])(?=confusionMatrix\()",
+        r"(?<![\w.])(?=plot\()",
+        r"(?<!^)(?=ggplot\()",
+        r"(?<!^)(?=sns\.)",
+        r"(?<!^)(?=plt\.)",
+        r"(?<![\w.])(?=dim\()",
+        r"(?<![\w.])(?=nrow\()",
+        r"(?<![\w.])(?=ncol\()",
+        r"(?<![\w.])(?=colnames\()",
+        r"(?<![\w.])(?=str\()",
+        r"(?<![\w.])(?=glimpse\()",
+        r"(?<![\w.])(?=is\.na\()",
+        r"(?<![\w.])(?=colSums\()",
+        r"(?<![\w.])(?=sum\()",
+        r"(?<![\w.])(?=unique\()",
+        r"(?<![\w.])(?=table\()",
+    ]
+    for pattern in break_patterns:
+        formatted = re.sub(pattern, "\n", formatted)
+    return [part.strip() for part in formatted.splitlines()]
+
+
+def is_equation(line: str) -> bool:
+    if len(line) > 180 or is_heading(line):
+        return False
+    math_tokens = [
+        "=", "≤", "≥", "≠", "≈", "∑", "√", "β", "α", "λ", "μ", "σ",
+        "logit", "Pr(", "P(", "y =", "Y =", "f(", "^2", "\\frac"
+    ]
+    if any(token in line for token in math_tokens):
+        if re.search(r"\b(R|Python|Código|Unidad|Fecha|Nombre|Carrera)\b", line, re.I):
+            return False
+        return True
+    return False
 
 
 def is_heading_or_meta(line: str) -> bool:
@@ -344,12 +514,9 @@ def render_academic_frontmatter(spec: dict[str, str], asset_path: str) -> str:
     )
     if spec["kind"] == "Guía del curso":
         return f"""
-    <section class="doc-cover-card guide">
-      <img src="{asset_path}facen-cover.jpg" alt="Portada institucional FACEN">
-      <div class="doc-cover-text">
-        <h2>Guía académica de la asignatura</h2>
-        <p>Documento marco para comprender la organización pedagógica, los objetivos, la metodología, el cronograma y los criterios de evaluación de la asignatura.</p>
-      </div>
+    <section class="doc-study-note">
+      <h2>Guía académica de la asignatura</h2>
+      <p>Documento marco para comprender la organización pedagógica, los objetivos, la metodología, el cronograma y los criterios de evaluación de la asignatura.</p>
     </section>
     <section class="doc-meta-grid">{meta}</section>
     <section class="doc-study-note">
@@ -360,9 +527,6 @@ def render_academic_frontmatter(spec: dict[str, str], asset_path: str) -> str:
     if unit:
         brief = UNIT_BRIEFS[unit]
         ruta = "".join(f"<li>{html.escape(item)}</li>" for item in brief["ruta"])
-        image = f"{asset_path}miniatura_unidad{unit}.png"
-        if spec["kind"] == "Material extendido":
-            image = f"{asset_path}portada_unidad{unit}.png"
         activity_html = ""
         if act:
             activity = ACTIVITY_BRIEFS[act]
@@ -374,10 +538,10 @@ def render_academic_frontmatter(spec: dict[str, str], asset_path: str) -> str:
       </div>
 """
         return f"""
-    <section class="doc-unit-card">
-      <img src="{image}" alt="Imagen académica Unidad {unit}">
+    <section class="doc-unit-card no-image">
+      <div class="doc-unit-number">Unidad {unit}</div>
       <div>
-        <div class="doc-kicker">Unidad {unit}</div>
+        <div class="doc-kicker">Analítica de Big Data</div>
         <h2>{html.escape(unit_title(unit))}</h2>
         <p>{html.escape(brief["competencia"])}</p>
       </div>
@@ -401,6 +565,7 @@ def render_index() -> str:
     resource_items = """
 <a href="guia_didactica/BigData_GuiaDid.pdf" download><span>PDF descargable</span>Guía Académica y Didáctica — PDF</a>
 <a href="practicas/index.html"><span>Prácticas</span>Laboratorios guiados con datos CSV y código R</a>
+<a href="laboratorio/index.html"><span>Laboratorio ejecutable</span>R con data.table y Python con Polars en el navegador</a>
 <a href="data/datasets/clientes_compras.csv" download><span>Datos CSV</span>Clientes y compras — práctica Unidad 1</a>
 <a href="data/datasets/estudiantes_ead.csv" download><span>Datos CSV</span>Estudiantes EAD — práctica Unidad 2</a>
 <a href="data/datasets/modelos_credito.csv" download><span>Datos CSV</span>Modelos de crédito — prácticas Unidades 3 y 4</a>
@@ -518,6 +683,15 @@ def write_simple_pdf(target: Path, spec: dict[str, str], lines: list[str]) -> No
     put(spec["subtitle"], size=12)
     y += 8
     for line in lines:
+        if line.startswith(TABLE_PREFIX):
+            try:
+                rows = json.loads(line.removeprefix(TABLE_PREFIX))
+            except json.JSONDecodeError:
+                rows = []
+            for row in rows:
+                put(" | ".join(str(cell) for cell in row), size=8)
+            y += 4
+            continue
         if not line:
             continue
         put(line, size=12 if is_heading(line) else 10, bold=is_heading(line))

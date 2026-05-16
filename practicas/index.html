@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prácticas guiadas — Analítica de Big Data</title>
-  <meta name="description" content="Laboratorios guiados con datos y código R para Analítica de Big Data.">
+  <meta name="description" content="Laboratorios guiados con datos y código R/Python para Analítica de Big Data.">
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="manifest" href="../manifest.json">
   <meta name="theme-color" content="#0f172a">
@@ -19,7 +19,7 @@
   <main class="embed-shell">
     <div class="embed-header">
       <h1>Prácticas guiadas</h1>
-      <p>Fichas paso a paso con datos descargables y código R.</p>
+      <p>Fichas paso a paso con datos descargables, código R data.table y enlace al laboratorio R/Python.</p>
     </div>
     <div id="practiceRoot"></div>
   </main>
@@ -33,9 +33,9 @@
         dataset: '../data/datasets/clientes_compras.csv',
         goal: 'Importar, limpiar y resumir compras de clientes para detectar segmentos simples.',
         steps: [
-          ['Leer datos', 'Importar el archivo y revisar su estructura.', 'clientes <- read.csv("../data/datasets/clientes_compras.csv")\nstr(clientes)\nhead(clientes, 8)'],
-          ['Resumir variables', 'Reconocer rangos, frecuencias y valores extremos.', 'summary(clientes[, c("edad", "compras_mes", "monto_total")])\ntable(clientes$canal_preferido)'],
-          ['Crear una señal', 'Transformar datos transaccionales en información accionable.', 'clientes$alto_valor <- clientes$monto_total >= median(clientes$monto_total)\naggregate(monto_total ~ alto_valor + canal_preferido, clientes, mean)']
+          ['Leer datos', 'Importar el archivo y revisar su estructura con data.table.', 'library(data.table)\nclientes <- fread("../data/datasets/clientes_compras.csv")\nstr(clientes)\nhead(clientes, 8)'],
+          ['Resumir variables', 'Reconocer rangos, frecuencias y valores extremos.', 'clientes[, .(\n  edad_min = min(edad),\n  edad_max = max(edad),\n  compras_promedio = mean(compras_mes),\n  monto_promedio = mean(monto_total)\n)]\nclientes[, .N, by = canal_preferido]'],
+          ['Crear una señal', 'Transformar datos transaccionales en información accionable.', 'clientes[, alto_valor := monto_total >= median(monto_total)]\nclientes[, .(monto_promedio = mean(monto_total)),\n         by = .(alto_valor, canal_preferido)]']
         ]
       },
       {
@@ -45,9 +45,9 @@
         dataset: '../data/datasets/estudiantes_ead.csv',
         goal: 'Explorar dedicación, participación y rendimiento en un curso virtual ficticio.',
         steps: [
-          ['Distribuciones', 'Visualizar cómo se distribuyen las variables principales.', 'ead <- read.csv("../data/datasets/estudiantes_ead.csv")\nhist(ead$horas_semana, col = "#14b8a6", main = "Horas de estudio", xlab = "Horas por semana")'],
+          ['Distribuciones', 'Visualizar cómo se distribuyen las variables principales.', 'library(data.table)\nead <- fread("../data/datasets/estudiantes_ead.csv")\nhist(ead$horas_semana, col = "#14b8a6", main = "Horas de estudio", xlab = "Horas por semana")'],
           ['Relaciones', 'Observar asociaciones entre dedicación y calificación.', 'plot(ead$horas_semana, ead$nota_final, pch = 19, col = "#f97316")\nabline(lm(nota_final ~ horas_semana, data = ead), col = "#38bdf8", lwd = 2)'],
-          ['Categorías', 'Binarizar variables para comparar grupos.', 'ead$riesgo <- ifelse(ead$nota_final < 70 | ead$entregas_pendientes > 1, "riesgo", "al_dia")\ntable(ead$riesgo, ead$turno)']
+          ['Categorías', 'Binarizar variables para comparar grupos.', 'ead[, riesgo := fifelse(nota_final < 70 | entregas_pendientes > 1, "riesgo", "al_dia")]\nead[, .N, by = .(riesgo, turno)]']
         ]
       },
       {
@@ -57,7 +57,7 @@
         dataset: '../data/datasets/modelos_credito.csv',
         goal: 'Entrenar una regresión logística sencilla y leer sus probabilidades.',
         steps: [
-          ['Variable objetivo', 'Definir qué se intenta predecir.', 'credito <- read.csv("../data/datasets/modelos_credito.csv")\ntable(credito$aprobado)\nprop.table(table(credito$aprobado))'],
+          ['Variable objetivo', 'Definir qué se intenta predecir.', 'library(data.table)\ncredito <- fread("../data/datasets/modelos_credito.csv")\ncredito[, .N, by = aprobado]\ncredito[, .(proporcion = .N / nrow(credito)), by = aprobado]'],
           ['Entrenar modelo', 'Estimar probabilidades para un resultado binario.', 'modelo <- glm(aprobado ~ ingreso_mensual + score_credito + deuda_actual,\n              data = credito, family = binomial)\nsummary(modelo)'],
           ['Predicciones', 'Transformar probabilidades en decisiones con un umbral.', 'credito$prob_aprobacion <- predict(modelo, type = "response")\ncredito$prediccion <- ifelse(credito$prob_aprobacion >= 0.5, 1, 0)\ntable(Predicho = credito$prediccion, Real = credito$aprobado)']
         ]
@@ -70,7 +70,7 @@
         goal: 'Convertir resultados técnicos en una recomendación entendible.',
         steps: [
           ['Métricas mínimas', 'Comparar aciertos, errores y límites.', 'matriz <- table(Predicho = credito$prediccion, Real = credito$aprobado)\naccuracy <- sum(diag(matriz)) / sum(matriz)\naccuracy'],
-          ['Casos dudosos', 'Revisar observaciones cercanas al umbral.', 'credito[order(abs(credito$prob_aprobacion - 0.5)),\n        c("id", "ingreso_mensual", "score_credito", "deuda_actual", "prob_aprobacion")][1:5, ]'],
+          ['Casos dudosos', 'Revisar observaciones cercanas al umbral.', 'credito[order(abs(prob_aprobacion - 0.5))][1:5,\n  .(id, ingreso_mensual, score_credito, deuda_actual, prob_aprobacion)]'],
           ['Cierre comunicable', 'Explicar datos, método, resultado, límites y acción.', 'cat("Recomendación: usar el modelo como apoyo, no como decisión automática.\\n")\ncat("Validar con nuevos datos antes de aplicar en producción.\\n")']
         ]
       }
@@ -100,7 +100,10 @@
               <h2>${lab.title}</h2>
               <p>${lab.goal}</p>
             </div>
-            <a class="btn-secondary as-link" href="${lab.dataset}" download>Descargar CSV</a>
+            <div class="practice-actions">
+              <a class="btn-secondary as-link" href="${lab.dataset}" download>Descargar CSV</a>
+              <a class="btn-primary as-link" href="../laboratorio/index.html" target="_blank">Abrir laboratorio R/Python</a>
+            </div>
           </div>
           <div class="practice-stepper">
             ${lab.steps.map((_, i) => `<button class="step-dot ${i === step ? 'active' : ''}" onclick="step=${i};render()">${i + 1}</button>`).join('')}

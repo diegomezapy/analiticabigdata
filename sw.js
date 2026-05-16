@@ -1,4 +1,4 @@
-const CACHE_NAME = 'analitica-bigdata-v4';
+const CACHE_NAME = 'analitica-bigdata-v5';
 
 const APP_SHELL = [
   './',
@@ -18,18 +18,10 @@ const APP_SHELL = [
   'data/datasets/modelos_credito.csv',
   'guia_didactica/index.html',
   'practicas/index.html',
+  'laboratorio/index.html',
   'icons/icon.svg',
   'assets/academic/facen-header.png',
-  'assets/academic/facen-footer.png',
-  'assets/academic/facen-cover.jpg',
-  'assets/academic/miniatura_unidad1.png',
-  'assets/academic/miniatura_unidad2.png',
-  'assets/academic/miniatura_unidad3.png',
-  'assets/academic/miniatura_unidad4.png',
-  'assets/academic/portada_unidad1.png',
-  'assets/academic/portada_unidad2.png',
-  'assets/academic/portada_unidad3.png',
-  'assets/academic/portada_unidad4.png'
+  'assets/academic/facen-footer.png'
 ];
 
 self.addEventListener('install', event => {

@@ -1214,6 +1214,21 @@ a:hover { text-decoration: underline; }
 .practice-task h4 { margin-bottom: 0.65rem; }
 .practice-task p { margin-bottom: 1rem; font-size: 0.88rem; }
 
+.lab-embed-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.lab-frame {
+  border: 0;
+  display: block;
+  height: min(78vh, 880px);
+  min-height: 640px;
+  width: 100%;
+}
+
 .concept-box {
   padding: 0.9rem 1rem;
   background: rgba(20,184,166,0.08);
@@ -1455,8 +1470,14 @@ a:hover { text-decoration: underline; }
 
   .practice-detail,
   .calendar-item,
+  .lab-embed-card,
   .form-row.two-cols {
     grid-template-columns: 1fr;
+  }
+
+  .lab-frame {
+    height: 860px;
+    min-height: 860px;
   }
 
   .admin-date-row {

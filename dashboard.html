@@ -82,6 +82,10 @@
                     <span class="nav-item-icon">💻</span>
                     <span>Prácticas guiadas</span>
                 </div>
+                <div class="nav-item" onclick="showPage('lab')" id="nav-lab">
+                    <span class="nav-item-icon">⌨️</span>
+                    <span>Laboratorio R/Python</span>
+                </div>
                 <div class="nav-item" onclick="showPage('flashcards')" id="nav-flashcards">
                     <span class="nav-item-icon">🃏</span>
                     <span>Flashcards</span>
@@ -198,19 +202,19 @@
                     {
                         title: 'Ficha 1 - Leer datos',
                         concept: 'Una práctica reproducible comienza con importar el archivo y revisar su estructura antes de transformar.',
-                        code: `clientes <- read.csv("data/datasets/clientes_compras.csv")\nstr(clientes)\nhead(clientes, 8)`,
+                        code: `library(data.table)\nclientes <- fread("data/datasets/clientes_compras.csv")\nstr(clientes)\nhead(clientes, 8)`,
                         task: 'Ejecuta el código y anota cuántas columnas trae el archivo.'
                     },
                     {
                         title: 'Ficha 2 - Resumir variables',
                         concept: 'Los resúmenes ayudan a reconocer rangos, valores extremos y posibles errores de captura.',
-                        code: `summary(clientes[, c("edad", "compras_mes", "monto_total")])\ntable(clientes$canal_preferido)`,
+                        code: `clientes[, .(\n  edad_min = min(edad),\n  edad_max = max(edad),\n  compras_promedio = mean(compras_mes),\n  monto_promedio = mean(monto_total)\n)]\nclientes[, .N, by = canal_preferido]`,
                         task: 'Identifica el canal con mayor frecuencia y el monto total máximo.'
                     },
                     {
                         title: 'Ficha 3 - Crear una señal analítica',
                         concept: 'Una variable derivada convierte datos transaccionales en información accionable.',
-                        code: `clientes$alto_valor <- clientes$monto_total >= median(clientes$monto_total)\naggregate(monto_total ~ alto_valor + canal_preferido, clientes, mean)`,
+                        code: `clientes[, alto_valor := monto_total >= median(monto_total)]\nclientes[, .(monto_promedio = mean(monto_total)),\n         by = .(alto_valor, canal_preferido)]`,
                         task: 'Marca la ficha como completa cuando puedas explicar qué significa alto_valor.'
                     }
                 ]
@@ -226,7 +230,7 @@
                     {
                         title: 'Ficha 1 - Distribuciones',
                         concept: 'Antes de modelar, conviene visualizar cómo se distribuyen las variables principales.',
-                        code: `ead <- read.csv("data/datasets/estudiantes_ead.csv")\nhist(ead$horas_semana, col = "#14b8a6", main = "Horas de estudio", xlab = "Horas por semana")`,
+                        code: `library(data.table)\nead <- fread("data/datasets/estudiantes_ead.csv")\nhist(ead$horas_semana, col = "#14b8a6", main = "Horas de estudio", xlab = "Horas por semana")`,
                         task: 'Observa si la mayoría estudia pocas, medias o muchas horas.'
                     },
                     {
@@ -238,7 +242,7 @@
                     {
                         title: 'Ficha 3 - Preparar categorías',
                         concept: 'Binarizar o categorizar variables facilita comparaciones y algunos modelos.',
-                        code: `ead$riesgo <- ifelse(ead$nota_final < 70 | ead$entregas_pendientes > 1, "riesgo", "al_dia")\ntable(ead$riesgo, ead$turno)`,
+                        code: `ead[, riesgo := fifelse(nota_final < 70 | entregas_pendientes > 1, "riesgo", "al_dia")]\nead[, .N, by = .(riesgo, turno)]`,
                         task: 'Cuenta cuántos estudiantes aparecen en riesgo por turno.'
                     }
                 ]
@@ -254,7 +258,7 @@
                     {
                         title: 'Ficha 1 - Variable objetivo',
                         concept: 'La variable objetivo define qué se intenta predecir; aquí será aprobación de crédito.',
-                        code: `credito <- read.csv("data/datasets/modelos_credito.csv")\ntable(credito$aprobado)\nprop.table(table(credito$aprobado))`,
+                        code: `library(data.table)\ncredito <- fread("data/datasets/modelos_credito.csv")\ncredito[, .N, by = aprobado]\ncredito[, .(proporcion = .N / nrow(credito)), by = aprobado]`,
                         task: 'Registra la proporción de solicitudes aprobadas.'
                     },
                     {
@@ -288,7 +292,7 @@
                     {
                         title: 'Ficha 2 - Casos para revisar',
                         concept: 'Los casos cercanos al umbral suelen requerir revisión humana o más información.',
-                        code: `credito[order(abs(credito$prob_aprobacion - 0.5)),\n        c("id", "ingreso_mensual", "score_credito", "deuda_actual", "prob_aprobacion")][1:5, ]`,
+                        code: `credito[order(abs(prob_aprobacion - 0.5))][1:5,\n  .(id, ingreso_mensual, score_credito, deuda_actual, prob_aprobacion)]`,
                         task: 'Selecciona un caso dudoso y justifica por qué lo revisarías.'
                     },
                     {
@@ -375,7 +379,7 @@
             earnBadge('first_login');
 
             const route = (window.location.hash || '').replace('#', '');
-            if (['calendar', 'practices', 'account', 'admin'].includes(route)) showPage(route);
+            if (['calendar', 'practices', 'lab', 'account', 'admin'].includes(route)) showPage(route);
             else if (/^u[1-4]$/.test(route)) showUnit(Number(route.slice(1)));
             else showPage('home');
             checkReminders();
@@ -461,6 +465,7 @@
             const titles = {
                 home: 'Inicio', progress: 'Mi Progreso', badges: 'Mis Logros',
                 calendar: 'Calendario', practices: 'Prácticas guiadas',
+                lab: 'Laboratorio R/Python',
                 flashcards: 'Flashcards', matching: 'Emparejar Conceptos', guia: 'Guía Didáctica',
                 account: 'Cuenta', admin: 'Administración'
             };
@@ -471,6 +476,7 @@
             else if (page === 'badges') renderBadges();
             else if (page === 'calendar') renderCalendar();
             else if (page === 'practices') renderPractices();
+            else if (page === 'lab') renderLab();
             else if (page === 'flashcards') renderFlashcards();
             else if (page === 'matching') renderMatching();
             else if (page === 'guia') renderGuia();
@@ -738,6 +744,11 @@
         <div style="font-size:2rem;margin-bottom:0.5rem">📅</div>
         <h3>Calendario</h3>
         <p style="font-size:0.8rem;margin-top:0.3rem">Fechas, exámenes y recordatorios del semestre</p>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="showPage('lab')">
+        <div style="font-size:2rem;margin-bottom:0.5rem">⌨️</div>
+        <h3>Laboratorio R/Python</h3>
+        <p style="font-size:0.8rem;margin-top:0.3rem">Ejecuta data.table y Polars en el navegador</p>
       </div>
       <div class="card" style="cursor:pointer" onclick="showPage('guia')">
         <div style="font-size:2rem;margin-bottom:0.5rem">📖</div>
@@ -1425,6 +1436,7 @@
         <div class="practice-actions">
           <button class="btn-primary" onclick="openPractice('${lab.id}', ${Math.min(doneSteps.length, lab.steps.length - 1)})">Continuar</button>
           <a class="btn-secondary as-link" href="${lab.dataset}" download>Datos CSV</a>
+          <a class="btn-secondary as-link" href="laboratorio/index.html" target="_blank">Laboratorio R/Python</a>
           <a class="btn-secondary as-link" href="${lab.embed}" target="_blank">URL embebible</a>
         </div>
       </div>`;
@@ -1436,9 +1448,12 @@
     <div class="page-heading">
       <div>
         <h2>💻 Prácticas guiadas con datos</h2>
-        <p>Laboratorios por fichas, con datos descargables, código R y avance guardado.</p>
+        <p>Laboratorios por fichas, con datos descargables, código R data.table y avance guardado.</p>
       </div>
-      <a class="btn-secondary as-link" href="practicas/index.html" target="_blank">Abrir versión embebible</a>
+      <div class="practice-actions">
+        <a class="btn-primary as-link" href="laboratorio/index.html" target="_blank">Abrir laboratorio R/Python</a>
+        <a class="btn-secondary as-link" href="practicas/index.html" target="_blank">Abrir versión embebible</a>
+      </div>
     </div>
     <div class="stats-row">
       <div class="stat-card primary">
@@ -1506,6 +1521,7 @@
           <div class="practice-actions">
             <button class="btn-secondary" onclick="copyPracticeCode()">Copiar código</button>
             <a class="btn-secondary as-link" href="${lab.dataset}" download>Descargar datos</a>
+            <a class="btn-primary as-link" href="laboratorio/index.html" target="_blank">Ejecutar en laboratorio</a>
             <a class="btn-secondary as-link" href="${lab.embed}" target="_blank">URL de esta práctica</a>
           </div>
         </div>
@@ -1560,6 +1576,21 @@
             }
             syncProgressSnapshot();
             renderPracticeStep();
+        }
+
+        function renderLab() {
+            document.getElementById('pageContent').innerHTML = `
+    <div class="page-heading">
+      <div>
+        <h2>⌨️ Laboratorio R/Python</h2>
+        <p>Motor ejecutable en navegador para practicar con data.table en R y Polars en Python.</p>
+      </div>
+      <a class="btn-secondary as-link" href="laboratorio/index.html" target="_blank">Abrir en ventana nueva</a>
+    </div>
+    <div class="lab-embed-card">
+      <iframe class="lab-frame" src="laboratorio/index.html" title="Laboratorio R y Python"></iframe>
+    </div>`;
+            trackEvent('laboratorio_abierto', { recurso: 'laboratorio/index.html', detalle: 'Laboratorio R/Python' });
         }
 
         // ================================================================
@@ -1772,6 +1803,14 @@
           <p>Laboratorios con datos CSV y código R listos para insertar por URL</p>
         </div>
         <span class="material-badge badge-quiz">HTML</span>
+      </a>
+      <a href="laboratorio/index.html" target="_blank" class="material-item" onclick="trackResourceOpen('', 'laboratorio/index.html', 'Laboratorio R/Python')">
+        <div class="material-icon" style="background:rgba(41,128,185,0.1)">⌨️</div>
+        <div class="material-info">
+          <h4>Laboratorio R/Python</h4>
+          <p>Ejecutor webR + data.table y Pyodide + Polars para prácticas en vivo</p>
+        </div>
+        <span class="material-badge badge-act">HTML</span>
       </a>
       <a href="documentos.html" target="_blank" class="material-item" onclick="trackResourceOpen('', 'documentos.html', 'Índice de documentos HTML')">
         <div class="material-icon" style="background:rgba(249,115,22,0.1)">🌐</div>

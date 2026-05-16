@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio R/Python — Analítica de Big Data</title>
+  <meta name="description" content="Laboratorio ejecutable con webR, data.table, Pyodide y Polars.">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#f8fafc">
+  <style>
+    body { background: var(--bg-dark); min-height: 100vh; }
+    .lab-shell { max-width: 1180px; margin: 0 auto; padding: 1.25rem; }
+    .lab-header { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    .lab-header p { margin-top: .35rem; max-width: 760px; }
+    .lab-tabs { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .lab-tab { border: 1px solid var(--glass-border); background: var(--bg-elevated); border-radius: var(--radius-full); color: var(--text-secondary); cursor: pointer; font-weight: 800; padding: .65rem 1rem; }
+    .lab-tab.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .lab-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 1rem; }
+    .lab-panel { background: var(--bg-elevated); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1rem; }
+    .lab-toolbar { display: flex; gap: .65rem; flex-wrap: wrap; align-items: center; margin: .8rem 0; }
+    .lab-editor { background: #0b1220; border: 1px solid #1f2937; border-radius: var(--radius-md); color: #d1fae5; font-family: Consolas, "Liberation Mono", monospace; font-size: .88rem; min-height: 360px; padding: 1rem; resize: vertical; width: 100%; }
+    .lab-output { background: #111827; border: 1px solid #263244; border-radius: var(--radius-md); color: #e5e7eb; font-family: Consolas, "Liberation Mono", monospace; font-size: .84rem; min-height: 180px; overflow: auto; padding: 1rem; white-space: pre-wrap; }
+    .lab-status { border-radius: var(--radius-full); border: 1px solid var(--glass-border); color: var(--text-muted); font-size: .76rem; font-weight: 800; padding: .35rem .7rem; }
+    .lab-status.ready { background: rgba(34,197,94,.12); color: #166534; }
+    .lab-status.loading { background: rgba(217,145,18,.12); color: #92400e; }
+    .lab-exercise { border-top: 1px solid var(--glass-border); padding: .85rem 0; }
+    .lab-exercise:first-child { border-top: 0; padding-top: 0; }
+    .lab-exercise button { margin-top: .55rem; }
+    .lab-small { color: var(--text-muted); font-size: .82rem; }
+    @media (max-width: 900px) { .lab-header, .lab-layout { grid-template-columns: 1fr; flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <main class="lab-shell">
+    <header class="lab-header">
+      <div>
+        <h1>Laboratorio R/Python</h1>
+        <p>Ejecuta código directamente en el navegador. R usa <strong>webR + data.table</strong>; Python usa <strong>Pyodide + Polars</strong>. Los datos se cargan desde los CSV del aula.</p>
+      </div>
+      <a class="btn-secondary as-link" href="../dashboard.html">Volver al aula</a>
+    </header>
+
+    <div class="lab-tabs">
+      <button class="lab-tab active" id="tab-python" onclick="switchRuntime('python')">Python · Polars</button>
+      <button class="lab-tab" id="tab-r" onclick="switchRuntime('r')">R · data.table</button>
+    </div>
+
+    <section class="lab-layout">
+      <div class="lab-panel">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+          <div>
+            <h2 id="runtimeTitle">Python con Polars</h2>
+            <p class="lab-small" id="runtimeHelp">Carga CSV, resume datos y practica expresiones de Polars.</p>
+          </div>
+          <span class="lab-status" id="runtimeStatus">Sin iniciar</span>
+        </div>
+        <div class="lab-toolbar">
+          <button class="btn-primary" onclick="runCurrentCode()">Ejecutar</button>
+          <button class="btn-secondary" onclick="loadStarterCode()">Restaurar ejemplo</button>
+          <button class="btn-secondary" onclick="copyCode()">Copiar código</button>
+        </div>
+        <textarea class="lab-editor" id="codeEditor" spellcheck="false"></textarea>
+        <h3 style="margin:1rem 0 .5rem">Salida</h3>
+        <pre class="lab-output" id="labOutput">Selecciona Ejecutar para iniciar el motor.</pre>
+      </div>
+
+      <aside class="lab-panel">
+        <h2>Fichas de práctica</h2>
+        <div id="exerciseList"></div>
+        <div class="lab-exercise">
+          <h3>Datos disponibles</h3>
+          <p class="lab-small">Los tres CSV se copian al sistema virtual de cada motor.</p>
+          <a class="btn-secondary as-link" href="../data/datasets/clientes_compras.csv" download>clientes_compras.csv</a>
+          <a class="btn-secondary as-link" href="../data/datasets/estudiantes_ead.csv" download>estudiantes_ead.csv</a>
+          <a class="btn-secondary as-link" href="../data/datasets/modelos_credito.csv" download>modelos_credito.csv</a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.29.4/full/pyodide.js"></script>
+  <script type="module">
+    import { WebR, ChannelType } from 'https://webr.r-wasm.org/latest/webr.mjs';
+
+    const DATASETS = [
+      ['clientes_compras.csv', '../data/datasets/clientes_compras.csv'],
+      ['estudiantes_ead.csv', '../data/datasets/estudiantes_ead.csv'],
+      ['modelos_credito.csv', '../data/datasets/modelos_credito.csv']
+    ];
+
+    const POLARS_SHIM = String.raw`
+import pandas as _pd
+
+class _AliasMixin:
+    def alias(self, name):
+        self._alias = name
+        return self
+
+class Expr(_AliasMixin):
+    def __init__(self, kind, name=None, value=None, left=None, right=None):
+        self.kind = kind
+        self.name = name
+        self.value = value
+        self.left = left
+        self.right = right
+        self._alias = None
+
+    def mean(self):
+        return AggExpr(self.name, "mean")
+
+    def sum(self):
+        return AggExpr(self.name, "sum")
+
+    def __lt__(self, other):
+        return Expr("lt", left=self, right=other)
+
+    def __gt__(self, other):
+        return Expr("gt", left=self, right=other)
+
+    def __or__(self, other):
+        return Expr("or", left=self, right=other)
+
+    def _eval(self, df):
+        if self.kind == "col":
+            return df[self.name]
+        if self.kind == "lit":
+            return self.value
+        if self.kind == "lt":
+            return self.left._eval(df) < self.right
+        if self.kind == "gt":
+            return self.left._eval(df) > self.right
+        if self.kind == "or":
+            return self.left._eval(df) | self.right._eval(df)
+        raise NotImplementedError(self.kind)
+
+class AggExpr(_AliasMixin):
+    def __init__(self, name, func):
+        self.name = name
+        self.func = func
+        self._alias = None
+        self._round = None
+
+    def round(self, digits=0):
+        self._round = digits
+        return self
+
+class LenExpr(_AliasMixin):
+    def __init__(self):
+        self._alias = "len"
+
+class WhenExpr(_AliasMixin):
+    def __init__(self, condition):
+        self.condition = condition
+        self.then_value = None
+        self.otherwise_value = None
+        self._alias = None
+
+    def then(self, value):
+        self.then_value = value
+        return self
+
+    def otherwise(self, value):
+        self.otherwise_value = value
+        return self
+
+    def _value(self, value, df):
+        return value._eval(df) if hasattr(value, "_eval") else value
+
+    def _eval(self, df):
+        mask = self.condition._eval(df)
+        return mask.map(lambda ok: self._value(self.then_value if ok else self.otherwise_value, df))
+
+class DataFrame:
+    def __init__(self, df):
+        self._df = df
+
+    def __repr__(self):
+        return repr(self._df)
+
+    def head(self, n=5):
+        return DataFrame(self._df.head(n))
+
+    def group_by(self, *cols):
+        return GroupBy(self, list(cols))
+
+    def sort(self, by, descending=False):
+        return DataFrame(self._df.sort_values(by=by, ascending=not descending))
+
+    def with_columns(self, *exprs):
+        df = self._df.copy()
+        for expr in exprs:
+            if isinstance(expr, (list, tuple)):
+                for nested in expr:
+                    df = DataFrame(df).with_columns(nested)._df
+                continue
+            name = getattr(expr, "_alias", None)
+            if not name:
+                raise ValueError("La expresión necesita alias().")
+            df[name] = expr._eval(df)
+        return DataFrame(df)
+
+class GroupBy:
+    def __init__(self, frame, cols):
+        self.frame = frame
+        self.cols = cols
+
+    def agg(self, exprs):
+        if not isinstance(exprs, (list, tuple)):
+            exprs = [exprs]
+        records = []
+        grouped = self.frame._df.groupby(self.cols, dropna=False, sort=False)
+        for keys, group in grouped:
+            if not isinstance(keys, tuple):
+                keys = (keys,)
+            row = dict(zip(self.cols, keys))
+            for expr in exprs:
+                name = getattr(expr, "_alias", None) or getattr(expr, "name", None) or "len"
+                if isinstance(expr, LenExpr):
+                    value = group.shape[0]
+                elif isinstance(expr, AggExpr):
+                    value = getattr(group[expr.name], expr.func)()
+                    if expr._round is not None:
+                        value = round(value, expr._round)
+                else:
+                    raise NotImplementedError(type(expr).__name__)
+                row[name] = value
+            records.append(row)
+        return DataFrame(_pd.DataFrame(records))
+
+    def len(self):
+        result = self.frame._df.groupby(self.cols, dropna=False, sort=False).size().reset_index(name="len")
+        return DataFrame(result)
+
+def read_csv(path):
+    return DataFrame(_pd.read_csv(path))
+
+def col(name):
+    return Expr("col", name=name)
+
+def lit(value):
+    return Expr("lit", value=value)
+
+def len():
+    return LenExpr()
+
+def when(condition):
+    return WhenExpr(condition)
+`;
+
+    const STARTERS = {
+      python: `import polars as pl
+
+clientes = pl.read_csv("/home/pyodide/data/clientes_compras.csv")
+print(clientes.head())
+
+resumen = (
+    clientes
+    .group_by("canal_preferido")
+    .agg([
+        pl.len().alias("clientes"),
+        pl.col("monto_total").mean().round(0).alias("monto_promedio"),
+        pl.col("compras_mes").sum().alias("compras_mes")
+    ])
+    .sort("monto_promedio", descending=True)
+)
+
+print(resumen)`,
+      r: `library(data.table)
+
+clientes <- fread("/data/clientes_compras.csv")
+print(head(clientes))
+
+resumen <- clientes[, .(
+  clientes = .N,
+  monto_promedio = round(mean(monto_total), 0),
+  compras_mes = sum(compras_mes)
+), by = canal_preferido][order(-monto_promedio)]
+
+print(resumen)`
+    };
+
+    const EXERCISES = {
+      python: [
+        ['Lectura con Polars', 'Carga `estudiantes_ead.csv` y muestra sus primeras 6 filas.',
+`import polars as pl
+ead = pl.read_csv("/home/pyodide/data/estudiantes_ead.csv")
+print(ead.head(6))`],
+        ['Agrupar y resumir', 'Calcula nota promedio y pendientes por turno.',
+`resumen = (
+    ead.group_by("turno")
+       .agg([
+           pl.col("nota_final").mean().round(1).alias("nota_promedio"),
+           pl.col("entregas_pendientes").sum().alias("pendientes")
+       ])
+       .sort("nota_promedio", descending=True)
+)
+print(resumen)`],
+        ['Clasificar riesgo', 'Crea una variable de riesgo académico y cuenta casos.',
+`ead = ead.with_columns(
+    pl.when((pl.col("nota_final") < 70) | (pl.col("entregas_pendientes") > 1))
+      .then(pl.lit("riesgo"))
+      .otherwise(pl.lit("al_dia"))
+      .alias("estado")
+)
+print(ead.group_by("estado").len())`]
+      ],
+      r: [
+        ['Lectura con data.table', 'Carga `estudiantes_ead.csv` y muestra sus primeras 6 filas.',
+`library(data.table)
+ead <- fread("/data/estudiantes_ead.csv")
+print(head(ead, 6))`],
+        ['Agrupar y resumir', 'Calcula nota promedio y pendientes por turno.',
+`resumen <- ead[, .(
+  nota_promedio = round(mean(nota_final), 1),
+  pendientes = sum(entregas_pendientes)
+), by = turno][order(-nota_promedio)]
+print(resumen)`],
+        ['Clasificar riesgo', 'Crea una variable de riesgo académico y cuenta casos.',
+`ead[, estado := fifelse(nota_final < 70 | entregas_pendientes > 1, "riesgo", "al_dia")]
+print(ead[, .N, by = estado])`]
+      ]
+    };
+
+    let currentRuntime = 'python';
+    let pyodide = null;
+    let webR = null;
+    let runtimeReady = { python: false, r: false };
+    let pythonPolarsMode = 'real';
+
+    const editor = document.getElementById('codeEditor');
+    const output = document.getElementById('labOutput');
+    const status = document.getElementById('runtimeStatus');
+
+    function setStatus(text, className = '') {
+      status.textContent = text;
+      status.className = `lab-status ${className}`;
+    }
+
+    function writeOutput(text) {
+      output.textContent = text || '(sin salida)';
+    }
+
+    async function fetchDatasets() {
+      const loaded = [];
+      for (const [name, url] of DATASETS) {
+        const text = await fetch(url).then(resp => resp.text());
+        loaded.push([name, text]);
+      }
+      return loaded;
+    }
+
+    async function ensurePython() {
+      if (runtimeReady.python) return;
+      setStatus('Cargando Pyodide y Polars...', 'loading');
+      pyodide = await loadPyodide();
+      let hasRealPolars = false;
+      try {
+        await pyodide.loadPackage('polars');
+        hasRealPolars = true;
+      } catch (err) {
+        try {
+          await pyodide.loadPackage('micropip');
+          const micropip = pyodide.pyimport('micropip');
+          await micropip.install('polars');
+          hasRealPolars = true;
+        } catch (installErr) {
+          await pyodide.loadPackage('pandas');
+          pyodide.FS.writeFile('/home/pyodide/polars.py', POLARS_SHIM);
+          pyodide.runPython("import sys; sys.modules.pop('polars', None); sys.path.insert(0, '/home/pyodide')");
+          pythonPolarsMode = 'didactico';
+        }
+      }
+      pyodide.FS.mkdirTree('/home/pyodide/data');
+      for (const [name, text] of await fetchDatasets()) {
+        pyodide.FS.writeFile(`/home/pyodide/data/${name}`, text);
+      }
+      runtimeReady.python = true;
+      setStatus(hasRealPolars ? 'Python listo' : 'Python listo (Polars didáctico)', 'ready');
+    }
+
+    async function ensureR() {
+      if (runtimeReady.r) return;
+      setStatus('Cargando webR y data.table...', 'loading');
+      webR = new WebR({ channelType: ChannelType.PostMessage });
+      await webR.init();
+      await webR.installPackages(['data.table']);
+      try { await webR.FS.mkdir('/data'); } catch (err) {}
+      for (const [name, text] of await fetchDatasets()) {
+        await webR.FS.writeFile(`/data/${name}`, new TextEncoder().encode(text));
+      }
+      runtimeReady.r = true;
+      setStatus('R listo', 'ready');
+    }
+
+    async function runPython(code) {
+      await ensurePython();
+      const runner = `
+import ast, contextlib, io, traceback
+_code = ${JSON.stringify(code)}
+_stdout = io.StringIO()
+try:
+    _tree = ast.parse(_code, mode="exec")
+    with contextlib.redirect_stdout(_stdout):
+        if _tree.body and isinstance(_tree.body[-1], ast.Expr):
+            _last = ast.Expression(_tree.body.pop().value)
+            exec(compile(_tree, "<abd-lab>", "exec"), globals())
+            _value = eval(compile(_last, "<abd-lab>", "eval"), globals())
+            if _value is not None:
+                print(_value)
+        else:
+            exec(compile(_tree, "<abd-lab>", "exec"), globals())
+except Exception:
+    traceback.print_exc(file=_stdout)
+_stdout.getvalue()
+`;
+      return await pyodide.runPythonAsync(runner);
+    }
+
+    async function runR(code) {
+      await ensureR();
+      const wrapped = `
+.__abd_code <- ${JSON.stringify(code)}
+.__abd_out <- capture.output({
+  tryCatch({
+    .__abd_expr <- parse(text = .__abd_code)
+    .__abd_value <- withVisible(eval(.__abd_expr, envir = .GlobalEnv))
+    if (.__abd_value$visible) print(.__abd_value$value)
+  }, error = function(e) {
+    message(conditionMessage(e))
+  })
+})
+paste(.__abd_out, collapse = "\\n")
+`;
+      const result = await webR.evalR(wrapped);
+      const text = await result.toString();
+      return text;
+    }
+
+    window.switchRuntime = function(runtime) {
+      currentRuntime = runtime;
+      document.getElementById('tab-python').classList.toggle('active', runtime === 'python');
+      document.getElementById('tab-r').classList.toggle('active', runtime === 'r');
+      document.getElementById('runtimeTitle').textContent = runtime === 'python' ? 'Python con Polars' : 'R con data.table';
+      document.getElementById('runtimeHelp').textContent = runtime === 'python'
+        ? 'Carga CSV, resume datos y practica expresiones de Polars.'
+        : 'Manipula datos con sintaxis data.table: i, j, by y asignación por referencia.';
+      const readyText = runtime === 'python' && pythonPolarsMode === 'didactico'
+        ? 'Python listo (Polars didáctico)'
+        : `${runtime === 'python' ? 'Python' : 'R'} listo`;
+      setStatus(runtimeReady[runtime] ? readyText : 'Sin iniciar', runtimeReady[runtime] ? 'ready' : '');
+      loadStarterCode();
+      renderExercises();
+    };
+
+    window.loadStarterCode = function() {
+      editor.value = STARTERS[currentRuntime];
+    };
+
+    window.runCurrentCode = async function() {
+      writeOutput('Ejecutando...');
+      try {
+        const code = editor.value;
+        const text = currentRuntime === 'python' ? await runPython(code) : await runR(code);
+        writeOutput(text);
+        localStorage.setItem(`abd_lab_last_${currentRuntime}`, code);
+      } catch (err) {
+        writeOutput(err && err.stack ? err.stack : String(err));
+        setStatus('Error', '');
+      }
+    };
+
+    window.copyCode = function() {
+      navigator.clipboard?.writeText(editor.value);
+    };
+
+    window.loadExercise = function(index) {
+      editor.value = EXERCISES[currentRuntime][index][2];
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    function renderExercises() {
+      document.getElementById('exerciseList').innerHTML = EXERCISES[currentRuntime].map((item, index) => `
+        <div class="lab-exercise">
+          <h3>${item[0]}</h3>
+          <p class="lab-small">${item[1]}</p>
+          <button class="btn-secondary" onclick="loadExercise(${index})">Cargar código</button>
+        </div>
+      `).join('');
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('../sw.js').catch(() => {});
+    }
+
+    loadStarterCode();
+    renderExercises();
+  </script>
+</body>
+</html>

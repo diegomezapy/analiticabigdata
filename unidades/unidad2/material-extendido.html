@@ -27,10 +27,10 @@
       </div>
     </header>
     
-    <section class="doc-unit-card">
-      <img src="../../assets/academic/portada_unidad2.png" alt="Imagen académica Unidad 2">
+    <section class="doc-unit-card no-image">
+      <div class="doc-unit-number">Unidad 2</div>
       <div>
-        <div class="doc-kicker">Unidad 2</div>
+        <div class="doc-kicker">Analítica de Big Data</div>
         <h2>Visualización y exploración de datos</h2>
         <p>Aplica técnicas de preparación, visualización y análisis exploratorio para datos estructurados.</p>
       </div>
@@ -54,28 +54,36 @@
 <h2>4.2.1 Tipos de Variables y Distribución</h2>
 <p>Identificar tipos de variables es esencial para elegir técnicas adecuadas en Big Data. Los tipos principales incluyen cuantitativas (discretas o continuas) y cualitativas (nominales u ordinales). Las distribuciones (normal, sesgada) guían transformaciones como log o Box-Cox.</p>
 <h2>Tabla 1: Tipos de Variables en Datos</h2>
-<table class="doc-table"><tr><td>Tipo</td><td>Subtipo</td><td>Descripción</td><td>Ejemplo</td></tr></table>
-<table class="doc-table"><tr><td>Cuantitativa</td><td>Discreta</td><td>Valores contables enteros.</td><td>Número de clientes (10, 20, 30).</td></tr></table>
-<table class="doc-table"><tr><td>Cuantitativa</td><td>Continua</td><td>Valores en un rango continuo.</td><td>Peso (65.5 kg), tiempo (3.2 horas).</td></tr></table>
-<table class="doc-table"><tr><td>Cualitativa</td><td>Nominal</td><td>Categorías sin orden.</td><td>Color (rojo, azul), género.</td></tr></table>
-<table class="doc-table"><tr><td>Cualitativa</td><td>Ordinal</td><td>Categorías con orden.</td><td>Nivel educativo (básico, medio, superior).</td></tr></table>
+<div class="doc-table-wrap"><table class="doc-table"><tr><th>Tipo</th><th>Subtipo</th><th>Descripción</th><th>Ejemplo</th></tr><tr><td>Cuantitativa</td><td>Discreta</td><td>Valores contables enteros.</td><td>Número de clientes (10, 20, 30).</td></tr><tr><td>Cuantitativa</td><td>Continua</td><td>Valores en un rango continuo.</td><td>Peso (65.5 kg), tiempo (3.2 horas).</td></tr><tr><td>Cualitativa</td><td>Nominal</td><td>Categorías sin orden.</td><td>Color (rojo, azul), género.</td></tr><tr><td>Cualitativa</td><td>Ordinal</td><td>Categorías con orden.</td><td>Nivel educativo (básico, medio, superior).</td></tr></table></div>
 <p>Fuente: Elaboración propia basada en Tukey (1977).</p>
 <h2>Figura 1: Diagrama de Tipos de Variables</h2>
 <p>Fuente: Stats and R - Variable types and examples.</p>
 <h2>4.2.2 Exploración de Datos (EDA)</h2>
 <p>EDA revela estructura y patrones en datos antes de modelado. Incluye estadísticas descriptivas y visualizaciones uni/multivariadas.</p>
 <h2>Tabla 2: Técnicas Comunes en EDA</h2>
-<table class="doc-table"><tr><td>Técnica</td><td>Propósito</td><td>Herramienta Ejemplo</td></tr></table>
-<table class="doc-table"><tr><td>Estadísticas Descriptivas</td><td>Resumir datos (media, mediana).</td><td>pandas.describe() / R summary().</td></tr></table>
-<table class="doc-table"><tr><td>Histogramas</td><td>Visualizar distribución univariada.</td><td>seaborn.histplot() / ggplot geom_histogram().</td></tr></table>
-<table class="doc-table"><tr><td>Boxplots</td><td>Detectar outliers y dispersión.</td><td>seaborn.boxplot() / ggplot geom_boxplot().</td></tr></table>
-<table class="doc-table"><tr><td>Scatter Plots</td><td>Explorar relaciones bivariadas.</td><td>matplotlib.scatter() / ggplot geom_point().</td></tr></table>
-<table class="doc-table"><tr><td>Heatmaps</td><td>Visualizar correlaciones.</td><td>seaborn.heatmap() / GGally ggcorr().</td></tr></table>
+<div class="doc-table-wrap"><table class="doc-table"><tr><th>Técnica</th><th>Propósito</th><th>Herramienta Ejemplo</th></tr><tr><td>Estadísticas Descriptivas</td><td>Resumir datos (media, mediana).</td><td>pandas.describe() / R summary().</td></tr><tr><td>Histogramas</td><td>Visualizar distribución univariada.</td><td>seaborn.histplot() / ggplot geom_histogram().</td></tr><tr><td>Boxplots</td><td>Detectar outliers y dispersión.</td><td>seaborn.boxplot() / ggplot geom_boxplot().</td></tr><tr><td>Scatter Plots</td><td>Explorar relaciones bivariadas.</td><td>matplotlib.scatter() / ggplot geom_point().</td></tr><tr><td>Heatmaps</td><td>Visualizar correlaciones.</td><td>seaborn.heatmap() / GGally ggcorr().</td></tr></table></div>
 <p>Fuente: Adaptado de Wickham (2016).</p>
 <h2>Ejemplo en Python: Exploración Básica con Pandas y Seaborn</h2>
 <p>Este script carga datos, computa estadísticas y visualiza distribución y correlaciones.</p>
 <h2>Python Code:</h2>
-<p>import pandas as pdimport matplotlib.pyplot as pltimport seaborn as sns# Cargar datasetdf = pd.read_csv(&#x27;clientes_compras.csv&#x27;)# Primeras filasprint(df.head())# Estadísticas descriptivasprint(df.describe())# Histograma de &#x27;edad&#x27;sns.histplot(data=df, x=&#x27;edad&#x27;, kde=True)plt.title(&#x27;Distribución de Edad de Clientes&#x27;)plt.show()# Heatmap de correlacionescorr = df.corr()sns.heatmap(corr, annot=True, cmap=&#x27;coolwarm&#x27;)plt.title(&#x27;Mapa de Calor de Correlaciones&#x27;)plt.show()</p>
+<pre class="doc-code"><code>import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+# Cargar dataset
+df = pd.read_csv(&#x27;clientes_compras.csv&#x27;)
+# Primeras filas
+print(df.head())
+# Estadísticas descriptivas
+print(df.describe())
+# Histograma de &#x27;edad&#x27;
+sns.histplot(data=df, x=&#x27;edad&#x27;, kde=True)
+plt.title(&#x27;Distribución de Edad de Clientes&#x27;)
+plt.show()
+# Heatmap de correlaciones
+corr = df.corr()
+sns.heatmap(corr, annot=True, cmap=&#x27;coolwarm&#x27;)
+plt.title(&#x27;Mapa de Calor de Correlaciones&#x27;)
+plt.show()</code></pre>
 <h2>Figura 2: Ejemplo de Histograma</h2>
 <p>Fuente: Atlassian - Histograms Unveiled.</p>
 <h2>Figura 3: Ejemplo de Heatmap de Correlaciones</h2>
@@ -83,34 +91,66 @@
 <h2>Ejemplo en R: Exploración con ggplot2 y GGally</h2>
 <p>Script equivalente en R para resumen y visualizaciones.</p>
 <h2>R Code:</h2>
-<p>library(ggplot2)library(GGally)# Cargar datasetdf &lt;- read.csv(&#x27;clientes_compras.csv&#x27;)# Primeras filashead(df)# Resumen estadísticosummary(df)# Histograma de edadggplot(df, aes(x=edad)) + geom_histogram(binwidth=5, fill=&#x27;blue&#x27;, color=&#x27;white&#x27;) + labs(title=&#x27;Distribución de Edad de Clientes&#x27;, x=&#x27;Edad&#x27;, y=&#x27;Frecuencia&#x27;)# Correlacionesggcorr(df, label=TRUE)</p>
+<pre class="doc-code"><code>library(ggplot2)
+library(GGally)
+# Cargar dataset
+df &lt;- read.csv(&#x27;clientes_compras.csv&#x27;)
+# Primeras filas
+head(df)
+# Resumen estadístico
+summary(df)
+# Histograma de edad
+ggplot(df, aes(x=edad)) + geom_histogram(binwidth=5, fill=&#x27;blue&#x27;, color=&#x27;white&#x27;) + labs(title=&#x27;Distribución de Edad de Clientes&#x27;, x=&#x27;Edad&#x27;, y=&#x27;Frecuencia&#x27;)
+# Correlaciones
+ggcorr(df, label=TRUE)</code></pre>
 <h2>4.2.3 Preprocesado de los Datos</h2>
 <p>Preprocesado limpia y transforma datos para modelado. Etapas clave incluyen limpieza, transformación y selección de features.</p>
 <h2>Tabla 3: Etapas de Preprocesado</h2>
-<table class="doc-table"><tr><td>Etapa</td><td>Descripción</td><td>Técnica Ejemplo</td></tr></table>
-<table class="doc-table"><tr><td>Limpieza</td><td>Eliminar duplicados/outliers.</td><td>Drop duplicates en pandas / unique() en R.</td></tr></table>
-<table class="doc-table"><tr><td>Transformación</td><td>Normalizar/escalar variables.</td><td>sklearn.StandardScaler / scale() en R.</td></tr></table>
-<table class="doc-table"><tr><td>Selección</td><td>Reducir dimensionalidad.</td><td>PCA en sklearn / prcomp() en R.</td></tr></table>
+<div class="doc-table-wrap"><table class="doc-table"><tr><th>Etapa</th><th>Descripción</th><th>Técnica Ejemplo</th></tr><tr><td>Limpieza</td><td>Eliminar duplicados/outliers.</td><td>Drop duplicates en pandas / unique() en R.</td></tr><tr><td>Transformación</td><td>Normalizar/escalar variables.</td><td>sklearn.StandardScaler / scale() en R.</td></tr><tr><td>Selección</td><td>Reducir dimensionalidad.</td><td>PCA en sklearn / prcomp() en R.</td></tr></table></div>
 <p>Fuente: Adaptado de McKinney (2017).</p>
 <h2>Figura 4: Boxplot para Detección de Outliers</h2>
 <p>Fuente: ChartExpo - Box Plot Outliers.</p>
 <h2>4.2.4 Imputación de Valores Ausentes</h2>
 <p>Manejar missing values evita sesgos. Estrategias: eliminación, imputación estadística o modelada.</p>
 <h2>Tabla 4: Estrategias de Imputación</h2>
-<table class="doc-table"><tr><td>Estrategia</td><td>Ventajas</td><td>Desventajas</td><td>Uso Típico</td></tr></table>
-<table class="doc-table"><tr><td>Eliminación</td><td>Simple, no introduce sesgos.</td><td>Pérdida de datos.</td><td>Baja proporción de missing.</td></tr></table>
-<table class="doc-table"><tr><td>Media/Mediana</td><td>Rápida, mantiene distribución.</td><td>Puede sesgar varianza.</td><td>Variables numéricas.</td></tr></table>
-<table class="doc-table"><tr><td>Moda</td><td>Útil para categóricas.</td><td>Ignora relaciones.</td><td>Variables cualitativas.</td></tr></table>
-<table class="doc-table"><tr><td>KNN/Regresión</td><td>Considera similitudes.</td><td>Computacionalmente intensivo.</td><td>Datasets complejos.</td></tr></table>
+<div class="doc-table-wrap"><table class="doc-table"><tr><th>Estrategia</th><th>Ventajas</th><th>Desventajas</th><th>Uso Típico</th></tr><tr><td>Eliminación</td><td>Simple, no introduce sesgos.</td><td>Pérdida de datos.</td><td>Baja proporción de missing.</td></tr><tr><td>Media/Mediana</td><td>Rápida, mantiene distribución.</td><td>Puede sesgar varianza.</td><td>Variables numéricas.</td></tr><tr><td>Moda</td><td>Útil para categóricas.</td><td>Ignora relaciones.</td><td>Variables cualitativas.</td></tr><tr><td>KNN/Regresión</td><td>Considera similitudes.</td><td>Computacionalmente intensivo.</td><td>Datasets complejos.</td></tr></table></div>
 <p>Fuente: Adaptado de VanderPlas (2016).</p>
 <h2>Ejemplo en Python: Imputación con Pandas y Scikit-learn</h2>
 <h2>Ejemplo manejando missing values: eliminación e imputación con media, mediana y KNN.</h2>
 <h2>Python Code:</h2>
-<p>import pandas as pdfrom sklearn.impute import KNNImputer# Cargar datasetdf = pd.read_csv(&#x27;datos_incompletos.csv&#x27;)# Eliminacióndf_drop = df.dropna()# Imputación media/medianadf_fill_mean = df.fillna(df.mean(numeric_only=True))df_fill_median = df.fillna(df.median(numeric_only=True))# Imputación KNNimputer = KNNImputer(n_neighbors=5)df_knn = pd.DataFrame(imputer.fit_transform(df), columns=df.columns)# Verificar missing restantesprint(df_knn.isna().sum())</p>
+<pre class="doc-code"><code>import pandas as pd
+from sklearn.impute
+import KNNImputer
+# Cargar dataset
+df = pd.read_csv(&#x27;
+datos_incompletos.csv&#x27;)
+# Eliminación
+df_drop = df.dropna()
+# Imputación media/mediana
+df_fill_mean = df.fillna(df.mean(numeric_only=True))
+df_fill_median = df.fillna(df.median(numeric_only=True))
+# Imputación KNN
+imputer = KNNImputer(n_neighbors=5)
+df_knn = pd.DataFrame(imputer.fit_transform(df), columns=df.columns)
+# Verificar missing restantes
+print(
+df_knn.isna().sum())</code></pre>
 <h2>Ejemplo en R: Imputación con Base R y mice</h2>
 <p>Imputación básica y avanzada con paquete mice.</p>
 <h2>R Code:</h2>
-<p>library(mice)# Cargar datasetdf &lt;- read.csv(&#x27;datos_incompletos.csv&#x27;)# Eliminacióndf_drop &lt;- na.omit(df)# Imputación mediadf$col_numerica[is.na(df$col_numerica)] &lt;- mean(df$col_numerica, na.rm = TRUE)# Imputación múltiple con miceimp &lt;- mice(df, m=5, maxit=50, method=&#x27;pmm&#x27;, seed=500)df_complete &lt;- complete(imp, 1)# Verificarsum(is.na(df_complete))</p>
+<pre class="doc-code"><code>library(mice)
+# Cargar dataset
+df &lt;- read.csv(&#x27;
+datos_incompletos.csv&#x27;)
+# Eliminación
+df_drop &lt;- na.omit(df)
+# Imputación mediadf$col_numerica[
+is.na(df$col_numerica)] &lt;- mean(df$col_numerica, na.rm = TRUE)
+# Imputación múltiple con miceimp &lt;- mice(df, m=5, maxit=50, method=&#x27;pmm&#x27;, seed=500)
+df_complete &lt;- complete(imp, 1)
+# Verificarsum(
+is.na(
+df_complete))</code></pre>
 <p>Conclusiones de la Unidad 2</p>
 <p>EDA y preprocesado aseguran datos de calidad para Big Data analytics. Con herramientas como Python/Seaborn y R/ggplot2, analistas detectan insights tempranos, reduciendo errores en modelado. Futuras tendencias incluyen EDA automatizada con IA.</p>
 <p>Bibliografía</p>

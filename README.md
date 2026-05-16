@@ -23,6 +23,7 @@ Plataforma educativa online para la asignatura **Analítica de Big Data** de la 
 - Materiales, orientaciones, guía y actividades como páginas HTML insertables y PDF descargables.
 - Documentos HTML con encabezado, pie e identidad visual FACEN EaD.
 - Prácticas guiadas por fichas con código R y datos CSV alojados en la web.
+- Laboratorio ejecutable en navegador para R con `data.table` y Python con sintaxis `polars`.
 - Cuestionarios interactivos con temporizador y retroalimentación.
 - Flashcards y actividad de emparejamiento de conceptos.
 - Registro de calificaciones, eventos y progreso en Google Sheets.
@@ -41,6 +42,7 @@ Plataforma educativa online para la asignatura **Analítica de Big Data** de la 
 ├── css/styles.css         # Estilos
 ├── css/documentos.css     # Estilos de documentos HTML
 ├── data/                  # Usuarios, cuestionarios y datasets CSV
+├── laboratorio/           # Ejecutor webR/Pyodide para R y Python
 ├── practicas/             # Laboratorios HTML insertables
 ├── guia_didactica/        # Guía académica/didáctica en HTML
 └── unidades/              # Materiales, orientaciones y actividades HTML
@@ -51,6 +53,7 @@ Plataforma educativa online para la asignatura **Analítica de Big Data** de la 
 - Guía: `https://diegomezapy.github.io/analiticabigdata/guia_didactica/`
 - Índice de documentos: `https://diegomezapy.github.io/analiticabigdata/documentos.html`
 - Prácticas guiadas: `https://diegomezapy.github.io/analiticabigdata/practicas/`
+- Laboratorio R/Python: `https://diegomezapy.github.io/analiticabigdata/laboratorio/`
 - Unidad 1: `https://diegomezapy.github.io/analiticabigdata/unidades/unidad1/orientaciones.html`
 - Actividades: `https://diegomezapy.github.io/analiticabigdata/unidades/unidad1/actividad-1.html`
 - Dataset ejemplo: `https://diegomezapy.github.io/analiticabigdata/data/datasets/clientes_compras.csv`

@@ -135,6 +135,25 @@ h1 {
   padding: 18px;
 }
 
+.doc-unit-card.no-image {
+  grid-template-columns: 112px minmax(0, 1fr);
+  align-items: center;
+}
+
+.doc-unit-number {
+  align-items: center;
+  background: #f3f4f6;
+  border: 1px solid var(--line);
+  color: var(--accent-dark);
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  justify-content: center;
+  min-height: 94px;
+  text-transform: uppercase;
+}
+
 .doc-cover-card.guide {
   grid-template-columns: 220px minmax(0, 1fr);
 }
@@ -265,17 +284,68 @@ h1 {
   text-align: left !important;
 }
 
+.doc-table-wrap {
+  overflow-x: auto;
+  margin: 14px 0;
+}
+
 .doc-table {
   border-collapse: collapse;
   font-family: Arial, Helvetica, sans-serif;
-  margin: 14px 0;
+  min-width: 620px;
   width: 100%;
+}
+
+.doc-table th {
+  background: #4b5563;
+  border: 1px solid #4b5563;
+  color: #ffffff;
+  font-size: 0.82rem;
+  padding: 9px 10px;
+  text-align: left;
+  vertical-align: top;
 }
 
 .doc-table td {
   border: 1px solid var(--line);
+  font-size: 0.84rem;
   padding: 9px 10px;
   vertical-align: top;
+}
+
+.doc-table tr:nth-child(even) td {
+  background: #f9fafb;
+}
+
+.doc-equation {
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  color: #111827;
+  font-family: "Cambria Math", Georgia, "Times New Roman", serif;
+  font-size: 1.04rem;
+  margin: 14px 0;
+  overflow-x: auto;
+  padding: 12px 14px;
+  white-space: pre-wrap;
+}
+
+.doc-code {
+  background: #182230;
+  border: 1px solid #344054;
+  border-radius: 4px;
+  color: #e4e7ec;
+  font-family: Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  margin: 14px 0;
+  overflow-x: auto;
+  padding: 14px 16px;
+  white-space: pre;
+}
+
+.doc-code code {
+  font-family: inherit;
 }
 
 .doc-index {
@@ -338,6 +408,10 @@ h1 {
   .doc-cover-card,
   .doc-cover-card.guide,
   .doc-unit-card {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-unit-card.no-image {
     grid-template-columns: 1fr;
   }
 }
