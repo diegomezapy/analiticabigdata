@@ -1655,14 +1655,22 @@
                 : (isLast ? (done ? 'Unidad completada' : 'Ya lei y comprendi') : (done ? 'Seguir al siguiente nivel' : 'Ya lei y comprendi'));
             return `
       <article class="learning-slide">
-        <div class="learning-slide-main">
-          <div class="learning-slide-kicker">
-            <span>${String(slideIndex + 1).padStart(2, '0')}</span>
-            <strong>${escapeHtml(slide.stage)}</strong>
-            <em>${status}</em>
+        <header class="learning-slide-top">
+          <div class="learning-slide-heading">
+            <div class="learning-slide-kicker">
+              <span>${String(slideIndex + 1).padStart(2, '0')}</span>
+              <strong>${escapeHtml(slide.stage)}</strong>
+              <em>${status}</em>
+            </div>
+            <h3>${escapeHtml(slide.title)}</h3>
+            <p class="learning-lead">${escapeHtml(slide.lead)}</p>
           </div>
-          <h3>${escapeHtml(slide.title)}</h3>
-          <p class="learning-lead">${escapeHtml(slide.lead)}</p>
+          <div class="learning-slide-controls">
+            <button class="btn-secondary" id="learningSupportButton_${unitNum}_${slideIndex}" onclick="toggleLearningSupport(${unitNum}, ${slideIndex})" aria-expanded="false">Necesito mas explicacion</button>
+            <button class="btn-primary" onclick="completeUnitPathSlide(${unitNum}, ${slideIndex})">${primaryLabel}</button>
+          </div>
+        </header>
+        <div class="learning-slide-main">
           ${bullets}
           ${renderLearningPathFormulas(slide)}
           ${renderLearningPathCode(slide)}
@@ -1677,8 +1685,6 @@
         </aside>
         <footer class="learning-slide-actions">
           <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex - 1})" ${slideIndex === 0 ? 'disabled' : ''}>Anterior</button>
-          <button class="btn-secondary" id="learningSupportButton_${unitNum}_${slideIndex}" onclick="toggleLearningSupport(${unitNum}, ${slideIndex})" aria-expanded="false">Necesito mas explicacion</button>
-          <button class="btn-primary" onclick="completeUnitPathSlide(${unitNum}, ${slideIndex})">${primaryLabel}</button>
           <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex + 1})" ${isLast || !canGoNext ? 'disabled' : ''}>Siguiente</button>
         </footer>
       </article>`;
