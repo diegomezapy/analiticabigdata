@@ -61,16 +61,31 @@ h1 {
   margin: 0;
 }
 
-.doc-home {
+.doc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.doc-home,
+.doc-download {
   display: inline-flex;
   align-items: center;
-  margin-top: 20px;
   color: var(--primary);
   font-weight: 700;
   text-decoration: none;
 }
 
-.doc-home:hover {
+.doc-download {
+  background: var(--primary);
+  border-radius: 999px;
+  color: #ffffff;
+  padding: 8px 14px;
+}
+
+.doc-home:hover,
+.doc-download:hover {
   text-decoration: underline;
 }
 

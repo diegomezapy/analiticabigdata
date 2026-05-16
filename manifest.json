@@ -1,0 +1,33 @@
+{
+  "name": "Analítica de Big Data FACEN",
+  "short_name": "Big Data FACEN",
+  "description": "Aula virtual instalable para Analítica de Big Data.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#0f172a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Calendario",
+      "short_name": "Fechas",
+      "url": "dashboard.html#calendar",
+      "icons": [{ "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Prácticas guiadas",
+      "short_name": "Prácticas",
+      "url": "practicas/index.html",
+      "icons": [{ "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Analítica de Big Data FACEN">
+  <rect width="512" height="512" rx="112" fill="#020617"/>
+  <path d="M104 340c52-96 100-148 160-148 58 0 96 48 144 148" fill="none" stroke="#14b8a6" stroke-width="34" stroke-linecap="round"/>
+  <path d="M126 176h260M126 236h104M286 236h100" fill="none" stroke="#f97316" stroke-width="30" stroke-linecap="round"/>
+  <circle cx="148" cy="340" r="28" fill="#67e8f9"/>
+  <circle cx="256" cy="192" r="34" fill="#facc15"/>
+  <circle cx="364" cy="340" r="28" fill="#86efac"/>
+  <text x="256" y="426" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="800" fill="#f8fafc">ABD</text>
+</svg>

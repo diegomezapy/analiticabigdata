@@ -23,7 +23,7 @@ https://script.google.com/d/1cZXfAId4sBXwIsPUaWgbPviQ13yUQTodyW8plm8I5y32a0llEJ5
 URL de recepción configurada en `dashboard.html`:
 
 ```text
-https://script.google.com/macros/s/AKfycbzZiGgj3FgE0Wv6pSQmT3ZSW-lz68wbp2RfH8lx7cSGChNLorUnv1HgL_GfJxwAG0aE/exec
+https://script.google.com/macros/s/AKfycbyKWqOqY08MFKk8CmESd0j1eV0n_2gAB_sNFqLvvqhZIgNfBJ2Tcn3eCRo0lw1meYh-/exec
 ```
 
 Si Google solicita autorización en el primer uso, abrir esa URL con la cuenta `dmeza.py@gmail.com` y aceptar los permisos del script antes de distribuir el enlace a estudiantes. La app conserva una copia local de los envíos en `localStorage` (`abd_sync_history`) y reintenta los pendientes cuando la URL está configurada.
@@ -37,7 +37,8 @@ El libro fue preparado con estas pestañas:
 | `Calificaciones` | Quizzes y actividades calificables |
 | `Eventos` | Login, recursos abiertos, badges y navegación relevante |
 | `Progreso` | Snapshot de XP, quizzes, badges y materiales vistos |
-| `Config` | Parámetros del curso, libro y despliegue |
+| `Estudiantes` | Altas/bajas registradas desde Administración |
+| `Config` | Parámetros del curso, calendario y despliegue |
 
 ## Datos enviados
 
@@ -45,8 +46,20 @@ La plataforma registra:
 
 - Quiz por unidad: puntaje, correctas, total, porcentaje, XP, duración y detalle.
 - Actividad de emparejamiento: puntaje, correctas, total y XP.
+- Prácticas guiadas: avance por fichas, dataset usado y laboratorio completado.
 - Recursos abiertos: guía, orientaciones, materiales y descripciones HTML.
-- Login, badges y snapshots de progreso.
+- Login, badges, cambios de contraseña, recordatorios y snapshots de progreso.
+- Estudiantes registrados/removidos y configuración de fechas por semestre.
+
+## Recordatorios por correo
+
+La PWA muestra recordatorios locales en el dispositivo del estudiante. Para correos automáticos desde Google Sheets:
+
+1. Abrir el proyecto Apps Script.
+2. Ejecutar una vez `installDailyReminderTrigger`.
+3. Autorizar permisos de Sheets, correo y disparadores.
+
+El disparador diario ejecuta `sendReminderEmails`, revisa la última configuración `semester_config` de la hoja `Config` y envía avisos a estudiantes activos con correo en `Estudiantes`.
 
 ## Actualizar el Apps Script
 

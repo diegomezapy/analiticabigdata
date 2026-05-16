@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
   <style>
     /* ===========================
        LOGIN PAGE SPECIFIC STYLES
@@ -301,9 +303,9 @@
 
       <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
         <div class="form-group">
-          <label for="username">Usuario</label>
+          <label for="username">Cédula o usuario</label>
           <div class="input-wrapper">
-            <input type="text" id="username" placeholder="Tu nombre de usuario" autocomplete="username" required>
+            <input type="text" id="username" placeholder="Tu número de cédula" autocomplete="username" inputmode="numeric" required>
             <span class="input-icon">👤</span>
           </div>
         </div>
@@ -334,7 +336,7 @@
       </div>
 
       <div class="login-footer">
-        <span>🔒 Acceso exclusivo para estudiantes matriculados</span>
+        <span>🔒 Primer acceso: cédula como usuario y contraseña</span>
       </div>
     </div>
   </div>
@@ -400,6 +402,77 @@
       return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
+    function localUsers() {
+      return JSON.parse(localStorage.getItem('abd_local_users') || '[]');
+    }
+
+    function saveLocalUsers(users) {
+      localStorage.setItem('abd_local_users', JSON.stringify(users));
+    }
+
+    function isCedula(value) {
+      return /^\d{5,12}$/.test(value);
+    }
+
+    async function loadStaticUsers() {
+      try {
+        const response = await fetch('data/usuarios.json');
+        const data = await response.json();
+        return data.usuarios || [];
+      } catch (err) {
+        return [
+          {
+            username: 'user',
+            password_hash: await sha256('123'),
+            nombre: 'Estudiante',
+            rol: 'estudiante',
+            password_changed: true
+          },
+          {
+            username: 'profesor',
+            password_hash: await sha256('profesor2026'),
+            nombre: 'Profesor Diego Meza',
+            rol: 'profesor',
+            password_changed: true
+          }
+        ];
+      }
+    }
+
+    function completeLogin(user) {
+      sessionStorage.setItem('abd_user', JSON.stringify({
+        username: user.username,
+        cedula: user.cedula || user.username,
+        nombre: user.nombre || user.username,
+        rol: user.rol || 'estudiante',
+        email: user.email || '',
+        passwordChanged: user.password_changed !== false,
+        loginTime: new Date().toISOString()
+      }));
+      document.querySelector('.login-card').style.transform = 'scale(1.05)';
+      document.querySelector('.login-card').style.opacity = '0';
+      document.querySelector('.login-card').style.transition = 'all 0.3s ease';
+      setTimeout(() => { window.location.href = 'dashboard.html'; }, 300);
+    }
+
+    async function autoCreateCedulaUser(username, password, passwordHash) {
+      if (!(isCedula(username) && username === password)) return null;
+      const users = localUsers();
+      if (users.some(u => u.username === username)) return null;
+      const created = {
+        username,
+        cedula: username,
+        nombre: `Estudiante ${username}`,
+        rol: 'estudiante',
+        password_hash: passwordHash,
+        password_changed: false,
+        created_at: new Date().toISOString()
+      };
+      users.push(created);
+      saveLocalUsers(users);
+      return created;
+    }
+
     async function handleLogin(e) {
       e.preventDefault();
       const btn = document.getElementById('btnLogin');
@@ -418,25 +491,17 @@
 
       try {
         const passwordHash = await sha256(password);
-        const response = await fetch('data/usuarios.json');
-        const data = await response.json();
-        const user = data.usuarios.find(u =>
+        const users = [...localUsers(), ...(await loadStaticUsers())];
+        let user = users.find(u =>
           u.username === username && u.password_hash === passwordHash
         );
 
+        if (!user) {
+          user = await autoCreateCedulaUser(username, password, passwordHash);
+        }
+
         if (user) {
-          // Save session
-          sessionStorage.setItem('abd_user', JSON.stringify({
-            username: user.username,
-            nombre: user.nombre,
-            rol: user.rol,
-            loginTime: new Date().toISOString()
-          }));
-          // Redirect with success animation
-          document.querySelector('.login-card').style.transform = 'scale(1.05)';
-          document.querySelector('.login-card').style.opacity = '0';
-          document.querySelector('.login-card').style.transition = 'all 0.3s ease';
-          setTimeout(() => { window.location.href = 'dashboard.html'; }, 300);
+          completeLogin(user);
         } else {
           errorDiv.classList.add('show');
           btnText.style.display = 'block';
@@ -446,23 +511,15 @@
           document.getElementById('password').focus();
         }
       } catch (err) {
-        // Fallback for local file access
-        const u = username, p = password;
-        if (u === 'user' && p === '123') {
-          sessionStorage.setItem('abd_user', JSON.stringify({
-            username: 'user',
-            nombre: 'Estudiante',
-            rol: 'estudiante',
-            loginTime: new Date().toISOString()
-          }));
-          window.location.href = 'dashboard.html';
-        } else {
-          errorDiv.classList.add('show');
-          btnText.style.display = 'block';
-          spinner.style.display = 'none';
-          btn.disabled = false;
-        }
+        errorDiv.classList.add('show');
+        btnText.style.display = 'block';
+        spinner.style.display = 'none';
+        btn.disabled = false;
       }
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
     }
 
     // Check if already logged in

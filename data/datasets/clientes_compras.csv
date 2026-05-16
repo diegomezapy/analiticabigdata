@@ -1,0 +1,13 @@
+id,edad,ciudad,canal_preferido,compras_mes,monto_total,satisfaccion
+1,24,Asuncion,web,3,450000,8
+2,31,San Lorenzo,tienda,1,120000,7
+3,45,Luque,web,5,980000,9
+4,28,Capiata,app,2,260000,6
+5,52,Asuncion,tienda,4,720000,8
+6,37,Fernando de la Mora,app,6,1150000,9
+7,22,Luque,web,1,90000,6
+8,41,Asuncion,app,3,540000,7
+9,33,San Lorenzo,web,4,680000,8
+10,58,Capiata,tienda,2,310000,7
+11,29,Fernando de la Mora,web,5,890000,9
+12,47,Asuncion,app,7,1320000,10

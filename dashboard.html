@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
 </head>
 
 <body>
@@ -48,6 +50,10 @@
                     <span class="nav-item-icon">🏆</span>
                     <span>Mis Logros</span>
                 </div>
+                <div class="nav-item" onclick="showPage('calendar')" id="nav-calendar">
+                    <span class="nav-item-icon">📅</span>
+                    <span>Calendario</span>
+                </div>
 
                 <span class="nav-section-label">Unidades</span>
                 <div class="nav-item" onclick="showUnit(1)" id="nav-u1">
@@ -72,6 +78,10 @@
                 </div>
 
                 <span class="nav-section-label">Herramientas</span>
+                <div class="nav-item" onclick="showPage('practices')" id="nav-practices">
+                    <span class="nav-item-icon">💻</span>
+                    <span>Prácticas guiadas</span>
+                </div>
                 <div class="nav-item" onclick="showPage('flashcards')" id="nav-flashcards">
                     <span class="nav-item-icon">🃏</span>
                     <span>Flashcards</span>
@@ -83,6 +93,16 @@
                 <div class="nav-item" onclick="showPage('guia')" id="nav-guia">
                     <span class="nav-item-icon">📖</span>
                     <span>Guía Didáctica</span>
+                </div>
+                <div class="nav-item" onclick="showPage('account')" id="nav-account">
+                    <span class="nav-item-icon">🔐</span>
+                    <span>Cuenta</span>
+                </div>
+
+                <span class="nav-section-label admin-only">Docente</span>
+                <div class="nav-item admin-only" onclick="showPage('admin')" id="nav-admin">
+                    <span class="nav-item-icon">🛠️</span>
+                    <span>Administración</span>
                 </div>
             </nav>
 
@@ -133,14 +153,153 @@
             quizAnswers: [],
             quizTimer: null,
             quizTimeLeft: 0,
+            currentPractice: null,
+            currentPracticeStep: 0,
         };
 
         const COURSE_CONFIG = {
             name: 'Analítica de Big Data',
             spreadsheetId: '1eU6Fh073qLIOQaPonRim5d0e6IuGE0Bq8hDZHmlHKzI',
             publicBaseUrl: 'https://diegomezapy.github.io/analiticabigdata/',
-            sheetsWebAppUrl: 'https://script.google.com/macros/s/AKfycbzZiGgj3FgE0Wv6pSQmT3ZSW-lz68wbp2RfH8lx7cSGChNLorUnv1HgL_GfJxwAG0aE/exec'
+            sheetsWebAppUrl: 'https://script.google.com/macros/s/AKfycbyKWqOqY08MFKk8CmESd0j1eV0n_2gAB_sNFqLvvqhZIgNfBJ2Tcn3eCRo0lw1meYh-/exec'
         };
+
+        const DEFAULT_SEMESTER_CONFIG = {
+            semesterName: 'Primer período 2026',
+            startDate: '2026-03-03',
+            endDate: '2026-06-20',
+            activities: [
+                { id: 'u1_af', unit: 1, title: 'U1 AF - Estudio de materiales', type: 'actividad', start: '2026-03-03', due: '2026-03-05', resource: 'unidades/unidad1/actividad-1.html' },
+                { id: 'u1_ai', unit: 1, title: 'U1 AI - Foro de aplicación', type: 'actividad', start: '2026-03-06', due: '2026-03-11', resource: 'unidades/unidad1/actividad-2.html' },
+                { id: 'u1_aa', unit: 1, title: 'U1 AA - Cuestionario', type: 'quiz', start: '2026-03-12', due: '2026-03-17', resource: 'dashboard.html#u1' },
+                { id: 'u2_af', unit: 2, title: 'U2 AF - Estudio de materiales', type: 'actividad', start: '2026-03-18', due: '2026-03-20', resource: 'unidades/unidad2/actividad-1.html' },
+                { id: 'u2_ai', unit: 2, title: 'U2 AI - Foro de aplicación', type: 'actividad', start: '2026-03-20', due: '2026-03-29', resource: 'unidades/unidad2/actividad-2.html' },
+                { id: 'u2_aa', unit: 2, title: 'U2 AA - Cuestionario', type: 'quiz', start: '2026-03-30', due: '2026-04-03', resource: 'dashboard.html#u2' },
+                { id: 'u3_af', unit: 3, title: 'U3 AF - Estudio de materiales', type: 'actividad', start: '2026-04-27', due: '2026-05-02', resource: 'unidades/unidad3/actividad-1.html' },
+                { id: 'u3_ai', unit: 3, title: 'U3 AI - Foro de aplicación', type: 'actividad', start: '2026-05-02', due: '2026-05-05', resource: 'unidades/unidad3/actividad-2.html' },
+                { id: 'parcial_1', unit: '', title: 'Examen parcial - fecha configurable', type: 'examen', start: '2026-05-06', due: '2026-05-06', resource: 'dashboard.html#calendar' },
+                { id: 'u3_aa', unit: 3, title: 'U3 AA - Cuestionario', type: 'quiz', start: '2026-05-06', due: '2026-05-08', resource: 'dashboard.html#u3' },
+                { id: 'u4_af', unit: 4, title: 'U4 AF - Estudio de materiales', type: 'actividad', start: '2026-05-09', due: '2026-05-13', resource: 'unidades/unidad4/actividad-1.html' },
+                { id: 'u4_ai', unit: 4, title: 'U4 AI - Foro de aplicación', type: 'actividad', start: '2026-05-14', due: '2026-05-17', resource: 'unidades/unidad4/actividad-2.html' },
+                { id: 'u4_aa', unit: 4, title: 'U4 AA - Cuestionario', type: 'quiz', start: '2026-05-18', due: '2026-05-26', resource: 'dashboard.html#u4' },
+                { id: 'final_1', unit: '', title: 'Examen final - fecha configurable', type: 'examen', start: '2026-06-20', due: '2026-06-20', resource: 'dashboard.html#calendar' }
+            ]
+        };
+
+        const PRACTICES = [
+            {
+                id: 'lab_datos',
+                title: 'Laboratorio 1 - Del CSV al primer tablero',
+                unit: 1,
+                dataset: 'data/datasets/clientes_compras.csv',
+                embed: 'practicas/index.html#lab_datos',
+                goal: 'Importar, limpiar y resumir compras de clientes para detectar segmentos simples.',
+                steps: [
+                    {
+                        title: 'Ficha 1 - Leer datos',
+                        concept: 'Una práctica reproducible comienza con importar el archivo y revisar su estructura antes de transformar.',
+                        code: `clientes <- read.csv("data/datasets/clientes_compras.csv")\nstr(clientes)\nhead(clientes, 8)`,
+                        task: 'Ejecuta el código y anota cuántas columnas trae el archivo.'
+                    },
+                    {
+                        title: 'Ficha 2 - Resumir variables',
+                        concept: 'Los resúmenes ayudan a reconocer rangos, valores extremos y posibles errores de captura.',
+                        code: `summary(clientes[, c("edad", "compras_mes", "monto_total")])\ntable(clientes$canal_preferido)`,
+                        task: 'Identifica el canal con mayor frecuencia y el monto total máximo.'
+                    },
+                    {
+                        title: 'Ficha 3 - Crear una señal analítica',
+                        concept: 'Una variable derivada convierte datos transaccionales en información accionable.',
+                        code: `clientes$alto_valor <- clientes$monto_total >= median(clientes$monto_total)\naggregate(monto_total ~ alto_valor + canal_preferido, clientes, mean)`,
+                        task: 'Marca la ficha como completa cuando puedas explicar qué significa alto_valor.'
+                    }
+                ]
+            },
+            {
+                id: 'lab_visualizacion',
+                title: 'Laboratorio 2 - Exploración visual de estudiantes',
+                unit: 2,
+                dataset: 'data/datasets/estudiantes_ead.csv',
+                embed: 'practicas/index.html#lab_visualizacion',
+                goal: 'Explorar dedicación, participación y rendimiento en un curso virtual ficticio.',
+                steps: [
+                    {
+                        title: 'Ficha 1 - Distribuciones',
+                        concept: 'Antes de modelar, conviene visualizar cómo se distribuyen las variables principales.',
+                        code: `ead <- read.csv("data/datasets/estudiantes_ead.csv")\nhist(ead$horas_semana, col = "#14b8a6", main = "Horas de estudio", xlab = "Horas por semana")`,
+                        task: 'Observa si la mayoría estudia pocas, medias o muchas horas.'
+                    },
+                    {
+                        title: 'Ficha 2 - Relación entre variables',
+                        concept: 'Un diagrama de dispersión permite ver asociaciones entre dedicación y calificación.',
+                        code: `plot(ead$horas_semana, ead$nota_final,\n     pch = 19, col = "#f97316",\n     xlab = "Horas por semana", ylab = "Nota final")\nabline(lm(nota_final ~ horas_semana, data = ead), col = "#38bdf8", lwd = 2)`,
+                        task: 'Describe si la pendiente de la línea parece positiva o negativa.'
+                    },
+                    {
+                        title: 'Ficha 3 - Preparar categorías',
+                        concept: 'Binarizar o categorizar variables facilita comparaciones y algunos modelos.',
+                        code: `ead$riesgo <- ifelse(ead$nota_final < 70 | ead$entregas_pendientes > 1, "riesgo", "al_dia")\ntable(ead$riesgo, ead$turno)`,
+                        task: 'Cuenta cuántos estudiantes aparecen en riesgo por turno.'
+                    }
+                ]
+            },
+            {
+                id: 'lab_modelos',
+                title: 'Laboratorio 3 - Primer modelo predictivo',
+                unit: 3,
+                dataset: 'data/datasets/modelos_credito.csv',
+                embed: 'practicas/index.html#lab_modelos',
+                goal: 'Entrenar una regresión logística sencilla y leer sus probabilidades.',
+                steps: [
+                    {
+                        title: 'Ficha 1 - Variable objetivo',
+                        concept: 'La variable objetivo define qué se intenta predecir; aquí será aprobación de crédito.',
+                        code: `credito <- read.csv("data/datasets/modelos_credito.csv")\ntable(credito$aprobado)\nprop.table(table(credito$aprobado))`,
+                        task: 'Registra la proporción de solicitudes aprobadas.'
+                    },
+                    {
+                        title: 'Ficha 2 - Entrenar el modelo',
+                        concept: 'La regresión logística estima probabilidades cuando el resultado es binario.',
+                        code: `modelo <- glm(aprobado ~ ingreso_mensual + score_credito + deuda_actual,\n              data = credito, family = binomial)\nsummary(modelo)`,
+                        task: 'Identifica qué variable tiene coeficiente positivo más claro.'
+                    },
+                    {
+                        title: 'Ficha 3 - Interpretar predicciones',
+                        concept: 'Una probabilidad se transforma en decisión usando un umbral explícito.',
+                        code: `credito$prob_aprobacion <- predict(modelo, type = "response")\ncredito$prediccion <- ifelse(credito$prob_aprobacion >= 0.5, 1, 0)\ntable(Predicho = credito$prediccion, Real = credito$aprobado)`,
+                        task: 'Marca como completa cuando puedas explicar un falso positivo.'
+                    }
+                ]
+            },
+            {
+                id: 'lab_interpretacion',
+                title: 'Laboratorio 4 - Bitácora de interpretación',
+                unit: 4,
+                dataset: 'data/datasets/modelos_credito.csv',
+                embed: 'practicas/index.html#lab_interpretacion',
+                goal: 'Convertir resultados técnicos en una recomendación entendible para la toma de decisiones.',
+                steps: [
+                    {
+                        title: 'Ficha 1 - Métricas mínimas',
+                        concept: 'La interpretación responsable compara aciertos, errores y límites del modelo.',
+                        code: `matriz <- table(Predicho = credito$prediccion, Real = credito$aprobado)\naccuracy <- sum(diag(matriz)) / sum(matriz)\naccuracy`,
+                        task: 'Escribe el accuracy y una advertencia sobre su interpretación.'
+                    },
+                    {
+                        title: 'Ficha 2 - Casos para revisar',
+                        concept: 'Los casos cercanos al umbral suelen requerir revisión humana o más información.',
+                        code: `credito[order(abs(credito$prob_aprobacion - 0.5)),\n        c("id", "ingreso_mensual", "score_credito", "deuda_actual", "prob_aprobacion")][1:5, ]`,
+                        task: 'Selecciona un caso dudoso y justifica por qué lo revisarías.'
+                    },
+                    {
+                        title: 'Ficha 3 - Cierre comunicable',
+                        concept: 'Un reporte de analítica debe explicar datos, método, resultado, límites y acción sugerida.',
+                        code: `cat("Recomendación: usar el modelo como apoyo, no como decisión automática.\\n")\ncat("Validar con nuevos datos antes de aplicar en producción.\\n")`,
+                        task: 'Completa una recomendación de tres líneas para un docente o directivo.'
+                    }
+                ]
+            }
+        ];
 
         const TOTAL_UNITS = 4;
 
@@ -177,6 +336,9 @@
             { id: 'all_units', emoji: '🏅', name: 'Analista Big Data', desc: 'Completar todos los quizzes' },
             { id: 'flashcard_master', emoji: '🃏', name: 'Flash Master', desc: 'Revisar todas las flashcards' },
             { id: 'early_bird', emoji: '🌅', name: 'Madrugador', desc: 'Acceder antes de las 8 AM' },
+            { id: 'practice_lab', emoji: '💻', name: 'Laboratorio Vivo', desc: 'Completar una práctica guiada' },
+            { id: 'calendar_ready', emoji: '📅', name: 'Agenda Clara', desc: 'Activar recordatorios del calendario' },
+            { id: 'password_changed', emoji: '🔐', name: 'Cuenta Protegida', desc: 'Cambiar la contraseña inicial' },
         ];
 
         // ================================================================
@@ -203,6 +365,7 @@
             document.getElementById('userAvatar').textContent = initial;
             document.getElementById('userName').textContent = STATE.user.nombre || STATE.user.username;
             updateXPDisplay();
+            applyRoleUI();
 
             // Early bird badge
             const hour = new Date().getHours();
@@ -211,7 +374,13 @@
             // First login badge
             earnBadge('first_login');
 
-            showPage('home');
+            const route = (window.location.hash || '').replace('#', '');
+            if (['calendar', 'practices', 'account', 'admin'].includes(route)) showPage(route);
+            else if (/^u[1-4]$/.test(route)) showUnit(Number(route.slice(1)));
+            else showPage('home');
+            checkReminders();
+            setInterval(() => checkReminders(), 60 * 60 * 1000);
+            registerServiceWorker();
             flushPendingSync();
             trackEvent('login', { detalle: 'Ingreso a la plataforma' });
             syncProgressSnapshot();
@@ -254,6 +423,13 @@
             window.location.href = 'index.html';
         }
 
+        function applyRoleUI() {
+            const isTeacher = STATE.user?.rol === 'profesor';
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.classList.toggle('show', isTeacher);
+            });
+        }
+
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('overlay').classList.toggle('show');
@@ -265,6 +441,13 @@
         // NAVIGATION
         // ================================================================
         function showPage(page) {
+            if (page === 'admin' && STATE.user?.rol !== 'profesor') {
+                showToast('La administración está disponible solo para el profesor.', 'error');
+                page = 'home';
+            }
+            if (window.location.hash !== `#${page}`) {
+                history.replaceState(null, '', `#${page}`);
+            }
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             const nav = document.getElementById(`nav-${page}`);
             if (nav) nav.classList.add('active');
@@ -277,26 +460,169 @@
 
             const titles = {
                 home: 'Inicio', progress: 'Mi Progreso', badges: 'Mis Logros',
-                flashcards: 'Flashcards', matching: 'Emparejar Conceptos', guia: 'Guía Didáctica'
+                calendar: 'Calendario', practices: 'Prácticas guiadas',
+                flashcards: 'Flashcards', matching: 'Emparejar Conceptos', guia: 'Guía Didáctica',
+                account: 'Cuenta', admin: 'Administración'
             };
             document.getElementById('topbarTitle').textContent = titles[page] || page;
 
             if (page === 'home') renderHome();
             else if (page === 'progress') renderProgress();
             else if (page === 'badges') renderBadges();
+            else if (page === 'calendar') renderCalendar();
+            else if (page === 'practices') renderPractices();
             else if (page === 'flashcards') renderFlashcards();
             else if (page === 'matching') renderMatching();
             else if (page === 'guia') renderGuia();
+            else if (page === 'account') renderAccount();
+            else if (page === 'admin') renderAdmin();
         }
 
         function showUnit(n) {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById(`nav-u${n}`)?.classList.add('active');
             STATE.currentUnit = n;
+            if (window.location.hash !== `#u${n}`) {
+                history.replaceState(null, '', `#u${n}`);
+            }
             document.getElementById('topbarTitle').textContent = `Unidad ${n}`;
             const content = document.getElementById('pageContent');
             content.innerHTML = '';
             renderUnitDetail(n, 'materiales');
+        }
+
+        // ================================================================
+        // SHARED HELPERS
+        // ================================================================
+        function deepClone(value) {
+            return JSON.parse(JSON.stringify(value));
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function formatDatePY(value) {
+            if (!value) return 'Sin fecha';
+            const [year, month, day] = value.split('-').map(Number);
+            return new Date(year, month - 1, day).toLocaleDateString('es-PY', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+
+        function todayISO() {
+            const d = new Date();
+            d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+            return d.toISOString().slice(0, 10);
+        }
+
+        function dayDiff(fromISO, toISO) {
+            const from = new Date(`${fromISO}T00:00:00`);
+            const to = new Date(`${toISO}T00:00:00`);
+            return Math.round((to - from) / 86400000);
+        }
+
+        function getSemesterConfig() {
+            const saved = localStorage.getItem('abd_semester_config');
+            if (!saved) return deepClone(DEFAULT_SEMESTER_CONFIG);
+            try {
+                const parsed = JSON.parse(saved);
+                return {
+                    ...deepClone(DEFAULT_SEMESTER_CONFIG),
+                    ...parsed,
+                    activities: Array.isArray(parsed.activities) ? parsed.activities : deepClone(DEFAULT_SEMESTER_CONFIG.activities)
+                };
+            } catch (e) {
+                return deepClone(DEFAULT_SEMESTER_CONFIG);
+            }
+        }
+
+        function saveSemesterConfig(config) {
+            localStorage.setItem('abd_semester_config', JSON.stringify(config));
+            sendToSheets({
+                kind: 'config',
+                timestamp: new Date().toISOString(),
+                usuario: STATE.user?.username || '',
+                nombre: STATE.user?.nombre || '',
+                config_key: 'semester_config',
+                config_value: config,
+                detalle: 'Configuración local de semestre actualizada'
+            });
+        }
+
+        function eventDoneKey() {
+            return `abd_event_done_${STATE.user?.username || 'anon'}`;
+        }
+
+        function getDoneEvents() {
+            return JSON.parse(localStorage.getItem(eventDoneKey()) || '{}');
+        }
+
+        function saveDoneEvents(done) {
+            localStorage.setItem(eventDoneKey(), JSON.stringify(done));
+        }
+
+        function isEventComplete(event) {
+            if (getDoneEvents()[event.id]) return true;
+            if (event.type === 'quiz' && event.unit) return Boolean(STATE.quizResults[`u${event.unit}`]);
+            return false;
+        }
+
+        function setEventDone(eventId, doneValue = true) {
+            const done = getDoneEvents();
+            done[eventId] = doneValue;
+            saveDoneEvents(done);
+            if (doneValue) addXP(8, 'Actividad marcada como al día');
+            trackEvent('calendario_estado', { recurso: eventId, detalle: doneValue ? 'completado' : 'pendiente' });
+            renderCalendar();
+        }
+
+        function eventStatus(event) {
+            if (isEventComplete(event)) return { label: 'Completado', className: 'done' };
+            const diffStart = dayDiff(todayISO(), event.start);
+            const diffDue = dayDiff(todayISO(), event.due);
+            if (diffStart > 0) return { label: 'Por iniciar', className: 'future' };
+            if (diffDue < 0) return { label: 'Vencido', className: 'late' };
+            if (diffDue <= 1) return { label: 'Vence pronto', className: 'soon' };
+            return { label: 'Activo', className: 'active' };
+        }
+
+        function getUpcomingEvents(limit = 3) {
+            return getSemesterConfig().activities
+                .map(event => ({ ...event, status: eventStatus(event), daysToDue: dayDiff(todayISO(), event.due) }))
+                .filter(event => !isEventComplete(event) && event.daysToDue >= -7)
+                .sort((a, b) => a.daysToDue - b.daysToDue)
+                .slice(0, limit);
+        }
+
+        function getPracticeProgress() {
+            return JSON.parse(localStorage.getItem(`abd_practice_progress_${STATE.user?.username || 'anon'}`) || '{}');
+        }
+
+        function savePracticeProgress(progress) {
+            localStorage.setItem(`abd_practice_progress_${STATE.user?.username || 'anon'}`, JSON.stringify(progress));
+        }
+
+        function localUsers() {
+            return JSON.parse(localStorage.getItem('abd_local_users') || '[]');
+        }
+
+        function saveLocalUsers(users) {
+            localStorage.setItem('abd_local_users', JSON.stringify(users));
+        }
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
         // ================================================================
@@ -306,6 +632,17 @@
             const totalQuizzes = Object.keys(STATE.quizResults).length;
             const level = Math.floor(STATE.xp / 100) + 1;
             const nextLevelXP = level * 100;
+            const upcoming = getUpcomingEvents(3);
+            const practiceProgress = getPracticeProgress();
+            const completedLabs = PRACTICES.filter(lab => (practiceProgress[lab.id] || []).length >= lab.steps.length).length;
+            const passwordPrompt = STATE.user.passwordChanged === false ? `
+              <div class="smart-card warning">
+                <div>
+                  <strong>Protege tu cuenta</strong>
+                  <p>Tu primer acceso usa la cédula como contraseña. Cámbiala para continuar trabajando con seguridad.</p>
+                </div>
+                <button class="btn-secondary" onclick="showPage('account')">Cambiar clave</button>
+              </div>` : '';
 
             const content = document.getElementById('pageContent');
             content.innerHTML = `
@@ -331,6 +668,24 @@
             <div class="stat-label">Logros obtenidos</div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="smart-grid">
+      ${passwordPrompt}
+      <div class="smart-card">
+        <div>
+          <strong>Próximas fechas</strong>
+          <p>${upcoming.length ? upcoming.map(e => `${e.title}: ${formatDatePY(e.due)}`).join(' · ') : 'No hay pendientes cercanos.'}</p>
+        </div>
+        <button class="btn-secondary" onclick="showPage('calendar')">Ver calendario</button>
+      </div>
+      <div class="smart-card">
+        <div>
+          <strong>Laboratorios paso a paso</strong>
+          <p>${completedLabs}/${PRACTICES.length} prácticas completas con datos y código R.</p>
+        </div>
+        <button class="btn-secondary" onclick="showPage('practices')">Practicar</button>
       </div>
     </div>
 
@@ -379,6 +734,11 @@
         <h3>Mis Logros</h3>
         <p style="font-size:0.8rem;margin-top:0.3rem">${STATE.badges.length}/${BADGES_DEF.length} badges desbloqueados</p>
       </div>
+      <div class="card" style="cursor:pointer" onclick="showPage('calendar')">
+        <div style="font-size:2rem;margin-bottom:0.5rem">📅</div>
+        <h3>Calendario</h3>
+        <p style="font-size:0.8rem;margin-top:0.3rem">Fechas, exámenes y recordatorios del semestre</p>
+      </div>
       <div class="card" style="cursor:pointer" onclick="showPage('guia')">
         <div style="font-size:2rem;margin-bottom:0.5rem">📖</div>
         <h3>Guía Didáctica</h3>
@@ -394,55 +754,55 @@
         const UNIT_FILES = {
             1: {
                 materiales: [
-                    { name: 'Material de lectura — Unidad 1', file: 'unidades/unidad1/material-lectura.html', type: 'html' },
-                    { name: 'Material extendido — Unidad 1', file: 'unidades/unidad1/material-extendido.html', type: 'html' },
+                    { name: 'Material de lectura — Unidad 1', file: 'unidades/unidad1/material-lectura.html', download: 'unidades/unidad1/Material_Lectura_Unidad1.pdf', type: 'html' },
+                    { name: 'Material extendido — Unidad 1', file: 'unidades/unidad1/material-extendido.html', download: 'unidades/unidad1/material-extendido.pdf', type: 'html' },
                 ],
                 actividades: [
-                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad1/actividad-1.html', type: 'html' },
-                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad1/actividad-2.html', type: 'html' },
-                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad1/actividad-3.html', type: 'html' },
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad1/actividad-1.html', download: 'unidades/unidad1/Descripcion_Actividad_Unidad1_Act1.pdf', type: 'html' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad1/actividad-2.html', download: 'unidades/unidad1/Descripcion_Actividad_Unidad1_Act2.pdf', type: 'html' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad1/actividad-3.html', download: 'unidades/unidad1/Descripcion_Actividad_Unidad1_Act3.pdf', type: 'html' },
                 ],
                 orientaciones: [
-                    { name: 'Orientaciones — Unidad 1', file: 'unidades/unidad1/orientaciones.html', type: 'html' },
+                    { name: 'Orientaciones — Unidad 1', file: 'unidades/unidad1/orientaciones.html', download: 'unidades/unidad1/Orientaciones_Unidad_Unidad1.pdf', type: 'html' },
                 ]
             },
             2: {
                 materiales: [
-                    { name: 'Material extendido — Unidad 2', file: 'unidades/unidad2/material-extendido.html', type: 'html' },
+                    { name: 'Material extendido — Unidad 2', file: 'unidades/unidad2/material-extendido.html', download: 'unidades/unidad2/material-extendido.pdf', type: 'html' },
                 ],
                 actividades: [
-                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad2/actividad-1.html', type: 'html' },
-                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad2/actividad-2.html', type: 'html' },
-                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad2/actividad-3.html', type: 'html' },
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad2/actividad-1.html', download: 'unidades/unidad2/Descripcion_Actividad_Unidad2_Act1.pdf', type: 'html' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad2/actividad-2.html', download: 'unidades/unidad2/Descripcion_Actividad_Unidad2_Act2.pdf', type: 'html' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad2/actividad-3.html', download: 'unidades/unidad2/Descripcion_Actividad_Unidad2_Act3.pdf', type: 'html' },
                 ],
                 orientaciones: [
-                    { name: 'Orientaciones — Unidad 2', file: 'unidades/unidad2/orientaciones.html', type: 'html' },
+                    { name: 'Orientaciones — Unidad 2', file: 'unidades/unidad2/orientaciones.html', download: 'unidades/unidad2/Orientaciones_Unidad_Unidad2.pdf', type: 'html' },
                 ]
             },
             3: {
                 materiales: [
-                    { name: 'Material extendido — Unidad 3', file: 'unidades/unidad3/material-extendido.html', type: 'html' },
+                    { name: 'Material extendido — Unidad 3', file: 'unidades/unidad3/material-extendido.html', download: 'unidades/unidad3/material-extendido.pdf', type: 'html' },
                 ],
                 actividades: [
-                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad3/actividad-1.html', type: 'html' },
-                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad3/actividad-2.html', type: 'html' },
-                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad3/actividad-3.html', type: 'html' },
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad3/actividad-1.html', download: 'unidades/unidad3/Descripcion_Actividad_Unidad3_Act1.pdf', type: 'html' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad3/actividad-2.html', download: 'unidades/unidad3/Descripcion_Actividad_Unidad3_Act2.pdf', type: 'html' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad3/actividad-3.html', download: 'unidades/unidad3/Descripcion_Actividad_Unidad3_Act3.pdf', type: 'html' },
                 ],
                 orientaciones: [
-                    { name: 'Orientaciones — Unidad 3', file: 'unidades/unidad3/orientaciones.html', type: 'html' },
+                    { name: 'Orientaciones — Unidad 3', file: 'unidades/unidad3/orientaciones.html', download: 'unidades/unidad3/Orientaciones_Unidad_Unidad3.pdf', type: 'html' },
                 ]
             },
             4: {
                 materiales: [
-                    { name: 'Material extendido — Unidad 4', file: 'unidades/unidad4/material-extendido.html', type: 'html' },
+                    { name: 'Material extendido — Unidad 4', file: 'unidades/unidad4/material-extendido.html', download: 'unidades/unidad4/material-extendido.pdf', type: 'html' },
                 ],
                 actividades: [
-                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad4/actividad-1.html', type: 'html' },
-                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad4/actividad-2.html', type: 'html' },
-                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad4/actividad-3.html', type: 'html' },
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad4/actividad-1.html', download: 'unidades/unidad4/Descripcion_Actividad_Unidad4_Act1.pdf', type: 'html' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad4/actividad-2.html', download: 'unidades/unidad4/Descripcion_Actividad_Unidad4_Act2.pdf', type: 'html' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad4/actividad-3.html', download: 'unidades/unidad4/Descripcion_Actividad_Unidad4_Act3.pdf', type: 'html' },
                 ],
                 orientaciones: [
-                    { name: 'Orientaciones — Unidad 4', file: 'unidades/unidad4/orientaciones.html', type: 'html' },
+                    { name: 'Orientaciones — Unidad 4', file: 'unidades/unidad4/orientaciones.html', download: 'unidades/unidad4/Orientaciones_Unidad_Unidad4.pdf', type: 'html' },
                 ]
             },
         };
@@ -466,6 +826,7 @@
     <div class="unit-tabs">
       <button class="unit-tab ${activeTab === 'materiales' ? 'active' : ''}" onclick="renderUnitDetail(${n},'materiales')">📄 Materiales</button>
       <button class="unit-tab ${activeTab === 'actividades' ? 'active' : ''}" onclick="renderUnitDetail(${n},'actividades')">🎯 Actividades</button>
+      <button class="unit-tab ${activeTab === 'practica' ? 'active' : ''}" onclick="renderUnitDetail(${n},'practica')">💻 Práctica</button>
       <button class="unit-tab ${activeTab === 'quiz' ? 'active' : ''}" onclick="renderUnitDetail(${n},'quiz')">🧠 Cuestionario</button>
       <button class="unit-tab ${activeTab === 'info' ? 'active' : ''}" onclick="renderUnitDetail(${n},'info')">ℹ️ Información</button>
     </div>
@@ -483,14 +844,17 @@
                     tabContent.innerHTML = `
         <div class="materials-list">
           ${all.map(f => `
-            <a href="${f.file}" target="_blank" class="material-item" onclick="markRead(${n},'${f.file}')">
-              <div class="material-icon" style="background:${f.type === 'html' ? 'rgba(20,184,166,0.1)' : 'rgba(239,68,68,0.1)'}">${f.type === 'html' ? '🌐' : '📄'}</div>
-              <div class="material-info">
-                <h4>${f.name}</h4>
-                <p>Archivo ${f.type.toUpperCase()} — click para abrir</p>
-              </div>
-              <span class="material-badge ${f.type === 'html' ? 'badge-act' : 'badge-pdf'}">${f.type.toUpperCase()}</span>
-            </a>
+            <div class="material-item">
+              <a href="${f.file}" target="_blank" class="material-open" onclick="markRead(${n},'${f.file}')">
+                <div class="material-icon" style="background:${f.type === 'html' ? 'rgba(20,184,166,0.1)' : 'rgba(239,68,68,0.1)'}">${f.type === 'html' ? '🌐' : '📄'}</div>
+                <div class="material-info">
+                  <h4>${f.name}</h4>
+                  <p>Documento HTML embebible — click para abrir</p>
+                </div>
+                <span class="material-badge ${f.type === 'html' ? 'badge-act' : 'badge-pdf'}">${f.type.toUpperCase()}</span>
+              </a>
+              ${f.download ? `<a href="${f.download}" class="material-download-btn" download onclick="trackResourceOpen(${n}, '${f.download}', 'Descarga PDF: ${f.name.replace(/'/g, "\\'")}')">PDF ↓</a>` : ''}
+            </div>
           `).join('')}
         </div>
       `;
@@ -504,14 +868,17 @@
         <p style="margin-bottom:1rem">Descarga y completa las siguientes actividades:</p>
         <div class="materials-list">
           ${acts.map((f, i) => `
-            <a href="${f.file}" target="_blank" class="material-item" onclick="trackResourceOpen(${n}, '${f.file}', '${f.name.replace(/'/g, "\\'")}')">
-              <div class="material-icon" style="background:rgba(20,184,166,0.1)">📝</div>
-              <div class="material-info">
-                <h4>${f.name}</h4>
-                <p>Documento HTML de actividad — Unidad ${n}</p>
-              </div>
-              <span class="material-badge badge-act">HTML</span>
-            </a>
+            <div class="material-item">
+              <a href="${f.file}" target="_blank" class="material-open" onclick="trackResourceOpen(${n}, '${f.file}', '${f.name.replace(/'/g, "\\'")}')">
+                <div class="material-icon" style="background:rgba(20,184,166,0.1)">📝</div>
+                <div class="material-info">
+                  <h4>${f.name}</h4>
+                  <p>Documento HTML de actividad — Unidad ${n}</p>
+                </div>
+                <span class="material-badge badge-act">HTML</span>
+              </a>
+              ${f.download ? `<a href="${f.download}" class="material-download-btn" download onclick="trackResourceOpen(${n}, '${f.download}', 'Descarga PDF: ${f.name.replace(/'/g, "\\'")}')">PDF ↓</a>` : ''}
+            </div>
           `).join('')}
         </div>
       `;
@@ -556,6 +923,13 @@
         </div>
       `;
                 }
+            } else if (activeTab === 'practica') {
+                const labs = PRACTICES.filter(lab => lab.unit === n);
+                tabContent.innerHTML = `
+      <div class="practice-grid">
+        ${labs.map(lab => practiceCardHTML(lab)).join('')}
+      </div>
+    `;
             } else if (activeTab === 'info') {
                 tabContent.innerHTML = `
       <div class="card">
@@ -1031,6 +1405,262 @@
         }
 
         // ================================================================
+        // GUIDED PRACTICES
+        // ================================================================
+        function practiceCardHTML(lab) {
+            const progress = getPracticeProgress();
+            const doneSteps = progress[lab.id] || [];
+            const pct = Math.round((doneSteps.length / lab.steps.length) * 100);
+            return `
+      <div class="practice-card">
+        <div class="practice-card-top">
+          <span class="material-badge badge-act">Unidad ${lab.unit}</span>
+          <span class="material-badge badge-quiz">${doneSteps.length}/${lab.steps.length}</span>
+        </div>
+        <h3>${lab.title}</h3>
+        <p>${lab.goal}</p>
+        <div class="unit-progress-bar">
+          <div class="unit-progress-fill" style="width:${pct}%"></div>
+        </div>
+        <div class="practice-actions">
+          <button class="btn-primary" onclick="openPractice('${lab.id}', ${Math.min(doneSteps.length, lab.steps.length - 1)})">Continuar</button>
+          <a class="btn-secondary as-link" href="${lab.dataset}" download>Datos CSV</a>
+          <a class="btn-secondary as-link" href="${lab.embed}" target="_blank">URL embebible</a>
+        </div>
+      </div>`;
+        }
+
+        function renderPractices() {
+            const completed = PRACTICES.filter(lab => (getPracticeProgress()[lab.id] || []).length >= lab.steps.length).length;
+            document.getElementById('pageContent').innerHTML = `
+    <div class="page-heading">
+      <div>
+        <h2>💻 Prácticas guiadas con datos</h2>
+        <p>Laboratorios por fichas, con datos descargables, código R y avance guardado.</p>
+      </div>
+      <a class="btn-secondary as-link" href="practicas/index.html" target="_blank">Abrir versión embebible</a>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card primary">
+        <div class="sc-label">Laboratorios completos</div>
+        <div class="sc-value" style="color:var(--primary-light)">${completed}/${PRACTICES.length}</div>
+        <div class="sc-sub">avance práctico</div>
+      </div>
+      <div class="stat-card accent">
+        <div class="sc-label">Datasets disponibles</div>
+        <div class="sc-value" style="color:var(--accent-light)">${PRACTICES.length}</div>
+        <div class="sc-sub">CSV alojados en GitHub Pages</div>
+      </div>
+      <div class="stat-card success">
+        <div class="sc-label">Fichas paso a paso</div>
+        <div class="sc-value" style="color:#86efac">${PRACTICES.reduce((sum, lab) => sum + lab.steps.length, 0)}</div>
+        <div class="sc-sub">microactividades</div>
+      </div>
+    </div>
+    <div class="practice-grid">
+      ${PRACTICES.map(lab => practiceCardHTML(lab)).join('')}
+    </div>`;
+        }
+
+        function openPractice(labId, stepIndex = 0) {
+            const lab = PRACTICES.find(item => item.id === labId);
+            if (!lab) return;
+            STATE.currentPractice = labId;
+            STATE.currentPracticeStep = Math.max(0, Math.min(stepIndex, lab.steps.length - 1));
+            renderPracticeStep();
+            trackEvent('practica_abierta', { unidad: lab.unit, recurso: lab.id, detalle: lab.title });
+        }
+
+        function renderPracticeStep() {
+            const lab = PRACTICES.find(item => item.id === STATE.currentPractice);
+            if (!lab) return renderPractices();
+            const step = lab.steps[STATE.currentPracticeStep];
+            const progress = getPracticeProgress();
+            const doneSteps = progress[lab.id] || [];
+            const completed = doneSteps.includes(STATE.currentPracticeStep);
+            const pct = Math.round((doneSteps.length / lab.steps.length) * 100);
+            document.getElementById('pageContent').innerHTML = `
+    <div class="practice-shell">
+      <div class="unit-detail-header">
+        <button class="btn-back" onclick="showPage('practices')">← Prácticas</button>
+        <div>
+          <h2>${lab.title}</h2>
+          <p>${lab.goal}</p>
+        </div>
+      </div>
+      <div class="practice-stepper">
+        ${lab.steps.map((item, i) => `
+          <button class="step-dot ${i === STATE.currentPracticeStep ? 'active' : ''} ${doneSteps.includes(i) ? 'done' : ''}"
+            onclick="openPractice('${lab.id}', ${i})">${i + 1}</button>
+        `).join('')}
+      </div>
+      <div class="unit-progress-bar">
+        <div class="unit-progress-fill" style="width:${pct}%"></div>
+      </div>
+      <div class="practice-detail">
+        <div class="practice-main">
+          <span class="material-badge badge-act">Ficha ${STATE.currentPracticeStep + 1} de ${lab.steps.length}</span>
+          <h3>${step.title}</h3>
+          <div class="concept-box">${step.concept}</div>
+          <pre class="code-block"><code id="practiceCode">${escapeHtml(step.code)}</code></pre>
+          <div class="practice-actions">
+            <button class="btn-secondary" onclick="copyPracticeCode()">Copiar código</button>
+            <a class="btn-secondary as-link" href="${lab.dataset}" download>Descargar datos</a>
+            <a class="btn-secondary as-link" href="${lab.embed}" target="_blank">URL de esta práctica</a>
+          </div>
+        </div>
+        <aside class="practice-task">
+          <h4>Evaluación de la ficha</h4>
+          <p>${step.task}</p>
+          <button class="btn-primary" onclick="completePracticeStep('${lab.id}', ${STATE.currentPracticeStep})">
+            ${completed ? 'Ficha completada' : 'Marcar ficha completa'}
+          </button>
+          <div class="practice-nav">
+            <button class="btn-secondary" onclick="openPractice('${lab.id}', ${STATE.currentPracticeStep - 1})" ${STATE.currentPracticeStep === 0 ? 'disabled' : ''}>Anterior</button>
+            <button class="btn-secondary" onclick="openPractice('${lab.id}', ${STATE.currentPracticeStep + 1})" ${STATE.currentPracticeStep === lab.steps.length - 1 ? 'disabled' : ''}>Siguiente</button>
+          </div>
+        </aside>
+      </div>
+    </div>`;
+        }
+
+        function copyPracticeCode() {
+            const text = document.getElementById('practiceCode')?.textContent || '';
+            navigator.clipboard?.writeText(text);
+            showToast('Código copiado al portapapeles.', 'success');
+        }
+
+        function completePracticeStep(labId, stepIndex) {
+            const lab = PRACTICES.find(item => item.id === labId);
+            if (!lab) return;
+            const progress = getPracticeProgress();
+            const done = new Set(progress[labId] || []);
+            const wasNew = !done.has(stepIndex);
+            done.add(stepIndex);
+            progress[labId] = Array.from(done).sort((a, b) => a - b);
+            savePracticeProgress(progress);
+            if (wasNew) addXP(12, 'Ficha práctica completada');
+            if (progress[labId].length >= lab.steps.length) {
+                earnBadge('practice_lab');
+                sendToSheets({
+                    kind: 'calificacion',
+                    timestamp: new Date().toISOString(),
+                    usuario: STATE.user.username,
+                    nombre: STATE.user.nombre,
+                    unidad: lab.unit,
+                    actividad: lab.title,
+                    tipo: 'practica_guiada',
+                    puntaje: 100,
+                    porcentaje: 100,
+                    correctas: lab.steps.length,
+                    total: lab.steps.length,
+                    xp: wasNew ? 12 : 0,
+                    detalle: { laboratorio: lab.id, dataset: lab.dataset, pasos: progress[labId] }
+                });
+            }
+            syncProgressSnapshot();
+            renderPracticeStep();
+        }
+
+        // ================================================================
+        // CALENDAR AND REMINDERS
+        // ================================================================
+        function renderCalendar() {
+            const config = getSemesterConfig();
+            const remindersEnabled = localStorage.getItem('abd_reminders_enabled') === 'true';
+            const events = [...config.activities].sort((a, b) => a.due.localeCompare(b.due));
+            const next = getUpcomingEvents(1)[0];
+            document.getElementById('pageContent').innerHTML = `
+    <div class="page-heading">
+      <div>
+        <h2>📅 Calendario del aula</h2>
+        <p>${config.semesterName} · ${formatDatePY(config.startDate)} al ${formatDatePY(config.endDate)}</p>
+      </div>
+      <button class="btn-primary" onclick="enableReminders()">${remindersEnabled ? 'Recordatorios activos' : 'Activar recordatorios'}</button>
+    </div>
+    <div class="smart-grid">
+      <div class="smart-card">
+        <div>
+          <strong>Próximo hito</strong>
+          <p>${next ? `${next.title} · vence ${formatDatePY(next.due)}` : 'Sin pendientes inmediatos.'}</p>
+        </div>
+        ${next?.resource ? `<a class="btn-secondary as-link" href="${next.resource}" target="_blank">Abrir</a>` : ''}
+      </div>
+      <div class="smart-card">
+        <div>
+          <strong>Recordatorio automático</strong>
+          <p>La app avisa un día antes y marca atrasos cuando haya tareas pendientes.</p>
+        </div>
+        <button class="btn-secondary" onclick="checkReminders(true)">Revisar ahora</button>
+      </div>
+    </div>
+    <div class="calendar-list">
+      ${events.map(event => {
+                const status = eventStatus(event);
+                return `
+        <div class="calendar-item">
+          <div class="calendar-date">
+            <span>${formatDatePY(event.due).split(' ')[0]}</span>
+            <small>${formatDatePY(event.due).replace(formatDatePY(event.due).split(' ')[0], '').trim()}</small>
+          </div>
+          <div class="calendar-body">
+            <div class="calendar-title-row">
+              <h3>${event.title}</h3>
+              <span class="status-pill ${status.className}">${status.label}</span>
+            </div>
+            <p>Inicio: ${formatDatePY(event.start)} · Entrega: ${formatDatePY(event.due)} · Tipo: ${event.type}</p>
+            <div class="calendar-actions">
+              ${event.resource ? `<a class="btn-secondary as-link" href="${event.resource}" target="_blank">Abrir recurso</a>` : ''}
+              <button class="btn-secondary" onclick="setEventDone('${event.id}', ${!isEventComplete(event)})">${isEventComplete(event) ? 'Marcar pendiente' : 'Marcar al día'}</button>
+            </div>
+          </div>
+        </div>`;
+            }).join('')}
+    </div>`;
+        }
+
+        async function enableReminders() {
+            localStorage.setItem('abd_reminders_enabled', 'true');
+            if ('Notification' in window && Notification.permission === 'default') {
+                await Notification.requestPermission();
+            }
+            earnBadge('calendar_ready');
+            trackEvent('recordatorios', { detalle: 'Recordatorios activados por el estudiante' });
+            showToast('Recordatorios activados en este dispositivo.', 'success');
+            renderCalendar();
+        }
+
+        function checkReminders(manual = false) {
+            const enabled = localStorage.getItem('abd_reminders_enabled') === 'true';
+            const today = todayISO();
+            const config = getSemesterConfig();
+            const candidates = config.activities
+                .filter(event => !isEventComplete(event))
+                .filter(event => dayDiff(today, event.due) === 1 || dayDiff(today, event.due) < 0);
+            if (!enabled && !manual) return;
+            if (!candidates.length) {
+                if (manual) showToast('No hay recordatorios pendientes ahora.', 'info');
+                return;
+            }
+            const already = JSON.parse(localStorage.getItem('abd_reminders_sent') || '{}');
+            candidates.forEach(event => {
+                const diff = dayDiff(today, event.due);
+                const key = `${event.id}_${today}_${diff}`;
+                if (already[key] && !manual) return;
+                const title = diff === 1 ? 'Entrega mañana' : 'Actividad atrasada';
+                const body = `${event.title} · vence ${formatDatePY(event.due)}`;
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification(title, { body, icon: 'icons/icon.svg' });
+                } else {
+                    showToast(`${title}: ${body}`, diff === 1 ? 'info' : 'error');
+                }
+                already[key] = true;
+                trackEvent('recordatorio_emitido', { recurso: event.id, detalle: `${title}: ${body}` });
+            });
+            localStorage.setItem('abd_reminders_sent', JSON.stringify(already));
+        }
+
+        // ================================================================
         // PROGRESS PAGE
         // ================================================================
         function renderProgress() {
@@ -1127,6 +1757,22 @@
         </div>
         <span class="material-badge badge-act">HTML</span>
       </a>
+      <a href="guia_didactica/BigData_GuiaDid.pdf" target="_blank" download class="material-item" onclick="trackResourceOpen('', 'guia_didactica/BigData_GuiaDid.pdf', 'Descarga PDF Guía Didáctica')">
+        <div class="material-icon" style="background:rgba(239,68,68,0.1)">📄</div>
+        <div class="material-info">
+          <h4>Guía Académica y Didáctica — PDF</h4>
+          <p>Archivo descargable para lectura offline</p>
+        </div>
+        <span class="material-badge badge-pdf">PDF</span>
+      </a>
+      <a href="practicas/index.html" target="_blank" class="material-item" onclick="trackResourceOpen('', 'practicas/index.html', 'Prácticas guiadas embebibles')">
+        <div class="material-icon" style="background:rgba(20,184,166,0.1)">💻</div>
+        <div class="material-info">
+          <h4>Prácticas guiadas embebibles</h4>
+          <p>Laboratorios con datos CSV y código R listos para insertar por URL</p>
+        </div>
+        <span class="material-badge badge-quiz">HTML</span>
+      </a>
       <a href="documentos.html" target="_blank" class="material-item" onclick="trackResourceOpen('', 'documentos.html', 'Índice de documentos HTML')">
         <div class="material-icon" style="background:rgba(249,115,22,0.1)">🌐</div>
         <div class="material-info">
@@ -1137,6 +1783,351 @@
       </a>
     </div>
   `;
+        }
+
+        // ================================================================
+        // ACCOUNT
+        // ================================================================
+        function renderAccount() {
+            const changed = STATE.user.passwordChanged !== false;
+            document.getElementById('pageContent').innerHTML = `
+    <div class="page-heading">
+      <div>
+        <h2>🔐 Cuenta</h2>
+        <p>${STATE.user.nombre || STATE.user.username} · ${STATE.user.rol || 'estudiante'}</p>
+      </div>
+      <span class="status-pill ${changed ? 'done' : 'soon'}">${changed ? 'Contraseña personalizada' : 'Contraseña inicial'}</span>
+    </div>
+    <div class="form-grid">
+      <div class="card">
+        <h3>Cambiar contraseña</h3>
+        <p style="margin:0.5rem 0 1rem">La nueva clave se guarda en este navegador y reemplaza la contraseña inicial de cédula.</p>
+        <div class="form-row">
+          <label>Nueva contraseña</label>
+          <input class="form-control" type="password" id="newPassword" autocomplete="new-password">
+        </div>
+        <div class="form-row">
+          <label>Repetir contraseña</label>
+          <input class="form-control" type="password" id="confirmPassword" autocomplete="new-password">
+        </div>
+        <button class="btn-primary" onclick="handlePasswordChange()">Guardar contraseña</button>
+      </div>
+      <div class="card">
+        <h3>Datos de acceso</h3>
+        <div class="info-list">
+          <div><strong>Usuario</strong><span>${STATE.user.username}</span></div>
+          <div><strong>Cédula</strong><span>${STATE.user.cedula || STATE.user.username}</span></div>
+          <div><strong>Rol</strong><span>${STATE.user.rol}</span></div>
+          <div><strong>Ingreso</strong><span>${new Date(STATE.user.loginTime).toLocaleString('es-PY')}</span></div>
+        </div>
+      </div>
+    </div>`;
+        }
+
+        async function handlePasswordChange() {
+            const pass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            if (pass.length < 6) {
+                showToast('Usa al menos 6 caracteres.', 'error');
+                return;
+            }
+            if (pass !== confirm) {
+                showToast('Las contraseñas no coinciden.', 'error');
+                return;
+            }
+            const users = localUsers();
+            const idx = users.findIndex(u => u.username === STATE.user.username);
+            const updated = {
+                username: STATE.user.username,
+                nombre: STATE.user.nombre || STATE.user.username,
+                rol: STATE.user.rol || 'estudiante',
+                cedula: STATE.user.cedula || STATE.user.username,
+                password_hash: await sha256(pass),
+                password_changed: true,
+                updated_at: new Date().toISOString()
+            };
+            if (idx >= 0) users[idx] = { ...users[idx], ...updated };
+            else users.push(updated);
+            saveLocalUsers(users);
+            STATE.user = { ...STATE.user, passwordChanged: true };
+            sessionStorage.setItem('abd_user', JSON.stringify(STATE.user));
+            earnBadge('password_changed');
+            trackEvent('password_changed', { detalle: 'Contraseña actualizada por el usuario' });
+            showToast('Contraseña actualizada.', 'success');
+            renderAccount();
+        }
+
+        // ================================================================
+        // ADMINISTRATION
+        // ================================================================
+        let adminCurrentTab = 'students';
+
+        function renderAdmin(tab = adminCurrentTab) {
+            if (STATE.user?.rol !== 'profesor') return showPage('home');
+            adminCurrentTab = tab;
+            document.getElementById('pageContent').innerHTML = `
+    <div class="page-heading">
+      <div>
+        <h2>🛠️ Administración</h2>
+        <p>Configuración reutilizable para abrir una nueva edición del curso cada semestre.</p>
+      </div>
+      <a class="btn-secondary as-link" href="${COURSE_CONFIG.publicBaseUrl}" target="_blank">Ver sitio publicado</a>
+    </div>
+    <div class="admin-tabs">
+      <button class="${tab === 'students' ? 'active' : ''}" onclick="renderAdmin('students')">Estudiantes</button>
+      <button class="${tab === 'calendar' ? 'active' : ''}" onclick="renderAdmin('calendar')">Fechas</button>
+      <button class="${tab === 'semester' ? 'active' : ''}" onclick="renderAdmin('semester')">Semestre</button>
+      <button class="${tab === 'data' ? 'active' : ''}" onclick="renderAdmin('data')">Datos</button>
+    </div>
+    <div id="adminPanel"></div>`;
+            if (tab === 'students') renderAdminStudents();
+            if (tab === 'calendar') renderAdminCalendar();
+            if (tab === 'semester') renderAdminSemester();
+            if (tab === 'data') renderAdminData();
+        }
+
+        function renderAdminStudents() {
+            const users = localUsers().filter(u => u.rol !== 'profesor');
+            document.getElementById('adminPanel').innerHTML = `
+    <div class="form-grid">
+      <div class="card">
+        <h3>Registrar estudiante</h3>
+        <div class="form-row">
+          <label>Cédula</label>
+          <input class="form-control" id="studentCedula" inputmode="numeric" placeholder="Ej. 1234567">
+        </div>
+        <div class="form-row">
+          <label>Nombre y apellido</label>
+          <input class="form-control" id="studentName" placeholder="Nombre del estudiante">
+        </div>
+        <div class="form-row">
+          <label>Correo</label>
+          <input class="form-control" id="studentEmail" type="email" placeholder="correo@ejemplo.com">
+        </div>
+        <button class="btn-primary" onclick="addStudent()">Agregar estudiante</button>
+      </div>
+      <div class="card">
+        <h3>Estudiantes locales</h3>
+        <div class="admin-list">
+          ${users.length ? users.map(u => `
+            <div class="admin-row">
+              <div><strong>${u.nombre || u.username}</strong><span>${u.cedula || u.username} · ${u.email || 'sin correo'}</span></div>
+              <button class="btn-secondary" onclick="removeStudent('${u.username}')">Quitar</button>
+            </div>`).join('') : '<p>Aún no hay estudiantes registrados en este navegador.</p>'}
+        </div>
+      </div>
+    </div>`;
+        }
+
+        async function addStudent() {
+            const cedula = document.getElementById('studentCedula').value.trim();
+            const nombre = document.getElementById('studentName').value.trim() || `Estudiante ${cedula}`;
+            const email = document.getElementById('studentEmail').value.trim();
+            if (!/^\d{5,12}$/.test(cedula)) {
+                showToast('La cédula debe tener entre 5 y 12 dígitos.', 'error');
+                return;
+            }
+            const users = localUsers().filter(u => u.username !== cedula);
+            const student = {
+                username: cedula,
+                cedula,
+                nombre,
+                email,
+                rol: 'estudiante',
+                password_hash: await sha256(cedula),
+                password_changed: false,
+                created_at: new Date().toISOString()
+            };
+            users.push(student);
+            saveLocalUsers(users);
+            sendToSheets({
+                kind: 'estudiante',
+                timestamp: new Date().toISOString(),
+                usuario: cedula,
+                nombre,
+                email,
+                estado: 'activo',
+                detalle: { cedula, password_inicial: 'cedula' }
+            });
+            showToast('Estudiante registrado. Primer acceso: cédula/cédula.', 'success');
+            renderAdminStudents();
+        }
+
+        function removeStudent(username) {
+            const users = localUsers().filter(u => u.username !== username);
+            saveLocalUsers(users);
+            sendToSheets({
+                kind: 'estudiante',
+                timestamp: new Date().toISOString(),
+                usuario: username,
+                estado: 'removido',
+                detalle: 'Removido desde administración local'
+            });
+            showToast('Estudiante quitado de la lista local.', 'success');
+            renderAdminStudents();
+        }
+
+        function renderAdminCalendar() {
+            const config = getSemesterConfig();
+            document.getElementById('adminPanel').innerHTML = `
+    <div class="card">
+      <h3>Fechas de actividades</h3>
+      <div class="admin-calendar">
+        ${config.activities.map((event, i) => `
+          <div class="admin-date-row">
+            <input class="form-control" value="${escapeHtml(event.title)}" onchange="updateCalendarField(${i}, 'title', this.value)">
+            <select class="form-control" onchange="updateCalendarField(${i}, 'type', this.value)">
+              ${['actividad', 'quiz', 'examen', 'practica'].map(type => `<option value="${type}" ${event.type === type ? 'selected' : ''}>${type}</option>`).join('')}
+            </select>
+            <input class="form-control" type="date" value="${event.start}" onchange="updateCalendarField(${i}, 'start', this.value)">
+            <input class="form-control" type="date" value="${event.due}" onchange="updateCalendarField(${i}, 'due', this.value)">
+            <input class="form-control" value="${escapeHtml(event.resource || '')}" onchange="updateCalendarField(${i}, 'resource', this.value)">
+            <button class="btn-secondary" onclick="deleteCalendarEvent(${i})">Quitar</button>
+          </div>`).join('')}
+      </div>
+      <div class="practice-actions">
+        <button class="btn-primary" onclick="addCalendarEvent()">Agregar fecha</button>
+        <button class="btn-secondary" onclick="renderCalendar()">Vista estudiante</button>
+      </div>
+    </div>`;
+        }
+
+        function updateCalendarField(index, field, value) {
+            const config = getSemesterConfig();
+            config.activities[index][field] = value;
+            saveSemesterConfig(config);
+            showToast('Fecha actualizada.', 'success');
+        }
+
+        function addCalendarEvent() {
+            const config = getSemesterConfig();
+            config.activities.push({
+                id: `evento_${Date.now()}`,
+                unit: '',
+                title: 'Nueva actividad',
+                type: 'actividad',
+                start: todayISO(),
+                due: todayISO(),
+                resource: 'dashboard.html'
+            });
+            saveSemesterConfig(config);
+            renderAdminCalendar();
+        }
+
+        function deleteCalendarEvent(index) {
+            const config = getSemesterConfig();
+            config.activities.splice(index, 1);
+            saveSemesterConfig(config);
+            renderAdminCalendar();
+        }
+
+        function renderAdminSemester() {
+            const config = getSemesterConfig();
+            document.getElementById('adminPanel').innerHTML = `
+    <div class="form-grid">
+      <div class="card">
+        <h3>Edición del curso</h3>
+        <div class="form-row">
+          <label>Nombre del semestre</label>
+          <input class="form-control" id="semesterName" value="${escapeHtml(config.semesterName)}">
+        </div>
+        <div class="form-row two-cols">
+          <div>
+            <label>Inicio</label>
+            <input class="form-control" type="date" id="semesterStart" value="${config.startDate}">
+          </div>
+          <div>
+            <label>Cierre</label>
+            <input class="form-control" type="date" id="semesterEnd" value="${config.endDate}">
+          </div>
+        </div>
+        <button class="btn-primary" onclick="saveSemesterBasics()">Guardar edición</button>
+      </div>
+      <div class="card">
+        <h3>Relanzar semestre</h3>
+        <p style="margin:0.5rem 0 1rem">Reinicia progreso local del docente para revisar la plataforma como nueva edición. No borra la planilla.</p>
+        <button class="btn-secondary" onclick="resetLocalCourseProgress()">Reiniciar progreso local</button>
+        <button class="btn-secondary" onclick="restoreDefaultCalendar()">Restaurar fechas base</button>
+      </div>
+    </div>`;
+        }
+
+        function saveSemesterBasics() {
+            const config = getSemesterConfig();
+            config.semesterName = document.getElementById('semesterName').value.trim() || config.semesterName;
+            config.startDate = document.getElementById('semesterStart').value || config.startDate;
+            config.endDate = document.getElementById('semesterEnd').value || config.endDate;
+            saveSemesterConfig(config);
+            showToast('Edición del semestre guardada.', 'success');
+            renderAdminSemester();
+        }
+
+        function resetLocalCourseProgress() {
+            Object.keys(localStorage)
+                .filter(key => key.startsWith('abd_progress_') || key.startsWith('abd_practice_progress_') || key.startsWith('abd_event_done_'))
+                .forEach(key => localStorage.removeItem(key));
+            showToast('Progreso local reiniciado para una nueva edición.', 'success');
+        }
+
+        function restoreDefaultCalendar() {
+            saveSemesterConfig(deepClone(DEFAULT_SEMESTER_CONFIG));
+            showToast('Fechas base restauradas.', 'success');
+            renderAdminSemester();
+        }
+
+        function renderAdminData() {
+            const config = getSemesterConfig();
+            const users = localUsers();
+            document.getElementById('adminPanel').innerHTML = `
+    <div class="form-grid">
+      <div class="card">
+        <h3>Exportar configuración</h3>
+        <textarea class="form-control code-textarea" id="configExport">${escapeHtml(JSON.stringify({ config, users }, null, 2))}</textarea>
+        <div class="practice-actions">
+          <button class="btn-secondary" onclick="copyAdminConfig()">Copiar JSON</button>
+          <button class="btn-secondary" onclick="downloadSyncHistory()">Exportar historial CSV</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Importar configuración</h3>
+        <textarea class="form-control code-textarea" id="configImport" placeholder="Pega aquí un JSON exportado"></textarea>
+        <button class="btn-primary" onclick="importAdminConfig()">Importar</button>
+      </div>
+    </div>`;
+        }
+
+        function copyAdminConfig() {
+            navigator.clipboard?.writeText(document.getElementById('configExport').value);
+            showToast('Configuración copiada.', 'success');
+        }
+
+        function importAdminConfig() {
+            try {
+                const parsed = JSON.parse(document.getElementById('configImport').value);
+                if (parsed.config) saveSemesterConfig(parsed.config);
+                if (Array.isArray(parsed.users)) saveLocalUsers(parsed.users);
+                showToast('Configuración importada.', 'success');
+                renderAdminData();
+            } catch (e) {
+                showToast('JSON inválido.', 'error');
+            }
+        }
+
+        function downloadSyncHistory() {
+            const history = JSON.parse(localStorage.getItem('abd_sync_history') || '[]');
+            const rows = [['timestamp', 'kind', 'usuario', 'nombre', 'evento', 'actividad', 'puntaje']];
+            history.forEach(item => rows.push([
+                item.timestamp || '', item.kind || '', item.usuario || '', item.nombre || '',
+                item.evento || '', item.actividad || '', item.puntaje || ''
+            ]));
+            const csv = rows.map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'analitica_bigdata_historial.csv';
+            a.click();
+            URL.revokeObjectURL(url);
         }
 
         // ================================================================
@@ -1233,6 +2224,8 @@
                 completedActivities: STATE.completedActivities,
                 quizResults: STATE.quizResults,
                 badges: STATE.badges,
+                practiceProgress: getPracticeProgress(),
+                calendarDone: getDoneEvents(),
                 quizzes_completados: quizValues.length,
                 promedio_quiz: avgScore,
                 materiales_vistos: Object.keys(STATE.completedActivities).length
@@ -1271,6 +2264,13 @@
                 toast.style.transition = 'all 0.3s';
                 setTimeout(() => toast.remove(), 300);
             }, 3500);
+        }
+
+        function registerServiceWorker() {
+            if (!('serviceWorker' in navigator)) return;
+            navigator.serviceWorker.register('sw.js').catch(err => {
+                console.warn('Service worker no registrado:', err.message);
+            });
         }
 
         // ================================================================

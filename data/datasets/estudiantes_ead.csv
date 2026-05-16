@@ -1,0 +1,13 @@
+id,turno,horas_semana,foros_publicados,entregas_pendientes,nota_final
+1,noche,6,2,0,82
+2,tarde,3,1,2,61
+3,noche,8,4,0,91
+4,manana,5,2,1,74
+5,tarde,2,0,3,48
+6,manana,7,3,0,88
+7,noche,4,1,1,69
+8,tarde,9,5,0,95
+9,manana,3,1,2,58
+10,noche,6,3,0,80
+11,tarde,5,2,1,73
+12,manana,10,6,0,97

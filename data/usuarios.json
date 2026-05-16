@@ -4,7 +4,15 @@
             "username": "user",
             "password_hash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
             "nombre": "Estudiante",
-            "rol": "estudiante"
+            "rol": "estudiante",
+            "password_changed": true
+        },
+        {
+            "username": "profesor",
+            "password_hash": "3df43f2863f00b4646f270742eee410ee478525a0342dd7df0ca010583de8ed0",
+            "nombre": "Profesor Diego Meza",
+            "rol": "profesor",
+            "password_changed": true
         }
     ],
     "_nota": "Passwords hasheados con SHA-256. Para agregar usuarios ejecute: echo -n 'contraseña' | sha256sum",

@@ -14,6 +14,13 @@ const HEADERS = {
     'timestamp', 'usuario', 'nombre', 'xp_total', 'quizzes_completados',
     'promedio_quiz', 'badges', 'materiales_vistos', 'progreso_json',
     'session_id'
+  ],
+  Estudiantes: [
+    'timestamp', 'usuario', 'nombre', 'email', 'estado', 'detalle'
+  ],
+  Config: [
+    'timestamp', 'usuario', 'nombre', 'config_key', 'config_value', 'detalle',
+    'session_id'
   ]
 };
 
@@ -80,6 +87,31 @@ function appendPayload_(ss, payload) {
     return;
   }
 
+  if (kind === 'estudiante') {
+    appendByHeaders_(ss.getSheetByName('Estudiantes'), HEADERS.Estudiantes, {
+      timestamp: payload.timestamp || now_(),
+      usuario: payload.usuario || payload.cedula || '',
+      nombre: payload.nombre || '',
+      email: payload.email || '',
+      estado: payload.estado || 'activo',
+      detalle: stringify_(payload.detalle || payload)
+    });
+    return;
+  }
+
+  if (kind === 'config') {
+    appendByHeaders_(ss.getSheetByName('Config'), HEADERS.Config, {
+      timestamp: payload.timestamp || now_(),
+      usuario: payload.usuario || '',
+      nombre: payload.nombre || '',
+      config_key: payload.config_key || payload.recurso || '',
+      config_value: stringify_(payload.config_value || payload.valor || ''),
+      detalle: stringify_(payload.detalle || ''),
+      session_id: payload.session_id || ''
+    });
+    return;
+  }
+
   appendByHeaders_(ss.getSheetByName('Calificaciones'), HEADERS.Calificaciones, {
     timestamp: payload.timestamp || payload.fecha_iso || now_(),
     usuario: payload.usuario || '',
@@ -117,7 +149,7 @@ function ensureWorkbook_(ss) {
     sheet.getRange(1, 1, 1, headers.length)
       .setFontWeight('bold')
       .setFontColor('#ffffff')
-      .setBackground(name === 'Calificaciones' ? '#17364f' : name === 'Eventos' ? '#0f766e' : '#6d28d9');
+      .setBackground(sheetColor_(name));
   });
 }
 
@@ -147,4 +179,107 @@ function stringify_(value) {
 
 function now_() {
   return Utilities.formatDate(new Date(), 'America/Asuncion', "yyyy-MM-dd'T'HH:mm:ssXXX");
+}
+
+function sheetColor_(name) {
+  const colors = {
+    Calificaciones: '#17364f',
+    Eventos: '#0f766e',
+    Progreso: '#6d28d9',
+    Estudiantes: '#b45309',
+    Config: '#374151'
+  };
+  return colors[name] || '#374151';
+}
+
+function installDailyReminderTrigger() {
+  ScriptApp.getProjectTriggers()
+    .filter(trigger => trigger.getHandlerFunction() === 'sendReminderEmails')
+    .forEach(trigger => ScriptApp.deleteTrigger(trigger));
+  ScriptApp.newTrigger('sendReminderEmails')
+    .timeBased()
+    .everyDays(1)
+    .atHour(7)
+    .create();
+  return jsonResponse({ status: 'ok', trigger: 'sendReminderEmails', hour: 7 });
+}
+
+function sendReminderEmails() {
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  ensureWorkbook_(ss);
+  const students = readObjects_(ss.getSheetByName('Estudiantes'))
+    .filter(row => String(row.estado || 'activo').toLowerCase() !== 'removido')
+    .filter(row => row.email);
+  const config = latestSemesterConfig_(ss);
+  const events = Array.isArray(config.activities) ? config.activities : [];
+  const today = Utilities.formatDate(new Date(), 'America/Asuncion', 'yyyy-MM-dd');
+  const dueEvents = events.filter(event => {
+    const diff = dayDiff_(today, event.due);
+    return diff === 1 || diff < 0;
+  });
+  if (!students.length || !dueEvents.length) return;
+
+  students.forEach(student => {
+    dueEvents.forEach(event => {
+      const diff = dayDiff_(today, event.due);
+      const subject = diff === 1
+        ? `Recordatorio: ${event.title} vence mañana`
+        : `Pendiente: ${event.title} está atrasada`;
+      const body = [
+        `Hola ${student.nombre || student.usuario},`,
+        '',
+        diff === 1
+          ? `Mañana vence: ${event.title}.`
+          : `La actividad está pendiente desde ${event.due}: ${event.title}.`,
+        event.resource ? `Recurso: ${event.resource}` : '',
+        '',
+        'Aula: https://diegomezapy.github.io/analiticabigdata/',
+        'Este mensaje fue generado automáticamente desde la planilla del curso.'
+      ].filter(Boolean).join('\n');
+      MailApp.sendEmail(student.email, subject, body);
+      appendByHeaders_(ss.getSheetByName('Eventos'), HEADERS.Eventos, {
+        timestamp: now_(),
+        usuario: student.usuario || '',
+        nombre: student.nombre || '',
+        evento: 'recordatorio_email',
+        unidad: event.unit || '',
+        recurso: event.id || '',
+        detalle: subject,
+        xp: '',
+        progreso_json: stringify_(event),
+        origen_url: 'Apps Script',
+        user_agent: 'MailApp',
+        session_id: ''
+      });
+    });
+  });
+}
+
+function latestSemesterConfig_(ss) {
+  const rows = readObjects_(ss.getSheetByName('Config'))
+    .filter(row => row.config_key === 'semester_config');
+  if (!rows.length) return {};
+  const latest = rows[rows.length - 1];
+  try {
+    return JSON.parse(latest.config_value || '{}');
+  } catch (e) {
+    return {};
+  }
+}
+
+function readObjects_(sheet) {
+  if (!sheet || sheet.getLastRow() < 2) return [];
+  const values = sheet.getDataRange().getValues();
+  const headers = values.shift();
+  return values.map(row => {
+    const obj = {};
+    headers.forEach((header, index) => obj[header] = row[index]);
+    return obj;
+  });
+}
+
+function dayDiff_(fromISO, toISO) {
+  const from = new Date(`${fromISO}T00:00:00`);
+  const to = new Date(`${toISO}T00:00:00`);
+  return Math.round((to - from) / 86400000);
 }

@@ -26,6 +26,7 @@ DOCUMENTS = [
     {
         "source": "guia_didactica/BigData_GuiaDid.pdf",
         "target": "guia_didactica/index.html",
+        "download": "guia_didactica/BigData_GuiaDid.pdf",
         "title": "Guía Académica y Didáctica",
         "subtitle": "Analítica de Big Data",
         "kind": "Guía del curso",
@@ -34,6 +35,7 @@ DOCUMENTS = [
         {
             "source": f"unidades/unidad{unit}/Orientaciones_Unidad_Unidad{unit}.pdf",
             "target": f"unidades/unidad{unit}/orientaciones.html",
+            "download": f"unidades/unidad{unit}/Orientaciones_Unidad_Unidad{unit}.pdf",
             "title": f"Orientaciones de la Unidad {unit}",
             "subtitle": unit_title(unit),
             "kind": "Orientaciones",
@@ -44,6 +46,7 @@ DOCUMENTS = [
         {
             "source": f"unidades/unidad{unit}/Descripcion_Actividad_Unidad{unit}_Act{act}.pdf",
             "target": f"unidades/unidad{unit}/actividad-{act}.html",
+            "download": f"unidades/unidad{unit}/Descripcion_Actividad_Unidad{unit}_Act{act}.pdf",
             "title": f"Descripción de Actividad {act}",
             "subtitle": f"Unidad {unit}: {unit_title(unit)}",
             "kind": "Actividad",
@@ -54,6 +57,7 @@ DOCUMENTS = [
     {
         "source": "unidades/unidad1/Material_Lectura_Unidad1.pdf",
         "target": "unidades/unidad1/material-lectura.html",
+        "download": "unidades/unidad1/Material_Lectura_Unidad1.pdf",
         "title": "Material de Lectura",
         "subtitle": "Unidad 1: Introducción al manejo de datos en Big Data",
         "kind": "Material de lectura",
@@ -62,6 +66,7 @@ DOCUMENTS = [
         {
             "source": f"unidades/unidad{unit}/Material_Lectura_Unidad{unit}_Extendido.docx",
             "target": f"unidades/unidad{unit}/material-extendido.html",
+            "download": f"unidades/unidad{unit}/material-extendido.pdf",
             "title": "Material de Lectura Extendido",
             "subtitle": f"Unidad {unit}: {unit_title(unit)}",
             "kind": "Material extendido",
@@ -196,6 +201,11 @@ def render_document(spec: dict[str, str], lines: list[str]) -> str:
     depth = len(Path(target).parts) - 1
     css_path = "../" * depth + "css/documentos.css"
     canonical = PUBLIC_BASE + target.replace("\\", "/")
+    download = spec.get("download", "")
+    download_link = ""
+    if download:
+        download_href = "../" * depth + download
+        download_link = f'<a class="doc-download" href="{download_href}" download>Descargar PDF</a>'
     body = "\n".join(line_to_html(line, i) for i, line in enumerate(lines))
     return f"""<!DOCTYPE html>
 <html lang="es">
@@ -213,7 +223,10 @@ def render_document(spec: dict[str, str], lines: list[str]) -> str:
       <div class="doc-kicker">{html.escape(spec["kind"])}</div>
       <h1>{html.escape(spec["title"])}</h1>
       <p>{html.escape(spec["subtitle"])}</p>
-      <a class="doc-home" href="{ '../' * depth }dashboard.html">Volver a la plataforma</a>
+      <div class="doc-actions">
+        <a class="doc-home" href="{ '../' * depth }dashboard.html">Volver a la plataforma</a>
+        {download_link}
+      </div>
     </header>
     <article class="doc-content">
       {body}
@@ -266,11 +279,67 @@ def main() -> None:
             lines = extract_docx(source)
         else:
             raise ValueError(f"Unsupported source type: {source}")
+        download = spec.get("download")
+        if download and source.suffix.lower() == ".docx":
+            write_simple_pdf(ROOT / download, spec, lines)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(render_document(spec, lines), encoding="utf-8", newline="\n")
         print(f"generated {target.relative_to(ROOT)}")
     (ROOT / "documentos.html").write_text(render_index(), encoding="utf-8", newline="\n")
     print("generated documentos.html")
+
+
+def write_simple_pdf(target: Path, spec: dict[str, str], lines: list[str]) -> None:
+    target.parent.mkdir(parents=True, exist_ok=True)
+    doc = fitz.open()
+    page = doc.new_page(width=595, height=842)
+    margin = 54
+    y = margin
+
+    def add_page() -> fitz.Page:
+        return doc.new_page(width=595, height=842)
+
+    def put(text: str, size: int = 10, bold: bool = False) -> None:
+        nonlocal page, y
+        font = "helv"
+        max_width = page.rect.width - margin * 2
+        for chunk in wrap_text(text, max_chars=max(45, int(max_width / (size * 0.48)))):
+            if y > page.rect.height - margin:
+                page = add_page()
+                y = margin
+            page.insert_text((margin, y), chunk, fontsize=size, fontname=font, color=(0.08, 0.12, 0.2))
+            y += size * (1.55 if bold else 1.45)
+        y += 2
+
+    put(spec["title"], size=18, bold=True)
+    put(spec["subtitle"], size=12)
+    y += 8
+    for line in lines:
+        if not line:
+            continue
+        put(line, size=12 if is_heading(line) else 10, bold=is_heading(line))
+    doc.save(target)
+    doc.close()
+    print(f"generated {target.relative_to(ROOT)}")
+
+
+def wrap_text(text: str, max_chars: int) -> list[str]:
+    words = text.split()
+    lines: list[str] = []
+    current: list[str] = []
+    length = 0
+    for word in words:
+        extra = len(word) + (1 if current else 0)
+        if current and length + extra > max_chars:
+            lines.append(" ".join(current))
+            current = [word]
+            length = len(word)
+        else:
+            current.append(word)
+            length += extra
+    if current:
+        lines.append(" ".join(current))
+    return lines or [text]
 
 
 if __name__ == "__main__":
