@@ -1663,7 +1663,6 @@
               <em>${status}</em>
             </div>
             <h3>${escapeHtml(slide.title)}</h3>
-            <p class="learning-lead">${escapeHtml(slide.lead)}</p>
           </div>
           <div class="learning-slide-controls">
             <button class="btn-secondary" id="learningSupportButton_${unitNum}_${slideIndex}" onclick="toggleLearningSupport(${unitNum}, ${slideIndex})" aria-expanded="false">Necesito mas explicacion</button>
@@ -1671,6 +1670,7 @@
           </div>
         </header>
         <div class="learning-slide-main">
+          <p class="learning-lead">${escapeHtml(slide.lead)}</p>
           ${bullets}
           ${renderLearningPathFormulas(slide)}
           ${renderLearningPathCode(slide)}
