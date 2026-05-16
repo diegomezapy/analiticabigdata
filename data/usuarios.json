@@ -15,6 +15,6 @@
             "password_changed": true
         }
     ],
-    "_nota": "Passwords hasheados con SHA-256. Para agregar usuarios ejecute: echo -n 'contraseña' | sha256sum",
+    "_nota": "Passwords hasheados con SHA-256. Los estudiantes solo pueden ingresar si su cedula ya fue registrada por el profesor en la administracion o en la hoja Estudiantes.",
     "_hash_generador": "https://emn178.github.io/online-tools/sha256.html"
 }

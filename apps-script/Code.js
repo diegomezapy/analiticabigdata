@@ -16,7 +16,8 @@ const HEADERS = {
     'session_id'
   ],
   Estudiantes: [
-    'timestamp', 'usuario', 'nombre', 'email', 'estado', 'detalle'
+    'timestamp', 'usuario', 'nombre', 'email', 'estado', 'password_hash',
+    'password_changed', 'detalle'
   ],
   Config: [
     'timestamp', 'usuario', 'nombre', 'config_key', 'config_value', 'detalle',
@@ -24,7 +25,12 @@ const HEADERS = {
   ]
 };
 
-function doGet() {
+function doGet(e) {
+  const params = e && e.parameter ? e.parameter : {};
+  if (params.action === 'auth') {
+    const result = authenticateStudent_(params.username || '', params.password_hash || '');
+    return jsonResponse(result, params.callback);
+  }
   return jsonResponse({
     status: 'ok',
     course: 'Analítica de Big Data',
@@ -94,6 +100,8 @@ function appendPayload_(ss, payload) {
       nombre: payload.nombre || '',
       email: payload.email || '',
       estado: payload.estado || 'activo',
+      password_hash: payload.password_hash || '',
+      password_changed: payload.password_changed === true ? 'true' : 'false',
       detalle: stringify_(payload.detalle || payload)
     });
     return;
@@ -165,10 +173,12 @@ function parsePayload_(e) {
   return JSON.parse(e.postData.contents);
 }
 
-function jsonResponse(data) {
+function jsonResponse(data, callback) {
+  const json = JSON.stringify(data);
+  const output = callback ? `${callback}(${json});` : json;
   return ContentService
-    .createTextOutput(JSON.stringify(data))
-    .setMimeType(ContentService.MimeType.JSON);
+    .createTextOutput(output)
+    .setMimeType(callback ? ContentService.MimeType.JAVASCRIPT : ContentService.MimeType.JSON);
 }
 
 function stringify_(value) {
@@ -179,6 +189,46 @@ function stringify_(value) {
 
 function now_() {
   return Utilities.formatDate(new Date(), 'America/Asuncion', "yyyy-MM-dd'T'HH:mm:ssXXX");
+}
+
+function authenticateStudent_(username, passwordHash) {
+  if (!username || !passwordHash) {
+    return { status: 'error', message: 'missing_credentials' };
+  }
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  ensureWorkbook_(ss);
+  const rows = readObjects_(ss.getSheetByName('Estudiantes'))
+    .filter(row => String(row.usuario || '').trim() === String(username).trim());
+  if (!rows.length) {
+    return { status: 'error', message: 'not_authorized' };
+  }
+  const latest = rows[rows.length - 1];
+  if (String(latest.estado || 'activo').toLowerCase() === 'removido') {
+    return { status: 'error', message: 'removed' };
+  }
+  const storedHash = latest.password_hash || sha256Hex_(String(latest.usuario || ''));
+  if (storedHash !== passwordHash) {
+    return { status: 'error', message: 'invalid_password' };
+  }
+  return {
+    status: 'ok',
+    user: {
+      username: String(latest.usuario || ''),
+      cedula: String(latest.usuario || ''),
+      nombre: String(latest.nombre || latest.usuario || ''),
+      email: String(latest.email || ''),
+      rol: 'estudiante',
+      password_changed: String(latest.password_changed || '').toLowerCase() === 'true'
+    }
+  };
+}
+
+function sha256Hex_(value) {
+  const bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, value);
+  return bytes.map(byte => {
+    const unsigned = byte < 0 ? byte + 256 : byte;
+    return (`0${unsigned.toString(16)}`).slice(-2);
+  }).join('');
 }
 
 function sheetColor_(name) {

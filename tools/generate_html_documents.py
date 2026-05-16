@@ -11,6 +11,71 @@ import fitz
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_BASE = "https://diegomezapy.github.io/analiticabigdata/"
+COURSE_NAME = "Analítica de Big Data"
+COURSE_CONTEXT = {
+    "Carrera": "Matemática Estadística",
+    "Modalidad": "Virtual",
+    "Año académico": "2026",
+    "Periodo": "Primer período",
+    "Institución": "FACEN · Universidad Nacional de Asunción",
+}
+
+UNIT_BRIEFS = {
+    1: {
+        "competencia": "Reconoce las características de Big Data y configura un entorno reproducible de trabajo con R/RStudio.",
+        "ruta": [
+            "Leer la orientación de la unidad y ubicar los conceptos de volumen, variedad y velocidad.",
+            "Configurar el entorno de análisis y ejecutar operaciones básicas con datos tabulares.",
+            "Elaborar una primera lectura exploratoria con tablas, resúmenes y gráficos simples.",
+        ],
+        "evidencia": "Bitácora breve con comandos utilizados, capturas de salida y reflexión sobre calidad de datos.",
+    },
+    2: {
+        "competencia": "Aplica técnicas de preparación, visualización y análisis exploratorio para datos estructurados.",
+        "ruta": [
+            "Identificar variables, tipos de datos y valores faltantes.",
+            "Construir visualizaciones que respondan preguntas analíticas concretas.",
+            "Preparar variables mediante binarización, imputación, estandarización o escalado según corresponda.",
+        ],
+        "evidencia": "Reporte exploratorio con gráficos comentados y decisiones de preparación justificadas.",
+    },
+    3: {
+        "competencia": "Implementa modelos predictivos básicos y compara resultados con criterios estadísticos.",
+        "ruta": [
+            "Definir variable objetivo, predictores y partición de datos.",
+            "Entrenar modelos supervisados como KNN y regresión logística.",
+            "Comparar desempeño e interpretar errores de clasificación.",
+        ],
+        "evidencia": "Cuaderno reproducible con modelo, matriz de confusión y discusión de resultados.",
+    },
+    4: {
+        "competencia": "Interpreta modelos estadísticos y comunica hallazgos de forma pertinente para la toma de decisiones.",
+        "ruta": [
+            "Revisar métricas, supuestos y límites del modelo.",
+            "Aplicar análisis discriminante lineal y contrastar resultados.",
+            "Sintetizar conclusiones, riesgos y recomendaciones en un informe final.",
+        ],
+        "evidencia": "Informe final con problema, datos, metodología, resultados, limitaciones y recomendación.",
+    },
+}
+
+ACTIVITY_BRIEFS = {
+    1: {
+        "tipo": "Actividad formativa",
+        "proposito": "Asegurar lectura activa del material y preparación conceptual antes de las tareas aplicadas.",
+        "producto": "Notas de lectura, respuestas guía y registro de dudas para tutoría.",
+    },
+    2: {
+        "tipo": "Actividad interactiva",
+        "proposito": "Contrastar ideas con el grupo mediante foro, caso o problema de aplicación.",
+        "producto": "Intervención argumentada y réplica académica a un aporte de un compañero.",
+    },
+    3: {
+        "tipo": "Actividad autónoma evaluable",
+        "proposito": "Verificar comprensión individual mediante cuestionario o entrega breve.",
+        "producto": "Cuestionario completado o evidencia de procedimiento según la consigna.",
+    },
+}
 
 
 def unit_title(unit: int) -> str:
@@ -153,10 +218,14 @@ def collapse_repeated(lines: list[str]) -> list[str]:
 
 def line_to_html(line: str, index: int) -> str:
     escaped = html.escape(line)
+    if not line:
+        return ""
     if index == 0:
         return f"<p>{escaped}</p>"
     if re.match(r"^(Página \d+|pág\. \d+|www\.virtual\.facen\.una\.py)", line, re.I):
         return f'<p class="doc-meta-line">{escaped}</p>'
+    if re.match(r"^•\s+", line):
+        return f'<p class="doc-bullet">{escaped}</p>'
     if " | " in line:
         cells = "".join(f"<td>{html.escape(cell.strip())}</td>" for cell in line.split(" | "))
         return f'<table class="doc-table"><tr>{cells}</tr></table>'
@@ -200,12 +269,14 @@ def render_document(spec: dict[str, str], lines: list[str]) -> str:
     target = spec["target"]
     depth = len(Path(target).parts) - 1
     css_path = "../" * depth + "css/documentos.css"
+    asset_path = "../" * depth + "assets/academic/"
     canonical = PUBLIC_BASE + target.replace("\\", "/")
     download = spec.get("download", "")
     download_link = ""
     if download:
         download_href = "../" * depth + download
         download_link = f'<a class="doc-download" href="{download_href}" download>Descargar PDF</a>'
+    frontmatter = render_academic_frontmatter(spec, asset_path)
     body = "\n".join(line_to_html(line, i) for i, line in enumerate(lines))
     return f"""<!DOCTYPE html>
 <html lang="es">
@@ -216,32 +287,125 @@ def render_document(spec: dict[str, str], lines: list[str]) -> str:
   <meta name="description" content="{html.escape(spec["kind"])} de Analítica de Big Data FACEN.">
   <link rel="canonical" href="{canonical}">
   <link rel="stylesheet" href="{css_path}">
+  <link rel="manifest" href="{ '../' * depth }manifest.json">
+  <meta name="theme-color" content="#f8fafc">
 </head>
 <body>
   <main class="doc-shell">
+    <div class="doc-brand-strip">
+      <img src="{asset_path}facen-header.png" alt="FACEN Universidad Nacional de Asunción">
+    </div>
     <header class="doc-header">
-      <div class="doc-kicker">{html.escape(spec["kind"])}</div>
-      <h1>{html.escape(spec["title"])}</h1>
-      <p>{html.escape(spec["subtitle"])}</p>
+      <div class="doc-header-copy">
+        <div class="doc-kicker">{html.escape(spec["kind"])}</div>
+        <h1>{html.escape(spec["title"])}</h1>
+        <p>{html.escape(spec["subtitle"])}</p>
+      </div>
       <div class="doc-actions">
         <a class="doc-home" href="{ '../' * depth }dashboard.html">Volver a la plataforma</a>
         {download_link}
       </div>
     </header>
+    {frontmatter}
     <article class="doc-content">
+      <h2>Contenido del documento fuente</h2>
       {body}
     </article>
+    <footer class="doc-footer">
+      <img src="{asset_path}facen-footer.png" alt="Educación a Distancia FACEN UNA">
+      <div>www.virtual.facen.una.py · Dpto. de Educación a Distancia</div>
+    </footer>
   </main>
 </body>
 </html>
 """
 
 
+def spec_unit(spec: dict[str, str]) -> int | None:
+    match = re.search(r"unidad(\d)", spec.get("target", ""), re.I)
+    if match:
+        return int(match.group(1))
+    return None
+
+
+def spec_activity(spec: dict[str, str]) -> int | None:
+    match = re.search(r"actividad-(\d)", spec.get("target", ""), re.I)
+    if match:
+        return int(match.group(1))
+    return None
+
+
+def render_academic_frontmatter(spec: dict[str, str], asset_path: str) -> str:
+    unit = spec_unit(spec)
+    act = spec_activity(spec)
+    meta = "".join(
+        f"<div><span>{html.escape(key)}</span><strong>{html.escape(value)}</strong></div>"
+        for key, value in COURSE_CONTEXT.items()
+    )
+    if spec["kind"] == "Guía del curso":
+        return f"""
+    <section class="doc-cover-card guide">
+      <img src="{asset_path}facen-cover.jpg" alt="Portada institucional FACEN">
+      <div class="doc-cover-text">
+        <h2>Guía académica de la asignatura</h2>
+        <p>Documento marco para comprender la organización pedagógica, los objetivos, la metodología, el cronograma y los criterios de evaluación de la asignatura.</p>
+      </div>
+    </section>
+    <section class="doc-meta-grid">{meta}</section>
+    <section class="doc-study-note">
+      <h2>Uso recomendado</h2>
+      <p>Revise esta guía antes de iniciar las unidades. Utilícela como contrato didáctico: allí se indican las expectativas de participación, la secuencia de actividades, los plazos y la forma en que se consolidan las evidencias de aprendizaje.</p>
+    </section>
+"""
+    if unit:
+        brief = UNIT_BRIEFS[unit]
+        ruta = "".join(f"<li>{html.escape(item)}</li>" for item in brief["ruta"])
+        image = f"{asset_path}miniatura_unidad{unit}.png"
+        if spec["kind"] == "Material extendido":
+            image = f"{asset_path}portada_unidad{unit}.png"
+        activity_html = ""
+        if act:
+            activity = ACTIVITY_BRIEFS[act]
+            activity_html = f"""
+      <div class="doc-activity-brief">
+        <h3>{html.escape(activity["tipo"])}</h3>
+        <p><strong>Propósito:</strong> {html.escape(activity["proposito"])}</p>
+        <p><strong>Producto esperado:</strong> {html.escape(activity["producto"])}</p>
+      </div>
+"""
+        return f"""
+    <section class="doc-unit-card">
+      <img src="{image}" alt="Imagen académica Unidad {unit}">
+      <div>
+        <div class="doc-kicker">Unidad {unit}</div>
+        <h2>{html.escape(unit_title(unit))}</h2>
+        <p>{html.escape(brief["competencia"])}</p>
+      </div>
+    </section>
+    <section class="doc-meta-grid">{meta}<div><span>Unidad</span><strong>{unit}</strong></div></section>
+    <section class="doc-study-note">
+      <h2>Ruta de trabajo sugerida</h2>
+      <ol>{ruta}</ol>
+      <p><strong>Evidencia de aprendizaje:</strong> {html.escape(brief["evidencia"])}</p>
+      {activity_html}
+    </section>
+"""
+    return f'<section class="doc-meta-grid">{meta}</section>'
+
+
 def render_index() -> str:
-    items = "\n".join(
+    document_items = "\n".join(
         f'<a href="{html.escape(spec["target"])}"><span>{html.escape(spec["kind"])}</span>{html.escape(spec["title"])} — {html.escape(spec["subtitle"])}</a>'
         for spec in DOCUMENTS
     )
+    resource_items = """
+<a href="guia_didactica/BigData_GuiaDid.pdf" download><span>PDF descargable</span>Guía Académica y Didáctica — PDF</a>
+<a href="practicas/index.html"><span>Prácticas</span>Laboratorios guiados con datos CSV y código R</a>
+<a href="data/datasets/clientes_compras.csv" download><span>Datos CSV</span>Clientes y compras — práctica Unidad 1</a>
+<a href="data/datasets/estudiantes_ead.csv" download><span>Datos CSV</span>Estudiantes EAD — práctica Unidad 2</a>
+<a href="data/datasets/modelos_credito.csv" download><span>Datos CSV</span>Modelos de crédito — prácticas Unidades 3 y 4</a>
+"""
+    items = resource_items + document_items
     return f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -251,18 +415,30 @@ def render_index() -> str:
   <meta name="description" content="Índice de documentos HTML insertables de Analítica de Big Data FACEN.">
   <link rel="canonical" href="{PUBLIC_BASE}documentos.html">
   <link rel="stylesheet" href="css/documentos.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#f8fafc">
 </head>
 <body>
   <main class="doc-shell">
+    <div class="doc-brand-strip">
+      <img src="assets/academic/facen-header.png" alt="FACEN Universidad Nacional de Asunción">
+    </div>
     <header class="doc-header">
       <div class="doc-kicker">Documentos HTML</div>
       <h1>Analítica de Big Data</h1>
       <p>Guía, orientaciones, actividades y materiales listos para abrir o insertar desde GitHub Pages.</p>
       <a class="doc-home" href="dashboard.html">Volver a la plataforma</a>
     </header>
+    <section class="doc-meta-grid">
+      {"".join(f"<div><span>{html.escape(key)}</span><strong>{html.escape(value)}</strong></div>" for key, value in COURSE_CONTEXT.items())}
+    </section>
     <nav class="doc-index">
       {items}
     </nav>
+    <footer class="doc-footer">
+      <img src="assets/academic/facen-footer.png" alt="Educación a Distancia FACEN UNA">
+      <div>www.virtual.facen.una.py · Dpto. de Educación a Distancia</div>
+    </footer>
   </main>
 </body>
 </html>
@@ -292,12 +468,38 @@ def main() -> None:
 def write_simple_pdf(target: Path, spec: dict[str, str], lines: list[str]) -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
     doc = fitz.open()
+    header_img = ROOT / "assets/academic/facen-header.png"
+    footer_img = ROOT / "assets/academic/facen-footer.png"
+    header_xref = 0
+    footer_xref = 0
+
+    def decorate(page: fitz.Page) -> None:
+        nonlocal header_xref, footer_xref
+        if header_img.exists():
+            header_xref = page.insert_image(
+                fitz.Rect(320, 0, 595, 67),
+                filename=str(header_img) if header_xref == 0 else None,
+                xref=header_xref,
+                keep_proportion=True
+            )
+        if footer_img.exists():
+            footer_xref = page.insert_image(
+                fitz.Rect(0, 797, 595, 842),
+                filename=str(footer_img) if footer_xref == 0 else None,
+                xref=footer_xref,
+                keep_proportion=False
+            )
+        page.insert_text((54, 812), "Educación a Distancia FACEN UNA", fontsize=9, fontname="helv", color=(1, 1, 1))
+
     page = doc.new_page(width=595, height=842)
+    decorate(page)
     margin = 54
-    y = margin
+    y = 96
 
     def add_page() -> fitz.Page:
-        return doc.new_page(width=595, height=842)
+        new_page = doc.new_page(width=595, height=842)
+        decorate(new_page)
+        return new_page
 
     def put(text: str, size: int = 10, bold: bool = False) -> None:
         nonlocal page, y
@@ -306,11 +508,12 @@ def write_simple_pdf(target: Path, spec: dict[str, str], lines: list[str]) -> No
         for chunk in wrap_text(text, max_chars=max(45, int(max_width / (size * 0.48)))):
             if y > page.rect.height - margin:
                 page = add_page()
-                y = margin
+                y = 96
             page.insert_text((margin, y), chunk, fontsize=size, fontname=font, color=(0.08, 0.12, 0.2))
             y += size * (1.55 if bold else 1.45)
         y += 2
 
+    put("FACEN · Universidad Nacional de Asunción", size=9)
     put(spec["title"], size=18, bold=True)
     put(spec["subtitle"], size=12)
     y += 8

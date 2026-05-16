@@ -19,8 +19,9 @@ Plataforma educativa online para la asignatura **Analítica de Big Data** de la 
 
 ## Funcionalidades
 
-- Primer acceso de estudiantes con cédula/cédula y cambio posterior de contraseña.
+- Primer acceso de estudiantes con cédula/cédula solo si la cédula fue autorizada por el profesor.
 - Materiales, orientaciones, guía y actividades como páginas HTML insertables y PDF descargables.
+- Documentos HTML con encabezado, pie e identidad visual FACEN EaD.
 - Prácticas guiadas por fichas con código R y datos CSV alojados en la web.
 - Cuestionarios interactivos con temporizador y retroalimentación.
 - Flashcards y actividad de emparejamiento de conceptos.
@@ -64,7 +65,7 @@ Profesor: `profesor`
 
 Contraseña docente inicial: `profesor2026`
 
-Para estudiantes nuevos, el primer acceso es el número de cédula como usuario y como contraseña. Luego pueden cambiar la clave desde `Cuenta`.
+Para estudiantes nuevos, el primer acceso es el número de cédula como usuario y como contraseña, siempre que la cédula ya figure en `data/usuarios.json`, en la administración local o en la hoja `Estudiantes` sincronizada por Apps Script. Luego pueden cambiar la clave desde `Cuenta`.
 
 ## Google Sheets
 

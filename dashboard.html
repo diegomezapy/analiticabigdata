@@ -161,7 +161,7 @@
             name: 'Analítica de Big Data',
             spreadsheetId: '1eU6Fh073qLIOQaPonRim5d0e6IuGE0Bq8hDZHmlHKzI',
             publicBaseUrl: 'https://diegomezapy.github.io/analiticabigdata/',
-            sheetsWebAppUrl: 'https://script.google.com/macros/s/AKfycbyKWqOqY08MFKk8CmESd0j1eV0n_2gAB_sNFqLvvqhZIgNfBJ2Tcn3eCRo0lw1meYh-/exec'
+            sheetsWebAppUrl: 'https://script.google.com/macros/s/AKfycbzr2gQky-zzvBBZFNDeUCsJ2uGJ6gF04QyNXyoh_WzAD_wQW5dv2-b6ZUtPOO4aEgGg/exec'
         };
 
         const DEFAULT_SEMESTER_CONFIG = {
@@ -1892,6 +1892,7 @@
     <div class="form-grid">
       <div class="card">
         <h3>Registrar estudiante</h3>
+        <p style="margin:0.4rem 0 1rem;font-size:0.86rem">Solo los estudiantes autorizados aquí o en la nómina web pueden ingresar. La contraseña inicial es la cédula.</p>
         <div class="form-row">
           <label>Cédula</label>
           <input class="form-control" id="studentCedula" inputmode="numeric" placeholder="Ej. 1234567">
@@ -1928,13 +1929,14 @@
                 return;
             }
             const users = localUsers().filter(u => u.username !== cedula);
+            const initialHash = await sha256(cedula);
             const student = {
                 username: cedula,
                 cedula,
                 nombre,
                 email,
                 rol: 'estudiante',
-                password_hash: await sha256(cedula),
+                password_hash: initialHash,
                 password_changed: false,
                 created_at: new Date().toISOString()
             };
@@ -1946,10 +1948,12 @@
                 usuario: cedula,
                 nombre,
                 email,
+                password_hash: initialHash,
+                password_changed: false,
                 estado: 'activo',
                 detalle: { cedula, password_inicial: 'cedula' }
             });
-            showToast('Estudiante registrado. Primer acceso: cédula/cédula.', 'success');
+            showToast('Estudiante autorizado. Primer acceso: cédula/cédula.', 'success');
             renderAdminStudents();
         }
 

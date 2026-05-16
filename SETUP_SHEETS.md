@@ -23,7 +23,7 @@ https://script.google.com/d/1cZXfAId4sBXwIsPUaWgbPviQ13yUQTodyW8plm8I5y32a0llEJ5
 URL de recepción configurada en `dashboard.html`:
 
 ```text
-https://script.google.com/macros/s/AKfycbyKWqOqY08MFKk8CmESd0j1eV0n_2gAB_sNFqLvvqhZIgNfBJ2Tcn3eCRo0lw1meYh-/exec
+https://script.google.com/macros/s/AKfycbzr2gQky-zzvBBZFNDeUCsJ2uGJ6gF04QyNXyoh_WzAD_wQW5dv2-b6ZUtPOO4aEgGg/exec
 ```
 
 Si Google solicita autorización en el primer uso, abrir esa URL con la cuenta `dmeza.py@gmail.com` y aceptar los permisos del script antes de distribuir el enlace a estudiantes. La app conserva una copia local de los envíos en `localStorage` (`abd_sync_history`) y reintenta los pendientes cuando la URL está configurada.
@@ -50,6 +50,7 @@ La plataforma registra:
 - Recursos abiertos: guía, orientaciones, materiales y descripciones HTML.
 - Login, badges, cambios de contraseña, recordatorios y snapshots de progreso.
 - Estudiantes registrados/removidos y configuración de fechas por semestre.
+- Autenticación de estudiantes autorizados por el profesor: si una cédula no existe en `Estudiantes` o fue removida, el login no permite automatrícula.
 
 ## Recordatorios por correo
 

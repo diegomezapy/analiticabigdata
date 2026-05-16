@@ -32,6 +32,7 @@
       width: 100%; height: 100%;
       z-index: 0;
       pointer-events: none;
+      display: none;
     }
 
     /* Background gradient rings */
@@ -42,6 +43,7 @@
       opacity: 0.15;
       animation: float 8s ease-in-out infinite;
       z-index: 0;
+      display: none;
     }
     .bg-ring-1 {
       width: 600px; height: 600px;
@@ -84,13 +86,11 @@
     }
 
     .login-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: #ffffff;
       border: 1px solid var(--glass-border);
-      border-radius: 24px;
+      border-radius: 10px;
       padding: 2.5rem;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+      box-shadow: var(--shadow-md);
     }
 
     .login-logo {
@@ -100,15 +100,14 @@
 
     .login-logo .logo-icon {
       width: 70px; height: 70px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      border-radius: 20px;
+      background: var(--primary);
+      border-radius: 8px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 2rem;
       margin-bottom: 1rem;
-      box-shadow: 0 10px 30px rgba(20, 184, 166, 0.4);
-      animation: pulse-glow 3s ease-in-out infinite;
+      box-shadow: none;
     }
 
     @keyframes pulse-glow {
@@ -119,10 +118,7 @@
     .login-logo h1 {
       font-size: 1.4rem;
       font-weight: 700;
-      background: linear-gradient(135deg, #fff, var(--primary-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--primary-dark);
       margin: 0;
     }
 
@@ -189,7 +185,7 @@
     .btn-login {
       width: 100%;
       padding: 1rem;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
+      background: var(--primary);
       border: none;
       border-radius: 12px;
       color: white;
@@ -216,7 +212,7 @@
     .btn-login:hover::before { left: 100%; }
     .btn-login:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(20, 184, 166, 0.5);
+      box-shadow: var(--shadow-md);
     }
     .btn-login:active { transform: translateY(0); }
 
@@ -324,7 +320,7 @@
         </button>
 
         <div class="login-error" id="loginError">
-          ❌ Usuario o contraseña incorrectos. Por favor intenta nuevamente.
+          Usuario no autorizado o contraseña incorrecta. Verifica que tu cédula ya haya sido cargada por el profesor.
         </div>
       </form>
 
@@ -395,6 +391,8 @@
     // ========================================
     // Login logic
     // ========================================
+    const SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzr2gQky-zzvBBZFNDeUCsJ2uGJ6gF04QyNXyoh_WzAD_wQW5dv2-b6ZUtPOO4aEgGg/exec';
+
     async function sha256(message) {
       const msgBuffer = new TextEncoder().encode(message);
       const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -455,22 +453,34 @@
       setTimeout(() => { window.location.href = 'dashboard.html'; }, 300);
     }
 
-    async function autoCreateCedulaUser(username, password, passwordHash) {
-      if (!(isCedula(username) && username === password)) return null;
-      const users = localUsers();
-      if (users.some(u => u.username === username)) return null;
-      const created = {
+    function jsonp(url, timeoutMs = 8000) {
+      return new Promise((resolve) => {
+        const callbackName = `abd_jsonp_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+        const script = document.createElement('script');
+        const sep = url.includes('?') ? '&' : '?';
+        const timer = setTimeout(() => cleanup(null), timeoutMs);
+        function cleanup(value) {
+          clearTimeout(timer);
+          delete window[callbackName];
+          script.remove();
+          resolve(value);
+        }
+        window[callbackName] = data => cleanup(data);
+        script.onerror = () => cleanup(null);
+        script.src = `${url}${sep}callback=${callbackName}`;
+        document.body.appendChild(script);
+      });
+    }
+
+    async function authenticateWithWebRoster(username, passwordHash) {
+      if (!SHEETS_WEB_APP_URL || !isCedula(username)) return null;
+      const params = new URLSearchParams({
+        action: 'auth',
         username,
-        cedula: username,
-        nombre: `Estudiante ${username}`,
-        rol: 'estudiante',
-        password_hash: passwordHash,
-        password_changed: false,
-        created_at: new Date().toISOString()
-      };
-      users.push(created);
-      saveLocalUsers(users);
-      return created;
+        password_hash: passwordHash
+      });
+      const result = await jsonp(`${SHEETS_WEB_APP_URL}?${params.toString()}`);
+      return result && result.status === 'ok' ? result.user : null;
     }
 
     async function handleLogin(e) {
@@ -497,7 +507,7 @@
         );
 
         if (!user) {
-          user = await autoCreateCedulaUser(username, password, passwordHash);
+          user = await authenticateWithWebRoster(username, passwordHash);
         }
 
         if (user) {

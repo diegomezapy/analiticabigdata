@@ -7,19 +7,44 @@
   <meta name="description" content="Material de lectura de Analítica de Big Data FACEN.">
   <link rel="canonical" href="https://diegomezapy.github.io/analiticabigdata/unidades/unidad1/material-lectura.html">
   <link rel="stylesheet" href="../../css/documentos.css">
+  <link rel="manifest" href="../../manifest.json">
+  <meta name="theme-color" content="#f8fafc">
 </head>
 <body>
   <main class="doc-shell">
+    <div class="doc-brand-strip">
+      <img src="../../assets/academic/facen-header.png" alt="FACEN Universidad Nacional de Asunción">
+    </div>
     <header class="doc-header">
-      <div class="doc-kicker">Material de lectura</div>
-      <h1>Material de Lectura</h1>
-      <p>Unidad 1: Introducción al manejo de datos en Big Data</p>
+      <div class="doc-header-copy">
+        <div class="doc-kicker">Material de lectura</div>
+        <h1>Material de Lectura</h1>
+        <p>Unidad 1: Introducción al manejo de datos en Big Data</p>
+      </div>
       <div class="doc-actions">
         <a class="doc-home" href="../../dashboard.html">Volver a la plataforma</a>
         <a class="doc-download" href="../../unidades/unidad1/Material_Lectura_Unidad1.pdf" download>Descargar PDF</a>
       </div>
     </header>
+    
+    <section class="doc-unit-card">
+      <img src="../../assets/academic/miniatura_unidad1.png" alt="Imagen académica Unidad 1">
+      <div>
+        <div class="doc-kicker">Unidad 1</div>
+        <h2>Introducción al manejo de datos en Big Data</h2>
+        <p>Reconoce las características de Big Data y configura un entorno reproducible de trabajo con R/RStudio.</p>
+      </div>
+    </section>
+    <section class="doc-meta-grid"><div><span>Carrera</span><strong>Matemática Estadística</strong></div><div><span>Modalidad</span><strong>Virtual</strong></div><div><span>Año académico</span><strong>2026</strong></div><div><span>Periodo</span><strong>Primer período</strong></div><div><span>Institución</span><strong>FACEN · Universidad Nacional de Asunción</strong></div><div><span>Unidad</span><strong>1</strong></div></section>
+    <section class="doc-study-note">
+      <h2>Ruta de trabajo sugerida</h2>
+      <ol><li>Leer la orientación de la unidad y ubicar los conceptos de volumen, variedad y velocidad.</li><li>Configurar el entorno de análisis y ejecutar operaciones básicas con datos tabulares.</li><li>Elaborar una primera lectura exploratoria con tablas, resúmenes y gráficos simples.</li></ol>
+      <p><strong>Evidencia de aprendizaje:</strong> Bitácora breve con comandos utilizados, capturas de salida y reflexión sobre calidad de datos.</p>
+      
+    </section>
+
     <article class="doc-content">
+      <h2>Contenido del documento fuente</h2>
       <p>pág. 1</p>
 <p class="doc-meta-line">www.virtual.facen.una.py - Dpto. de Educación a Distancia</p>
 <h2>MATERIAL DE LECTURA — UNIDAD 1</h2>
@@ -75,14 +100,14 @@
 <p class="doc-meta-line">www.virtual.facen.una.py - Dpto. de Educación a Distancia</p>
 <h2>1.3 Aplicaciones de la Analítica de Big Data</h2>
 <p>La analítica de Big Data tiene aplicaciones en prácticamente todos los sectores. Algunos ejemplos destacados incluyen:</p>
-<p>• Salud: análisis genómico, epidemiología, sistemas de alerta temprana de brotes. • Finanzas: detección de fraude en tiempo real, modelos de riesgo crediticio. • Comercio: motores de recomendación (Netflix, Amazon), análisis de comportamiento. • Transporte: optimización de rutas, tráfico en tiempo real, vehículos autónomos. • Agro: modelos predictivos de rendimiento de cultivos, monitoreo satelital. • Gobierno: análisis de redes sociales, optimización de servicios públicos. 2. ECOSISTEMA Y HERRAMIENTAS DE LA ANALÍTICA DE BIG DATA</p>
+<p class="doc-bullet">• Salud: análisis genómico, epidemiología, sistemas de alerta temprana de brotes. • Finanzas: detección de fraude en tiempo real, modelos de riesgo crediticio. • Comercio: motores de recomendación (Netflix, Amazon), análisis de comportamiento. • Transporte: optimización de rutas, tráfico en tiempo real, vehículos autónomos. • Agro: modelos predictivos de rendimiento de cultivos, monitoreo satelital. • Gobierno: análisis de redes sociales, optimización de servicios públicos. 2. ECOSISTEMA Y HERRAMIENTAS DE LA ANALÍTICA DE BIG DATA</p>
 <p>El ecosistema de herramientas disponibles para la Analítica de Big Data es amplio y está en constante evolución. Las principales categorías son: lenguajes de programación y análisis, plataformas de procesamiento distribuido, bases de datos especializadas, herramientas de visualización y plataformas en la nube. 2.1 Lenguajes principales: R y Python</p>
 <p>R y Python son los dos lenguajes de programación más utilizados en ciencia de datos y analítica. Aunque comparten muchas capacidades, tienen orientaciones diferentes:</p>
 <h2>Tabla 3. R vs. Python para Analítica de Datos</h2>
 <p>Aspecto R Python Origen Bell Labs, 1993. Murray Hill, NJ. Guido van Rossum, 1991. Países Bajos. Orientación Estadística y análisis de datos. Programación general + ciencia de datos. Fortalezas Estadística avanzada, visualización. Machine Learning, producción, versatilidad. Ecosistema clave tidyverse, ggplot2, caret, Shiny. pandas, scikit-learn, TensorFlow, PyTorch. Entorno IDE RStudio. Jupyter, VS Code, PyCharm. Curva de aprendizaje Moderada para estadísticos. Moderada para programadores.</p>
 <p>📌 En este curso usaremos principalmente R y RStudio, complementando con Python en unidades posteriores. Ambos lenguajes son gratuitos, de código abierto y ampliamente usados en el sector académico y profesional. 2.2 Plataformas de procesamiento: Hadoop y Spark</p>
 <p>Cuando los datos superan la capacidad de una sola máquina, se recurre a plataformas de procesamiento distribuido. Los más conocidos son:</p>
-<p>• Apache Hadoop: framework de código abierto que permite el procesamiento distribuido de grandes conjuntos de datos usando clusters de computadoras. Basa su modelo en MapReduce — dividir el trabajo en tareas paralelas. • Apache Spark: motor de procesamiento analítico de uso general, más rápido que Hadoop para muchas tareas. Soporta R (SparkR, sparklyr) y Python (PySpark).</p>
+<p class="doc-bullet">• Apache Hadoop: framework de código abierto que permite el procesamiento distribuido de grandes conjuntos de datos usando clusters de computadoras. Basa su modelo en MapReduce — dividir el trabajo en tareas paralelas. • Apache Spark: motor de procesamiento analítico de uso general, más rápido que Hadoop para muchas tareas. Soporta R (SparkR, sparklyr) y Python (PySpark).</p>
 <p class="doc-meta-line">Página 5</p>
 <p class="doc-meta-line">pág. 5</p>
 <p class="doc-meta-line">www.virtual.facen.una.py - Dpto. de Educación a Distancia</p>
@@ -205,11 +230,15 @@
 <p class="doc-meta-line">Página 12</p>
 <p class="doc-meta-line">pág. 12</p>
 <p class="doc-meta-line">www.virtual.facen.una.py - Dpto. de Educación a Distancia</p>
-<p>• Usar nombres descriptivos: mejor analisis_ventas_2026.R que script_final_v3.R • Numerar scripts en orden de ejecución: 01_, 02_, 03_... • Usar rutas relativas (no absolutas): data/raw/datos.csv no C:/Usuario/... • Fijar la semilla aleatoria para resultados reproducibles: set.seed(42) • Documentar la versión de R y paquetes: sessionInfo() 9. REFERENCIAS Y RECURSOS 9.1 Bibliografía básica</p>
-<p>• Wickham, H. y Grolemund, G. (2023). R for Data Science (2ª ed.). O&#x27;Reilly. Disponible en: https://r4ds.hadley.nz/ • James, G., Witten, D., Hastie, T. y Tibshirani, R. (2021). An Introduction to Statistical Learning with Applications in R (2ª ed.). Springer. Disponible en: https://www.statlearning.com/ • Silge, J. y Robinson, D. (2017). Text Mining with R. O&#x27;Reilly. Disponible en: https://www.tidytextmining.com/ • Irizarry, R. A. (2022). Introduction to Data Science. Disponible en: https://rafalab.github.io/dsbook/ 9.2 Complementarias y recursos en línea</p>
-<p>• Kabacoff, R. I. (2015). R in Action (2ª ed.). Manning Publications. • Grolemund, G. (2014). Hands-On Programming with R. O&#x27;Reilly. • CRAN Task Views — Big Data: https://cran.r-project.org/view=BigData • Posit Cloud (antes RStudio.cloud): plataforma gratuita para usar R en el navegador. • RStudio Community: https://community.rstudio.com/ • Stack Overflow (etiqueta [r]): https://stackoverflow.com/questions/tagged/r • Swirl — aprende R desde la consola: install.packages(&#x27;swirl&#x27;); library(swirl)</p>
+<p class="doc-bullet">• Usar nombres descriptivos: mejor analisis_ventas_2026.R que script_final_v3.R • Numerar scripts en orden de ejecución: 01_, 02_, 03_... • Usar rutas relativas (no absolutas): data/raw/datos.csv no C:/Usuario/... • Fijar la semilla aleatoria para resultados reproducibles: set.seed(42) • Documentar la versión de R y paquetes: sessionInfo() 9. REFERENCIAS Y RECURSOS 9.1 Bibliografía básica</p>
+<p class="doc-bullet">• Wickham, H. y Grolemund, G. (2023). R for Data Science (2ª ed.). O&#x27;Reilly. Disponible en: https://r4ds.hadley.nz/ • James, G., Witten, D., Hastie, T. y Tibshirani, R. (2021). An Introduction to Statistical Learning with Applications in R (2ª ed.). Springer. Disponible en: https://www.statlearning.com/ • Silge, J. y Robinson, D. (2017). Text Mining with R. O&#x27;Reilly. Disponible en: https://www.tidytextmining.com/ • Irizarry, R. A. (2022). Introduction to Data Science. Disponible en: https://rafalab.github.io/dsbook/ 9.2 Complementarias y recursos en línea</p>
+<p class="doc-bullet">• Kabacoff, R. I. (2015). R in Action (2ª ed.). Manning Publications. • Grolemund, G. (2014). Hands-On Programming with R. O&#x27;Reilly. • CRAN Task Views — Big Data: https://cran.r-project.org/view=BigData • Posit Cloud (antes RStudio.cloud): plataforma gratuita para usar R en el navegador. • RStudio Community: https://community.rstudio.com/ • Stack Overflow (etiqueta [r]): https://stackoverflow.com/questions/tagged/r • Swirl — aprende R desde la consola: install.packages(&#x27;swirl&#x27;); library(swirl)</p>
 <p>📚 Recomendación del docente: comenzar con el Capítulo 1 de &#x27;R for Data Science&#x27; (Wickham &amp; Grolemund) y complementar con los tutoriales de Swirl para practicar los conceptos básicos de R de forma interactiva.</p>
     </article>
+    <footer class="doc-footer">
+      <img src="../../assets/academic/facen-footer.png" alt="Educación a Distancia FACEN UNA">
+      <div>www.virtual.facen.una.py · Dpto. de Educación a Distancia</div>
+    </footer>
   </main>
 </body>
 </html>
