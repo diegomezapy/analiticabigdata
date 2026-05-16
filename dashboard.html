@@ -508,7 +508,7 @@
             document.getElementById('topbarTitle').textContent = `Unidad ${n}`;
             const content = document.getElementById('pageContent');
             content.innerHTML = '';
-            renderUnitDetail(n, 'materiales');
+            renderUnitDetail(n, 'ruta');
         }
 
         // ================================================================
@@ -973,7 +973,613 @@
             },
         };
 
-        function renderUnitDetail(n, activeTab) {
+        const UNIT_LEARNING_PATHS = {
+            1: [
+                {
+                    kind: 'intro',
+                    stage: 'Inicio',
+                    title: 'Mapa de la unidad',
+                    lead: 'La unidad comienza situando que se entiende por Big Data y como se trabaja de forma reproducible dentro del aula.',
+                    bullets: [
+                        'Reconocer las caracteristicas del Big Data y sus usos academicos.',
+                        'Preparar el entorno de trabajo para leer, revisar y transformar datos.',
+                        'Conectar la lectura oficial con una practica breve de importacion y resumen.'
+                    ],
+                    checks: ['Revisa las orientaciones oficiales.', 'Identifica las actividades AF, AI y AA de la unidad.'],
+                    resources: ['orientation']
+                },
+                {
+                    kind: 'concept',
+                    stage: 'Conceptos',
+                    title: 'Big Data como proceso analitico',
+                    lead: 'Big Data no es solamente tener muchos archivos: implica volumen, velocidad, variedad, veracidad y valor para convertir datos en decisiones.',
+                    bullets: [
+                        'Volumen: cantidad de registros, variables o fuentes disponibles.',
+                        'Variedad: formatos tabulares, texto, sensores, registros web o datos administrativos.',
+                        'Valor: capacidad de generar una pregunta, una decision o una mejora verificable.'
+                    ],
+                    formulas: [
+                        { label: 'Lectura de proceso', value: 'Datos + contexto + metodo = informacion util', note: 'El dato aislado no alcanza; la interpretacion depende del objetivo.' }
+                    ],
+                    checks: ['Distingue dato, informacion y conocimiento.', 'Explica una aplicacion universitaria de Big Data.'],
+                    resources: ['materials']
+                },
+                {
+                    kind: 'function',
+                    stage: 'Funciones',
+                    title: 'Primeras operaciones con data.table y Polars',
+                    lead: 'Antes de analizar conviene inspeccionar la estructura, contar registros y obtener una primera vista de las variables.',
+                    codeBlocks: [
+                        { label: 'R data.table', code: `library(data.table)\ndatos <- fread("data/datasets/clientes_compras.csv")\nstr(datos)\nhead(datos)\ndatos[, .N]` },
+                        { label: 'Python Polars', code: `import polars as pl\n\ndatos = pl.read_csv("data/datasets/clientes_compras.csv")\nprint(datos.schema)\nprint(datos.head())\nprint(datos.height)` }
+                    ],
+                    checks: ['Reconoce filas, columnas y tipos de variables.', 'Puede explicar para que sirve fread o read_csv.']
+                },
+                {
+                    kind: 'formula',
+                    stage: 'Procedimiento',
+                    title: 'De la observacion al resumen',
+                    lead: 'El primer analisis produce medidas descriptivas para detectar rangos, valores extremos y posibles errores.',
+                    formulas: [
+                        { label: 'Promedio', value: 'media = suma(x) / n', note: 'Resume el centro de una variable numerica.' },
+                        { label: 'Frecuencia', value: 'frecuencia(categoria) = cantidad de casos en la categoria', note: 'Resume variables cualitativas o grupos.' }
+                    ],
+                    codeBlocks: [
+                        { label: 'R data.table', code: `datos[, .(\n  edad_promedio = mean(edad),\n  compras_promedio = mean(compras_mes),\n  total_clientes = .N\n)]\n\ndatos[, .N, by = canal_preferido]` },
+                        { label: 'Python Polars', code: `datos.select(\n    pl.col("edad").mean().alias("edad_promedio"),\n    pl.col("compras_mes").mean().alias("compras_promedio"),\n    pl.len().alias("total_clientes")\n)\n\ndatos.group_by("canal_preferido").len()` }
+                    ],
+                    checks: ['Calcula un resumen numerico.', 'Agrupa por una variable categorica.']
+                },
+                {
+                    kind: 'practice',
+                    stage: 'Practica',
+                    title: 'Laboratorio guiado con datos de clientes',
+                    lead: 'Aplica la lectura de datos, el resumen de variables y la creacion de una senal analitica sencilla.',
+                    practiceId: 'lab_datos',
+                    checks: ['Abre el laboratorio de la unidad.', 'Completa las fichas paso a paso.', 'Descarga el dataset para trabajar fuera de linea.'],
+                    resources: ['activity1']
+                },
+                {
+                    kind: 'activity',
+                    stage: 'Aplicacion',
+                    title: 'Foro y consigna aplicada',
+                    lead: 'La actividad intermedia pide llevar los conceptos a una situacion de aplicacion y argumentar con criterio tecnico.',
+                    bullets: [
+                        'Retoma los conceptos de volumen, variedad y valor.',
+                        'Relaciona un problema real con una fuente de datos posible.',
+                        'Formula una intervencion o pregunta analitica concreta.'
+                    ],
+                    checks: ['Lee la consigna AI.', 'Prepara una respuesta con ejemplo y justificacion.'],
+                    resources: ['activity2']
+                },
+                {
+                    kind: 'quiz',
+                    stage: 'Evaluacion',
+                    title: 'Cuestionario de cierre',
+                    lead: 'Cierra la unidad con retroalimentacion inmediata. El resultado queda guardado en tu progreso.',
+                    checks: ['Repasa las diapositivas previas.', 'Completa el cuestionario AA de la unidad.'],
+                    resources: ['activity3']
+                }
+            ],
+            2: [
+                {
+                    kind: 'intro',
+                    stage: 'Inicio',
+                    title: 'Preparacion y exploracion de datos',
+                    lead: 'Esta unidad avanza desde la carga de datos hacia la limpieza, transformacion y preparacion para analisis.',
+                    bullets: [
+                        'Usar librerias para procesar datos de forma eficiente.',
+                        'Crear variables derivadas y transformar variables cualitativas.',
+                        'Preparar datos de entrenamiento y prueba.'
+                    ],
+                    checks: ['Revisa las orientaciones oficiales.', 'Identifica que actividades tienen puntaje.'],
+                    resources: ['orientation']
+                },
+                {
+                    kind: 'concept',
+                    stage: 'Conceptos',
+                    title: 'Variables, calidad y preparacion',
+                    lead: 'La preparacion busca que cada variable sea interpretable, comparable y util para responder una pregunta analitica.',
+                    bullets: [
+                        'Imputacion: tratamiento de valores faltantes.',
+                        'Binarizacion: conversion de categorias en indicadores.',
+                        'Escalado: ajuste de magnitudes para comparar variables.'
+                    ],
+                    checks: ['Reconoce valores faltantes.', 'Diferencia variable numerica y categorica.'],
+                    resources: ['materials']
+                },
+                {
+                    kind: 'formula',
+                    stage: 'Formulas',
+                    title: 'Escalado y particion de datos',
+                    lead: 'El escalado estandariza magnitudes y la particion evita evaluar un modelo con los mismos datos usados para construirlo.',
+                    formulas: [
+                        { label: 'Estandarizacion z', value: 'z = (x - media) / desviacion_estandar', note: 'Permite comparar variables con unidades distintas.' },
+                        { label: 'Division train/test', value: 'datos = entrenamiento + prueba', note: 'Entrenamiento aprende patrones; prueba estima desempeno.' }
+                    ],
+                    checks: ['Interpreta un valor z.', 'Explica por que se separan datos de entrenamiento y prueba.']
+                },
+                {
+                    kind: 'function',
+                    stage: 'Funciones',
+                    title: 'Transformar columnas con data.table y Polars',
+                    lead: 'Las transformaciones deben ser explicitas y reproducibles para que otro estudiante pueda reconstruir el procedimiento.',
+                    codeBlocks: [
+                        { label: 'R data.table', code: `library(data.table)\nead <- fread("data/datasets/estudiantes_ead.csv")\nead[, riesgo := fifelse(nota_final < 70, 1, 0)]\nead[, horas_z := (horas_semana - mean(horas_semana)) / sd(horas_semana)]\nead[, .N, by = .(riesgo, turno)]` },
+                        { label: 'Python Polars', code: `import polars as pl\n\nead = pl.read_csv("data/datasets/estudiantes_ead.csv")\nead = ead.with_columns(\n    (pl.col("nota_final") < 70).cast(pl.Int8).alias("riesgo"),\n    ((pl.col("horas_semana") - pl.col("horas_semana").mean()) / pl.col("horas_semana").std()).alias("horas_z")\n)\nead.group_by(["riesgo", "turno"]).len()` }
+                    ],
+                    checks: ['Crea una variable binaria.', 'Estandariza una variable numerica.']
+                },
+                {
+                    kind: 'practice',
+                    stage: 'Practica',
+                    title: 'Exploracion visual de estudiantes',
+                    lead: 'El laboratorio guia una lectura visual y tabular del rendimiento en un curso virtual ficticio.',
+                    practiceId: 'lab_visualizacion',
+                    checks: ['Explora la distribucion de horas.', 'Relaciona dedicacion y nota final.', 'Identifica casos de riesgo.'],
+                    resources: ['activity1']
+                },
+                {
+                    kind: 'activity',
+                    stage: 'Aplicacion',
+                    title: 'Discusion sobre preparacion de datos',
+                    lead: 'La consigna aplicada pide justificar decisiones de limpieza y preparacion antes de modelar.',
+                    bullets: [
+                        'Describe que variable transformarias y por que.',
+                        'Indica si conviene imputar, eliminar o conservar valores faltantes.',
+                        'Propone una division de datos coherente.'
+                    ],
+                    checks: ['Lee la consigna AI.', 'Relaciona la respuesta con el laboratorio.'],
+                    resources: ['activity2']
+                },
+                {
+                    kind: 'quiz',
+                    stage: 'Evaluacion',
+                    title: 'Cuestionario de preparacion y exploracion',
+                    lead: 'Comprueba conceptos de carga, transformacion, binarizacion, imputacion y escalado.',
+                    checks: ['Repasa funciones y formulas.', 'Completa el cuestionario AA.'],
+                    resources: ['activity3']
+                }
+            ],
+            3: [
+                {
+                    kind: 'intro',
+                    stage: 'Inicio',
+                    title: 'Modelos predictivos',
+                    lead: 'La unidad introduce modelos supervisados para estimar una categoria o probabilidad a partir de variables explicativas.',
+                    bullets: [
+                        'Comprender la idea de variable objetivo.',
+                        'Construir predicciones con datos de entrenamiento.',
+                        'Comparar KNN y regresion logistica como enfoques iniciales.'
+                    ],
+                    checks: ['Revisa las orientaciones oficiales.', 'Ubica las fechas de la unidad en el calendario.'],
+                    resources: ['orientation']
+                },
+                {
+                    kind: 'concept',
+                    stage: 'Conceptos',
+                    title: 'Aprendizaje supervisado',
+                    lead: 'Un modelo supervisado aprende la relacion entre variables de entrada y una salida conocida.',
+                    bullets: [
+                        'Variable objetivo: resultado que se quiere predecir.',
+                        'Predictores: variables usadas como informacion de entrada.',
+                        'Generalizacion: capacidad de funcionar con casos nuevos.'
+                    ],
+                    checks: ['Distingue predictor y objetivo.', 'Explica que significa entrenar un modelo.'],
+                    resources: ['materials']
+                },
+                {
+                    kind: 'formula',
+                    stage: 'Formulas',
+                    title: 'KNN y regresion logistica',
+                    lead: 'KNN usa cercania entre casos; la regresion logistica estima probabilidades para resultados binarios.',
+                    formulas: [
+                        { label: 'Distancia euclidiana', value: 'd(a,b) = sqrt(suma((a_i - b_i)^2))', note: 'KNN clasifica segun vecinos cercanos.' },
+                        { label: 'Probabilidad logistica', value: 'p = 1 / (1 + exp(-(b0 + b1*x1 + ... + bk*xk)))', note: 'Convierte una combinacion lineal en probabilidad.' }
+                    ],
+                    checks: ['Interpreta la idea de vecino mas cercano.', 'Relaciona probabilidad con umbral de decision.']
+                },
+                {
+                    kind: 'function',
+                    stage: 'Funciones',
+                    title: 'Entrenar y predecir',
+                    lead: 'El codigo debe dejar claro que datos se usan para entrenar y que resultado produce el modelo.',
+                    codeBlocks: [
+                        { label: 'R data.table + glm', code: `library(data.table)\ncredito <- fread("data/datasets/modelos_credito.csv")\nmodelo <- glm(aprobado ~ ingreso_mensual + score_credito + deuda_actual,\n              data = credito,\n              family = binomial)\ncredito[, prob_aprobacion := predict(modelo, type = "response")]\ncredito[, prediccion := as.integer(prob_aprobacion >= 0.5)]` },
+                        { label: 'Python Polars + sklearn', code: `import polars as pl\nfrom sklearn.linear_model import LogisticRegression\n\ncredito = pl.read_csv("data/datasets/modelos_credito.csv")\nX = credito.select(["ingreso_mensual", "score_credito", "deuda_actual"]).to_numpy()\ny = credito["aprobado"].to_numpy()\nmodelo = LogisticRegression().fit(X, y)\nprob = modelo.predict_proba(X)[:, 1]` }
+                    ],
+                    checks: ['Identifica variables de entrada.', 'Genera una probabilidad o prediccion.']
+                },
+                {
+                    kind: 'practice',
+                    stage: 'Practica',
+                    title: 'Primer modelo predictivo',
+                    lead: 'El laboratorio construye una regresion logistica sencilla y revisa sus predicciones.',
+                    practiceId: 'lab_modelos',
+                    checks: ['Carga el dataset de credito.', 'Entrena el modelo.', 'Interpreta una matriz de prediccion.'],
+                    resources: ['activity1']
+                },
+                {
+                    kind: 'activity',
+                    stage: 'Aplicacion',
+                    title: 'Foro sobre problemas de aplicacion',
+                    lead: 'La actividad aplicada pide discutir cuando un modelo predictivo es pertinente y que riesgos tiene.',
+                    bullets: [
+                        'Define una variable objetivo verificable.',
+                        'Indica posibles sesgos o limitaciones del dataset.',
+                        'Explica que error seria mas costoso.'
+                    ],
+                    checks: ['Lee la consigna AI.', 'Conecta la respuesta con el laboratorio.'],
+                    resources: ['activity2']
+                },
+                {
+                    kind: 'quiz',
+                    stage: 'Evaluacion',
+                    title: 'Cuestionario de modelos predictivos',
+                    lead: 'Evalua conceptos de objetivo, predictores, KNN, regresion logistica y lectura de resultados.',
+                    checks: ['Repasa formulas y funciones.', 'Completa el cuestionario AA.'],
+                    resources: ['activity3']
+                }
+            ],
+            4: [
+                {
+                    kind: 'intro',
+                    stage: 'Inicio',
+                    title: 'Interpretacion y comunicacion',
+                    lead: 'La unidad final se concentra en seleccionar resultados, justificar decisiones y comunicar hallazgos con responsabilidad.',
+                    bullets: [
+                        'Leer metricas sin perder de vista el problema.',
+                        'Identificar limites de un modelo.',
+                        'Preparar un proyecto final con datos, metodo, resultados y recomendacion.'
+                    ],
+                    checks: ['Revisa orientaciones y fechas.', 'Identifica el entregable final.'],
+                    resources: ['orientation']
+                },
+                {
+                    kind: 'concept',
+                    stage: 'Conceptos',
+                    title: 'Resultados, evidencia y limites',
+                    lead: 'Un resultado estadistico debe explicarse junto con su contexto, supuestos y consecuencias de uso.',
+                    bullets: [
+                        'Una metrica resume desempeno, pero no reemplaza el juicio tecnico.',
+                        'Los errores deben analizarse segun su impacto real.',
+                        'La comunicacion debe ser comprensible para quien toma decisiones.'
+                    ],
+                    checks: ['Distingue resultado tecnico y recomendacion.', 'Reconoce al menos una limitacion del modelo.'],
+                    resources: ['materials']
+                },
+                {
+                    kind: 'formula',
+                    stage: 'Formulas',
+                    title: 'Metricas e interpretacion de clasificacion',
+                    lead: 'Las metricas ayudan a explicar aciertos y errores, pero se leen junto con la matriz de confusion.',
+                    formulas: [
+                        { label: 'Exactitud', value: 'accuracy = predicciones_correctas / total_de_casos', note: 'Resume aciertos globales.' },
+                        { label: 'Tasa de error', value: 'error = predicciones_incorrectas / total_de_casos', note: 'Ayuda a dimensionar fallas.' }
+                    ],
+                    checks: ['Calcula una exactitud simple.', 'Explica por que una metrica puede ser insuficiente.']
+                },
+                {
+                    kind: 'function',
+                    stage: 'Funciones',
+                    title: 'Cuadros de decision y casos dudosos',
+                    lead: 'La interpretacion mejora cuando se revisan casos cercanos al umbral y se documenta el criterio de decision.',
+                    codeBlocks: [
+                        { label: 'R data.table', code: `matriz <- table(Predicho = credito$prediccion, Real = credito$aprobado)\naccuracy <- sum(diag(matriz)) / sum(matriz)\naccuracy\n\ncredito[order(abs(prob_aprobacion - 0.5))][1:5,\n  .(id, ingreso_mensual, score_credito, deuda_actual, prob_aprobacion)]` },
+                        { label: 'Python Polars', code: `resultado = credito.with_columns(\n    pl.Series("prob_aprobacion", prob),\n    (pl.Series("prob_aprobacion", prob) >= 0.5).cast(pl.Int8).alias("prediccion")\n)\nresultado.sort((pl.col("prob_aprobacion") - 0.5).abs()).head(5)` }
+                    ],
+                    checks: ['Construye un cuadro de resultados.', 'Selecciona un caso que requiera revision humana.']
+                },
+                {
+                    kind: 'practice',
+                    stage: 'Practica',
+                    title: 'Bitacora de interpretacion',
+                    lead: 'El laboratorio transforma salidas tecnicas en una recomendacion clara para un publico academico o institucional.',
+                    practiceId: 'lab_interpretacion',
+                    checks: ['Calcula una metrica minima.', 'Selecciona casos dudosos.', 'Redacta una recomendacion breve.'],
+                    resources: ['activity1']
+                },
+                {
+                    kind: 'activity',
+                    stage: 'Proyecto',
+                    title: 'Proyecto de investigacion final',
+                    lead: 'La actividad aplicada prepara el cierre: pregunta, datos, metodo, resultados, limites y decision sugerida.',
+                    bullets: [
+                        'Define una pregunta investigable.',
+                        'Describe datos y variables principales.',
+                        'Presenta resultados con interpretacion y limites.'
+                    ],
+                    checks: ['Lee la consigna AI.', 'Organiza el avance del proyecto final.'],
+                    resources: ['activity2']
+                },
+                {
+                    kind: 'quiz',
+                    stage: 'Evaluacion',
+                    title: 'Cuestionario y cierre de la unidad',
+                    lead: 'La evaluacion final de la unidad verifica la lectura de metricas, LDA, seleccion de resultados y comunicacion.',
+                    checks: ['Repasa conceptos y formulas.', 'Completa el cuestionario AA.'],
+                    resources: ['activity3']
+                }
+            ]
+        };
+
+        function getUnitLearningPath(unitNum) {
+            return UNIT_LEARNING_PATHS[unitNum] || [];
+        }
+
+        function unitPathStorageKey(unitNum) {
+            return `abd_unit_path_${STATE.user?.username || 'anon'}_${unitNum}`;
+        }
+
+        function unitPathSlideKey(unitNum, slideIndex) {
+            return `u${unitNum}_path_${slideIndex}`;
+        }
+
+        function isPracticeComplete(labId) {
+            const lab = PRACTICES.find(item => item.id === labId);
+            if (!lab) return false;
+            const done = getPracticeProgress()[labId] || [];
+            return done.length >= lab.steps.length;
+        }
+
+        function isUnitPathSlideComplete(unitNum, slide, slideIndex) {
+            if (STATE.completedActivities[unitPathSlideKey(unitNum, slideIndex)]) return true;
+            if (slide.kind === 'practice' && slide.practiceId) return isPracticeComplete(slide.practiceId);
+            if (slide.kind === 'quiz') return Boolean(STATE.quizResults[`u${unitNum}`]);
+            return false;
+        }
+
+        function maxUnlockedPathSlide(unitNum, slides) {
+            const firstPending = slides.findIndex((slide, index) => !isUnitPathSlideComplete(unitNum, slide, index));
+            return firstPending === -1 ? Math.max(0, slides.length - 1) : firstPending;
+        }
+
+        function getCurrentUnitPathSlide(unitNum, slides) {
+            const stored = Number(localStorage.getItem(unitPathStorageKey(unitNum)));
+            const maxUnlocked = maxUnlockedPathSlide(unitNum, slides);
+            if (Number.isInteger(stored) && stored >= 0) return Math.min(stored, maxUnlocked);
+            return maxUnlocked;
+        }
+
+        function setCurrentUnitPathSlide(unitNum, slideIndex) {
+            localStorage.setItem(unitPathStorageKey(unitNum), String(slideIndex));
+        }
+
+        function goToUnitPathSlide(unitNum, slideIndex) {
+            const slides = getUnitLearningPath(unitNum);
+            if (!slides.length) return;
+            const target = Math.max(0, Math.min(slideIndex, slides.length - 1));
+            const maxUnlocked = maxUnlockedPathSlide(unitNum, slides);
+            if (target > maxUnlocked) {
+                showToast('Completa el bloque actual para avanzar en orden.', 'info');
+                return;
+            }
+            setCurrentUnitPathSlide(unitNum, target);
+            renderUnitDetail(unitNum, 'ruta');
+        }
+
+        function completeUnitPathSlide(unitNum, slideIndex) {
+            const slides = getUnitLearningPath(unitNum);
+            const slide = slides[slideIndex];
+            if (!slide) return;
+            if (slide.kind === 'quiz' && !STATE.quizResults[`u${unitNum}`]) {
+                startQuiz(unitNum);
+                return;
+            }
+            const key = unitPathSlideKey(unitNum, slideIndex);
+            const wasNew = !STATE.completedActivities[key];
+            STATE.completedActivities[key] = true;
+            if (wasNew) addXP(8, 'Bloque de unidad completado');
+            else saveProgress();
+            trackEvent('ruta_unidad', {
+                unidad: unitNum,
+                recurso: key,
+                detalle: slide.title
+            });
+            const next = Math.min(slideIndex + 1, slides.length - 1);
+            setCurrentUnitPathSlide(unitNum, next);
+            renderUnitDetail(unitNum, 'ruta');
+        }
+
+        function slideResources(unitNum, slide) {
+            const files = UNIT_FILES[unitNum] || {};
+            const refs = {
+                orientation: files.orientaciones || [],
+                materials: files.materiales || [],
+                activity1: files.actividades?.[0] ? [files.actividades[0]] : [],
+                activity2: files.actividades?.[1] ? [files.actividades[1]] : [],
+                activity3: files.actividades?.[2] ? [files.actividades[2]] : []
+            };
+            const seen = new Set();
+            return (slide.resources || [])
+                .flatMap(key => refs[key] || [])
+                .filter(resource => {
+                    if (!resource || seen.has(resource.file)) return false;
+                    seen.add(resource.file);
+                    return true;
+                });
+        }
+
+        function renderLearningPathResources(unitNum, slide) {
+            const resources = slideResources(unitNum, slide);
+            if (!resources.length) return '';
+            return `
+      <div class="learning-resource-list">
+        <h4>Recursos oficiales vinculados</h4>
+        ${resources.map(resource => `
+          <div class="learning-resource-row">
+            <button type="button" onclick="openResourceInAula(${jsArg(resource.file)}, ${unitNum})">
+              <strong>${escapeHtml(resource.name)}</strong>
+              <span>Abrir embebido en el aula</span>
+            </button>
+            ${resource.download ? `<a href="${escapeHtml(resource.download)}" download>PDF</a>` : ''}
+          </div>
+        `).join('')}
+      </div>`;
+        }
+
+        function renderLearningPathChecks(slide) {
+            if (!slide.checks?.length) return '';
+            return `
+      <div class="learning-checks">
+        <h4>Para completar este bloque</h4>
+        ${slide.checks.map(item => `<label><input type="checkbox" disabled> <span>${escapeHtml(item)}</span></label>`).join('')}
+      </div>`;
+        }
+
+        function renderLearningPathFormulas(slide) {
+            if (!slide.formulas?.length) return '';
+            return `
+      <div class="learning-formulas">
+        ${slide.formulas.map(item => `
+          <div class="learning-formula">
+            <strong>${escapeHtml(item.label)}</strong>
+            <code>${escapeHtml(item.value)}</code>
+            ${item.note ? `<p>${escapeHtml(item.note)}</p>` : ''}
+          </div>
+        `).join('')}
+      </div>`;
+        }
+
+        function renderLearningPathCode(slide) {
+            if (!slide.codeBlocks?.length) return '';
+            return `
+      <div class="learning-code-grid">
+        ${slide.codeBlocks.map(block => `
+          <figure class="learning-code-card">
+            <figcaption>${escapeHtml(block.label)}</figcaption>
+            <pre><code>${escapeHtml(block.code)}</code></pre>
+          </figure>
+        `).join('')}
+      </div>`;
+        }
+
+        function renderLearningPathPractice(slide) {
+            if (!slide.practiceId) return '';
+            const lab = PRACTICES.find(item => item.id === slide.practiceId);
+            if (!lab) return '';
+            const done = getPracticeProgress()[lab.id] || [];
+            const pct = Math.round((done.length / lab.steps.length) * 100);
+            return `
+      <div class="learning-practice-card">
+        <div>
+          <span class="material-badge badge-act">${done.length}/${lab.steps.length} fichas</span>
+          <h4>${escapeHtml(lab.title)}</h4>
+          <p>${escapeHtml(lab.goal)}</p>
+          <div class="unit-progress-bar">
+            <div class="unit-progress-fill" style="width:${pct}%"></div>
+          </div>
+        </div>
+        <div class="practice-actions">
+          <button class="btn-primary" onclick="openPractice('${lab.id}', ${Math.min(done.length, lab.steps.length - 1)})">Abrir practica</button>
+          <a class="btn-secondary as-link" href="${lab.dataset}" download>Descargar datos</a>
+          <a class="btn-secondary as-link" href="laboratorio/index.html" target="_blank">Laboratorio R/Python</a>
+        </div>
+      </div>`;
+        }
+
+        function renderLearningPathQuiz(unitNum) {
+            const result = STATE.quizResults[`u${unitNum}`];
+            if (result) {
+                return `
+      <div class="learning-quiz-card completed">
+        <strong>Cuestionario completado</strong>
+        <span>${result.score}% (${result.correct}/${result.total})</span>
+      </div>`;
+            }
+            return `
+      <div class="learning-quiz-card">
+        <strong>Evaluacion pendiente</strong>
+        <span>10 preguntas con retroalimentacion inmediata.</span>
+        <button class="btn-primary" onclick="startQuiz(${unitNum})">Iniciar cuestionario</button>
+      </div>`;
+        }
+
+        function renderLearningPathSlide(unitNum, slide, slideIndex, slides) {
+            const done = isUnitPathSlideComplete(unitNum, slide, slideIndex);
+            const isLast = slideIndex === slides.length - 1;
+            const maxUnlocked = maxUnlockedPathSlide(unitNum, slides);
+            const canGoNext = slideIndex + 1 <= maxUnlocked;
+            const bullets = slide.bullets?.length
+                ? `<ul class="learning-bullets">${slide.bullets.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+                : '';
+            const status = done ? 'Completado' : 'En curso';
+            const primaryLabel = slide.kind === 'quiz' && !STATE.quizResults[`u${unitNum}`]
+                ? 'Iniciar evaluacion'
+                : (isLast ? 'Finalizar unidad' : (done ? 'Avanzar' : 'Completar y avanzar'));
+            return `
+      <article class="learning-slide">
+        <div class="learning-slide-main">
+          <div class="learning-slide-kicker">
+            <span>${String(slideIndex + 1).padStart(2, '0')}</span>
+            <strong>${escapeHtml(slide.stage)}</strong>
+            <em>${status}</em>
+          </div>
+          <h3>${escapeHtml(slide.title)}</h3>
+          <p class="learning-lead">${escapeHtml(slide.lead)}</p>
+          ${bullets}
+          ${renderLearningPathFormulas(slide)}
+          ${renderLearningPathCode(slide)}
+          ${renderLearningPathPractice(slide)}
+          ${slide.kind === 'quiz' ? renderLearningPathQuiz(unitNum) : ''}
+        </div>
+        <aside class="learning-slide-side">
+          ${renderLearningPathChecks(slide)}
+          ${renderLearningPathResources(unitNum, slide)}
+        </aside>
+        <footer class="learning-slide-actions">
+          <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex - 1})" ${slideIndex === 0 ? 'disabled' : ''}>Anterior</button>
+          <button class="btn-primary" onclick="completeUnitPathSlide(${unitNum}, ${slideIndex})">${primaryLabel}</button>
+          <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex + 1})" ${isLast || !canGoNext ? 'disabled' : ''}>Siguiente</button>
+        </footer>
+      </article>`;
+        }
+
+        function renderLearningPath(unitNum) {
+            const unit = UNITS[unitNum - 1];
+            const slides = getUnitLearningPath(unitNum);
+            if (!slides.length) return '<div class="card">La ruta secuencial de esta unidad estara disponible proximamente.</div>';
+            const current = getCurrentUnitPathSlide(unitNum, slides);
+            const completed = slides.filter((slide, index) => isUnitPathSlideComplete(unitNum, slide, index)).length;
+            const pct = Math.round((completed / slides.length) * 100);
+            const maxUnlocked = maxUnlockedPathSlide(unitNum, slides);
+            return `
+      <section class="learning-path-shell">
+        <div class="learning-path-head">
+          <div>
+            <span class="doc-status-pill">Ruta secuencial</span>
+            <h3>Unidad ${unitNum}: ${escapeHtml(unit.title)}</h3>
+            <p>${escapeHtml(unit.desc)}</p>
+          </div>
+          <div class="learning-path-progress">
+            <strong>${completed}/${slides.length}</strong>
+            <span>bloques completados</span>
+          </div>
+        </div>
+        <div class="unit-progress-bar">
+          <div class="unit-progress-fill" style="width:${pct}%"></div>
+        </div>
+        <div class="learning-stepper" aria-label="Bloques de la unidad">
+          ${slides.map((slide, index) => {
+                const locked = index > maxUnlocked;
+                const done = isUnitPathSlideComplete(unitNum, slide, index);
+                return `
+            <button class="learning-step ${index === current ? 'active' : ''} ${done ? 'done' : ''} ${locked ? 'locked' : ''}"
+              onclick="goToUnitPathSlide(${unitNum}, ${index})" ${locked ? 'disabled' : ''}>
+              <span>${index + 1}</span>
+              <small>${escapeHtml(slide.stage)}</small>
+            </button>`;
+            }).join('')}
+        </div>
+        <div class="learning-slider">
+          <div class="learning-track" style="transform:translateX(-${current * 100}%)">
+            ${slides.map((slide, index) => renderLearningPathSlide(unitNum, slide, index, slides)).join('')}
+          </div>
+        </div>
+      </section>`;
+        }
+
+        function renderUnitDetail(n, activeTab = 'ruta') {
             const unit = UNITS[n - 1];
             const files = UNIT_FILES[n];
             const quizKey = `u${n}`;
@@ -990,6 +1596,7 @@
     </div>
 
     <div class="unit-tabs">
+      <button class="unit-tab ${activeTab === 'ruta' ? 'active' : ''}" onclick="renderUnitDetail(${n},'ruta')">Ruta secuencial</button>
       <button class="unit-tab ${activeTab === 'materiales' ? 'active' : ''}" onclick="renderUnitDetail(${n},'materiales')">📄 Materiales</button>
       <button class="unit-tab ${activeTab === 'actividades' ? 'active' : ''}" onclick="renderUnitDetail(${n},'actividades')">🎯 Actividades</button>
       <button class="unit-tab ${activeTab === 'practica' ? 'active' : ''}" onclick="renderUnitDetail(${n},'practica')">💻 Práctica</button>
@@ -1002,7 +1609,9 @@
 
             const tabContent = document.getElementById('unitTabContent');
 
-            if (activeTab === 'materiales') {
+            if (activeTab === 'ruta') {
+                tabContent.innerHTML = renderLearningPath(n);
+            } else if (activeTab === 'materiales') {
                 const all = [...(files.orientaciones || []), ...(files.materiales || [])];
                 tabContent.innerHTML = renderEmbeddedResources(all, {
                     unit: n,
