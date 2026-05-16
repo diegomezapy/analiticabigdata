@@ -1,4 +1,4 @@
-const CACHE_NAME = 'analitica-bigdata-v8';
+const CACHE_NAME = 'analitica-bigdata-v9';
 
 const APP_SHELL = [
   './',

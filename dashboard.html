@@ -128,6 +128,7 @@
                 </button>
                 <div class="topbar-title" id="topbarTitle">Inicio</div>
                 <div class="topbar-actions">
+                    <button class="topbar-guide-btn" onclick="showPage('guia')">Guia didactica</button>
                     <div class="xp-pill" id="xpDisplay">⭐ 0 XP</div>
                 </div>
             </header>
@@ -1397,10 +1398,68 @@
                     if (!resource || seen.has(resource.file)) return false;
                     seen.add(resource.file);
                     return true;
-                });
+            });
         }
 
-        function renderLearningPathResources(unitNum, slide) {
+        function learningOfficialDocId(unitNum, slideIndex) {
+            return `learningOfficialDoc_${unitNum}_${slideIndex}`;
+        }
+
+        function learningOfficialFrameId(unitNum, slideIndex) {
+            return `learningOfficialFrame_${unitNum}_${slideIndex}`;
+        }
+
+        function learningOfficialTitleId(unitNum, slideIndex) {
+            return `learningOfficialTitle_${unitNum}_${slideIndex}`;
+        }
+
+        function toggleLearningOfficialDoc(unitNum, slideIndex, file, name, download = '') {
+            const panel = document.getElementById(learningOfficialDocId(unitNum, slideIndex));
+            const frame = document.getElementById(learningOfficialFrameId(unitNum, slideIndex));
+            const title = document.getElementById(learningOfficialTitleId(unitNum, slideIndex));
+            const open = panel?.querySelector('[data-official-open]');
+            const pdf = panel?.querySelector('[data-official-pdf]');
+            if (!panel || !frame || !title) return;
+            panel.classList.add('is-visible');
+            if (frame.src !== file) frame.src = file;
+            title.textContent = name;
+            if (open) open.href = file;
+            if (pdf) {
+                pdf.href = download || '#';
+                pdf.classList.toggle('is-hidden', !download);
+            }
+            trackEvent('recurso_secuencia', {
+                unidad: unitNum,
+                recurso: file,
+                detalle: name
+            });
+        }
+
+        function renderLearningPathOfficialDocument(unitNum, slide, slideIndex) {
+            const resources = slideResources(unitNum, slide);
+            if (!resources.length) return '';
+            const first = resources[0];
+            return `
+      <section class="learning-official-doc is-visible" id="${learningOfficialDocId(unitNum, slideIndex)}">
+        <div class="learning-official-toolbar">
+          <div>
+            <span>Documento FACEN del nivel</span>
+            <strong id="${learningOfficialTitleId(unitNum, slideIndex)}">${escapeHtml(first.name)}</strong>
+          </div>
+          <div class="learning-official-actions">
+            <a class="btn-secondary as-link" href="${escapeHtml(first.file)}" target="_blank" rel="noopener" data-official-open>Abrir</a>
+            <a class="btn-secondary as-link ${first.download ? '' : 'is-hidden'}" href="${escapeHtml(first.download || '#')}" download data-official-pdf>PDF</a>
+          </div>
+        </div>
+        <iframe
+          id="${learningOfficialFrameId(unitNum, slideIndex)}"
+          src="${escapeHtml(first.file)}"
+          title="${escapeHtml(first.name)}"
+          loading="lazy"></iframe>
+      </section>`;
+        }
+
+        function renderLearningPathResources(unitNum, slide, slideIndex) {
             const resources = slideResources(unitNum, slide);
             if (!resources.length) return '';
             return `
@@ -1408,14 +1467,101 @@
         <h4>Recursos oficiales vinculados</h4>
         ${resources.map(resource => `
           <div class="learning-resource-row">
-            <button type="button" onclick="openResourceInAula(${jsArg(resource.file)}, ${unitNum})">
+            <button type="button" onclick="toggleLearningOfficialDoc(${unitNum}, ${slideIndex}, ${jsArg(resource.file)}, ${jsArg(resource.name)}, ${jsArg(resource.download || '')})">
               <strong>${escapeHtml(resource.name)}</strong>
-              <span>Abrir embebido en el aula</span>
+              <span>Ver dentro de la secuencia</span>
             </button>
             ${resource.download ? `<a href="${escapeHtml(resource.download)}" download>PDF</a>` : ''}
           </div>
         `).join('')}
       </div>`;
+        }
+
+        function toggleLearningSupport(unitNum, slideIndex) {
+            const panel = document.getElementById(`learningSupport_${unitNum}_${slideIndex}`);
+            const button = document.getElementById(`learningSupportButton_${unitNum}_${slideIndex}`);
+            if (!panel) return;
+            const visible = panel.classList.toggle('is-visible');
+            button?.setAttribute('aria-expanded', visible ? 'true' : 'false');
+            trackEvent('apoyo_secuencia', {
+                unidad: unitNum,
+                recurso: `u${unitNum}_path_${slideIndex}`,
+                detalle: visible ? 'Solicita explicacion ampliada' : 'Oculta explicacion ampliada'
+            });
+        }
+
+        function supportSearchUrl(query) {
+            return `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+        }
+
+        function learningSupportContent(unitNum, slide) {
+            const unit = UNITS[unitNum - 1];
+            const base = {
+                intro: {
+                    text: `Ubica este nivel dentro de la unidad: no necesitas memorizar todo, sino reconocer que problema se va a resolver y que producto debes entregar.`,
+                    example: `Ejemplo de lectura: si la unidad trata ${unit.title}, piensa en una pregunta concreta que pueda responderse con datos.`,
+                    practice: 'Escribe en una frase que vas a poder hacer al terminar esta unidad.'
+                },
+                concept: {
+                    text: 'Vuelve al concepto desde una pregunta simple: que dato entra, que transformacion se hace y que decision permite tomar.',
+                    example: `Ejemplo: antes de modelar, identifica si hablas de datos, variables, indicadores, predictores o resultados.`,
+                    practice: 'Crea una mini definicion con tus palabras y agrega un ejemplo del curso.'
+                },
+                formula: {
+                    text: 'Lee la formula por partes. Primero identifica cada simbolo, luego explica que cambia cuando cambia cada valor.',
+                    example: 'Ejemplo: en un promedio, si aumenta la suma total y n queda igual, el promedio aumenta.',
+                    practice: 'Toma dos numeros pequenos y aplica la formula manualmente antes de usar codigo.'
+                },
+                function: {
+                    text: 'Lee el codigo como una receta: importar datos, seleccionar variables, transformar y resumir. Ejecuta una linea por vez si algo no queda claro.',
+                    example: 'Ejemplo: group_by o by agrupan casos; summarize o .(...) calculan indicadores por grupo.',
+                    practice: 'Cambia una variable del ejemplo y observa si el resultado sigue teniendo sentido.'
+                },
+                practice: {
+                    text: 'La practica no es un examen: sirve para convertir lectura en accion. Si te trabas, completa primero la ficha anterior.',
+                    example: 'Ejemplo: descarga el CSV, ejecuta el primer bloque y revisa filas, columnas y tipos antes de transformar.',
+                    practice: 'Marca la ficha como completa solo cuando puedas explicar que hizo el codigo.'
+                },
+                activity: {
+                    text: 'La actividad aplicada evalua criterio: no basta con copiar definiciones, hay que justificar una decision con el vocabulario de la unidad.',
+                    example: 'Ejemplo: plantea un problema, una fuente de datos, una variable relevante y una accion posible.',
+                    practice: 'Redacta un borrador de 5 lineas: problema, dato, metodo, resultado esperado y limite.'
+                },
+                quiz: {
+                    text: 'Antes del cuestionario, repasa los niveles previos. El objetivo es comprobar comprension, no adivinar respuestas.',
+                    example: 'Ejemplo: si una pregunta menciona una funcion, piensa primero que entrada recibe y que salida produce.',
+                    practice: 'Haz un repaso rapido: tres conceptos, una formula y un ejemplo de codigo.'
+                }
+            };
+            return base[slide.kind] || base.concept;
+        }
+
+        function renderLearningSupport(unitNum, slide, slideIndex) {
+            const support = learningSupportContent(unitNum, slide);
+            const unit = UNITS[unitNum - 1];
+            const videoUrl = supportSearchUrl(`Analitica de Big Data ${unit.title} ${slide.title}`);
+            return `
+      <section class="learning-support" id="learningSupport_${unitNum}_${slideIndex}">
+        <div class="learning-support-grid">
+          <div>
+            <h4>Explicacion ampliada</h4>
+            <p>${escapeHtml(support.text)}</p>
+          </div>
+          <div>
+            <h4>Ejemplo adicional</h4>
+            <p>${escapeHtml(support.example)}</p>
+          </div>
+          <div>
+            <h4>Mini ejercicio</h4>
+            <p>${escapeHtml(support.practice)}</p>
+          </div>
+        </div>
+        <div class="learning-support-actions">
+          <button class="btn-secondary" onclick="showPage('guia')">Consultar guia didactica</button>
+          <a class="btn-secondary as-link" href="${videoUrl}" target="_blank" rel="noopener">Buscar videos explicativos</a>
+          <button class="btn-primary" onclick="completeUnitPathSlide(${unitNum}, ${slideIndex})">Ahora lo comprendi</button>
+        </div>
+      </section>`;
         }
 
         function renderLearningPathChecks(slide) {
@@ -1506,7 +1652,7 @@
             const status = done ? 'Completado' : 'En curso';
             const primaryLabel = slide.kind === 'quiz' && !STATE.quizResults[`u${unitNum}`]
                 ? 'Iniciar evaluacion'
-                : (isLast ? 'Finalizar unidad' : (done ? 'Avanzar' : 'Completar y avanzar'));
+                : (isLast ? (done ? 'Unidad completada' : 'Ya lei y comprendi') : (done ? 'Seguir al siguiente nivel' : 'Ya lei y comprendi'));
             return `
       <article class="learning-slide">
         <div class="learning-slide-main">
@@ -1520,15 +1666,18 @@
           ${bullets}
           ${renderLearningPathFormulas(slide)}
           ${renderLearningPathCode(slide)}
+          ${renderLearningPathOfficialDocument(unitNum, slide, slideIndex)}
           ${renderLearningPathPractice(slide)}
           ${slide.kind === 'quiz' ? renderLearningPathQuiz(unitNum) : ''}
+          ${renderLearningSupport(unitNum, slide, slideIndex)}
         </div>
         <aside class="learning-slide-side">
           ${renderLearningPathChecks(slide)}
-          ${renderLearningPathResources(unitNum, slide)}
+          ${renderLearningPathResources(unitNum, slide, slideIndex)}
         </aside>
         <footer class="learning-slide-actions">
           <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex - 1})" ${slideIndex === 0 ? 'disabled' : ''}>Anterior</button>
+          <button class="btn-secondary" id="learningSupportButton_${unitNum}_${slideIndex}" onclick="toggleLearningSupport(${unitNum}, ${slideIndex})" aria-expanded="false">Necesito mas explicacion</button>
           <button class="btn-primary" onclick="completeUnitPathSlide(${unitNum}, ${slideIndex})">${primaryLabel}</button>
           <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex + 1})" ${isLast || !canGoNext ? 'disabled' : ''}>Siguiente</button>
         </footer>
@@ -1551,9 +1700,12 @@
             <h3>Unidad ${unitNum}: ${escapeHtml(unit.title)}</h3>
             <p>${escapeHtml(unit.desc)}</p>
           </div>
-          <div class="learning-path-progress">
-            <strong>${completed}/${slides.length}</strong>
-            <span>bloques completados</span>
+          <div class="learning-path-actions">
+            <button class="btn-secondary" onclick="showPage('guia')">Guia didactica</button>
+            <div class="learning-path-progress">
+              <strong>${completed}/${slides.length}</strong>
+              <span>bloques completados</span>
+            </div>
           </div>
         </div>
         <div class="unit-progress-bar">

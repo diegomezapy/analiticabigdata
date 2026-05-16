@@ -343,6 +343,24 @@ a:hover { text-decoration: underline; }
 
 .topbar-actions { display: flex; align-items: center; gap: 0.75rem; }
 
+.topbar-guide-btn {
+  background: #fff;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  color: var(--primary);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.38rem 0.75rem;
+  transition: var(--transition-fast);
+}
+
+.topbar-guide-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--primary);
+}
+
 /* XP Pills */
 .xp-pill {
   display: flex;
@@ -630,6 +648,13 @@ a:hover { text-decoration: underline; }
   max-width: 780px;
 }
 
+.learning-path-actions {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .learning-path-progress {
   background: var(--bg-surface);
   border: 1px solid var(--glass-border);
@@ -877,6 +902,60 @@ a:hover { text-decoration: underline; }
   padding: 0.85rem;
 }
 
+.learning-official-doc {
+  background: #fff;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  display: none;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+.learning-official-doc.is-visible {
+  display: block;
+}
+
+.learning-official-toolbar {
+  align-items: center;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+}
+
+.learning-official-toolbar span {
+  color: var(--accent);
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.learning-official-toolbar strong {
+  color: var(--text-primary);
+  display: block;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+.learning-official-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  justify-content: flex-end;
+}
+
+.learning-official-doc iframe {
+  background: #eef2f7;
+  border: 0;
+  display: block;
+  height: 520px;
+  width: 100%;
+}
+
 .learning-slide-side {
   align-self: start;
   display: grid;
@@ -886,7 +965,8 @@ a:hover { text-decoration: underline; }
 .learning-checks,
 .learning-resource-list,
 .learning-practice-card,
-.learning-quiz-card {
+.learning-quiz-card,
+.learning-support {
   background: var(--bg-surface);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
@@ -999,9 +1079,48 @@ a:hover { text-decoration: underline; }
   border-color: rgba(34, 120, 72, 0.35);
 }
 
+.learning-support {
+  background: #fff8e8;
+  border-color: rgba(185, 111, 6, 0.28);
+  display: none;
+  margin-top: 1rem;
+}
+
+.learning-support.is-visible {
+  display: block;
+}
+
+.learning-support-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.learning-support h4 {
+  color: var(--accent-dark);
+  font-size: 0.82rem;
+  margin-bottom: 0.45rem;
+}
+
+.learning-support p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.learning-support-actions {
+  border-top: 1px solid rgba(185, 111, 6, 0.2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
 .learning-slide-actions {
   border-top: 1px solid var(--glass-border);
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
   grid-column: 1 / -1;
   justify-content: flex-end;
@@ -2251,6 +2370,11 @@ a:hover { text-decoration: underline; }
     width: 100%;
   }
 
+  .learning-path-actions {
+    align-items: stretch;
+    width: 100%;
+  }
+
   .learning-stepper {
     display: flex;
     overflow-x: auto;
@@ -2273,6 +2397,23 @@ a:hover { text-decoration: underline; }
     flex: 1;
     padding-left: 0.8rem;
     padding-right: 0.8rem;
+  }
+
+  .learning-support-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .learning-official-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .learning-official-actions {
+    justify-content: flex-start;
+  }
+
+  .learning-official-doc iframe {
+    height: 620px;
   }
 
   .learning-resource-row {
@@ -2346,5 +2487,7 @@ a:hover { text-decoration: underline; }
 
 @media (max-width: 480px) {
   .topbar { padding: 0.75rem 1rem; }
+  .topbar-actions { gap: 0.4rem; }
+  .topbar-guide-btn { font-size: 0.7rem; padding: 0.34rem 0.55rem; }
   .progress-grid { grid-template-columns: 1fr 1fr; }
 }
