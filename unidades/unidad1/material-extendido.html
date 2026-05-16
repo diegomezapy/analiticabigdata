@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material de Lectura Extendido — Analítica de Big Data</title>
+  <meta name="description" content="Material extendido de Analítica de Big Data FACEN.">
+  <link rel="canonical" href="https://diegomezapy.github.io/analiticabigdata/unidades/unidad1/material-extendido.html">
+  <link rel="stylesheet" href="../../css/documentos.css">
+</head>
+<body>
+  <main class="doc-shell">
+    <header class="doc-header">
+      <div class="doc-kicker">Material extendido</div>
+      <h1>Material de Lectura Extendido</h1>
+      <p>Unidad 1: Introducción al manejo de datos en Big Data</p>
+      <a class="doc-home" href="../../dashboard.html">Volver a la plataforma</a>
+    </header>
+    <article class="doc-content">
+      <p>Material de Lectura: Unidad 1</p>
+<p>Revolución del Big Data</p>
+<p>Fundamentos, Arquitecturas y Aplicaciones Prácticas</p>
+<p>Curso: Big Data y Analítica Avanzada</p>
+<p>Facultad de Ciencias Exactas y Naturales</p>
+<p>Universidad Nacional de Asunción</p>
+<p>Versión Extendida – Noviembre 2025</p>
+<h2>Unidad 1: Revolución del Big Data - Fundamentos, Arquitecturas y Aplicaciones Prácticas</h2>
+<p>El Big Data ha evolucionado de un buzzword a un pilar fundamental de la transformación digital. Este paradigma no solo maneja volúmenes masivos de datos, sino que integra inteligencia artificial, aprendizaje automático y computación distribuida para generar valor estratégico. Esta unidad explora sus fundamentos, evoluciones, desafíos y proyecciones futuras con un enfoque práctico y multidisciplinario.</p>
+<h2>1.1 Orígenes, Evolución Histórica y Contexto Global</h2>
+<p>Los orígenes del Big Data se remontan a desafíos computacionales en la era de la Guerra Fría, pero su madurez llegó con la explosión digital del siglo XXI. Entender su evolución es clave para apreciar su impacto actual y futuro.</p>
+<p>**Timeline de Hitos Clave:**</p>
+<p>• **1960s**: Primeros sistemas de manejo de datos masivos en defensa y ciencia (e.g., ARPANET precursors).</p>
+<p>• **1990s**: Nacimiento del término &#x27;Big Data&#x27; en papers de NASA sobre visualización de datos científicos.</p>
+<p>• **2004**: Google MapReduce: Fundación para procesamiento distribuido escalable.</p>
+<p>• **2006**: Lanzamiento de Hadoop: Democratización del Big Data open-source.</p>
+<p>• **2011**: Apache Spark: Procesamiento en memoria, revolucionando la velocidad.</p>
+<p>• **2015-2020**: Boom de cloud computing (AWS, Azure, GCP) y adopción masiva de Data Lakes.</p>
+<p>• **2023+**: Integración con AI/GenAI: Big Data como fuel para modelos como GPT.</p>
+<p>Figura: Evolución acelerada del volumen global de datos (1990-2030 proyectado). Fuente: Adaptado de IDC y Statista.</p>
+<h2>1.2 Cambio de Paradigma: Del Muestreo al Análisis Integral y Predictivo</h2>
+<p>El shift del Big Data radica en pasar de inferencias estadísticas basadas en muestras a análisis exhaustivos de datasets completos, habilitando descubrimientos no hipotéticos y predicciones en tiempo real.</p>
+<p>**Caso Práctico - Análisis en Healthcare:**</p>
+<p>En lugar de muestrear 1,000 registros médicos, un hospital analiza 10 millones de historiales para detectar patrones de enfermedades raras, reduciendo diagnósticos erróneos en un 35% y optimizando tratamientos personalizados.</p>
+<p># Ejemplo avanzado: Análisis de correlaciones en datos médicos con Pandas y SciPyimport pandas as pdfrom scipy.stats import pearsonrimport numpy as np# Cargar dataset completo (simulado para 10M registros)datos_completos = pd.read_parquet(&#x27;historiales_medicos_10M.parquet&#x27;) # Uso de Parquet para eficiencia# Muestreo tradicional para comparaciónmuestra_tradicional = datos_completos.sample(n=1000, random_state=42)# Función para calcular correlaciones significativasdef calcular_correlaciones(df, threshold=0.8): corr_matrix = df.corr(method=&#x27;pearson&#x27;) significant = np.where(np.abs(corr_matrix) &gt; threshold) return list(zip(significant[0], significant[1], corr_matrix.iloc[significant]))# Correlaciones en datos completos vs muestracorr_completa = calcular_correlaciones(datos_completos.select_dtypes(include=&#x27;number&#x27;))corr_muestra = calcular_correlaciones(muestra_tradicional.select_dtypes(include=&#x27;number&#x27;))print(f&quot;Big Data revela {len(corr_completa)} correlaciones significativas vs {len(corr_muestra)} en muestra tradicional&quot;)print(&quot;Ejemplo: Correlación entre edad y riesgo cardíaco:&quot;, pearsonr(datos_completos[&#x27;edad&#x27;], datos_completos[&#x27;riesgo_cardiaco&#x27;]))</p>
+<h2>1.3 Las 5V del Big Data: Marco Conceptual y Análisis Comparativo</h2>
+<p>Figura: Análisis evolutivo multidimensional de las 5V del Big Data</p>
+<p>Volumen: Manejo de Escala Exponencial</p>
+<p>**Estadísticas Globales (2025):**</p>
+<p>• **181 ZB generados anualmente** mundialmente (IDC).• **YouTube**: 720,000 horas de video subidas diariamente.• **CERN LHC**: 15 PB de datos por segundo durante experimentos.• **Meta Platforms**: Maneja 4 PB de datos nuevos por día.</p>
+<p>Velocidad: Procesamiento en Tiempo Real y Streaming</p>
+<p>**Aplicaciones de Alta Velocidad:**</p>
+<p>• **Trading Algorítmico**: Órdenes ejecutadas en &lt;10 μs.• **Detección de Fraude**: Análisis en &lt;50ms para 1M transacciones/min.• **Monitoreo IoT**: Procesamiento de 10M eventos/segundo en redes 5G.</p>
+<p># Ejemplo optimizado: Streaming en tiempo real con Apache Flink (mejor que Spark para low-latency)from pyflink.datastream import StreamExecutionEnvironmentfrom pyflink.table import EnvironmentSettings, StreamTableEnvironment# Configurar entorno Flinkenv = StreamExecutionEnvironment.get_execution_environment()env.set_parallelism(4) # Escalabilidad distribuidat_env = StreamTableEnvironment.create(env, environment_settings=EnvironmentSettings.in_streaming_mode())# Definir source de stream (e.g., Kafka)t_env.execute_sql(&quot;&quot;&quot; CREATE TABLE sensor_stream ( id STRING, temperatura DOUBLE, timestamp TIMESTAMP(3), WATERMARK FOR timestamp AS timestamp - INTERVAL &#x27;5&#x27; SECOND ) WITH ( &#x27;connector&#x27; = &#x27;kafka&#x27;, &#x27;topic&#x27; = &#x27;iot-sensores&#x27;, &#x27;properties.bootstrap.servers&#x27; = &#x27;kafka:9092&#x27;, &#x27;format&#x27; = &#x27;json&#x27; )&quot;&quot;&quot;)# Query de procesamiento en tiempo real con windowingresult = t_env.sql_query(&quot;&quot;&quot; SELECT TUMBLE_START(timestamp, INTERVAL &#x27;1&#x27; MINUTE) as window_start, AVG(temperatura) as avg_temp, COUNT(*) as lectura_count FROM sensor_stream GROUP BY TUMBLE(timestamp, INTERVAL &#x27;1&#x27; MINUTE) HAVING AVG(temperatura) &gt; 100&quot;&quot;&quot;)# Sink para alertas (e.g., a otro topic Kafka o DB)result.execute_insert(&#x27;alertas_sink&#x27;) # Definir sink similarmenteenv.execute(&#x27;IoT Real-Time Monitoring&#x27;)</p>
+<p>Variedad: Integración de Datos Heterogéneos</p>
+<p>**Tipos Diversos y Desafíos:**</p>
+<p>• **Estructurados (20%)**: SQL, CSV, Excel.• **Semi-estructurados (30%)**: JSON, XML, Logs.• **No estructurados (50%)**: Textos, Imágenes, Videos, Audio.• **Grafos &amp; Time-Series**: Redes sociales, series temporales de sensores.</p>
+<p>Veracidad: Aseguramiento de Calidad y Confianza</p>
+<p>**Métricas de Calidad Típicas:**</p>
+<p>• **Completitud**: &lt;20% missing values en datasets curados.• **Precisión**: &gt;95% en datos validados.• **Consistencia**: 0 inconsistencias formato/cross-system.• **Timeliness**: Datos actualizados en &lt;1 hora para real-time.</p>
+<p>Valor: Extracción de Insights Estratégicos</p>
+<p>El valor se materializa en ROI medible, como reducción de costos (20-30%), incremento en ingresos (15-25%) y mejora en eficiencia operativa mediante data-driven decisions.</p>
+<h2>1.4 Arquitecturas Modernas y Ecosistemas Tecnológicos</h2>
+<p>Figura: Arquitectura de referencia integral para ecosistemas Big Data (Híbrida Cloud-Native)</p>
+<p>**Stacks Tecnológicos Recomendados:**</p>
+<p>**Ingesta &amp; ETL:**</p>
+<p>• Apache Kafka (high-throughput streaming)</p>
+<p>• Apache NiFi (data flows visuales)</p>
+<p>• Talend (ETL enterprise)</p>
+<p>**Procesamiento:**</p>
+<p>• Apache Spark (batch &amp; stream)</p>
+<p>• Apache Flink (stateful streaming)</p>
+<p>• Databricks (managed Spark + ML)</p>
+<p>**Almacenamiento:**</p>
+<p>• Apache HDFS (distributed FS)</p>
+<p>• Amazon S3 (object storage)</p>
+<p>• Delta Lake (ACID sobre data lakes)</p>
+<p>**Análisis &amp; ML:**</p>
+<p>• Spark MLlib (distributed ML)</p>
+<p>• TensorFlow (deep learning)</p>
+<p>• dbt (data build tool para analytics)</p>
+<p>**Gobernanza:**</p>
+<p>• Apache Atlas (metadata management)</p>
+<p>• Collibra (data catalog)</p>
+<p>• Amundsen (open-source discovery)</p>
+<h2>1.5 Casos de Éxito Empresariales con Impacto Cuantificable</h2>
+<p>Netflix: Hiper-Personalización y Contenido Inteligente</p>
+<p>**KPIs de Impacto (2024):**</p>
+<p>• **$1.5B+ ahorro anual** en churn mediante recomendaciones.• **75%+** de visualizaciones impulsadas por algoritmos.• **Procesamiento de 1B+ eventos diarios** de usuario.• **Modelo con 5,000+ features** por perfil de usuario.</p>
+<p>Uber: Optimización Urbana y Logística Dinámica</p>
+<p>**Métricas Operacionales:**</p>
+<p>• **100M+ viajes semanales** generando datos geoespaciales.• **500 TB/día** de datos procesados en real-time.• **Algoritmos de surge pricing** ajustando en segundos.• **20% reducción** en ETAs mediante predictive analytics.</p>
+<p># Ejemplo avanzado: Modelo simplificado de surge pricing con MLimport numpy as npfrom sklearn.linear_model import LinearRegressionfrom sklearn.preprocessing import StandardScaler# Features: demanda, oferta, tráfico, eventos, climaX_train = np.array([[0.95, 0.60, 1.8, 2.5, 0.7], # Hora pico [0.50, 0.90, 1.0, 1.0, 0.2], # Hora baja # ... más datos de entrenamiento ])y_train = np.array([3.5, 1.2]) # Multiplicadores de precio# Normalizar y entrenar modeloscaler = StandardScaler().fit(X_train)X_scaled = scaler.transform(X_train)model = LinearRegression().fit(X_scaled, y_train)# Predicción en tiempo realdef predecir_surge(demanda, oferta, trafico, eventos, clima): features = np.array([[demanda, oferta, trafico, eventos, clima]]) scaled = scaler.transform(features) multiplier = model.predict(scaled)[0] return max(1.0, min(multiplier, 5.0)) # Clamp entre 1x y 5x# Ejemplo: Condiciones de alta demandasurge = predecir_surge(0.92, 0.55, 1.9, 3.0, 0.8)print(f&quot;Multiplicador de precio dinámico: {surge:.2f}x&quot;)</p>
+<h2>1.6 Desafíos Técnicos, Éticos y Operacionales</h2>
+<p>Desafíos Técnicos y Soluciones</p>
+<p>**1. Escalabilidad &amp; Performance:**• **Problema**: Manejo de petabytes con low-latency (e.g., queries &gt;10s).• **Solución**: Auto-scaling en cloud, partitioning optimizado, caching con Redis.</p>
+<p>**2. Integración &amp; Gobernanza:**• **Problema**: Silos de datos en 70% de organizaciones.• **Solución**: Data Fabric, metadata automation, CI/CD para pipelines.</p>
+<p>Aspectos Éticos y Regulatorios</p>
+<p>**Privacidad &amp; Compliance:**• Adopción de anonymization techniques (e.g., differential privacy).• Cumplimiento GDPR/CCPA: Multas promedio $1M por breach.</p>
+<p>**Mitigación de Sesgos:**• **Problema**: 50%+ de modelos AI con bias inherente.• **Solución**: FairML tools, audits regulares, diverse datasets.</p>
+<h2>1.7 Visión Futura: Tendencias Emergentes 2025-2030</h2>
+<p>**Paradigmas Innovadores:**</p>
+<p>• **Data Mesh 2.0**: Dominios autónomos con AI-governance integrada.</p>
+<p>• **GenAI + Big Data**: Análisis conversacional y auto-generación de insights.</p>
+<p>• **Edge-to-Cloud Continuum**: Procesamiento híbrido para latencia sub-ms en IoT.</p>
+<p>• **Sustainable Data Ops**: Optimización green: Reducción 30% en consumo energético de data centers.</p>
+<p>• **Quantum-Enhanced Analytics**: Procesamiento de datasets masivos con qubits para optimizaciones complejas.</p>
+<p>• **Federated Learning**: Entrenamiento distribuido sin compartir datos sensibles.</p>
+<p>Ejercicios Prácticos y Casos de Estudio Interactivos</p>
+<p>Caso 1: Sistema de Detección de Anomalías en FinTech</p>
+<p>**Escenario:** Banco digital con 50M transacciones/día, tasa de fraude 0.05%, costo promedio $1,000/fraude.</p>
+<p>**Objetivos Técnicos:**</p>
+<p>• Latencia: &lt;100ms por transacción.• Recall: &gt;98% en detección.• Throughput: 10,000 TPS.• Falsos positivos: &lt;0.005%.</p>
+<p># Implementación con TensorFlow para detección de anomalías (Autoencoder)import tensorflow as tffrom tensorflow.keras import layers# Modelo Autoencoder para detección unsupervisedmodel = tf.keras.Sequential([ layers.Dense(64, activation=&#x27;relu&#x27;, input_shape=(num_features,)), layers.Dense(32, activation=&#x27;relu&#x27;), layers.Dense(16, activation=&#x27;relu&#x27;), # Bottleneck layers.Dense(32, activation=&#x27;relu&#x27;), layers.Dense(64, activation=&#x27;relu&#x27;), layers.Dense(num_features, activation=&#x27;sigmoid&#x27;)])model.compile(optimizer=&#x27;adam&#x27;, loss=&#x27;mse&#x27;)# Entrenamiento con datos normalesmodel.fit(normal_transactions, normal_transactions, epochs=50, batch_size=256, validation_split=0.2)# Inferencia en streamdef detectar_anomalia(transaccion): reconstruccion = model.predict(np.array([transaccion])) error = np.mean(np.square(transaccion - reconstruccion)) return error &gt; threshold # Threshold aprendido de validación# Integración con Kafka para real-time# (Código similar al anterior, pero con modelo TF)</p>
+<p>Caso 2: Predicción de Demanda en Supply Chain Inteligente</p>
+<p>**Desafío:** Retailer global con 1,000 SKUs, 200 warehouses, meta: Reducir stock-outs 50%, overstock 30%.</p>
+<p>**Datos Integrados:**</p>
+<p>• **Ventas históricas**: 100M registros.• **Externos**: Pronósticos clima, trends Google, eventos económicos.• **Real-time**: Inventarios actualizados cada 5 min.• **ML Features**: Seasonality, promotions, competitor pricing.</p>
+<p># Modelo de forecasting con Prophet (Facebook&#x27;s library)from prophet import Prophetimport pandas as pd# Preparar datosdf = pd.read_csv(&#x27;ventas_historicas.csv&#x27;)df = df.rename(columns={&#x27;fecha&#x27;: &#x27;ds&#x27;, &#x27;ventas&#x27;: &#x27;y&#x27;})# Incluir regressors externosdf[&#x27;clima_temp&#x27;] = temperaturas_historicasdf[&#x27;promo_active&#x27;] = promociones# Inicializar y fit modelom = Prophet(yearly_seasonality=True, weekly_seasonality=True)m.add_regressor(&#x27;clima_temp&#x27;)m.add_regressor(&#x27;promo_active&#x27;)m.fit(df)# Predicción futurafuture = m.make_future_dataframe(periods=90) # 3 meses adelantefuture[&#x27;clima_temp&#x27;] = pronosticos_climafuture[&#x27;promo_active&#x27;] = plan_promocionesforecast = m.predict(future)# Optimizar inventario basado en forecastoptimal_stock = forecast[&#x27;yhat&#x27;] * safety_factor + forecast[&#x27;yhat_upper&#x27;] * risk_tolerance</p>
+<p>Glosario de Términos Técnicos Avanzados</p>
+<p>Batch Processing: Procesamiento en lotes para jobs no urgentes de alto volumen.</p>
+<p>Data Drift: Cambio gradual en distribución de datos que afecta performance de modelos.</p>
+<p>Data Fabric: Arquitectura virtual que integra datos across silos sin movimiento físico.</p>
+<p>Data Lakehouse: Híbrido de data lake y warehouse con transacciones ACID y governance.</p>
+<p>Data Sovereignty: Requisitos legales para almacenamiento de datos en jurisdicciones específicas.</p>
+<p>Explainable AI (XAI): Técnicas para hacer modelos ML interpretables y auditables.</p>
+<p>Federated Query: Consultas distribuidas across multiple data sources sin centralización.</p>
+<p>MLOps: Prácticas DevOps para ML: Automatización de training, deployment y monitoring.</p>
+<p>Stream Processing: Análisis continuo de datos en movimiento para insights real-time.</p>
+<p>Zero-Trust Data Access: Modelo de seguridad donde cada acceso es verificado dinámicamente.</p>
+<p>Bibliografía, Recursos y Lecturas Recomendadas</p>
+<p>**Libros Fundamentales:**</p>
+<p>• Kleppmann, M. (2017). Designing Data-Intensive Applications.</p>
+<p>• Zaharia, M. et al. (2020). Learning Spark: Lightning-Fast Data Analytics.</p>
+<p>• Dehghani, Z. (2022). Data Mesh: Delivering Data-Driven Value at Scale.</p>
+<p>**Reportes y Whitepapers:**</p>
+<p>• IDC (2025). Worldwide Global DataSphere Forecast, 2025–2029.</p>
+<p>• Gartner (2025). Magic Quadrant for Data Management Solutions.</p>
+<p>• McKinsey (2024). The Data-Driven Enterprise of 2025.</p>
+<p>**Recursos Online y Documentación:**</p>
+<p>• Apache Foundation Docs: Spark, Flink, Kafka (apache.org).</p>
+<p>• Databricks Academy: Cursos gratuitos en Big Data y ML.</p>
+<p>• Towards Data Science (Medium): Artículos prácticos y tutorials.</p>
+<p>**Journals Académicos:**</p>
+<p>• IEEE Transactions on Big Data.</p>
+<p>• ACM SIGMOD Record.</p>
+<p>• Journal of Big Data (Springer).</p>
+    </article>
+  </main>
+</body>
+</html>

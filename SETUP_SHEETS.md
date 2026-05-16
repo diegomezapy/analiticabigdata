@@ -1,133 +1,60 @@
-# 🔧 Configuración de Google Sheets
+# Google Sheets — Analítica de Big Data
 
-Esta guía te llevará paso a paso a conectar la plataforma con tu Google Sheets para que los resultados de los estudiantes se guarden automáticamente.
+Libro destino:
 
-**Planilla objetivo**: https://docs.google.com/spreadsheets/d/1-6Q0EdjhEdw2ZHelpYY6jMFx9lqTTClaH1wBawbbdH8/edit
+https://docs.google.com/spreadsheets/d/1eU6Fh073qLIOQaPonRim5d0e6IuGE0Bq8hDZHmlHKzI/edit
 
----
+ID del libro:
 
-## Paso 1: Abrir la Planilla
-
-Abre la planilla de Google Sheets en el enlace de arriba.
-
-## Paso 2: Crear el Apps Script
-
-1. En la planilla, ve a **Extensiones → Apps Script**
-2. Elimina el código existente y pega el siguiente:
-
-```javascript
-function doPost(e) {
-  try {
-    var data = JSON.parse(e.postData.contents);
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
-    
-    // Elegir hoja según unidad
-    var sheetName = 'Unidad' + data.unidad;
-    var sheet = ss.getSheetByName(sheetName);
-    
-    // Si no existe la hoja, crearla
-    if (!sheet) {
-      sheet = ss.insertSheet(sheetName);
-      sheet.appendRow(['Usuario', 'Nombre', 'Unidad', 'Actividad', 'Puntaje (%)', 
-                       'Correctas', 'Total Preguntas', 'Fecha', 'Tiempo Restante (s)', 'XP Ganado']);
-      sheet.getRange(1,1,1,10).setBackground('#2c3e50').setFontColor('#ffffff').setFontWeight('bold');
-    }
-    
-    // Agregar el registro
-    sheet.appendRow([
-      data.usuario || '',
-      data.nombre || '',
-      data.unidad || '',
-      data.actividad || '',
-      data.puntaje || 0,
-      data.correctas || 0,
-      data.total || 0,
-      data.fecha || new Date().toLocaleString(),
-      data.tiempo_restante || 0,
-      data.xp || 0
-    ]);
-    
-    // También guardar en hoja "Todos"
-    var allSheet = ss.getSheetByName('Todos');
-    if (!allSheet) {
-      allSheet = ss.insertSheet('Todos');
-      allSheet.appendRow(['Usuario', 'Nombre', 'Unidad', 'Actividad', 'Puntaje (%)', 
-                          'Correctas', 'Total', 'Fecha', 'XP']);
-      allSheet.getRange(1,1,1,9).setBackground('#4a235a').setFontColor('#ffffff').setFontWeight('bold');
-    }
-    allSheet.appendRow([data.usuario, data.nombre, data.unidad, data.actividad, 
-                        data.puntaje, data.correctas, data.total, data.fecha, data.xp]);
-    
-    return ContentService.createTextOutput(JSON.stringify({status:'ok'}))
-                         .setMimeType(ContentService.MimeType.JSON);
-  } catch(err) {
-    return ContentService.createTextOutput(JSON.stringify({status:'error', msg:err.toString()}))
-                         .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-function doGet(e) {
-  return ContentService.createTextOutput('API de Anal\u00edtica de Big Data FACEN OK')
-                       .setMimeType(ContentService.MimeType.TEXT);
-}
+```text
+1eU6Fh073qLIOQaPonRim5d0e6IuGE0Bq8hDZHmlHKzI
 ```
 
-## Paso 3: Publicar el Script como Web App
+## Web App
 
-1. Haz click en **Implementar → Nueva implementación**
-2. Selecciona tipo: **Aplicación web**
-3. Configura:
-   - **Ejecutar como**: Yo (tu cuenta)
-   - **Quién tiene acceso**: Cualquier persona
-4. Click en **Implementar**
-5. **Autoriza** el acceso cuando te lo pida
-6. **Copia la URL** que aparece (empieza con `https://script.google.com/macros/s/...`)
+El proyecto incluye el Apps Script en `apps-script/`.
 
-## Paso 4: Agregar la URL al dashboard
+Script creado:
 
-Abre el archivo `dashboard.html` y busca esta línea:
-
-```javascript
-const SHEETS_URL = 'TU_APPS_SCRIPT_URL_AQUI';
+```text
+https://script.google.com/d/1cZXfAId4sBXwIsPUaWgbPviQ13yUQTodyW8plm8I5y32a0llEJ5C_hFa/edit
 ```
 
-Reemplaza `TU_APPS_SCRIPT_URL_AQUI` con la URL que copiaste. Por ejemplo:
+URL de recepción configurada en `dashboard.html`:
 
-```javascript
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycby.../exec';
+```text
+https://script.google.com/macros/s/AKfycbzZiGgj3FgE0Wv6pSQmT3ZSW-lz68wbp2RfH8lx7cSGChNLorUnv1HgL_GfJxwAG0aE/exec
 ```
 
-## Paso 5: ¡Listo!
+Si Google solicita autorización en el primer uso, abrir esa URL con la cuenta `dmeza.py@gmail.com` y aceptar los permisos del script antes de distribuir el enlace a estudiantes. La app conserva una copia local de los envíos en `localStorage` (`abd_sync_history`) y reintenta los pendientes cuando la URL está configurada.
 
-A partir de ahora, cada vez que un estudiante complete un quiz, el resultado se guardará automáticamente en la planilla de Google Sheets, en la hoja correspondiente a cada unidad.
+## Pestañas del libro
 
----
-
-## Estructura de la Planilla
+El libro fue preparado con estas pestañas:
 
 | Hoja | Contenido |
 |------|-----------|
-| `Unidad1` | Resultados del quiz de Unidad 1 |
-| `Unidad2` | Resultados del quiz de Unidad 2 |
-| `Unidad3` | Resultados del quiz de Unidad 3 |
-| `Unidad4` | Resultados del quiz de Unidad 4 |
-| `Todos` | Todos los resultados en una sola hoja |
+| `Calificaciones` | Quizzes y actividades calificables |
+| `Eventos` | Login, recursos abiertos, badges y navegación relevante |
+| `Progreso` | Snapshot de XP, quizzes, badges y materiales vistos |
+| `Config` | Parámetros del curso, libro y despliegue |
 
----
+## Datos enviados
 
-## Agregar Más Usuarios
+La plataforma registra:
 
-Edita el archivo `data/usuarios.json`. Para hashear contraseñas:
-- Ve a https://emn178.github.io/online-tools/sha256.html
-- Ingresa la contraseña en el campo de texto
-- El hash generado es el valor de `password_hash`
+- Quiz por unidad: puntaje, correctas, total, porcentaje, XP, duración y detalle.
+- Actividad de emparejamiento: puntaje, correctas, total y XP.
+- Recursos abiertos: guía, orientaciones, materiales y descripciones HTML.
+- Login, badges y snapshots de progreso.
 
-Ejemplo para agregar el usuario `maria` con contraseña `estatistica2026`:
-```json
-{
-  "username": "maria",
-  "password_hash": "HASH_AQUI",
-  "nombre": "María García",
-  "rol": "estudiante"
-}
+## Actualizar el Apps Script
+
+Desde la raíz del repo:
+
+```powershell
+clasp push --force
+clasp deploy -d "Actualizacion Analitica Big Data"
 ```
+
+Si se genera una nueva URL `/exec`, reemplazar `COURSE_CONFIG.sheetsWebAppUrl` en `dashboard.html`.

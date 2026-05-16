@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material de Lectura Extendido — Analítica de Big Data</title>
+  <meta name="description" content="Material extendido de Analítica de Big Data FACEN.">
+  <link rel="canonical" href="https://diegomezapy.github.io/analiticabigdata/unidades/unidad4/material-extendido.html">
+  <link rel="stylesheet" href="../../css/documentos.css">
+</head>
+<body>
+  <main class="doc-shell">
+    <header class="doc-header">
+      <div class="doc-kicker">Material extendido</div>
+      <h1>Material de Lectura Extendido</h1>
+      <p>Unidad 4: Interpretación de resultados y modelos estadísticos</p>
+      <a class="doc-home" href="../../dashboard.html">Volver a la plataforma</a>
+    </header>
+    <article class="doc-content">
+      <p>Departamento de Educación a Distancia</p>
+<h2>Analítica de Big Data</h2>
+<h2>Material de Lectura - Unidad 4: Interpretación de Resultados y Modelos Estadísticos en Big Data</h2>
+<p>Año 2025</p>
+<h2>Unidad 4: Interpretación de Resultados y Modelos Estadísticos en Big Data</h2>
+<p>La interpretación de resultados es crucial para convertir datos en acciones. Esta unidad cubre análisis discriminante lineal (LDA), interpretación de modelos, selección de resultados y generación de información estadística en Big Data. Incluimos teoría, ventajas, ejemplos en R, tablas comparativas, diagramas y casos reales para un entendimiento profundo.</p>
+<h2>4.1 Introducción a la Interpretación en Modelos Estadísticos</h2>
+<p>En Big Data, interpretar modelos implica entender coeficientes, importancia de variables y métricas de performance. Evita &#x27;caja negra&#x27; con técnicas explicables; clave para toma de decisiones éticas y accionables.</p>
+<h2>Tabla 1: Métricas Clave para Interpretación de Modelos</h2>
+<table class="doc-table"><tr><td>Métrica</td><td>Descripción</td><td>Uso</td><td>Ejemplo en R</td></tr></table>
+<table class="doc-table"><tr><td>Accuracy</td><td>Proporción de predicciones correctas.</td><td>Clasificación general.</td><td>confusionMatrix() accuracy.</td></tr></table>
+<table class="doc-table"><tr><td>Precision/Recall</td><td>Balance falsos positivos/negativos.</td><td>Clasificación imbalanceada.</td><td>precision() / recall() en caret.</td></tr></table>
+<table class="doc-table"><tr><td>AUC-ROC</td><td>Área bajo curva ROC.</td><td>Discriminación clases.</td><td>roc() en pROC.</td></tr></table>
+<table class="doc-table"><tr><td>R-squared</td><td>Varianza explicada.</td><td>Regresión.</td><td>summary(lm_model)$r.squared.</td></tr></table>
+<table class="doc-table"><tr><td>Feature Importance</td><td>Contribución de variables.</td><td>Selección modelos.</td><td>varImp() en caret.</td></tr></table>
+<p>Fuente: Adaptado de RDocumentation y Caret package docs.</p>
+<p>Error al insertar figura: 404 Client Error: Not Found for url: https://miro.medium.com/v2/1*9j9ZqNcQzW3GwFQ8b1Wv3Q.png</p>
+<h2>4.2 Análisis Discriminante Lineal (LDA)</h2>
+<p>LDA es un método supervisado para clasificación y reducción dimensional. Maximiza separación entre clases minimizando varianza intra-clase. Asume normalidad multivariada y covarianza igual; útil en reconocimiento de patrones.</p>
+<p>Función Discriminante: \( \delta_k(x) = x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \log \pi_k \)</p>
+<h2>Tabla 2: Ventajas y Desventajas de LDA</h2>
+<table class="doc-table"><tr><td>Aspecto</td><td>Ventajas</td><td>Desventajas</td></tr></table>
+<table class="doc-table"><tr><td>Eficiencia</td><td>Rápido y computacionalmente ligero.</td><td>Asume normalidad y homocedasticidad.</td></tr></table>
+<table class="doc-table"><tr><td>Reducción Dimensional</td><td>Proyecta datos en espacio de baja dimensión.</td><td>Sensible a outliers.</td></tr></table>
+<table class="doc-table"><tr><td>Interpretabilidad</td><td>Coeficientes indican importancia de features.</td><td>No maneja no-linealidades.</td></tr></table>
+<table class="doc-table"><tr><td>Escalabilidad</td><td>Buena para datasets medianos en Big Data.</td><td>Requiere matrices invertibles (no colinealidad).</td></tr></table>
+<p>Fuente: Adaptado de Analytics Vidhya LDA Tutorial.</p>
+<h2>Ejemplo en R: LDA con MASS</h2>
+<h2>R Code:</h2>
+<p>library(MASS)library(caret)# Datos irisdata(iris)# Train/test splitset.seed(123)trainIndex &lt;- createDataPartition(iris$Species, p=0.8, list=FALSE)train &lt;- iris[trainIndex,]test &lt;- iris[-trainIndex,]# Entrenar LDAmodel &lt;- lda(Species ~ ., data=train)# Predecirpredictions &lt;- predict(model, test[,1:4])$class# EvaluaciónconfusionMatrix(predictions, test$Species)# Visualizar proyeccionesplot(model)</p>
+<p>Este código entrena LDA en iris, predice y visualiza separaciones.</p>
+<p>Error al insertar figura: 406 Client Error: Not Acceptable for url: https://sebastianraschka.com/images/blog/2014/linear-discriminant-analysis/iris_lda_1.png</p>
+<h2>4.3 Interpretación y Selección de Resultados</h2>
+<p>Interpretar implica analizar métricas, visualizaciones y feature importance. Selección: elegir modelo por cross-validation, AIC/BIC o ensemble.</p>
+<h2>Ejemplo en R: Interpretación con varImp y ROC</h2>
+<h2>R Code:</h2>
+<p>library(caret)library(pROC)# Asumir modelo entrenado (ej. randomForest)model &lt;- train(Species ~ ., data=iris, method=&quot;rf&quot;)# Importancia de variablesvarImp(model)# ROC para multiclass (one-vs-all)multi_roc &lt;- multiclass.roc(test$Species, as.numeric(predictions))print(multi_roc$auc)# Plot ROCplot(multi_roc)</p>
+<p>Usa varImp para importancia y pROC para curvas ROC en interpretación.</p>
+<h2>Tabla 3: Criterios para Selección de Modelos</h2>
+<table class="doc-table"><tr><td>Criterio</td><td>Descripción</td><td>Fórmula/Ejemplo</td></tr></table>
+<table class="doc-table"><tr><td>Cross-Validation</td><td>Evalúa performance en folds.</td><td>k-fold CV error.</td></tr></table>
+<table class="doc-table"><tr><td>AIC/BIC</td><td>Balancea fit y complejidad.</td><td>AIC = 2k - 2ln(L).</td></tr></table>
+<table class="doc-table"><tr><td>Ensemble Voting</td><td>Combina múltiples modelos.</td><td>Majority vote.</td></tr></table>
+<table class="doc-table"><tr><td>SHAP Values</td><td>Explicabilidad local/global.</td><td>SHAP library in R.</td></tr></table>
+<p>Fuente: Adaptado de Hastie et al. (2009) Elements of Statistical Learning.</p>
+<p>Error al insertar figura: 404 Client Error: Not Found for url: https://christophm.github.io/interpretable-ml-book/images/shap-header.png</p>
+<h2>4.4 Generación de Información Estadística en Big Data</h2>
+<p>Generar info implica reportes, dashboards y narrativas. En R, usa Shiny para interactivos o rmarkdown para informes reproducibles.</p>
+<h2>Ejemplo en R: Generar Reporte con rmarkdown</h2>
+<p>R Markdown Code:</p>
+<p># En un archivo .Rmd---title: &quot;Reporte Big Data&quot;output: html_document---```{r setup, include=FALSE}knitr::opts_chunk$set(echo = TRUE)```## Resumen Modelomodel &lt;- lda(Species ~ ., data=iris)summary(model)## Visualizaciónplot(model)```# Renderizar: rmarkdown::render(&#x27;report.Rmd&#x27;)</p>
+<p>Crea reportes reproducibles integrando código, resultados y narrativas.</p>
+<h2>4.5 Comparación y Selección de Modelos en Big Data</h2>
+<p>Compara por métricas, complejidad y escalabilidad. En Big Data, prioriza paralelizables como LDA sobre computacionalmente intensivos.</p>
+<h2>Tabla 4: Comparación de Modelos para Clasificación</h2>
+<table class="doc-table"><tr><td>Modelo</td><td>Asunciones</td><td>Fortalezas</td><td>Debilidades</td><td>Escalabilidad en Big Data</td></tr></table>
+<table class="doc-table"><tr><td>LDA</td><td>Normalidad, covarianza igual.</td><td>Reducción dimensional, interpretable.</td><td>Sensible a violaciones.</td><td>Buena con paralelización.</td></tr></table>
+<table class="doc-table"><tr><td>QDA</td><td>Normalidad, covarianza diferente.</td><td>Más flexible que LDA.</td><td>Sobrefit en alta dimensión.</td><td>Moderada.</td></tr></table>
+<table class="doc-table"><tr><td>Logistic Regression</td><td>Linealidad en logit.</td><td>Probabilidades, regularización.</td><td>No captura no-linealidades.</td><td>Alta con Spark ML.</td></tr></table>
+<table class="doc-table"><tr><td>SVM</td><td>Margen máximo.</td><td>Efectivo en alta dimensión.</td><td>Lento en entrenamiento.</td><td>Buena con kernels aproximados.</td></tr></table>
+<p>Fuente: Adaptado de Elements of Statistical Learning.</p>
+<h2>4.6 Aplicaciones Reales en Big Data</h2>
+<p>LDA en reconocimiento facial (Eigenfaces), interpretación en finanzas para riesgo, selección en bioinformática para genes.</p>
+<h2>Tabla 5: Aplicaciones Reales de Modelos en Big Data</h2>
+<table class="doc-table"><tr><td>Modelo</td><td>Aplicación</td><td>Ejemplo</td><td>Beneficio</td></tr></table>
+<table class="doc-table"><tr><td>LDA</td><td>Clasificación de documentos.</td><td>Topic modeling en noticias.</td><td>Reducción dimensional para escalabilidad.</td></tr></table>
+<table class="doc-table"><tr><td>Interpretación</td><td>Análisis de sentiment.</td><td>Twitter data insights.</td><td>Explicabilidad para decisiones de marketing.</td></tr></table>
+<table class="doc-table"><tr><td>Selección Modelos</td><td>Predicción de enfermedades.</td><td>Genómica con Big Data.</td><td>Optimización de accuracy en datasets masivos.</td></tr></table>
+<p>Fuente: Adaptado de Kaggle y Real-world ML cases.</p>
+<p>Conclusiones de la Unidad 4</p>
+<p>Interpretar y seleccionar modelos asegura valor actionable de Big Data. LDA ofrece base sólida; herramientas como R facilitan análisis. Futuro: XAI (Explainable AI) para transparencia en modelos complejos.</p>
+<p>Bibliografía</p>
+<p>• Hastie, T., Tibshirani, R., &amp; Friedman, J. (2009). The Elements of Statistical Learning. Springer.</p>
+<p>• James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2013). An Introduction to Statistical Learning with Applications in R. Springer.</p>
+<p>• Kuhn, M. (2008). Building Predictive Models in R Using the caret Package. Journal of Statistical Software.</p>
+<p>• Additional: RDocumentation - lda. https://www.rdocumentation.org/packages/MASS/versions/7.3-58.1/topics/lda</p>
+<p>• Analytics Vidhya. (2020). Linear Discriminant Analysis – A Complete Guide. https://www.analyticsvidhya.com/blog/2020/10/linear-discriminant-analysis-a-complete-guide/</p>
+<p>• DataCamp. (2023). Model Interpretation in R. https://www.datacamp.com/tutorial/model-interpretation-r</p>
+<p>• SHAP Documentation. https://shap.readthedocs.io/en/latest/</p>
+    </article>
+  </main>
+</body>
+</html>

@@ -135,6 +135,13 @@
             quizTimeLeft: 0,
         };
 
+        const COURSE_CONFIG = {
+            name: 'Analítica de Big Data',
+            spreadsheetId: '1eU6Fh073qLIOQaPonRim5d0e6IuGE0Bq8hDZHmlHKzI',
+            publicBaseUrl: 'https://diegomezapy.github.io/analiticabigdata/',
+            sheetsWebAppUrl: 'https://script.google.com/macros/s/AKfycbzZiGgj3FgE0Wv6pSQmT3ZSW-lz68wbp2RfH8lx7cSGChNLorUnv1HgL_GfJxwAG0aE/exec'
+        };
+
         const TOTAL_UNITS = 4;
 
         const UNITS = [
@@ -205,6 +212,9 @@
             earnBadge('first_login');
 
             showPage('home');
+            flushPendingSync();
+            trackEvent('login', { detalle: 'Ingreso a la plataforma' });
+            syncProgressSnapshot();
         }
 
         function saveProgress() {
@@ -236,6 +246,7 @@
             STATE.badges.push(id);
             saveProgress();
             showToast(`🏆 Badge desbloqueado: ${badge.emoji} ${badge.name}`, 'xp');
+            trackEvent('badge', { recurso: id, detalle: badge.name });
         }
 
         function logout() {
@@ -383,55 +394,55 @@
         const UNIT_FILES = {
             1: {
                 materiales: [
-                    { name: 'Material de lectura — Unidad 1', file: 'unidades/unidad1/Material_Lectura_Unidad1.pdf', type: 'pdf' },
-                    { name: 'Material extendido — Unidad 1', file: 'unidades/unidad1/Material_Lectura_Unidad1_Extendido.docx', type: 'docx' },
+                    { name: 'Material de lectura — Unidad 1', file: 'unidades/unidad1/material-lectura.html', type: 'html' },
+                    { name: 'Material extendido — Unidad 1', file: 'unidades/unidad1/material-extendido.html', type: 'html' },
                 ],
                 actividades: [
-                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad1/Descripcion_Actividad_Unidad1_Act1.pdf', type: 'act' },
-                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad1/Descripcion_Actividad_Unidad1_Act2.pdf', type: 'act' },
-                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad1/Descripcion_Actividad_Unidad1_Act3.pdf', type: 'act' },
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad1/actividad-1.html', type: 'html' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad1/actividad-2.html', type: 'html' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad1/actividad-3.html', type: 'html' },
                 ],
                 orientaciones: [
-                    { name: 'Orientaciones — Unidad 1', file: 'unidades/unidad1/Orientaciones_Unidad_Unidad1.pdf', type: 'pdf' },
+                    { name: 'Orientaciones — Unidad 1', file: 'unidades/unidad1/orientaciones.html', type: 'html' },
                 ]
             },
             2: {
                 materiales: [
-                    { name: 'Material extendido — Unidad 2', file: 'unidades/unidad2/Material_Lectura_Unidad2_Extendido.docx', type: 'docx' },
+                    { name: 'Material extendido — Unidad 2', file: 'unidades/unidad2/material-extendido.html', type: 'html' },
                 ],
                 actividades: [
-                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad2/Descripcion_Actividad_Unidad2_Act1.pdf', type: 'act' },
-                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad2/Descripcion_Actividad_Unidad2_Act2.pdf', type: 'act' },
-                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad2/Descripcion_Actividad_Unidad2_Act3.pdf', type: 'act' },
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad2/actividad-1.html', type: 'html' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad2/actividad-2.html', type: 'html' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad2/actividad-3.html', type: 'html' },
                 ],
                 orientaciones: [
-                    { name: 'Orientaciones — Unidad 2', file: 'unidades/unidad2/Orientaciones_Unidad_Unidad2.pdf', type: 'pdf' },
+                    { name: 'Orientaciones — Unidad 2', file: 'unidades/unidad2/orientaciones.html', type: 'html' },
                 ]
             },
             3: {
                 materiales: [
-                    { name: 'Material extendido — Unidad 3', file: 'unidades/unidad3/Material_Lectura_Unidad3_Extendido.docx', type: 'docx' },
+                    { name: 'Material extendido — Unidad 3', file: 'unidades/unidad3/material-extendido.html', type: 'html' },
                 ],
                 actividades: [
-                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad3/Descripcion_Actividad_Unidad3_Act1.pdf', type: 'act' },
-                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad3/Descripcion_Actividad_Unidad3_Act2.pdf', type: 'act' },
-                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad3/Descripcion_Actividad_Unidad3_Act3.pdf', type: 'act' },
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad3/actividad-1.html', type: 'html' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad3/actividad-2.html', type: 'html' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad3/actividad-3.html', type: 'html' },
                 ],
                 orientaciones: [
-                    { name: 'Orientaciones — Unidad 3', file: 'unidades/unidad3/Orientaciones_Unidad_Unidad3.pdf', type: 'pdf' },
+                    { name: 'Orientaciones — Unidad 3', file: 'unidades/unidad3/orientaciones.html', type: 'html' },
                 ]
             },
             4: {
                 materiales: [
-                    { name: 'Material extendido — Unidad 4', file: 'unidades/unidad4/Material_Lectura_Unidad4_Extendido.docx', type: 'docx' },
+                    { name: 'Material extendido — Unidad 4', file: 'unidades/unidad4/material-extendido.html', type: 'html' },
                 ],
                 actividades: [
-                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad4/Descripcion_Actividad_Unidad4_Act1.pdf', type: 'act' },
-                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad4/Descripcion_Actividad_Unidad4_Act2.pdf', type: 'act' },
-                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad4/Descripcion_Actividad_Unidad4_Act3.pdf', type: 'act' },
+                    { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad4/actividad-1.html', type: 'html' },
+                    { name: 'AI — Foro sobre problemas de aplicación', file: 'unidades/unidad4/actividad-2.html', type: 'html' },
+                    { name: 'AA — Cuestionario en línea', file: 'unidades/unidad4/actividad-3.html', type: 'html' },
                 ],
                 orientaciones: [
-                    { name: 'Orientaciones — Unidad 4', file: 'unidades/unidad4/Orientaciones_Unidad_Unidad4.pdf', type: 'pdf' },
+                    { name: 'Orientaciones — Unidad 4', file: 'unidades/unidad4/orientaciones.html', type: 'html' },
                 ]
             },
         };
@@ -473,12 +484,12 @@
         <div class="materials-list">
           ${all.map(f => `
             <a href="${f.file}" target="_blank" class="material-item" onclick="markRead(${n},'${f.file}')">
-              <div class="material-icon" style="background:${f.type === 'docx' ? 'rgba(20,184,166,0.1)' : 'rgba(239,68,68,0.1)'}">${f.type === 'docx' ? '📝' : '📄'}</div>
+              <div class="material-icon" style="background:${f.type === 'html' ? 'rgba(20,184,166,0.1)' : 'rgba(239,68,68,0.1)'}">${f.type === 'html' ? '🌐' : '📄'}</div>
               <div class="material-info">
                 <h4>${f.name}</h4>
                 <p>Archivo ${f.type.toUpperCase()} — click para abrir</p>
               </div>
-              <span class="material-badge ${f.type === 'docx' ? 'badge-act' : 'badge-pdf'}">${f.type.toUpperCase()}</span>
+              <span class="material-badge ${f.type === 'html' ? 'badge-act' : 'badge-pdf'}">${f.type.toUpperCase()}</span>
             </a>
           `).join('')}
         </div>
@@ -493,13 +504,13 @@
         <p style="margin-bottom:1rem">Descarga y completa las siguientes actividades:</p>
         <div class="materials-list">
           ${acts.map((f, i) => `
-            <a href="${f.file}" target="_blank" class="material-item">
+            <a href="${f.file}" target="_blank" class="material-item" onclick="trackResourceOpen(${n}, '${f.file}', '${f.name.replace(/'/g, "\\'")}')">
               <div class="material-icon" style="background:rgba(20,184,166,0.1)">📝</div>
               <div class="material-info">
                 <h4>${f.name}</h4>
-                <p>Descripción de actividad — Unidad ${n}</p>
+                <p>Documento HTML de actividad — Unidad ${n}</p>
               </div>
-              <span class="material-badge badge-act">ACTIVIDAD</span>
+              <span class="material-badge badge-act">HTML</span>
             </a>
           `).join('')}
         </div>
@@ -561,12 +572,22 @@
         }
 
         function markRead(unit, file) {
-            const key = `u${unit}_read`;
+            const key = `u${unit}_read_${file}`;
             if (!STATE.completedActivities[key]) {
                 STATE.completedActivities[key] = true;
                 addXP(10, 'Material de lectura abierto');
                 saveProgress();
             }
+            trackResourceOpen(unit, file, 'Material u orientación');
+        }
+
+        function trackResourceOpen(unit, file, name) {
+            trackEvent('recurso_abierto', {
+                unidad: unit,
+                recurso: file,
+                detalle: name
+            });
+            syncProgressSnapshot();
         }
 
         // ================================================================
@@ -744,17 +765,28 @@
 
             // Send to Google Sheets
             sendToSheets({
+                kind: 'calificacion',
+                timestamp: new Date().toISOString(),
                 usuario: STATE.user.username,
                 nombre: STATE.user.nombre,
                 unidad: STATE.currentUnit,
                 actividad: 'Quiz',
+                tipo: 'cuestionario',
                 puntaje: pct,
+                porcentaje: pct,
                 correctas: correct,
                 total: total,
                 fecha: new Date().toLocaleString('es-PY'),
                 tiempo_restante: STATE.quizTimeLeft,
-                xp: xpEarned
+                duracion_seg: (STATE.quizData.tiempo_minutos * 60) - STATE.quizTimeLeft,
+                xp: xpEarned,
+                detalle: {
+                    titulo: STATE.quizData.titulo,
+                    timeout,
+                    respuestas: STATE.quizAnswers
+                }
             });
+            syncProgressSnapshot();
 
             let grade, gradeClass;
             if (pct >= 90) { grade = '¡Excelente! 🌟'; gradeClass = 'excellent'; }
@@ -980,6 +1012,22 @@
     </div>
   `;
             if (correct === total) addXP(20, 'Actividad de emparejamiento completada');
+            sendToSheets({
+                kind: 'calificacion',
+                timestamp: new Date().toISOString(),
+                usuario: STATE.user.username,
+                nombre: STATE.user.nombre,
+                unidad: 'general',
+                actividad: 'Emparejar conceptos',
+                tipo: 'actividad_interactiva',
+                puntaje: pct,
+                porcentaje: pct,
+                correctas: correct,
+                total,
+                xp: correct === total ? 20 : 0,
+                detalle: { conceptos: MATCH_DATA.map(item => item.concept) }
+            });
+            syncProgressSnapshot();
         }
 
         // ================================================================
@@ -1071,13 +1119,21 @@
             content.innerHTML = `
     <h2 style="margin-bottom:1rem">📖 Guía Didáctica</h2>
     <div class="materials-list">
-      <a href="guia_didactica/BigData_GuiaDid.pdf" target="_blank" class="material-item">
-        <div class="material-icon" style="background:rgba(239,68,68,0.1)">📖</div>
+      <a href="guia_didactica/index.html" target="_blank" class="material-item" onclick="trackResourceOpen('', 'guia_didactica/index.html', 'Guía Académica y Didáctica')">
+        <div class="material-icon" style="background:rgba(20,184,166,0.1)">📖</div>
         <div class="material-info">
-          <h4>Guía Didáctica — Analítica de Big Data</h4>
-          <p>Documento completo de la asignatura — Primer Período 2026</p>
+          <h4>Guía Académica y Didáctica — Analítica de Big Data</h4>
+          <p>Documento HTML completo de la asignatura — Primer Período 2026</p>
         </div>
-        <span class="material-badge badge-pdf">PDF</span>
+        <span class="material-badge badge-act">HTML</span>
+      </a>
+      <a href="documentos.html" target="_blank" class="material-item" onclick="trackResourceOpen('', 'documentos.html', 'Índice de documentos HTML')">
+        <div class="material-icon" style="background:rgba(249,115,22,0.1)">🌐</div>
+        <div class="material-info">
+          <h4>Índice de documentos HTML</h4>
+          <p>Rutas listas para abrir, enlazar o insertar desde GitHub Pages</p>
+        </div>
+        <span class="material-badge badge-quiz">HTML</span>
       </a>
     </div>
   `;
@@ -1086,19 +1142,117 @@
         // ================================================================
         // GOOGLE SHEETS INTEGRATION
         // ================================================================
+        function sheetsUrl() {
+            const override = localStorage.getItem('abd_sheets_web_app_url');
+            return override || COURSE_CONFIG.sheetsWebAppUrl;
+        }
+
+        function sessionId() {
+            let id = sessionStorage.getItem('abd_session_id');
+            if (!id) {
+                id = `abd_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+                sessionStorage.setItem('abd_session_id', id);
+            }
+            return id;
+        }
+
+        function baseSyncPayload(data) {
+            return {
+                ...data,
+                course: COURSE_CONFIG.name,
+                spreadsheet_id: COURSE_CONFIG.spreadsheetId,
+                origen_url: window.location.href,
+                user_agent: navigator.userAgent,
+                session_id: sessionId()
+            };
+        }
+
         async function sendToSheets(data) {
-            const SHEETS_URL = 'TU_APPS_SCRIPT_URL_AQUI'; // Completar después de configurar Apps Script
-            if (!SHEETS_URL || SHEETS_URL.includes('TU_APPS')) return;
+            const SHEETS_URL = sheetsUrl();
+            const payload = baseSyncPayload(data);
+            storeSyncHistory(payload);
+            if (!SHEETS_URL || SHEETS_URL.includes('TU_APPS_SCRIPT')) {
+                queuePendingSync(payload);
+                return;
+            }
             try {
                 await fetch(SHEETS_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(payload)
                 });
             } catch (e) {
+                queuePendingSync(payload);
                 console.warn('Google Sheets sync skipped:', e.message);
             }
+        }
+
+        function storeSyncHistory(payload) {
+            const key = 'abd_sync_history';
+            const history = JSON.parse(localStorage.getItem(key) || '[]');
+            history.push(payload);
+            localStorage.setItem(key, JSON.stringify(history.slice(-250)));
+        }
+
+        function queuePendingSync(payload) {
+            const key = 'abd_pending_sync';
+            const pending = JSON.parse(localStorage.getItem(key) || '[]');
+            pending.push(payload);
+            localStorage.setItem(key, JSON.stringify(pending.slice(-100)));
+        }
+
+        async function flushPendingSync() {
+            const SHEETS_URL = sheetsUrl();
+            if (!SHEETS_URL || SHEETS_URL.includes('TU_APPS_SCRIPT')) return;
+            const key = 'abd_pending_sync';
+            const pending = JSON.parse(localStorage.getItem(key) || '[]');
+            if (pending.length === 0) return;
+            localStorage.removeItem(key);
+            await sendToSheets({ kind: 'batch', items: pending });
+        }
+
+        function trackEvent(evento, extra = {}) {
+            sendToSheets({
+                kind: 'evento',
+                timestamp: new Date().toISOString(),
+                usuario: STATE.user?.username || '',
+                nombre: STATE.user?.nombre || '',
+                evento,
+                ...extra
+            });
+        }
+
+        function progressSnapshot() {
+            const quizValues = Object.values(STATE.quizResults);
+            const avgScore = quizValues.length
+                ? Math.round(quizValues.reduce((sum, item) => sum + item.score, 0) / quizValues.length)
+                : 0;
+            return {
+                xp: STATE.xp,
+                completedActivities: STATE.completedActivities,
+                quizResults: STATE.quizResults,
+                badges: STATE.badges,
+                quizzes_completados: quizValues.length,
+                promedio_quiz: avgScore,
+                materiales_vistos: Object.keys(STATE.completedActivities).length
+            };
+        }
+
+        function syncProgressSnapshot() {
+            const snapshot = progressSnapshot();
+            sendToSheets({
+                kind: 'progreso',
+                timestamp: new Date().toISOString(),
+                usuario: STATE.user?.username || '',
+                nombre: STATE.user?.nombre || '',
+                xp_total: STATE.xp,
+                quizzes_completados: snapshot.quizzes_completados,
+                promedio_quiz: snapshot.promedio_quiz,
+                badges: STATE.badges,
+                materiales_vistos: snapshot.materiales_vistos,
+                progreso: snapshot
+            });
         }
 
         // ================================================================

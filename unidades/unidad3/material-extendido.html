@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material de Lectura Extendido — Analítica de Big Data</title>
+  <meta name="description" content="Material extendido de Analítica de Big Data FACEN.">
+  <link rel="canonical" href="https://diegomezapy.github.io/analiticabigdata/unidades/unidad3/material-extendido.html">
+  <link rel="stylesheet" href="../../css/documentos.css">
+</head>
+<body>
+  <main class="doc-shell">
+    <header class="doc-header">
+      <div class="doc-kicker">Material extendido</div>
+      <h1>Material de Lectura Extendido</h1>
+      <p>Unidad 3: Machine Learning</p>
+      <a class="doc-home" href="../../dashboard.html">Volver a la plataforma</a>
+    </header>
+    <article class="doc-content">
+      <p>Departamento de Educación a Distancia</p>
+<h2>Analítica de Big Data</h2>
+<h2>Material de Lectura - Unidad 3: Machine Learning en Big Data con R</h2>
+<p>Año 2025</p>
+<h2>Unidad 3: Machine Learning en Big Data con R</h2>
+<p>El Machine Learning (ML) es esencial para extraer insights de grandes volúmenes de datos en Big Data. Esta unidad introduce conceptos clave de ML, enfocándose en modelos predictivos como K-Nearest Neighbors (KNN), Naive Bayes y Regresión Logística. Exploraremos explicaciones teóricas, ventajas/desventajas, ejemplos en R, diagramas y aplicaciones reales para un aprendizaje completo y práctico.</p>
+<h2>3.1 Introducción al Machine Learning en Big Data</h2>
+<p>ML permite a las máquinas aprender patrones de datos sin programación explícita. En Big Data, maneja volúmenes masivos con algoritmos escalables. Tipos: Supervisado (etiquetado), No Supervisado (patrones), Reforzamiento (recompensas). Enfoque en supervisado para clasificación/regresión.</p>
+<h2>Tabla 1: Tipos de Machine Learning</h2>
+<table class="doc-table"><tr><td>Tipo</td><td>Descripción</td><td>Ejemplos</td><td>Uso en Big Data</td></tr></table>
+<table class="doc-table"><tr><td>Supervisado</td><td>Aprende de datos etiquetados para predecir.</td><td>Clasificación, Regresión.</td><td>Predicción de churn en telecomunicaciones.</td></tr></table>
+<table class="doc-table"><tr><td>No Supervisado</td><td>Encuentra patrones sin etiquetas.</td><td>Clustering, Reducción dimensional.</td><td>Segmentación de clientes en e-commerce.</td></tr></table>
+<table class="doc-table"><tr><td>Reforzamiento</td><td>Aprende por ensayo-error con recompensas.</td><td>Q-Learning, Deep RL.</td><td>Optimización de rutas en logística.</td></tr></table>
+<table class="doc-table"><tr><td>Semi-Supervisado</td><td>Mezcla etiquetados y no etiquetados.</td><td>Autoencoders.</td><td>Clasificación de imágenes con datos limitados.</td></tr></table>
+<p>Fuente: Adaptado de GeeksforGeeks y DataCamp tutorials.</p>
+<p>Error al insertar figura: 403 Client Error: Forbidden for url: https://www.researchgate.net/publication/342062164/figure/fig1/AS:900227347886082@1592604879453/Machine-Learning-Types.ppm</p>
+<h2>3.2 Creación de Modelos Predictivos</h2>
+<p>En ML supervisado, se divide datos en entrenamiento/test, se entrena el modelo y se evalúa (accuracy, precision, recall, F1-score). En R, paquetes como caret facilitan este flujo.</p>
+<h2>Ejemplo en R: Flujo Básico de ML con caret</h2>
+<h2>R Code:</h2>
+<p>library(caret)# Cargar datos (ej. iris)data(iris)# Dividir en train/testset.seed(123)trainIndex &lt;- createDataPartition(iris$Species, p=0.8, list=FALSE)train &lt;- iris[trainIndex,]test &lt;- iris[-trainIndex,]# Entrenar modelo (ej. KNN)model &lt;- train(Species ~ ., data=train, method=&quot;knn&quot;)# Predecir y evaluarpredictions &lt;- predict(model, test)confusionMatrix(predictions, test$Species)</p>
+<p>Este ejemplo usa caret para partición, entrenamiento y evaluación, común en Big Data para escalabilidad.</p>
+<h2>3.3 K-Nearest Neighbors (KNN)</h2>
+<p>KNN es un algoritmo no paramétrico de aprendizaje basado en instancias. Clasifica un punto nuevo basado en la mayoría de votos de sus K vecinos más cercanos, usando distancias como Euclidea. Ideal para datasets pequeños a medianos; en Big Data, usar aproximaciones como KD-trees.</p>
+<p>Fórmula de Distancia Euclidea: \( d(p, q) = \sqrt{\sum (p_i - q_i)^2} \)</p>
+<h2>Tabla 2: Ventajas y Desventajas de KNN</h2>
+<table class="doc-table"><tr><td>Aspecto</td><td>Ventajas</td><td>Desventajas</td></tr></table>
+<table class="doc-table"><tr><td>Simplicidad</td><td>Fácil de entender e implementar.</td><td>Sensible a ruido y outliers.</td></tr></table>
+<table class="doc-table"><tr><td>No paramétrico</td><td>No asume distribución de datos.</td><td>Alto costo computacional en predicción.</td></tr></table>
+<table class="doc-table"><tr><td>Flexibilidad</td><td>Bueno para clasificación multi-clase.</td><td>Requiere elección óptima de K.</td></tr></table>
+<table class="doc-table"><tr><td>Escalabilidad</td><td>Útil en datasets no lineales.</td><td>No escala bien con Big Data sin optimizaciones.</td></tr></table>
+<p>Fuente: Adaptado de DataCamp KNN Tutorial.</p>
+<h2>Ejemplo en R: Implementación de KNN con class</h2>
+<h2>R Code:</h2>
+<p>library(class)library(caret)# Datos irisdata(iris)# Normalizar (opcional)normalize &lt;- function(x) { return ((x - min(x)) / (max(x) - min(x))) }iris_norm &lt;- as.data.frame(lapply(iris[1:4], normalize))# Train/test splitset.seed(123)trainIndex &lt;- createDataPartition(iris$Species, p=0.8, list=FALSE)train_data &lt;- iris_norm[trainIndex,]train_labels &lt;- iris$Species[trainIndex]test_data &lt;- iris_norm[-trainIndex,]test_labels &lt;- iris$Species[-trainIndex]# KNN con K=3predictions &lt;- knn(train=train_data, test=test_data, cl=train_labels, k=3)# EvaluaciónconfusionMatrix(predictions, test_labels)</p>
+<p>Este código normaliza features, aplica KNN y evalúa con matriz de confusión.</p>
+<h2>Figura 2: Diagrama de KNN</h2>
+<p>Fuente: GeeksforGeeks - KNN Algorithm.</p>
+<h2>3.4 Naive Bayes</h2>
+<p>Naive Bayes es un clasificador probabilístico basado en el Teorema de Bayes, asumiendo independencia entre features (naive). Eficiente para texto y Big Data, variantes: Gaussian (continuas), Multinomial (discretas), Bernoulli (binarias).</p>
+<p>Teorema de Bayes: \( P(C|X) = \frac{P(X|C) P(C)}{P(X)} \)</p>
+<h2>Tabla 3: Ventajas y Desventajas de Naive Bayes</h2>
+<table class="doc-table"><tr><td>Aspecto</td><td>Ventajas</td><td>Desventajas</td></tr></table>
+<table class="doc-table"><tr><td>Eficiencia</td><td>Rápido en entrenamiento y predicción.</td><td>Asume independencia (puede no ser real).</td></tr></table>
+<table class="doc-table"><tr><td>Manejo de datos</td><td>Bueno con datos categóricos y texto.</td><td>Problemas con zero-frequency (Laplace smoothing).</td></tr></table>
+<table class="doc-table"><tr><td>Escalabilidad</td><td>Escala bien con Big Data.</td><td>Menos preciso en datasets complejos.</td></tr></table>
+<table class="doc-table"><tr><td>Simplicidad</td><td>Fácil interpretación probabilística.</td><td>No maneja bien interacciones entre features.</td></tr></table>
+<p>Fuente: Adaptado de Edureka Naive Bayes Tutorial.</p>
+<h2>Ejemplo en R: Naive Bayes con e1071</h2>
+<h2>R Code:</h2>
+<p>library(e1071)library(caret)# Datos iris (para clasificación)data(iris)# Train/test splitset.seed(123)trainIndex &lt;- createDataPartition(iris$Species, p=0.8, list=FALSE)train &lt;- iris[trainIndex,]test &lt;- iris[-trainIndex,]# Entrenar Naive Bayesmodel &lt;- naiveBayes(Species ~ ., data=train)# Predecirpredictions &lt;- predict(model, test[,1:4])# EvaluaciónconfusionMatrix(predictions, test$Species)</p>
+<h2>Ejemplo simple con iris; en Big Data, útil para spam filtering o sentiment analysis.</h2>
+<h2>Figura 3: Diagrama de Naive Bayes</h2>
+<p>Fuente: Medium - Mastering Naive Bayes.</p>
+<h2>3.5 Regresión Logística</h2>
+<p>Regresión Logística modela probabilidades para clasificación binaria/multinomial usando función sigmoide. Extiende regresión lineal para outputs categóricos.</p>
+<p>Función Logística: \( p = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x)}} \)</p>
+<h2>Tabla 4: Ventajas y Desventajas de Regresión Logística</h2>
+<table class="doc-table"><tr><td>Aspecto</td><td>Ventajas</td><td>Desventajas</td></tr></table>
+<table class="doc-table"><tr><td>Interpretabilidad</td><td>Coeficientes fáciles de interpretar.</td><td>Asume linealidad en logit.</td></tr></table>
+<table class="doc-table"><tr><td>Eficiencia</td><td>Rápida, no requiere mucho cómputo.</td><td>Sensible a multicolinealidad.</td></tr></table>
+<table class="doc-table"><tr><td>Probabilidades</td><td>Output probabilístico directo.</td><td>No maneja bien no-linealidades complejas.</td></tr></table>
+<table class="doc-table"><tr><td>Escalabilidad</td><td>Buena para Big Data con regularización.</td><td>Requiere datos balanceados.</td></tr></table>
+<p>Fuente: Adaptado de Statology Logistic Regression Tutorial.</p>
+<h2>Ejemplo en R: Regresión Logística Binaria con glm</h2>
+<h2>R Code:</h2>
+<p># Datos de ejemplo (titanic simplificado)data &lt;- read.csv(&#x27;titanic.csv&#x27;) # Asumir columnas: Survived, Pclass, Sex, Age, etc.# Convertir factoresdata$Survived &lt;- factor(data$Survived)data$Sex &lt;- factor(data$Sex)# Train/test splitset.seed(123)trainIndex &lt;- createDataPartition(data$Survived, p=0.8, list=FALSE)train &lt;- data[trainIndex,]test &lt;- data[-trainIndex,]# Modelo logitmodel &lt;- glm(Survived ~ Pclass + Sex + Age, data=train, family=&quot;binomial&quot;)# Predecir probabilidadesprobabilities &lt;- predict(model, test, type=&quot;response&quot;)predictions &lt;- ifelse(probabilities &gt; 0.5, 1, 0)# EvaluaciónconfusionMatrix(factor(predictions), test$Survived)</p>
+<p>Usando glm para clasificación binaria; en Big Data, aplicar en churn prediction o fraud detection.</p>
+<h2>Figura 4: Frontera de Decisión en Regresión Logística</h2>
+<p>Fuente: Medium - Logistic Regression and Decision Boundary.</p>
+<h2>3.6 Comparación de Algoritmos</h2>
+<p>Selección depende de datos: KNN para no-lineales, Naive Bayes para texto, Logística para interpretabilidad.</p>
+<h2>Tabla 5: Comparación de Algoritmos</h2>
+<table class="doc-table"><tr><td>Algoritmo</td><td>Tipo</td><td>Fortalezas</td><td>Debilidades</td><td>Uso en Big Data</td></tr></table>
+<table class="doc-table"><tr><td>KNN</td><td>Basado en instancias</td><td>Simple, no asume distribución.</td><td>Lento en predicción.</td><td>Clasificación local con aproximaciones.</td></tr></table>
+<table class="doc-table"><tr><td>Naive Bayes</td><td>Probabilístico</td><td>Rápido, maneja alta dimensionalidad.</td><td>Asume independencia.</td><td>Análisis de texto/spam en streams.</td></tr></table>
+<table class="doc-table"><tr><td>Regresión Logística</td><td>Lineal</td><td>Interpretabilidad, probabilidades.</td><td>Lineal en logit.</td><td>Predicciones binarias escalables.</td></tr></table>
+<p>Fuente: Elaboración propia basada en tutorials de DataCamp y GeeksforGeeks.</p>
+<h2>3.7 Aplicaciones Reales en Big Data</h2>
+<p>ML en Big Data: Recomendadores (Netflix - KNN), detección spam (Gmail - Naive Bayes), riesgo crediticio (bancos - Logística).</p>
+<h2>Tabla 6: Aplicaciones Reales</h2>
+<table class="doc-table"><tr><td>Algoritmo</td><td>Aplicación</td><td>Ejemplo</td><td>Beneficio</td></tr></table>
+<table class="doc-table"><tr><td>KNN</td><td>Sistemas de recomendación.</td><td>Spotify playlists.</td><td>Personalización basada en similitud.</td></tr></table>
+<table class="doc-table"><tr><td>Naive Bayes</td><td>Clasificación de texto.</td><td>Filtro spam en email.</td><td>Procesamiento rápido de volúmenes masivos.</td></tr></table>
+<table class="doc-table"><tr><td>Regresión Logística</td><td>Predicción binaria.</td><td>Churn en telecom.</td><td>Evaluación de probabilidades de retención.</td></tr></table>
+<p>Fuente: Adaptado de R-bloggers y Analytics Vidhya.</p>
+<p>Conclusiones de la Unidad 3</p>
+<p>ML transforma Big Data en insights accionables. KNN, Naive Bayes y Regresión Logística son bases sólidas; en R, paquetes como caret/e1071 facilitan implementación. Futuro: Integración con Spark para escalabilidad extrema.</p>
+<p>Bibliografía</p>
+<p>• DataCamp. (2023). K-Nearest Neighbors (KNN) Classification with R Tutorial. https://www.datacamp.com/tutorial/k-nearest-neighbors-knn-classification-with-r-tutorial</p>
+<p>• Edureka. (2019). A Step By Step Guide To Implement Naive Bayes In R. https://medium.com/edureka/naive-bayes-in-r-37ca73f3e85c</p>
+<p>• Statology. How to Perform Logistic Regression in R (Step-by-Step). https://www.statology.org/logistic-regression-in-r/</p>
+<p>• GeeksforGeeks. (2025). Introduction to Machine Learning in R. https://www.geeksforgeeks.org/r-machine-learning/introduction-to-machine-learning-in-r/</p>
+<p>• Additional: R-bloggers. (2021). Naive Bayes Classification in R. https://www.r-bloggers.com/2021/04/naive-bayes-classification-in-r/</p>
+<p>• Wickham, H. (2016). ggplot2: Elegant Graphics for Data Analysis. Springer.</p>
+<p>• Lutz, M. (2013). Learning Python. O&#x27;Reilly Media (for general ML context).</p>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,164 @@
+:root {
+  --bg: #f6f8fb;
+  --paper: #ffffff;
+  --ink: #172033;
+  --muted: #64748b;
+  --line: #dbe4ef;
+  --primary: #0f766e;
+  --accent: #ea580c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.65;
+}
+
+.doc-shell {
+  width: min(980px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 56px;
+}
+
+.doc-header {
+  border-top: 6px solid var(--primary);
+  background: var(--paper);
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+  padding: clamp(24px, 5vw, 48px);
+  margin-bottom: 24px;
+}
+
+.doc-kicker {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  margin: 0 0 12px;
+}
+
+.doc-header p {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.doc-home {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 20px;
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.doc-home:hover {
+  text-decoration: underline;
+}
+
+.doc-content,
+.doc-index {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: clamp(22px, 4vw, 42px);
+}
+
+.doc-content h2 {
+  border-top: 1px solid var(--line);
+  color: #0f3d4a;
+  font-size: 1.25rem;
+  margin: 28px 0 10px;
+  padding-top: 22px;
+}
+
+.doc-content h2:first-child {
+  border-top: 0;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.doc-content p {
+  margin: 0 0 12px;
+}
+
+.doc-meta-line {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+}
+
+.doc-table td {
+  border: 1px solid var(--line);
+  padding: 8px 10px;
+  vertical-align: top;
+}
+
+.doc-index {
+  display: grid;
+  gap: 10px;
+}
+
+.doc-index a {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  display: block;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.doc-index a:hover {
+  border-color: var(--primary);
+  background: #f0fdfa;
+}
+
+.doc-index span {
+  color: var(--primary);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+@media print {
+  body {
+    background: #ffffff;
+  }
+
+  .doc-shell {
+    width: 100%;
+    padding: 0;
+  }
+
+  .doc-header,
+  .doc-content {
+    border: 0;
+    box-shadow: none;
+  }
+}
