@@ -225,7 +225,7 @@
         };
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
-        const APP_VERSION = 'v28';
+        const APP_VERSION = 'v29';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -3441,17 +3441,14 @@
             return `
       <section class="learning-path-shell unit-theme-u${unitNum} sublevel-theme-s${currentSlide?.sublevelIndex || 1}">
         <div class="learning-path-head">
-          <div>
-            <span class="doc-status-pill">Ruta secuencial</span>
-            <h3>Unidad ${unitNum}: ${escapeHtml(unit.title)}</h3>
-            <p>${escapeHtml(unit.desc)}</p>
+          <div class="learning-path-compact-title">
+            <span>Ruta secuencial</span>
+            <strong>Unidad ${unitNum}: ${escapeHtml(unit.title)}</strong>
+            <em>${escapeHtml(unit.desc)}</em>
           </div>
-          <div class="learning-path-actions">
-            <button class="btn-secondary" onclick="showPage('guia')">Guia didactica</button>
-            <div class="learning-path-progress">
-              <strong>${completed}/${slides.length}</strong>
-              <span>bloques completados</span>
-            </div>
+          <div class="learning-path-progress">
+            <strong>${completed}/${slides.length}</strong>
+            <span>completados</span>
           </div>
         </div>
         <div class="unit-progress-bar">
