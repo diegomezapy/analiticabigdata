@@ -99,15 +99,11 @@
     }
 
     .login-logo .logo-icon {
-      width: 70px; height: 70px;
-      background: var(--primary);
-      border-radius: 8px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      box-shadow: none;
+      width: 80px; height: 80px;
+      border-radius: 14px;
+      display: block;
+      margin: 0 auto 1rem;
+      box-shadow: var(--shadow-md);
     }
 
     @keyframes pulse-glow {
@@ -273,6 +269,9 @@
     }
 
     .badge-feat {
+      align-items: center;
+      display: inline-flex;
+      gap: 0.35rem;
       padding: 0.3rem 0.7rem;
       border-radius: 20px;
       font-size: 0.7rem;
@@ -280,6 +279,14 @@
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.08);
       color: var(--text-muted);
+    }
+
+    .badge-feat img {
+      background: var(--primary);
+      border-radius: 5px;
+      height: 18px;
+      padding: 0.2rem;
+      width: 18px;
     }
   </style>
 </head>
@@ -292,7 +299,7 @@
   <div class="login-container">
     <div class="login-card">
       <div class="login-logo">
-        <div class="logo-icon">🧠</div>
+        <img src="icons/logo-abd.svg" alt="Analítica de Big Data" class="logo-icon">
         <h1>Analítica de Big Data</h1>
         <p>FACEN — Matemática Estadística · 2026</p>
       </div>
@@ -325,10 +332,10 @@
       </form>
 
       <div class="feature-badges">
-        <span class="badge-feat">📚 4 Unidades</span>
-        <span class="badge-feat">🧠 Cuestionarios</span>
-        <span class="badge-feat">🤖 Machine Learning</span>
-        <span class="badge-feat">📊 Seguimiento</span>
+        <span class="badge-feat"><img src="icons/logo-abd.svg" alt=""> 4 Unidades</span>
+        <span class="badge-feat"><img src="icons/unit-1.svg" alt=""> Cuestionarios</span>
+        <span class="badge-feat"><img src="icons/unit-3.svg" alt=""> Machine Learning</span>
+        <span class="badge-feat"><img src="icons/unit-2.svg" alt=""> Seguimiento</span>
       </div>
 
       <div class="login-footer">

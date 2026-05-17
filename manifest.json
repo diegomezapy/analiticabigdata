@@ -10,7 +10,7 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icons/icon.svg",
+      "src": "icons/logo-abd.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
@@ -21,13 +21,13 @@
       "name": "Calendario",
       "short_name": "Fechas",
       "url": "dashboard.html#calendar",
-      "icons": [{ "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+      "icons": [{ "src": "icons/logo-abd.svg", "sizes": "any", "type": "image/svg+xml" }]
     },
     {
       "name": "Prácticas guiadas",
       "short_name": "Prácticas",
       "url": "practicas/index.html",
-      "icons": [{ "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+      "icons": [{ "src": "icons/logo-abd.svg", "sizes": "any", "type": "image/svg+xml" }]
     }
   ]
 }

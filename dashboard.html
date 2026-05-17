@@ -28,7 +28,7 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
-                    <div class="sidebar-logo-icon">🧠</div>
+                    <img src="icons/logo-abd.svg" alt="ABD" class="sidebar-logo-icon">
                     <div class="sidebar-logo-text">
                         <h2>Analítica de Big Data</h2>
                         <p>FACEN · 2026</p>
@@ -61,22 +61,30 @@
 
                 <span class="nav-section-label">Unidades</span>
                 <div class="nav-item" onclick="showUnit(1)" id="nav-u1">
-                    <span class="nav-item-icon">📌</span>
+                    <span class="nav-item-icon nav-unit-icon" style="background:var(--u1-color)">
+                      <img src="icons/unit-1.svg" width="16" height="16" alt="U1">
+                    </span>
                     <span>Unidad 1 — Manejo de datos</span>
                     <span class="nav-unit-indicator" style="background:var(--u1-color)"></span>
                 </div>
                 <div class="nav-item" onclick="showUnit(2)" id="nav-u2">
-                    <span class="nav-item-icon">📊</span>
+                    <span class="nav-item-icon nav-unit-icon" style="background:var(--u2-color)">
+                      <img src="icons/unit-2.svg" width="16" height="16" alt="U2">
+                    </span>
                     <span>Unidad 2 — Visualización</span>
                     <span class="nav-unit-indicator" style="background:var(--u2-color)"></span>
                 </div>
                 <div class="nav-item" onclick="showUnit(3)" id="nav-u3">
-                    <span class="nav-item-icon">📉</span>
+                    <span class="nav-item-icon nav-unit-icon" style="background:var(--u3-color)">
+                      <img src="icons/unit-3.svg" width="16" height="16" alt="U3">
+                    </span>
                     <span>Unidad 3 — Machine Learning</span>
                     <span class="nav-unit-indicator" style="background:var(--u3-color)"></span>
                 </div>
                 <div class="nav-item" onclick="showUnit(4)" id="nav-u4">
-                    <span class="nav-item-icon">🔬</span>
+                    <span class="nav-item-icon nav-unit-icon" style="background:var(--u4-color)">
+                      <img src="icons/unit-4.svg" width="16" height="16" alt="U4">
+                    </span>
                     <span>Unidad 4 — Modelos</span>
                     <span class="nav-unit-indicator" style="background:var(--u4-color)"></span>
                 </div>
@@ -217,7 +225,7 @@
         };
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
-        const APP_VERSION = 'v21';
+        const APP_VERSION = 'v22';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -439,21 +447,25 @@
             {
                 id: 1, title: 'Manejo de datos', subtitle: 'Fundamentos, entorno R y operaciones básicas', icon: '🧭', color: 'var(--u1-color)',
                 desc: 'Introduce los orígenes y características del Big Data, la configuración de R y RStudio, y las primeras operaciones con datos y gráficos.',
+                iconSrc: 'icons/unit-1.svg',
                 activities: 3
             },
             {
                 id: 2, title: 'Visualización y exploración', subtitle: 'Librerías, preparación y análisis exploratorio', icon: '📊', color: 'var(--u2-color)',
                 desc: 'Trabaja carga y procesamiento con librerías de R, binarización de variables, división de datos, imputación, estandarización y escalado.',
+                iconSrc: 'icons/unit-2.svg',
                 activities: 3
             },
             {
                 id: 3, title: 'Machine Learning', subtitle: 'Modelos predictivos, KNN y regresión logística', icon: '🤖', color: 'var(--u3-color)',
                 desc: 'Implementa modelos predictivos en R y compara algoritmos supervisados como K-Nearest Neighbor y regresión logística.',
+                iconSrc: 'icons/unit-3.svg',
                 activities: 3
             },
             {
                 id: 4, title: 'Interpretación de modelos', subtitle: 'Selección de resultados, LDA y proyecto final', icon: '🔎', color: 'var(--u4-color)',
                 desc: 'Interpreta resultados de modelos estadísticos, aplica Análisis Discriminante Lineal y comunica hallazgos en un proyecto final.',
+                iconSrc: 'icons/unit-4.svg',
                 activities: 3
             },
         ];
@@ -666,6 +678,12 @@
 
         function jsArg(value) {
             return JSON.stringify(value ?? '').replace(/</g, '\\u003c');
+        }
+
+        function unitIconHTML(unit, className = 'unit-inline-icon') {
+            const src = unit?.iconSrc || `icons/unit-${unit?.id || 1}.svg`;
+            const alt = unit?.title ? `Unidad ${unit.id}: ${unit.title}` : 'Unidad';
+            return `<img class="${className}" src="${escapeHtml(src)}" alt="${escapeHtml(alt)}">`;
         }
 
         function formatFileSize(bytes) {
@@ -1249,7 +1267,7 @@
             <div class="unit-number">Unidad ${u.id}</div>
             <h3>${u.title}</h3>
             <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.3rem;">${u.subtitle}</p>
-            <div class="unit-icon-big">${u.icon}</div>
+            ${unitIconHTML(u, 'unit-icon-big')}
           </div>
           <div class="unit-card-body">
             <div class="unit-progress-bar">
@@ -2871,10 +2889,13 @@
 
             const content = document.getElementById('pageContent');
             content.innerHTML = `
-    <div class="unit-detail-header">
+    <div class="unit-detail-header unit-theme-u${n}">
       <button class="btn-back" onclick="showPage('home')">← Volver</button>
       <div>
-        <h2 style="font-size:1.2rem;margin-bottom:0.2rem">${unit.icon} Unidad ${n}: ${unit.title}</h2>
+        <div class="unit-detail-title">
+          ${unitIconHTML(unit, 'unit-detail-icon')}
+          <h2>Unidad ${n}: ${unit.title}</h2>
+        </div>
         <p style="font-size:0.8rem;color:var(--text-muted)">${unit.subtitle}</p>
       </div>
     </div>
@@ -2968,8 +2989,8 @@
       </div>`;
             } else if (activeTab === 'info') {
                 tabContent.innerHTML = `
-      <div class="card">
-        <h3 style="margin-bottom:1rem">${unit.icon} ${unit.title}</h3>
+      <div class="card unit-theme-u${n}">
+        <h3 class="unit-card-title-inline">${unitIconHTML(unit, 'unit-inline-icon')} ${unit.title}</h3>
         <p style="margin-bottom:1rem">${unit.desc}</p>
         <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
           <span class="material-badge badge-pdf">3 Actividades</span>
@@ -4116,7 +4137,7 @@
                 const title = diff === 1 ? 'Entrega mañana' : 'Actividad atrasada';
                 const body = `${event.title} · vence ${formatDatePY(event.due)}`;
                 if ('Notification' in window && Notification.permission === 'granted') {
-                    new Notification(title, { body, icon: 'icons/icon.svg' });
+                    new Notification(title, { body, icon: 'icons/logo-abd.svg' });
                 } else {
                     showToast(`${title}: ${body}`, diff === 1 ? 'info' : 'error');
                 }
@@ -4521,8 +4542,8 @@
       ${UNITS.map(u => {
                 const r = STATE.quizResults[`u${u.id}`];
                 return `
-          <div class="card" style="display:flex;align-items:center;gap:1rem">
-            <span style="font-size:1.3rem">${u.icon}</span>
+          <div class="card unit-theme-u${u.id}" style="display:flex;align-items:center;gap:1rem">
+            ${unitIconHTML(u, 'unit-progress-icon')}
             <div style="flex:1">
               <div style="font-size:0.85rem;font-weight:600;margin-bottom:0.3rem">U${u.id}: ${u.title}</div>
               <div class="unit-progress-bar" style="margin:0">

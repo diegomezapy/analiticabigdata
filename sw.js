@@ -1,4 +1,4 @@
-const CACHE_NAME = 'analitica-bigdata-v21';
+const CACHE_NAME = 'analitica-bigdata-v22';
 
 const APP_SHELL = [
   './',
@@ -21,6 +21,11 @@ const APP_SHELL = [
   'practicas/index.html',
   'laboratorio/index.html',
   'icons/icon.svg',
+  'icons/logo-abd.svg',
+  'icons/unit-1.svg',
+  'icons/unit-2.svg',
+  'icons/unit-3.svg',
+  'icons/unit-4.svg',
   'assets/academic/facen-header.png',
   'assets/academic/facen-footer.png'
 ];
