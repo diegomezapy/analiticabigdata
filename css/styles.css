@@ -1567,6 +1567,74 @@ a:hover { text-decoration: underline; }
   padding: 0.85rem;
 }
 
+.learning-inline-lab {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.96), rgba(239,247,252,0.86));
+  border: 1px solid var(--sublevel-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-md);
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+.learning-inline-lab-head {
+  align-items: center;
+  background: linear-gradient(90deg, var(--sublevel-soft), rgba(255,255,255,0.94));
+  border-bottom: 1px solid var(--sublevel-border);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+}
+
+.learning-inline-lab-head span {
+  color: var(--sublevel-color-dark);
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.learning-inline-lab-head strong {
+  color: var(--text-primary);
+  display: block;
+  font-size: 0.92rem;
+  margin-top: 0.18rem;
+}
+
+.learning-command-reference {
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0.75rem 1rem 1rem;
+}
+
+.learning-command-reference summary {
+  color: var(--primary-dark);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.learning-inline-lab-frame {
+  background: transparent;
+  border: 0;
+  display: block;
+  height: 760px;
+  width: 100%;
+}
+
+.learning-inline-lab-placeholder {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+  padding: 1rem;
+}
+
+.learning-inline-lab.is-dormant .learning-command-reference {
+  border-bottom: 0;
+}
+
 .learning-official-doc {
   background: #fff;
   border: 1px solid var(--glass-border);
@@ -4147,6 +4215,20 @@ a:hover { text-decoration: underline; }
 
   .learning-support-grid {
     grid-template-columns: 1fr;
+  }
+
+  .learning-inline-lab-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .learning-inline-lab-head .btn-secondary {
+    width: 100%;
+  }
+
+  .learning-inline-lab-frame {
+    height: calc(100dvh - 150px);
+    min-height: 620px;
   }
 
   .notebook-support-grid,

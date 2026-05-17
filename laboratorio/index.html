@@ -29,6 +29,15 @@
     .lab-exercise button { margin-top: .55rem; }
     .lab-small { color: var(--text-muted); font-size: .82rem; }
     @media (max-width: 900px) { .lab-header, .lab-layout { grid-template-columns: 1fr; flex-direction: column; } }
+    body.lab-embedded { background: transparent; min-height: auto; }
+    body.lab-embedded .lab-shell { max-width: none; padding: .75rem; }
+    body.lab-embedded .lab-header { display: none; }
+    body.lab-embedded .lab-tabs { margin-bottom: .65rem; }
+    body.lab-embedded .lab-layout { display: block; }
+    body.lab-embedded .lab-panel { border-radius: 12px; box-shadow: none; }
+    body.lab-embedded .lab-layout > aside { display: none; }
+    body.lab-embedded .lab-editor { min-height: 230px; }
+    body.lab-embedded .lab-output { max-height: 260px; min-height: 150px; }
   </style>
 </head>
 <body>
@@ -89,6 +98,15 @@
       ['modelos_credito.csv', '../data/datasets/modelos_credito.csv']
     ];
 
+    const LAB_PARAMS = new URLSearchParams(window.location.search);
+    const EMBED_MODE = LAB_PARAMS.get('embed') === '1';
+    const INITIAL_RUNTIME = LAB_PARAMS.get('runtime') === 'r' ? 'r' : 'python';
+    const CUSTOM_STARTERS = {
+      python: LAB_PARAMS.get('code_python') || LAB_PARAMS.get('code') || '',
+      r: LAB_PARAMS.get('code_r') || ''
+    };
+    if (EMBED_MODE) document.body.classList.add('lab-embedded');
+
     const POLARS_SHIM = String.raw`
 import pandas as _pd
 
@@ -112,11 +130,23 @@ class Expr(_AliasMixin):
     def sum(self):
         return AggExpr(self.name, "sum")
 
+    def max(self):
+        return AggExpr(self.name, "max")
+
     def __lt__(self, other):
         return Expr("lt", left=self, right=other)
 
+    def __le__(self, other):
+        return Expr("le", left=self, right=other)
+
     def __gt__(self, other):
         return Expr("gt", left=self, right=other)
+
+    def __ge__(self, other):
+        return Expr("ge", left=self, right=other)
+
+    def __eq__(self, other):
+        return Expr("eq", left=self, right=other)
 
     def __or__(self, other):
         return Expr("or", left=self, right=other)
@@ -128,8 +158,14 @@ class Expr(_AliasMixin):
             return self.value
         if self.kind == "lt":
             return self.left._eval(df) < self.right
+        if self.kind == "le":
+            return self.left._eval(df) <= self.right
         if self.kind == "gt":
             return self.left._eval(df) > self.right
+        if self.kind == "ge":
+            return self.left._eval(df) >= self.right
+        if self.kind == "eq":
+            return self.left._eval(df) == self.right
         if self.kind == "or":
             return self.left._eval(df) | self.right._eval(df)
         raise NotImplementedError(self.kind)
@@ -181,6 +217,18 @@ class DataFrame:
     def head(self, n=5):
         return DataFrame(self._df.head(n))
 
+    @property
+    def height(self):
+        return self._df.shape[0]
+
+    @property
+    def shape(self):
+        return self._df.shape
+
+    @property
+    def schema(self):
+        return {name: str(dtype) for name, dtype in self._df.dtypes.items()}
+
     def group_by(self, *cols):
         return GroupBy(self, list(cols))
 
@@ -199,6 +247,23 @@ class DataFrame:
                 raise ValueError("La expresión necesita alias().")
             df[name] = expr._eval(df)
         return DataFrame(df)
+
+    def select(self, exprs):
+        if not isinstance(exprs, (list, tuple)):
+            exprs = [exprs]
+        row = {}
+        for expr in exprs:
+            name = getattr(expr, "_alias", None) or getattr(expr, "name", None) or "value"
+            if isinstance(expr, LenExpr):
+                value = self._df.shape[0]
+            elif isinstance(expr, AggExpr):
+                value = getattr(self._df[expr.name], expr.func)()
+                if expr._round is not None:
+                    value = round(value, expr._round)
+            else:
+                value = expr._eval(self._df)
+            row[name] = value
+        return DataFrame(_pd.DataFrame([row]))
 
 class GroupBy:
     def __init__(self, frame, cols):
@@ -322,7 +387,7 @@ print(ead[, .N, by = estado])`]
       ]
     };
 
-    let currentRuntime = 'python';
+    let currentRuntime = INITIAL_RUNTIME;
     let pyodide = null;
     let webR = null;
     let runtimeReady = { python: false, r: false };
@@ -454,7 +519,7 @@ paste(.__abd_out, collapse = "\\n")
     };
 
     window.loadStarterCode = function() {
-      editor.value = STARTERS[currentRuntime];
+      editor.value = CUSTOM_STARTERS[currentRuntime] || STARTERS[currentRuntime];
     };
 
     window.runCurrentCode = async function() {
@@ -493,8 +558,7 @@ paste(.__abd_out, collapse = "\\n")
       navigator.serviceWorker.register('../sw.js').catch(() => {});
     }
 
-    loadStarterCode();
-    renderExercises();
+    window.switchRuntime(currentRuntime);
   </script>
 </body>
 </html>
