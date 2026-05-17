@@ -352,7 +352,8 @@ a:hover { text-decoration: underline; }
 .topbar-actions { display: flex; align-items: center; gap: 0.75rem; }
 
 .topbar-guide-btn,
-.topbar-alert-btn {
+.topbar-alert-btn,
+.topbar-update-btn {
   background: #fff;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-full);
@@ -366,7 +367,8 @@ a:hover { text-decoration: underline; }
 }
 
 .topbar-guide-btn:hover,
-.topbar-alert-btn:hover {
+.topbar-alert-btn:hover,
+.topbar-update-btn:hover {
   background: var(--bg-hover);
   border-color: var(--primary);
 }
@@ -384,6 +386,10 @@ a:hover { text-decoration: underline; }
   font-size: 0.68rem;
   min-width: 1.35rem;
   padding: 0.12rem 0.35rem;
+}
+
+.topbar-update-btn {
+  color: #166534;
 }
 
 .mobile-bottom-nav {
@@ -3470,7 +3476,8 @@ a:hover { text-decoration: underline; }
   }
 
   .topbar-guide-btn,
-  .topbar-alert-btn {
+  .topbar-alert-btn,
+  .topbar-update-btn {
     min-height: 38px;
     white-space: nowrap;
   }
@@ -3937,7 +3944,8 @@ a:hover { text-decoration: underline; }
   .topbar { padding: 0.6rem 0.7rem; }
   .topbar-actions { gap: 0.4rem; }
   .topbar-guide-btn,
-  .topbar-alert-btn { font-size: 0.7rem; padding: 0.34rem 0.55rem; }
+  .topbar-alert-btn,
+  .topbar-update-btn { font-size: 0.7rem; padding: 0.34rem 0.55rem; }
   .topbar-guide-btn {
     font-size: 0;
   }
@@ -3954,6 +3962,13 @@ a:hover { text-decoration: underline; }
   }
   .topbar-alert-btn span {
     font-size: 0.64rem;
+  }
+  .topbar-update-btn {
+    font-size: 0;
+  }
+  .topbar-update-btn::after {
+    content: 'Act.';
+    font-size: 0.68rem;
   }
   .mobile-nav-btn small {
     font-size: 0.58rem;

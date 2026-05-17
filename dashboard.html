@@ -133,6 +133,7 @@
                 <div class="topbar-title" id="topbarTitle">Inicio</div>
                 <div class="topbar-actions">
                     <button class="topbar-alert-btn" onclick="toggleAlertsPanel()" aria-expanded="false" id="alertsToggle">Alertas <span id="alertsCount">0</span></button>
+                    <button class="topbar-update-btn" id="appUpdateButton" onclick="updateAppVersion()" title="Actualizar version de la app">Actualizar</button>
                     <button class="topbar-guide-btn" onclick="showPage('guia')">Guia didactica</button>
                     <div class="xp-pill" id="xpDisplay">⭐ 0 XP</div>
                 </div>
@@ -216,6 +217,7 @@
         };
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
+        const APP_VERSION = 'v21';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -4623,6 +4625,15 @@
           <div><strong>Ingreso</strong><span>${new Date(STATE.user.loginTime).toLocaleString('es-PY')}</span></div>
         </div>
       </div>
+      <div class="card">
+        <h3>Version de la app</h3>
+        <p style="margin:0.5rem 0 1rem">Si el celular conserva una version anterior, usa este boton para buscar cambios, limpiar la cache del aula y recargar.</p>
+        <div class="info-list" style="margin-bottom:1rem">
+          <div><strong>Version instalada</strong><span>${APP_VERSION}</span></div>
+          <div><strong>Datos locales</strong><span>Se conserva progreso, clave y sesion</span></div>
+        </div>
+        <button class="btn-primary" id="appUpdateButtonAccount" onclick="updateAppVersion()">Actualizar version</button>
+      </div>
     </div>`;
         }
 
@@ -5077,6 +5088,41 @@
             navigator.serviceWorker.register('sw.js').catch(err => {
                 console.warn('Service worker no registrado:', err.message);
             });
+        }
+
+        function setAppUpdateBusy(isBusy) {
+            document.querySelectorAll('#appUpdateButton, #appUpdateButtonAccount').forEach(button => {
+                button.disabled = isBusy;
+                button.textContent = isBusy ? 'Actualizando...' : (button.id === 'appUpdateButtonAccount' ? 'Actualizar version' : 'Actualizar');
+            });
+        }
+
+        async function updateAppVersion() {
+            setAppUpdateBusy(true);
+            showToast('Buscando la version mas reciente de la app...', 'info');
+            try {
+                if ('serviceWorker' in navigator) {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    await Promise.all(registrations.map(async registration => {
+                        await registration.update().catch(() => null);
+                        const worker = registration.waiting || registration.installing || registration.active;
+                        worker?.postMessage({ type: 'SKIP_WAITING' });
+                    }));
+                }
+                if ('caches' in window) {
+                    const keys = await caches.keys();
+                    await Promise.all(keys
+                        .filter(key => key.startsWith('analitica-bigdata-'))
+                        .map(key => caches.delete(key)));
+                }
+                trackEvent('app_update', { detalle: `Actualizacion manual ${APP_VERSION}` });
+                showToast('Version actualizada. Recargando el aula...', 'success');
+                setTimeout(() => window.location.reload(), 650);
+            } catch (err) {
+                console.warn('No se pudo actualizar la app:', err);
+                showToast('No se pudo actualizar ahora. Revisa la conexion e intenta de nuevo.', 'error');
+                setAppUpdateBusy(false);
+            }
         }
 
         // ================================================================

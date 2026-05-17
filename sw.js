@@ -1,4 +1,4 @@
-const CACHE_NAME = 'analitica-bigdata-v20';
+const CACHE_NAME = 'analitica-bigdata-v21';
 
 const APP_SHELL = [
   './',
@@ -37,6 +37,12 @@ self.addEventListener('activate', event => {
     )
   );
   self.clients.claim();
+});
+
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('fetch', event => {
