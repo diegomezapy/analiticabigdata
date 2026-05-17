@@ -1801,7 +1801,8 @@
                             file,
                             key: stage.fileKey,
                             label: stage.label,
-                            type: notebookResourceType(file)
+                            type: notebookResourceType(file),
+                            pdf: sublevel.archivos?.[`${stage.fileKey}Pdf`] || ''
                         } : null
                     };
                 }).map((slide, localIndex) => ({
@@ -2084,6 +2085,7 @@
           </div>
           <div class="learning-official-actions">
             <a class="btn-secondary as-link" href="${escapeHtml(resource.file)}" target="_blank" rel="noopener">Abrir</a>
+            ${resource.pdf ? `<a class="btn-secondary as-link" href="${escapeHtml(resource.pdf)}" download>PDF</a>` : ''}
           </div>
         </div>
         <iframe
@@ -2100,7 +2102,10 @@
             <span>Recurso NotebookLM</span>
             <strong>${escapeHtml(resource.label)}</strong>
           </div>
-          <a class="btn-secondary as-link" href="${escapeHtml(resource.file)}" target="_blank" rel="noopener">Abrir recurso</a>
+          <div class="learning-official-actions">
+            <a class="btn-secondary as-link" href="${escapeHtml(resource.file)}" target="_blank" rel="noopener">Abrir recurso</a>
+            ${resource.pdf ? `<a class="btn-secondary as-link" href="${escapeHtml(resource.pdf)}" download>PDF</a>` : ''}
+          </div>
         </div>
       </section>`;
         }

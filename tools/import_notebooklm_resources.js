@@ -238,6 +238,13 @@ function importSublevels(index) {
       copyFile(source, path.join(destDir, filename));
       copied += 1;
       archivos[key] = relFor('recursos', 'notebooklm', 'subniveles', item.slug, filename);
+      if (/\.html$/i.test(filename)) {
+        const pdfName = filename.replace(/\.html$/i, '.pdf');
+        const pdfPath = path.join(destDir, pdfName);
+        if (exists(pdfPath)) {
+          archivos[`${key}Pdf`] = relFor('recursos', 'notebooklm', 'subniveles', item.slug, pdfName);
+        }
+      }
     }
 
     const quizPath = path.join(destDir, 'quiz.json');
