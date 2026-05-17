@@ -152,6 +152,28 @@
             </div>
             <div class="alerts-panel-body" id="alertsPanelBody"></div>
         </aside>
+        <nav class="mobile-bottom-nav" aria-label="Navegacion principal movil">
+            <button class="mobile-nav-btn" id="mobile-nav-home" onclick="showPage('home')">
+                <span>⌂</span>
+                <small>Inicio</small>
+            </button>
+            <button class="mobile-nav-btn" id="mobile-nav-calendar" onclick="showPage('calendar')">
+                <span>□</span>
+                <small>Fechas</small>
+            </button>
+            <button class="mobile-nav-btn" id="mobile-nav-community" onclick="showPage('community')">
+                <span>◇</span>
+                <small>Foro</small>
+            </button>
+            <button class="mobile-nav-btn" id="mobile-nav-practices" onclick="showPage('practices')">
+                <span>▣</span>
+                <small>Practicas</small>
+            </button>
+            <button class="mobile-nav-btn" id="mobile-nav-more" onclick="toggleSidebar(true)">
+                <span>☰</span>
+                <small>Mas</small>
+            </button>
+        </nav>
     </div>
 
     <!-- ============================================================
@@ -542,12 +564,24 @@
             renderAlertsPanel();
         }
 
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-            document.getElementById('overlay').classList.toggle('show');
+        function toggleSidebar(force) {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const open = typeof force === 'boolean' ? force : !sidebar.classList.contains('open');
+            sidebar.classList.toggle('open', open);
+            overlay.classList.toggle('show', open);
         }
 
-        document.getElementById('overlay').onclick = toggleSidebar;
+        document.getElementById('overlay').onclick = () => {
+            toggleSidebar(false);
+            toggleAlertsPanel(false);
+        };
+
+        function updateMobileNav(target) {
+            const normalized = /^u[1-4]$/.test(String(target || '')) ? 'home' : target;
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`mobile-nav-${normalized}`)?.classList.add('active');
+        }
 
         // ================================================================
         // NAVIGATION
@@ -563,6 +597,9 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             const nav = document.getElementById(`nav-${page}`);
             if (nav) nav.classList.add('active');
+            updateMobileNav(page);
+            toggleSidebar(false);
+            toggleAlertsPanel(false);
 
             const content = document.getElementById('pageContent');
             content.innerHTML = '';
@@ -600,6 +637,9 @@
             if (window.location.hash !== `#u${n}`) {
                 history.replaceState(null, '', `#u${n}`);
             }
+            updateMobileNav(`u${n}`);
+            toggleSidebar(false);
+            toggleAlertsPanel(false);
             document.getElementById('topbarTitle').textContent = `Unidad ${n}`;
             const content = document.getElementById('pageContent');
             content.innerHTML = '';
@@ -3918,7 +3958,9 @@
         function renderCalendarMonthView(events) {
             const cursorMonth = firstOfMonth(STATE.calendarCursor || todayISO()).slice(0, 7);
             const today = todayISO();
+            const selected = STATE.calendarSelectedDate || today;
             const days = calendarMonthDays(STATE.calendarCursor || today);
+            const selectedEvents = events.filter(event => eventOccursOn(event, selected));
             return `
     <div class="calendar-month-grid">
       ${['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map(day => `<div class="calendar-weekday">${day}</div>`).join('')}
@@ -3927,8 +3969,10 @@
                 const visible = dayEvents.slice(0, 3);
                 const outside = value.slice(0, 7) !== cursorMonth ? 'outside' : '';
                 const isToday = value === today ? 'today' : '';
+                const hasEvents = dayEvents.length ? 'has-events' : '';
+                const isSelected = value === selected ? 'selected' : '';
                 return `
-        <div class="calendar-day ${outside} ${isToday}">
+        <div class="calendar-day ${outside} ${isToday} ${hasEvents} ${isSelected}">
           <button class="calendar-day-number" onclick="setCalendarSelectedDate('${value}', true)">${Number(value.slice(8, 10))}</button>
           <div class="calendar-day-events">
             ${visible.map(calendarEventChip).join('')}
@@ -3936,6 +3980,15 @@
           </div>
         </div>`;
             }).join('')}
+    </div>
+    <div class="calendar-selected-agenda">
+      <div>
+        <strong>${formatDatePY(selected)}</strong>
+        <span>${selectedEvents.length ? `${selectedEvents.length} evento(s)` : 'Sin eventos para este dia'}</span>
+      </div>
+      <div class="calendar-selected-events">
+        ${selectedEvents.length ? selectedEvents.map(calendarEventChip).join('') : '<span class="calendar-empty">Toca otro dia del calendario para revisar sus actividades.</span>'}
+      </div>
     </div>`;
         }
 
