@@ -132,6 +132,7 @@
                 </button>
                 <div class="topbar-title" id="topbarTitle">Inicio</div>
                 <div class="topbar-actions">
+                    <button class="topbar-alert-btn" onclick="toggleAlertsPanel()" aria-expanded="false" id="alertsToggle">Alertas <span id="alertsCount">0</span></button>
                     <button class="topbar-guide-btn" onclick="showPage('guia')">Guia didactica</button>
                     <div class="xp-pill" id="xpDisplay">⭐ 0 XP</div>
                 </div>
@@ -141,6 +142,16 @@
                 <!-- Content injected by JS -->
             </div>
         </main>
+        <aside class="alerts-panel" id="alertsPanel" aria-label="Alertas importantes">
+            <div class="alerts-panel-head">
+                <div>
+                    <strong>Alertas importantes</strong>
+                    <span>Fechas, vencimientos y examenes</span>
+                </div>
+                <button class="btn-secondary" onclick="toggleAlertsPanel(false)">Cerrar</button>
+            </div>
+            <div class="alerts-panel-body" id="alertsPanelBody"></div>
+        </aside>
     </div>
 
     <!-- ============================================================
@@ -172,6 +183,7 @@
             socialTab: 'foro',
             socialMessages: [],
             socialDraft: null,
+            socialReplyTo: null,
         };
 
         const COURSE_CONFIG = {
@@ -479,6 +491,7 @@
             checkReminders();
             setInterval(() => checkReminders(), 60 * 60 * 1000);
             registerServiceWorker();
+            renderAlertsPanel();
             flushPendingSync();
             trackEvent('login', { detalle: 'Ingreso a la plataforma' });
             syncProgressSnapshot();
@@ -526,6 +539,7 @@
             document.querySelectorAll('.admin-only').forEach(el => {
                 el.classList.toggle('show', isTeacher);
             });
+            renderAlertsPanel();
         }
 
         function toggleSidebar() {
@@ -991,6 +1005,7 @@
                 config_value: config,
                 detalle: 'Configuración local de semestre actualizada'
             });
+            renderAlertsPanel();
         }
 
         function eventDoneKey() {
@@ -1017,7 +1032,8 @@
             saveDoneEvents(done);
             if (doneValue) addXP(8, 'Actividad marcada como al día');
             trackEvent('calendario_estado', { recurso: eventId, detalle: doneValue ? 'completado' : 'pendiente' });
-            renderCalendar();
+            renderAlertsPanel();
+            if ((window.location.hash || '') === '#calendar') renderCalendar();
         }
 
         function eventStatus(event) {
@@ -1036,6 +1052,61 @@
                 .filter(event => !isEventComplete(event) && event.daysToDue >= -7)
                 .sort((a, b) => a.daysToDue - b.daysToDue)
                 .slice(0, limit);
+        }
+
+        function getImportantAlerts(limit = 8) {
+            return getSemesterConfig().activities
+                .map(event => ({ ...event, status: eventStatus(event), daysToDue: dayDiff(todayISO(), event.due) }))
+                .filter(event => !isEventComplete(event))
+                .filter(event => event.daysToDue < 0 || event.daysToDue <= 21 || ['examen', 'quiz'].includes(event.type))
+                .sort((a, b) => {
+                    const aPriority = a.daysToDue < 0 ? -1000 : (['examen', 'quiz'].includes(a.type) ? -100 : 0);
+                    const bPriority = b.daysToDue < 0 ? -1000 : (['examen', 'quiz'].includes(b.type) ? -100 : 0);
+                    return (a.daysToDue + aPriority) - (b.daysToDue + bPriority);
+                })
+                .slice(0, limit);
+        }
+
+        function alertUrgencyLabel(event) {
+            if (event.daysToDue < 0) return `${Math.abs(event.daysToDue)} dia(s) atrasada`;
+            if (event.daysToDue === 0) return 'Vence hoy';
+            if (event.daysToDue === 1) return 'Vence manana';
+            return `Faltan ${event.daysToDue} dias`;
+        }
+
+        function renderAlertsPanel() {
+            const alerts = getImportantAlerts(8);
+            const count = alerts.filter(event => event.daysToDue <= 7 || event.type === 'examen').length;
+            const countEl = document.getElementById('alertsCount');
+            if (countEl) countEl.textContent = String(count);
+            const body = document.getElementById('alertsPanelBody');
+            if (!body) return;
+            body.innerHTML = alerts.length ? alerts.map(event => `
+        <article class="alert-item ${event.daysToDue < 0 ? 'late' : event.daysToDue <= 1 ? 'soon' : ''}">
+          <div>
+            <span class="alert-type">${escapeHtml(eventTypeLabel(event.type))}</span>
+            <strong>${escapeHtml(event.title)}</strong>
+            <small>${escapeHtml(alertUrgencyLabel(event))} · ${formatDatePY(event.due)}</small>
+          </div>
+          <div class="alert-actions">
+            ${event.resource ? `<button class="btn-secondary" onclick="openCalendarEvent('${event.id}')">Abrir</button>` : ''}
+            <button class="btn-secondary" onclick="setEventDone('${event.id}', true)">Al dia</button>
+          </div>
+        </article>`).join('') : `
+        <div class="alert-empty">
+          <strong>Sin alertas pendientes</strong>
+          <span>Las fechas importantes apareceran aqui.</span>
+        </div>`;
+        }
+
+        function toggleAlertsPanel(force) {
+            const panel = document.getElementById('alertsPanel');
+            const button = document.getElementById('alertsToggle');
+            if (!panel) return;
+            const open = typeof force === 'boolean' ? force : !panel.classList.contains('open');
+            panel.classList.toggle('open', open);
+            button?.setAttribute('aria-expanded', String(open));
+            if (open) renderAlertsPanel();
         }
 
         function getPracticeProgress() {
@@ -2028,11 +2099,20 @@
             return firstPending === -1 ? Math.max(0, slides.length - 1) : firstPending;
         }
 
+        function canCompletePathSlide(unitNum, slides, slideIndex) {
+            if (slideIndex <= 0) return true;
+            return slides.slice(0, slideIndex).every((slide, index) => isUnitPathSlideComplete(unitNum, slide, index));
+        }
+
+        function firstPendingPathSlide(unitNum, slides) {
+            const firstPending = slides.findIndex((slide, index) => !isUnitPathSlideComplete(unitNum, slide, index));
+            return firstPending === -1 ? Math.max(0, slides.length - 1) : firstPending;
+        }
+
         function getCurrentUnitPathSlide(unitNum, slides) {
             const stored = Number(localStorage.getItem(unitPathStorageKey(unitNum)));
-            const maxUnlocked = maxUnlockedPathSlide(unitNum, slides);
-            if (Number.isInteger(stored) && stored >= 0) return Math.min(stored, maxUnlocked);
-            return maxUnlocked;
+            if (Number.isInteger(stored) && stored >= 0) return Math.max(0, Math.min(stored, slides.length - 1));
+            return firstPendingPathSlide(unitNum, slides);
         }
 
         function setCurrentUnitPathSlide(unitNum, slideIndex) {
@@ -2043,11 +2123,6 @@
             const slides = getUnitLearningPath(unitNum);
             if (!slides.length) return;
             const target = Math.max(0, Math.min(slideIndex, slides.length - 1));
-            const maxUnlocked = maxUnlockedPathSlide(unitNum, slides);
-            if (target > maxUnlocked) {
-                showToast('Completa el bloque actual para avanzar en orden.', 'info');
-                return;
-            }
             setCurrentUnitPathSlide(unitNum, target);
             renderUnitDetail(unitNum, 'ruta');
         }
@@ -2056,6 +2131,10 @@
             const slides = getUnitLearningPath(unitNum);
             const slide = slides[slideIndex];
             if (!slide) return;
+            if (!canCompletePathSlide(unitNum, slides, slideIndex)) {
+                showToast('Puedes revisar este bloque, pero para completarlo debes cerrar primero los bloques anteriores.', 'info');
+                return;
+            }
             if (slide.kind === 'quiz' && !STATE.quizResults[`u${unitNum}`]) {
                 startQuiz(unitNum);
                 return;
@@ -2101,6 +2180,26 @@
             const next = Math.min(slideIndex + 1, slides.length - 1);
             setCurrentUnitPathSlide(unitNum, next);
             renderUnitDetail(unitNum, 'ruta');
+        }
+
+        function practiceStepRouteGate(labId, stepIndex) {
+            for (const unit of UNITS) {
+                const slides = getUnitLearningPath(unit.id);
+                const slideIndex = slides.findIndex(slide =>
+                    slide.kind === 'practice' &&
+                    slide.practiceId === labId &&
+                    Number(slide.practiceStepIndex) === Number(stepIndex)
+                );
+                if (slideIndex >= 0) {
+                    return {
+                        unitNum: unit.id,
+                        slideIndex,
+                        slide: slides[slideIndex],
+                        allowed: canCompletePathSlide(unit.id, slides, slideIndex)
+                    };
+                }
+            }
+            return null;
         }
 
         function slideResources(unitNum, slide) {
@@ -2453,7 +2552,7 @@
       </div>`;
         }
 
-        function renderLearningPathPractice(slide) {
+        function renderLearningPathPractice(slide, completionAllowed = true) {
             if (!slide.practiceId) return '';
             const lab = PRACTICES.find(item => item.id === slide.practiceId);
             if (!lab) return '';
@@ -2475,7 +2574,7 @@
           </div>
         </div>
         <div class="practice-actions">
-          <button class="btn-primary" onclick="openPractice('${lab.id}', ${targetStep})">Abrir ficha practica</button>
+          <button class="btn-primary" onclick="openPractice('${lab.id}', ${targetStep})">${completionAllowed ? 'Abrir ficha practica' : 'Abrir como vista previa'}</button>
           <button class="btn-secondary" onclick="openContextMessage('consulta', { unidad: ${lab.unit}, recurso: ${jsArg(lab.id)}, titulo_recurso: ${jsArg(step?.title || lab.title)}, canal: 'practica' })">Consultar</button>
           <a class="btn-secondary as-link" href="${lab.dataset}" download>Descargar datos</a>
           <a class="btn-secondary as-link" href="laboratorio/index.html" target="_blank">Laboratorio R/Python</a>
@@ -2503,21 +2602,23 @@
         function renderLearningPathSlide(unitNum, slide, slideIndex, slides) {
             const done = isUnitPathSlideComplete(unitNum, slide, slideIndex);
             const isLast = slideIndex === slides.length - 1;
-            const maxUnlocked = maxUnlockedPathSlide(unitNum, slides);
-            const canGoNext = slideIndex + 1 <= maxUnlocked;
+            const completionAllowed = canCompletePathSlide(unitNum, slides, slideIndex);
+            const previewOnly = !done && !completionAllowed;
             const bullets = slide.bullets?.length
                 ? `<ul class="learning-bullets">${slide.bullets.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
                 : '';
-            const status = done ? 'Completado' : 'En curso';
-            const primaryLabel = slide.kind === 'quiz' && !STATE.quizResults[`u${unitNum}`]
+            const status = done ? 'Completado' : (previewOnly ? 'Vista previa' : 'En curso');
+            const primaryLabel = previewOnly
+                ? 'Completa los bloques anteriores'
+                : (slide.kind === 'quiz' && !STATE.quizResults[`u${unitNum}`]
                 ? 'Iniciar evaluacion'
                 : (slide.kind === 'practice' && !done
                     ? 'Abrir practica'
                     : (slide.kind === 'assessment' && !done
                         ? 'Registrar evaluacion parcial'
-                        : (isLast ? (done ? 'Unidad completada' : 'Ya lei y comprendi') : (done ? 'Seguir al siguiente nivel' : 'Ya lei y comprendi'))));
+                        : (isLast ? (done ? 'Unidad completada' : 'Ya lei y comprendi') : (done ? 'Seguir al siguiente nivel' : 'Ya lei y comprendi')))));
             return `
-      <article class="learning-slide unit-theme-u${unitNum} sublevel-theme-s${slide.sublevelIndex || 1}">
+      <article class="learning-slide unit-theme-u${unitNum} sublevel-theme-s${slide.sublevelIndex || 1} ${previewOnly ? 'preview-only' : ''}">
         <header class="learning-slide-top">
           <div class="learning-slide-heading">
             <div class="learning-slide-kicker">
@@ -2530,17 +2631,18 @@
           <div class="learning-slide-controls">
             <button class="btn-secondary" id="learningSupportButton_${unitNum}_${slideIndex}" onclick="toggleLearningSupport(${unitNum}, ${slideIndex})" aria-expanded="false">Necesito mas explicacion</button>
             <button class="btn-secondary" onclick="openContextMessage('consulta', { unidad: ${unitNum}, recurso: ${jsArg(`u${unitNum}_bloque_${slideIndex + 1}`)}, titulo_recurso: ${jsArg(slide.title)}, canal: ${jsArg(slide.kind || 'ruta')} })">Consultar</button>
-            <button class="btn-primary" onclick="completeUnitPathSlide(${unitNum}, ${slideIndex})">${primaryLabel}</button>
+            <button class="btn-primary" onclick="completeUnitPathSlide(${unitNum}, ${slideIndex})" ${previewOnly ? 'disabled' : ''}>${primaryLabel}</button>
           </div>
         </header>
         <div class="learning-slide-main">
           <p class="learning-lead">${escapeHtml(slide.lead)}</p>
+          ${previewOnly ? '<div class="learning-preview-note">Puedes leer y revisar este bloque, pero la entrega queda bloqueada hasta completar la secuencia anterior.</div>' : ''}
           ${bullets}
           ${renderLearningPathNotebookResource(unitNum, slide, slideIndex)}
           ${renderLearningPathFormulas(slide)}
           ${renderLearningPathCode(slide)}
           ${renderLearningPathOfficialDocument(unitNum, slide, slideIndex)}
-          ${renderLearningPathPractice(slide)}
+          ${renderLearningPathPractice(slide, completionAllowed)}
           ${slide.kind === 'quiz' ? renderLearningPathQuiz(unitNum) : ''}
           ${renderLearningSupport(unitNum, slide, slideIndex)}
         </div>
@@ -2550,7 +2652,7 @@
         </aside>
         <footer class="learning-slide-actions">
           <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex - 1})" ${slideIndex === 0 ? 'disabled' : ''}>Anterior</button>
-          <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex + 1})" ${isLast || !canGoNext ? 'disabled' : ''}>Siguiente</button>
+          <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex + 1})" ${isLast ? 'disabled' : ''}>Siguiente</button>
         </footer>
       </article>`;
         }
@@ -2569,10 +2671,10 @@
                 const active = currentSlide?.sublevelIndex === sublevelIndex;
                 return `
             <button class="learning-sublevel-card sublevel-theme-s${sublevelIndex} ${active ? 'active' : ''} ${locked ? 'locked' : ''}"
-              onclick="goToUnitPathSlide(${unitNum}, ${firstIndex})" ${locked ? 'disabled' : ''}>
+              onclick="goToUnitPathSlide(${unitNum}, ${firstIndex})">
               <span>Subnivel ${sublevelIndex}</span>
               <strong>${escapeHtml(group[0]?.sublevelTitle || `Subnivel ${sublevelIndex}`)}</strong>
-              <em>${completed}/${group.length} pasos</em>
+              <em>${locked ? 'Vista previa · ' : ''}${completed}/${group.length} pasos</em>
             </button>`;
             }).join('')}
         </div>`;
@@ -2617,7 +2719,7 @@
                 const done = isUnitPathSlideComplete(unitNum, slide, index);
                 return `
             <button class="learning-step ${index === current ? 'active' : ''} ${done ? 'done' : ''} ${locked ? 'locked' : ''}"
-              onclick="goToUnitPathSlide(${unitNum}, ${index})" ${locked ? 'disabled' : ''}>
+              onclick="goToUnitPathSlide(${unitNum}, ${index})">
               <span>${slide.stageOrder || index + 1}</span>
               <small>${escapeHtml(slide.stage)}</small>
             </button>`;
@@ -3567,6 +3669,8 @@
             const progress = getPracticeProgress();
             const doneSteps = progress[lab.id] || [];
             const completed = doneSteps.includes(STATE.currentPracticeStep);
+            const gate = practiceStepRouteGate(lab.id, STATE.currentPracticeStep);
+            const canCompleteStep = !gate || gate.allowed || completed;
             const pct = Math.round((doneSteps.length / lab.steps.length) * 100);
             document.getElementById('pageContent').innerHTML = `
     <div class="practice-shell">
@@ -3603,8 +3707,9 @@
         <aside class="practice-task">
           <h4>Evaluación de la ficha</h4>
           <p>${step.task}</p>
-          <button class="btn-primary" onclick="completePracticeStep('${lab.id}', ${STATE.currentPracticeStep})">
-            ${completed ? 'Ficha completada' : 'Marcar ficha completa'}
+          ${!canCompleteStep ? '<div class="learning-preview-note">Ficha disponible para revisar. La marca de completado se habilita cuando cierres las fichas y bloques anteriores.</div>' : ''}
+          <button class="btn-primary" onclick="completePracticeStep('${lab.id}', ${STATE.currentPracticeStep})" ${canCompleteStep ? '' : 'disabled'}>
+            ${completed ? 'Ficha completada' : (canCompleteStep ? 'Marcar ficha completa' : 'Completa anteriores')}
           </button>
           <div class="practice-nav">
             <button class="btn-secondary" onclick="openPractice('${lab.id}', ${STATE.currentPracticeStep - 1})" ${STATE.currentPracticeStep === 0 ? 'disabled' : ''}>Anterior</button>
@@ -3624,6 +3729,11 @@
         function completePracticeStep(labId, stepIndex) {
             const lab = PRACTICES.find(item => item.id === labId);
             if (!lab) return;
+            const gate = practiceStepRouteGate(labId, stepIndex);
+            if (gate && !gate.allowed) {
+                showToast('Puedes revisar esta ficha, pero para completarla debes terminar primero la secuencia anterior.', 'info');
+                return;
+            }
             const progress = getPracticeProgress();
             const done = new Set(progress[labId] || []);
             const wasNew = !done.has(stepIndex);
@@ -4062,8 +4172,18 @@
             let items = mergeSocialMessages(STATE.socialMessages, localSocialMessages())
                 .filter(item => item.tipo === kind);
             if (kind === 'consulta' && STATE.user?.rol !== 'profesor') {
-                const mine = new Set(items.filter(item => item.usuario === STATE.user?.username).map(item => item.id));
-                items = items.filter(item => item.usuario === STATE.user?.username || mine.has(item.parent_id));
+                const visibleIds = new Set(items.filter(item => item.usuario === STATE.user?.username).map(item => item.id));
+                let changed = true;
+                while (changed) {
+                    changed = false;
+                    items.forEach(item => {
+                        if (item.parent_id && visibleIds.has(item.parent_id) && !visibleIds.has(item.id)) {
+                            visibleIds.add(item.id);
+                            changed = true;
+                        }
+                    });
+                }
+                items = items.filter(item => visibleIds.has(item.id));
             }
             return items;
         }
@@ -4142,18 +4262,34 @@
           </div>`;
                 return;
             }
-            container.innerHTML = items.map(item => renderSocialMessage(item)).join('');
+            const ids = new Set(items.map(item => item.id));
+            const roots = items.filter(item => !item.parent_id || !ids.has(item.parent_id));
+            container.innerHTML = roots.map(item => renderSocialMessage(item, items)).join('');
         }
 
-        function renderSocialMessage(item) {
+        function renderSocialReplyForm(item) {
+            return `
+        <form class="social-reply-form" onsubmit="submitSocialReply(event, ${jsArg(item.id)})">
+          <textarea id="socialReplyMessage" rows="3" placeholder="Responder a ${escapeHtml(item.nombre)}..."></textarea>
+          <div>
+            <button class="btn-secondary" type="button" onclick="cancelSocialReply()">Cancelar</button>
+            <button class="btn-primary" type="submit">Responder</button>
+          </div>
+        </form>`;
+        }
+
+        function renderSocialMessage(item, allItems = [], depth = 0) {
             const date = new Date(item.timestamp).toLocaleString('es-PY');
             const isTeacher = item.rol === 'profesor';
             const canReply = item.tipo !== 'anuncio' || STATE.user?.rol === 'profesor';
             const canResolve = STATE.user?.rol === 'profesor' && item.tipo === 'consulta' && item.estado !== 'atendida';
             const context = [item.unidad ? `Unidad ${item.unidad}` : '', item.titulo_recurso || item.recurso || '']
                 .filter(Boolean).join(' · ');
+            const children = allItems
+                .filter(child => child.parent_id === item.id)
+                .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
             return `
-        <article class="social-message ${isTeacher ? 'teacher' : ''}">
+        <article class="social-message ${isTeacher ? 'teacher' : ''} ${depth ? 'reply' : ''}">
           <header>
             <div>
               <strong>${escapeHtml(item.nombre)}</strong>
@@ -4168,6 +4304,11 @@
             ${canReply ? `<button class="btn-secondary" onclick="prepareSocialReply(${jsArg(item.id)})">Responder</button>` : ''}
             ${canResolve ? `<button class="btn-secondary" onclick="resolveSocialMessage(${jsArg(item.id)})">Marcar atendida</button>` : ''}
           </footer>
+          ${STATE.socialReplyTo === item.id ? renderSocialReplyForm(item) : ''}
+          ${children.length ? `
+            <div class="social-replies">
+              ${children.map(child => renderSocialMessage(child, allItems, depth + 1)).join('')}
+            </div>` : ''}
         </article>`;
         }
 
@@ -4208,6 +4349,39 @@
             renderCommunity(STATE.socialTab);
         }
 
+        function submitSocialReply(event, parentId) {
+            event.preventDefault();
+            const parent = mergeSocialMessages(STATE.socialMessages, localSocialMessages()).find(item => item.id === parentId);
+            if (!parent) return;
+            const message = document.getElementById('socialReplyMessage')?.value.trim() || '';
+            if (message.length < 3) {
+                showToast('Escribe una respuesta antes de publicar.', 'error');
+                return;
+            }
+            const item = normalizeSocialMessage({
+                id: socialMessageId(),
+                timestamp: new Date().toISOString(),
+                tipo: parent.tipo,
+                canal: parent.canal || socialTabForKind(parent.tipo),
+                usuario: STATE.user?.username || '',
+                nombre: STATE.user?.nombre || STATE.user?.username || '',
+                rol: STATE.user?.rol || 'estudiante',
+                unidad: parent.unidad || '',
+                recurso: parent.recurso || '',
+                titulo_recurso: parent.titulo_recurso || parent.recurso || '',
+                mensaje: message,
+                parent_id: parent.id,
+                estado: parent.tipo === 'consulta' && STATE.user?.rol === 'profesor' ? 'atendida' : 'publicado'
+            });
+            const messages = mergeSocialMessages(localSocialMessages(), [item]);
+            saveLocalSocialMessages(messages);
+            STATE.socialMessages = mergeSocialMessages(STATE.socialMessages, [item]);
+            STATE.socialReplyTo = null;
+            sendToSheets({ kind: 'interaccion', ...item });
+            showToast('Respuesta publicada.', 'success');
+            renderSocialMessagesList();
+        }
+
         function openContextMessage(kind, context = {}) {
             STATE.socialDraft = {
                 tipo: kind || 'consulta',
@@ -4225,13 +4399,14 @@
         function prepareSocialReply(id) {
             const item = mergeSocialMessages(STATE.socialMessages, localSocialMessages()).find(msg => msg.id === id);
             if (!item) return;
-            openContextMessage(item.tipo, {
-                unidad: item.unidad,
-                recurso: item.recurso,
-                titulo_recurso: item.titulo_recurso || item.recurso || `Mensaje de ${item.nombre}`,
-                parent_id: item.id,
-                mensaje: `@${item.nombre} `
-            });
+            STATE.socialReplyTo = STATE.socialReplyTo === id ? null : id;
+            renderSocialMessagesList();
+            setTimeout(() => document.getElementById('socialReplyMessage')?.focus(), 0);
+        }
+
+        function cancelSocialReply() {
+            STATE.socialReplyTo = null;
+            renderSocialMessagesList();
         }
 
         function resolveSocialMessage(id) {
