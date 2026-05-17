@@ -225,7 +225,7 @@
         };
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
-        const APP_VERSION = 'v26';
+        const APP_VERSION = 'v27';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -2885,7 +2885,7 @@
             if (slide.kind === 'practice') return ['Leer consigna', 'Ejecutar codigo', 'Comparar salida', 'Marcar evidencia'];
             if (slide.kind === 'activity') return ['Plantear caso', 'Elegir dato', 'Aplicar criterio', 'Redactar conclusion'];
             if (slide.kind === 'assessment') return ['Recordar concepto', 'Conectar formula o comando', 'Resolver actividad', 'Explicar evidencia'];
-            return ['Leer idea', 'Reconocer ejemplo', 'Ejecutar comando', 'Explicar con palabras'];
+            return ['Leer idea', 'Revisar ejemplo', 'Relacionar conceptos', 'Explicar con palabras'];
         }
 
         function shuffledCopy(items) {
@@ -2900,6 +2900,7 @@
             const pairs = buildLearningEvalPairs(slide);
             const definitions = shuffledCopy(pairs);
             const order = buildLearningEvalOrder(slide);
+            const hasExecution = slideNeedsExecution(slide);
             return `
       <section class="learning-eval-widget ${summative ? 'summative' : 'formative'} ${done ? 'completed' : ''}" id="${learningInlineEvalId(unitNum, slideIndex)}">
         <div class="learning-eval-head">
@@ -2938,8 +2939,8 @@
           </div>
           <div class="learning-eval-panel reflection">
             <h4>Micro evidencia</h4>
-            <p>Escribe que viste en la ficha o que significaria la salida del comando.</p>
-            <textarea data-eval-reflection rows="5" placeholder="Ejemplo: el comando agrupa los casos y permite comparar..."></textarea>
+            <p>${hasExecution ? 'Escribe que viste al ejecutar o que significaria la salida.' : 'Escribe con tus palabras que idea te queda clara y como la reconocerias en un caso.'}</p>
+            <textarea data-eval-reflection rows="5" placeholder="${hasExecution ? 'Ejemplo: el comando agrupa los casos y permite comparar...' : 'Ejemplo: la idea central es... y se reconoce cuando...'}"></textarea>
           </div>
         </div>
         <div class="learning-eval-actions">
@@ -3077,6 +3078,56 @@
         </div>`;
         }
 
+        function slideNeedsExecution(slide) {
+            return ['function', 'formula', 'practice'].includes(slide.kind)
+                || Boolean(slide.codeBlocks?.length);
+        }
+
+        function renderLearningCardFigure(slide) {
+            if (slideNeedsExecution(slide)) return '';
+            const nodes = slideConceptList(slide).slice(0, 4);
+            return `
+        <section class="learning-card-figure" aria-label="Figura conceptual">
+          <div>
+            <span>Figura conceptual</span>
+            <strong>${escapeHtml(slide.stage)} en una mirada</strong>
+          </div>
+          <div class="learning-flow-diagram">
+            ${nodes.map((item, index) => `
+              <div class="learning-flow-node">
+                <em>${index + 1}</em>
+                <p>${escapeHtml(item)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>`;
+        }
+
+        function renderLearningInlineResource(unitNum, slide, slideIndex, isActive) {
+            const notebook = slide.notebookResource;
+            const resources = slideResources(unitNum, slide);
+            if (!notebook && !resources.length) return '';
+            const firstResource = resources[0];
+            const title = notebook?.label || firstResource?.name || 'Recurso de apoyo';
+            const pdf = notebook?.pdf || firstResource?.download || '';
+            const frame = notebook?.type === 'html'
+                ? (isActive
+                    ? `<iframe src="${escapeHtml(notebook.file)}" title="${escapeHtml(title)}" loading="lazy" onload="trackNotebookResourceLoad(${unitNum}, ${slideIndex})"></iframe>`
+                    : '<div class="learning-inline-resource-placeholder">Abre esta ficha para cargar la lectura integrada.</div>')
+                : (firstResource?.file
+                    ? `<iframe src="${escapeHtml(firstResource.file)}" title="${escapeHtml(title)}" loading="lazy"></iframe>`
+                    : '');
+            return `
+        <details class="learning-inline-resource">
+          <summary>
+            <span>Recurso integrado</span>
+            <strong>${escapeHtml(title)}</strong>
+          </summary>
+          ${frame}
+          ${pdf ? `<a class="btn-secondary as-link" href="${escapeHtml(pdf)}" download>Descargar PDF</a>` : ''}
+        </details>`;
+        }
+
         function renderLearningCardMedia(unitNum, slide, slideIndex, isActive) {
             const unit = UNITS[unitNum - 1];
             const resources = slideResources(unitNum, slide);
@@ -3132,6 +3183,7 @@
             const support = learningSupportContent(unitNum, slide);
             const definition = learningCardDefinition(slide, support);
             const example = learningCardExample(slide, support);
+            const hasExecution = slideNeedsExecution(slide);
             const primaryLabel = previewOnly
                 ? 'Completa los bloques anteriores'
                 : (slide.kind === 'quiz' && !STATE.quizResults[`u${unitNum}`]
@@ -3172,22 +3224,23 @@
                 <p>${escapeHtml(example)}</p>
               </div>
               ${renderLearningCardBullets(slide)}
+              ${renderLearningCardFigure(slide)}
               ${renderLearningPathFormulas(slide)}
+              ${renderLearningInlineResource(unitNum, slide, slideIndex, slideIndex === activeIndex)}
               ${renderLearningInlineEvaluation(unitNum, slide, slideIndex)}
               ${slide.kind === 'assessment' ? renderLearningPathAssessment(unitNum, slide, slideIndex) : ''}
               ${slide.kind === 'quiz' ? renderLearningPathQuiz(unitNum) : ''}
               ${renderLearningPathPractice(slide, completionAllowed)}
             </section>
-            ${renderLearningCardMedia(unitNum, slide, slideIndex, slideIndex === activeIndex)}
           </div>
 
-          <section class="learning-card-execution">
+          ${hasExecution ? `<section class="learning-card-execution">
             <div class="learning-card-execution-copy">
               <span>Ahora ejecuta</span>
               <strong>La ficha no se completa solo leyendo: prueba el comando, mira la salida y explica que ocurrio.</strong>
             </div>
             ${renderLearningInlineLab(unitNum, slide, slideIndex, slideIndex === activeIndex)}
-          </section>
+          </section>` : ''}
 
           ${renderLearningSupport(unitNum, slide, slideIndex)}
 
