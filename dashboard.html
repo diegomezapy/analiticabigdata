@@ -225,7 +225,7 @@
         };
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
-        const APP_VERSION = 'v24';
+        const APP_VERSION = 'v25';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -2839,15 +2839,101 @@
       </div>`;
         }
 
+        function learningCardType(slide) {
+            const labels = {
+                intro: 'Concepto inicial',
+                concept: 'Definicion guiada',
+                function: 'Funcion y comando',
+                formula: 'Formula paso a paso',
+                practice: 'Practica ejecutada',
+                activity: 'Aplicacion breve',
+                quiz: 'Evaluacion',
+                assessment: 'Evaluacion parcial'
+            };
+            return labels[slide.kind] || 'Ficha de aprendizaje';
+        }
+
+        function learningCardDefinition(slide, support) {
+            if (slide.formulas?.[0]?.note) return slide.formulas[0].note;
+            if (slide.bullets?.[0]) return slide.bullets[0];
+            return support.text || slide.lead || 'Lee la idea central y compruebala con un comando pequeno.';
+        }
+
+        function learningCardExample(slide, support) {
+            if (slide.formulas?.[0]?.value) return `Ejemplo de lectura: ${slide.formulas[0].label} se expresa como ${slide.formulas[0].value}.`;
+            if (slide.bullets?.[1]) return slide.bullets[1];
+            return support.example || 'Ejecuta el comando de la ficha y observa como cambia la salida.';
+        }
+
+        function renderLearningCardBullets(slide) {
+            const items = (slide.bullets || []).slice(0, 3);
+            if (!items.length) return '';
+            return `
+        <div class="learning-card-points">
+          ${items.map((item, index) => `
+            <div>
+              <span>${index + 1}</span>
+              <p>${escapeHtml(item)}</p>
+            </div>
+          `).join('')}
+        </div>`;
+        }
+
+        function renderLearningCardMedia(unitNum, slide, slideIndex, isActive) {
+            const unit = UNITS[unitNum - 1];
+            const resources = slideResources(unitNum, slide);
+            const notebook = slide.notebookResource;
+            const support = slide.notebookSupport || {};
+            const mediaLinks = [
+                notebook ? { label: notebook.label || 'Lectura NotebookLM', href: notebook.file, kind: 'lectura' } : null,
+                notebook?.pdf ? { label: 'PDF del recurso', href: notebook.pdf, kind: 'pdf', download: true } : null,
+                support.audioMicroclaseUrl ? { label: 'Audio microclase', href: support.audioMicroclaseUrl, kind: 'audio' } : null,
+                support.audioRepasoUrl ? { label: 'Audio repaso', href: support.audioRepasoUrl, kind: 'audio' } : null,
+                support.videoOverviewUrl ? { label: 'Video / guion', href: support.videoOverviewUrl, kind: 'video' } : null,
+                ...resources.slice(0, 2).map(resource => ({
+                    label: resource.name,
+                    href: resource.download || resource.file,
+                    kind: resource.download ? 'pdf' : 'facen',
+                    download: Boolean(resource.download)
+                }))
+            ].filter(Boolean);
+            const activeNotebookFrame = isActive && notebook?.type === 'html'
+                ? `<details class="learning-card-reading">
+                    <summary>Ver lectura completa dentro de la ficha</summary>
+                    <iframe src="${escapeHtml(notebook.file)}" title="${escapeHtml(notebook.label || slide.title)}" loading="lazy" onload="trackNotebookResourceLoad(${unitNum}, ${slideIndex})"></iframe>
+                  </details>`
+                : '';
+            return `
+        <aside class="learning-card-media">
+          <div class="learning-card-image">
+            ${unitIconHTML(unit, 'learning-card-unit-icon')}
+          </div>
+          <div class="learning-card-media-copy">
+            <span>Recursos de la ficha</span>
+            <strong>${escapeHtml(slide.sublevelCode || `Unidad ${unitNum}`)}</strong>
+            <p>${escapeHtml(slide.sublevelTitle || unit.title)}</p>
+          </div>
+          ${mediaLinks.length ? `
+            <div class="learning-card-media-links">
+              ${mediaLinks.map(link => `
+                <a class="learning-media-chip ${escapeHtml(link.kind)}" href="${escapeHtml(link.href)}" ${link.download ? 'download' : 'target="_blank" rel="noopener"'}>
+                  ${escapeHtml(link.label)}
+                </a>
+              `).join('')}
+            </div>` : '<p class="learning-muted-note">Los recursos multimedia de esta ficha apareceran aqui cuando esten disponibles.</p>'}
+          ${activeNotebookFrame}
+        </aside>`;
+        }
+
         function renderLearningPathSlide(unitNum, slide, slideIndex, slides, activeIndex = slideIndex) {
             const done = isUnitPathSlideComplete(unitNum, slide, slideIndex);
             const isLast = slideIndex === slides.length - 1;
             const completionAllowed = canCompletePathSlide(unitNum, slides, slideIndex);
             const previewOnly = !done && !completionAllowed;
-            const bullets = slide.bullets?.length
-                ? `<ul class="learning-bullets">${slide.bullets.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
-                : '';
             const status = done ? 'Completado' : (previewOnly ? 'Vista previa' : 'En curso');
+            const support = learningSupportContent(unitNum, slide);
+            const definition = learningCardDefinition(slide, support);
+            const example = learningCardExample(slide, support);
             const primaryLabel = previewOnly
                 ? 'Completa los bloques anteriores'
                 : (slide.kind === 'quiz' && !STATE.quizResults[`u${unitNum}`]
@@ -2858,43 +2944,59 @@
                         ? 'Registrar evaluacion parcial'
                         : (isLast ? (done ? 'Unidad completada' : 'Ya lei y comprendi') : (done ? 'Seguir al siguiente nivel' : 'Ya lei y comprendi')))));
             return `
-      <article class="learning-slide unit-theme-u${unitNum} sublevel-theme-s${slide.sublevelIndex || 1} ${previewOnly ? 'preview-only' : ''}">
-        <header class="learning-slide-top">
-          <div class="learning-slide-heading">
+      <article class="learning-slide learning-card-slide unit-theme-u${unitNum} sublevel-theme-s${slide.sublevelIndex || 1} ${previewOnly ? 'preview-only' : ''}">
+        <div class="learning-card-stage">
+          <header class="learning-card-top">
             <div class="learning-slide-kicker">
               <span>${slide.sublevelIndex ? `${slide.sublevelIndex}.${slide.stageOrder}` : String(slideIndex + 1).padStart(2, '0')}</span>
-              <strong>${escapeHtml(slide.stage)}</strong>
+              <strong>${escapeHtml(learningCardType(slide))}</strong>
               <em>${status}</em>
             </div>
-            <h3>${escapeHtml(slide.title)}</h3>
+            <div class="learning-card-controls">
+              <button class="btn-secondary" id="learningSupportButton_${unitNum}_${slideIndex}" onclick="toggleLearningSupport(${unitNum}, ${slideIndex})" aria-expanded="false">Ver mas</button>
+              <button class="btn-secondary" onclick="openContextMessage('consulta', { unidad: ${unitNum}, recurso: ${jsArg(`u${unitNum}_bloque_${slideIndex + 1}`)}, titulo_recurso: ${jsArg(slide.title)}, canal: ${jsArg(slide.kind || 'ruta')} })">Consultar</button>
+              <button class="btn-primary" onclick="completeUnitPathSlide(${unitNum}, ${slideIndex})" ${previewOnly ? 'disabled' : ''}>${primaryLabel}</button>
+            </div>
+          </header>
+
+          <div class="learning-card-canvas">
+            <section class="learning-card-copy">
+              <span class="learning-card-eyebrow">${escapeHtml(slide.stage)}</span>
+              <h3>${escapeHtml(slide.title)}</h3>
+              <p class="learning-card-lead">${escapeHtml(slide.lead)}</p>
+              ${previewOnly ? '<div class="learning-preview-note">Puedes mirar esta ficha, pero el boton de completado se habilita cuando cierres las fichas anteriores.</div>' : ''}
+              <div class="learning-card-definition">
+                <span>Definicion corta</span>
+                <p>${escapeHtml(definition)}</p>
+              </div>
+              <div class="learning-card-example">
+                <span>Ejemplo sencillo</span>
+                <p>${escapeHtml(example)}</p>
+              </div>
+              ${renderLearningCardBullets(slide)}
+              ${renderLearningPathFormulas(slide)}
+              ${slide.kind === 'assessment' ? renderLearningPathAssessment(unitNum, slide, slideIndex) : ''}
+              ${slide.kind === 'quiz' ? renderLearningPathQuiz(unitNum) : ''}
+              ${renderLearningPathPractice(slide, completionAllowed)}
+            </section>
+            ${renderLearningCardMedia(unitNum, slide, slideIndex, slideIndex === activeIndex)}
           </div>
-          <div class="learning-slide-controls">
-            <button class="btn-secondary" id="learningSupportButton_${unitNum}_${slideIndex}" onclick="toggleLearningSupport(${unitNum}, ${slideIndex})" aria-expanded="false">Necesito mas explicacion</button>
-            <button class="btn-secondary" onclick="openContextMessage('consulta', { unidad: ${unitNum}, recurso: ${jsArg(`u${unitNum}_bloque_${slideIndex + 1}`)}, titulo_recurso: ${jsArg(slide.title)}, canal: ${jsArg(slide.kind || 'ruta')} })">Consultar</button>
-            <button class="btn-primary" onclick="completeUnitPathSlide(${unitNum}, ${slideIndex})" ${previewOnly ? 'disabled' : ''}>${primaryLabel}</button>
-          </div>
-        </header>
-        <div class="learning-slide-main">
-          <p class="learning-lead">${escapeHtml(slide.lead)}</p>
-          ${previewOnly ? '<div class="learning-preview-note">Puedes leer y revisar este bloque, pero la entrega queda bloqueada hasta completar la secuencia anterior.</div>' : ''}
-          ${bullets}
-          ${renderLearningPathNotebookResource(unitNum, slide, slideIndex)}
-          ${renderLearningPathFormulas(slide)}
-          ${renderLearningPathCode(slide)}
-          ${renderLearningInlineLab(unitNum, slide, slideIndex, slideIndex === activeIndex)}
-          ${renderLearningPathOfficialDocument(unitNum, slide, slideIndex)}
-          ${renderLearningPathPractice(slide, completionAllowed)}
-          ${slide.kind === 'quiz' ? renderLearningPathQuiz(unitNum) : ''}
+
+          <section class="learning-card-execution">
+            <div class="learning-card-execution-copy">
+              <span>Ahora ejecuta</span>
+              <strong>La ficha no se completa solo leyendo: prueba el comando, mira la salida y explica que ocurrio.</strong>
+            </div>
+            ${renderLearningInlineLab(unitNum, slide, slideIndex, slideIndex === activeIndex)}
+          </section>
+
           ${renderLearningSupport(unitNum, slide, slideIndex)}
+
+          <footer class="learning-slide-actions">
+            <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex - 1})" ${slideIndex === 0 ? 'disabled' : ''}>Anterior</button>
+            <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex + 1})" ${isLast ? 'disabled' : ''}>Siguiente</button>
+          </footer>
         </div>
-        <aside class="learning-slide-side">
-          ${renderLearningPathChecks(slide)}
-          ${renderLearningPathResources(unitNum, slide, slideIndex)}
-        </aside>
-        <footer class="learning-slide-actions">
-          <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex - 1})" ${slideIndex === 0 ? 'disabled' : ''}>Anterior</button>
-          <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex + 1})" ${isLast ? 'disabled' : ''}>Siguiente</button>
-        </footer>
       </article>`;
         }
 
