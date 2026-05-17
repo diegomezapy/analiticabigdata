@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>3.1 KNN y Naive Bayes — Resumen — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #2E7D32; border-bottom: 3px solid #2E7D32; padding-bottom: 10px; }
+  h2 { color: #388E3C; margin-top: 2em; }
+  h3 { color: #1B5E20; }
+  .header-info { background: #E8F5E9; border-left: 4px solid #2E7D32; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #1B5E20; }
+  pre { background: #F5F5F5; border-left: 4px solid #4CAF50; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F1F8E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #2E7D32; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #2E7D32; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 3</div>
+
+<h1>3.1 KNN y Naive Bayes — Resumen</h1>
+<p>KNN y Naive Bayes son algoritmos de clasificación supervisada. Representan dos filosofías distintas: KNN basado en distancia (instancia), Naive Bayes basado en probabilidad (modelo).</p>
+<h2>KNN — K-Nearest Neighbors</h2>
+<p>Para clasificar un nuevo punto, busca los K vecinos más cercanos en el espacio de features y asigna la clase mayoritaria. Sin entrenamiento explícito: "lazy learner".</p>
+<ul>
+<li><strong>Distancia euclidiana:</strong> d = √[Σ(xᵢ − yᵢ)²]</li>
+<li><strong>Elección de K:</strong> K pequeño = overfitting; K grande = underfitting. Usar K impar para evitar empates. Probar con √n.</li>
+<li><strong>Normalización obligatoria:</strong> sin normalizar, variables con mayor escala dominan la distancia.</li>
+<li><strong>Complejidad predicción:</strong> O(n·d) — lento en datasets grandes.</li>
+</ul>
+<h2>Naive Bayes</h2>
+<p>Aplica el teorema de Bayes asumiendo <em>independencia condicional</em> entre features dado la clase.</p>
+<p>P(clase | features) ∝ P(clase) × ΠP(featureᵢ | clase)</p>
+<ul>
+<li><strong>Gaussian NB:</strong> para features continuas, asume distribución normal por clase.</li>
+<li><strong>Multinomial NB:</strong> para conteos (frecuencias de palabras en texto).</li>
+<li><strong>Ventaja:</strong> muy rápido, funciona bien con pocos datos, ideal para texto.</li>
+<li><strong>Limitación:</strong> el supuesto de independencia raramente es cierto en la práctica.</li>
+</ul>
+<h2>Comparación</h2>
+<table>
+<tr><th>Característica</th><th>KNN</th><th>Naive Bayes</th></tr>
+<tr><td>Tipo</td><td>Basado en instancia</td><td>Probabilístico</td></tr>
+<tr><td>Entrenamiento</td><td>Sin entrenamiento</td><td>Rápido</td></tr>
+<tr><td>Predicción</td><td>Lenta (busca vecinos)</td><td>Muy rápida</td></tr>
+<tr><td>Interpetabilidad</td><td>Alta</td><td>Alta</td></tr>
+<tr><td>Escala</td><td>Mal escala</td><td>Escala bien</td></tr>
+</table>
+
+</body>
+</html>

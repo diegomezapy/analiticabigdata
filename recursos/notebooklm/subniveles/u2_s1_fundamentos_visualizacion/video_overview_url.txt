@@ -1,0 +1,2 @@
+# URL del video overview de 2.1 Fundamentos de Visualización de Datos
+# Usar NotebookLM o Loom

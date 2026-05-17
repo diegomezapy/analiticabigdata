@@ -1,0 +1,174 @@
+{
+  "mind_map": {
+    "name": "Unidad 1: Analítica de Big Data",
+    "children": [
+      {
+        "name": "Marco Conceptual",
+        "children": [
+          {
+            "name": "Las 5V",
+            "children": [
+              {
+                "name": "Volumen: Escala exponencial"
+              },
+              {
+                "name": "Velocidad: Tiempo real y streaming"
+              },
+              {
+                "name": "Variedad: Datos heterogéneos"
+              },
+              {
+                "name": "Veracidad: Calidad y confianza"
+              },
+              {
+                "name": "Valor: ROI e insights estratégicos"
+              }
+            ]
+          },
+          {
+            "name": "Evolución Histórica",
+            "children": [
+              {
+                "name": "Orígenes: Guerra Fría y NASA"
+              },
+              {
+                "name": "Hitos: MapReduce, Hadoop, Spark"
+              },
+              {
+                "name": "Actualidad: Cloud y GenAI"
+              }
+            ]
+          },
+          {
+            "name": "Cambio de Paradigma: Análisis integral vs Muestreo"
+          }
+        ]
+      },
+      {
+        "name": "Ecosistema Tecnológico",
+        "children": [
+          {
+            "name": "Ingesta y Procesamiento",
+            "children": [
+              {
+                "name": "Apache Kafka"
+              },
+              {
+                "name": "Apache Spark"
+              },
+              {
+                "name": "Apache Flink"
+              }
+            ]
+          },
+          {
+            "name": "Almacenamiento",
+            "children": [
+              {
+                "name": "HDFS"
+              },
+              {
+                "name": "Amazon S3"
+              },
+              {
+                "name": "Delta Lake"
+              }
+            ]
+          },
+          {
+            "name": "Análisis y ML",
+            "children": [
+              {
+                "name": "TensorFlow"
+              },
+              {
+                "name": "Spark MLlib"
+              },
+              {
+                "name": "dbt"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Gestión Académica",
+        "children": [
+          {
+            "name": "Actividades",
+            "children": [
+              {
+                "name": "Actividad 1: Estudio de materiales"
+              },
+              {
+                "name": "Actividad 2: Foro de discusión"
+              },
+              {
+                "name": "Actividad 3: Cuestionario en línea"
+              }
+            ]
+          },
+          {
+            "name": "Ruta de Trabajo",
+            "children": [
+              {
+                "name": "Configuración R/RStudio"
+              },
+              {
+                "name": "Análisis exploratorio"
+              },
+              {
+                "name": "Bitácora de aprendizaje"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Casos y Desafíos",
+        "children": [
+          {
+            "name": "Casos de Éxito",
+            "children": [
+              {
+                "name": "Netflix: Personalización"
+              },
+              {
+                "name": "Uber: Logística dinámica"
+              }
+            ]
+          },
+          {
+            "name": "Desafíos",
+            "children": [
+              {
+                "name": "Técnicos: Escalabilidad"
+              },
+              {
+                "name": "Éticos: Privacidad y sesgos"
+              },
+              {
+                "name": "Regulaciones: GDPR/CCPA"
+              }
+            ]
+          },
+          {
+            "name": "Tendencias 2030",
+            "children": [
+              {
+                "name": "Data Mesh 2.0"
+              },
+              {
+                "name": "Quantum Analytics"
+              },
+              {
+                "name": "Sustainable Data Ops"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "note_id": "92384caf-4798-4111-b497-6f9d1f63971f"
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>3.2 Práctica Guiada — Predicción de Deserción — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #2E7D32; border-bottom: 3px solid #2E7D32; padding-bottom: 10px; }
+  h2 { color: #388E3C; margin-top: 2em; }
+  h3 { color: #1B5E20; }
+  .header-info { background: #E8F5E9; border-left: 4px solid #2E7D32; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #1B5E20; }
+  pre { background: #F5F5F5; border-left: 4px solid #4CAF50; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F1F8E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #2E7D32; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #2E7D32; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 3</div>
+
+<h1>3.2 Práctica Guiada: Predicción de Deserción Estudiantil</h1>
+<p><strong>Contexto:</strong> Un sistema universitario quiere predecir qué estudiantes corren riesgo de desertar.</p>
+<div class="ficha">
+<h2>Ficha 1: Simular datos estudiantiles</h2>
+<pre>set.seed(55)
+n <- 500
+estudiantes <- data.frame(
+  promedio = round(rnorm(n, 65, 15), 1),
+  ausencias = rpois(n, 3),
+  distancia_km = round(rexp(n, 0.1)),
+  trabaja = sample(c(0,1), n, replace=TRUE, prob=c(0.6,0.4)),
+  beca = sample(c(0,1), n, replace=TRUE, prob=c(0.7,0.3)),
+  primer_generacion = sample(c(0,1), n, replace=TRUE, prob=c(0.55,0.45))
+)
+# Variable objetivo: desercion (influenciada por promedio y ausencias)
+lp <- -3 + 0.05*estudiantes$ausencias - 0.04*estudiantes$promedio +
+      0.3*estudiantes$trabaja - 0.8*estudiantes$beca
+prob_des <- 1/(1+exp(-lp))
+estudiantes$desercion <- factor(rbinom(n,1,prob_des), labels=c("No","Si"))
+table(estudiantes$desercion)</pre>
+</div>
+<div class="ficha">
+<h2>Ficha 2: Modelo de regresión logística</h2>
+<pre>library(caret); library(pROC)
+set.seed(42)
+idx <- createDataPartition(estudiantes$desercion, p=0.8, list=FALSE)
+train <- estudiantes[idx,]; test <- estudiantes[-idx,]
+modelo <- glm(desercion ~ ., data=train, family=binomial)
+summary(modelo)
+# ¿Qué variables son significativas?
+# ¿La beca disminuye el riesgo de deserción?</pre>
+</div>
+<div class="ficha">
+<h2>Ficha 3: Odds ratios e interpretación</h2>
+<pre>or <- exp(coef(modelo))
+ic <- exp(confint(modelo))
+tabla_or <- cbind(OR=round(or,3), round(ic,3))
+print(tabla_or)
+# Interpreta: OR de 'trabaja' — ¿cuánto aumenta el odds de desertar si trabaja?
+# Interpreta: OR de 'promedio' — ¿qué pasa por cada punto más de promedio?</pre>
+</div>
+<div class="ficha">
+<h2>Ficha 4: Evaluación y umbral</h2>
+<pre>probs <- predict(modelo, test, type="response")
+pred_05 <- factor(ifelse(probs>=0.5,"Si","No"), levels=c("No","Si"))
+pred_03 <- factor(ifelse(probs>=0.3,"Si","No"), levels=c("No","Si"))
+cm5 <- confusionMatrix(pred_05, test$desercion, positive="Si")
+cm3 <- confusionMatrix(pred_03, test$desercion, positive="Si")
+cat("Umbral 0.5 — Recall:", cm5$byClass["Sensitivity"], "
+")
+cat("Umbral 0.3 — Recall:", cm3$byClass["Sensitivity"], "
+")
+# ¿Qué umbral recomiendas para el sistema de alertas tempranas?</pre>
+</div>
+
+</body>
+</html>

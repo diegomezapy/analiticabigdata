@@ -1,0 +1,255 @@
+{
+  "title": "Bigdata Cuestionario",
+  "questions": [
+    {
+      "question": "\u00bfQu\u00e9 hito tecnol\u00f3gico en 2011 marc\u00f3 una revoluci\u00f3n en la velocidad de procesamiento al introducir el procesamiento en memoria?",
+      "answerOptions": [
+        {
+          "text": "Apache Spark",
+          "isCorrect": true,
+          "rationale": "Apache Spark es identificado en la l\u00ednea de tiempo como el motor que revolucion\u00f3 la velocidad mediante el procesamiento en memoria."
+        },
+        {
+          "text": "Hadoop",
+          "isCorrect": false,
+          "rationale": "Aunque fundamental, el lanzamiento de Hadoop en 2006 se centr\u00f3 en la democratizaci\u00f3n del almacenamiento y procesamiento distribuido open-source, no espec\u00edficamente en el procesamiento en memoria de alta velocidad."
+        },
+        {
+          "text": "Google MapReduce",
+          "isCorrect": false,
+          "rationale": "Este fue el fundamento para el procesamiento distribuido escalable en 2004, pero no es el motor de procesamiento en memoria de 2011."
+        },
+        {
+          "text": "Apache Flink",
+          "isCorrect": false,
+          "rationale": "Flink se menciona como una opci\u00f3n para streaming de baja latencia, pero no es el hito principal asociado al a\u00f1o 2011 en la cronolog\u00eda del material."
+        }
+      ],
+      "hint": "Este motor es ampliamente conocido por ser significativamente m\u00e1s r\u00e1pido que el modelo MapReduce tradicional debido a su manejo de datos en la RAM."
+    },
+    {
+      "question": "En el contexto de la 'Veracidad' de los datos, \u00bfcu\u00e1l es el porcentaje m\u00e1ximo aceptable de valores faltantes (missing values) para considerar un dataset como curado?",
+      "answerOptions": [
+        {
+          "text": "$< 20\\%$",
+          "isCorrect": true,
+          "rationale": "El material establece expl\u00edcitamente que una m\u00e9trica de calidad t\u00edpica para la completitud es tener menos del $20\\%$ de valores faltantes."
+        },
+        {
+          "text": "$< 5\\%$",
+          "isCorrect": false,
+          "rationale": "Aunque un $5\\%$ ser\u00eda ideal, el est\u00e1ndar mencionado en el documento para datasets curados es un umbral del $20\\%$."
+        },
+        {
+          "text": "$< 10\\%$",
+          "isCorrect": false,
+          "rationale": "Este valor es una suposici\u00f3n com\u00fan de calidad, pero no coincide con la m\u00e9trica espec\u00edfica de completitud citada en el material de lectura."
+        },
+        {
+          "text": "$< 50\\%$",
+          "isCorrect": false,
+          "rationale": "Un dataset con casi la mitad de valores faltantes generalmente se considera de baja calidad y supera ampliamente el l\u00edmite del $20\\%$ sugerido."
+        }
+      ],
+      "hint": "Revise las m\u00e9tricas de calidad t\u00edpicas dentro de la secci\u00f3n de las 5V del Big Data."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es el beneficio econ\u00f3mico anual estimado que Netflix obtiene gracias a la reducci\u00f3n del 'churn' mediante su sistema de recomendaciones?",
+      "answerOptions": [
+        {
+          "text": "M\u00e1s de $1.5B$",
+          "isCorrect": true,
+          "rationale": "El material destaca que el sistema de recomendaciones genera un ahorro anual superior a los 1,500 millones de d\u00f3lares al evitar que los usuarios cancelen sus suscripciones."
+        },
+        {
+          "text": "Aproximadamente $500M$",
+          "isCorrect": false,
+          "rationale": "Esta cifra subestima significativamente el impacto econ\u00f3mico reportado en los KPIs de 2024 para Netflix."
+        },
+        {
+          "text": "$1B$",
+          "isCorrect": false,
+          "rationale": "Aunque es una cifra elevada, el ahorro documentado supera esta marca alcanzando los $1.5B$ anuales."
+        },
+        {
+          "text": "$10B$",
+          "isCorrect": false,
+          "rationale": "Esta cifra excede lo indicado en el material como impacto directo del ahorro en churn."
+        }
+      ],
+      "hint": "Piense en una cifra que supera los mil millones pero se detiene antes de los dos mil millones."
+    },
+    {
+      "question": "De acuerdo con el material, \u00bfqu\u00e9 tecnolog\u00eda es preferible para el procesamiento de streaming cuando se requiere una latencia extremadamente baja (low-latency)?",
+      "answerOptions": [
+        {
+          "text": "Apache Flink",
+          "isCorrect": true,
+          "rationale": "El ejemplo de c\u00f3digo optimizado se\u00f1ala que Apache Flink es superior a Spark para aplicaciones que requieren baja latencia en tiempo real."
+        },
+        {
+          "text": "Apache Spark",
+          "isCorrect": false,
+          "rationale": "Spark es excelente para procesamiento batch y micro-batch, pero el texto lo posiciona por debajo de Flink en t\u00e9rminos de latencia m\u00ednima para streaming."
+        },
+        {
+          "text": "Pandas",
+          "isCorrect": false,
+          "rationale": "Pandas es una librer\u00eda para manipulaci\u00f3n de datos en memoria (normalmente en Python) y no es una herramienta de procesamiento de streaming distribuido de baja latencia."
+        },
+        {
+          "text": "Amazon S3",
+          "isCorrect": false,
+          "rationale": "Amazon S3 es una soluci\u00f3n de almacenamiento de objetos, no un motor de procesamiento de streams."
+        }
+      ],
+      "hint": "Se menciona expl\u00edcitamente en el comentario del ejemplo de c\u00f3digo de IoT como la opci\u00f3n optimizada frente a Spark."
+    },
+    {
+      "question": "\u00bfQu\u00e9 porcentaje de los modelos de IA presentan sesgos inherentes (bias), seg\u00fan los desaf\u00edos \u00e9ticos planteados en la unidad?",
+      "answerOptions": [
+        {
+          "text": "M\u00e1s del $50\\%$",
+          "isCorrect": true,
+          "rationale": "El material identifica como un problema cr\u00edtico que m\u00e1s de la mitad de los modelos de IA actuales contienen sesgos inherentes que requieren mitigaci\u00f3n."
+        },
+        {
+          "text": "Menos del $10\\%$",
+          "isCorrect": false,
+          "rationale": "Esta cifra es demasiado optimista y no refleja la gravedad del desaf\u00edo \u00e9tico descrito en el texto."
+        },
+        {
+          "text": "Exactamente el $25\\%$",
+          "isCorrect": false,
+          "rationale": "El texto no proporciona un porcentaje tan bajo, sino que alerta sobre una prevalencia mayoritaria del sesgo."
+        },
+        {
+          "text": "Casi el $95\\%$",
+          "isCorrect": false,
+          "rationale": "Aunque el problema es grave, el material no llega a afirmar que la pr\u00e1ctica totalidad de los modelos presentan sesgos."
+        }
+      ],
+      "hint": "Considere que el sesgo afecta a la mayor\u00eda de los modelos evaluados en las auditor\u00edas citadas."
+    },
+    {
+      "question": "Verdadero o Falso: El 'Data Lakehouse' es una arquitectura h\u00edbrida que permite transacciones ACID y gobernanza sobre un data lake.",
+      "answerOptions": [
+        {
+          "text": "Verdadero",
+          "isCorrect": true,
+          "rationale": "Seg\u00fan el glosario, el Data Lakehouse combina las ventajas de los data lakes y los warehouses, proporcionando integridad transaccional ACID."
+        },
+        {
+          "text": "Falso",
+          "isCorrect": false,
+          "rationale": "Esta afirmaci\u00f3n es correcta; el Data Lakehouse fue dise\u00f1ado precisamente para superar las limitaciones de gobernanza y transaccionalidad de los data lakes tradicionales."
+        }
+      ],
+      "hint": "Recuerde la definici\u00f3n del glosario que une las palabras 'Lake' y 'Warehouse'."
+    },
+    {
+      "question": "En el modelo simplificado de 'Surge Pricing' de Uber presentado, \u00bfcu\u00e1l de las siguientes NO es una variable de entrada (feature) mencionada?",
+      "answerOptions": [
+        {
+          "text": "Nivel de bater\u00eda del usuario",
+          "isCorrect": true,
+          "rationale": "El ejemplo de c\u00f3digo utiliza demanda, oferta, tr\u00e1fico, eventos y clima como variables, pero no menciona el estado de la bater\u00eda del dispositivo."
+        },
+        {
+          "text": "Tr\u00e1fico",
+          "isCorrect": false,
+          "rationale": "El tr\u00e1fico es una de las variables clave incluidas en el vector $X\\_train$ para determinar el multiplicador de precio."
+        },
+        {
+          "text": "Eventos",
+          "isCorrect": false,
+          "rationale": "La presencia de eventos masivos es una caracter\u00edstica expl\u00edcita utilizada en el modelo de regresi\u00f3n lineal para predecir la demanda."
+        },
+        {
+          "text": "Clima",
+          "isCorrect": false,
+          "rationale": "Las condiciones meteorol\u00f3gicas se consideran un factor externo relevante para ajustar los precios en el modelo propuesto."
+        }
+      ],
+      "hint": "Revise los par\u00e1metros de la funci\u00f3n 'predecir_surge' o los comentarios del c\u00f3digo de Python."
+    },
+    {
+      "question": "\u00bfQu\u00e9 tecnolog\u00eda se recomienda para la gesti\u00f3n de flujos de datos visuales dentro de la etapa de Ingesta y ETL?",
+      "answerOptions": [
+        {
+          "text": "Apache NiFi",
+          "isCorrect": true,
+          "rationale": "Apache NiFi es listado espec\u00edficamente bajo la categor\u00eda de Ingesta & ETL para el manejo de flujos de datos de manera visual."
+        },
+        {
+          "text": "Apache Atlas",
+          "isCorrect": false,
+          "rationale": "Apache Atlas se utiliza para la gobernanza y gesti\u00f3n de metadatos, no para la creaci\u00f3n visual de flujos ETL."
+        },
+        {
+          "text": "TensorFlow",
+          "isCorrect": false,
+          "rationale": "TensorFlow es una librer\u00eda de aprendizaje profundo (Deep Learning) y no una herramienta de ingesta de datos."
+        },
+        {
+          "text": "Delta Lake",
+          "isCorrect": false,
+          "rationale": "Delta Lake es una capa de almacenamiento que aporta fiabilidad a los data lakes, no una herramienta de dise\u00f1o de flujos visuales."
+        }
+      ],
+      "hint": "Busque la herramienta asociada a 'data flows visuales' en la secci\u00f3n de Stacks Tecnol\u00f3gicos."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la principal caracter\u00edstica del 'Federated Learning' como paradigma futuro del Big Data?",
+      "answerOptions": [
+        {
+          "text": "Entrenamiento distribuido sin compartir datos sensibles",
+          "isCorrect": true,
+          "rationale": "La visi\u00f3n futura describe el aprendizaje federado como una t\u00e9cnica que permite entrenar modelos sin necesidad de centralizar o exponer los datos privados."
+        },
+        {
+          "text": "Procesamiento de datos \u00fanicamente en la nube",
+          "isCorrect": false,
+          "rationale": "Al contrario, el aprendizaje federado suele implicar procesamiento en los bordes (edge) o dispositivos locales para proteger la privacidad."
+        },
+        {
+          "text": "Eliminaci\u00f3n completa de la necesidad de algoritmos de IA",
+          "isCorrect": false,
+          "rationale": "El aprendizaje federado es una rama de la IA; su objetivo es optimizar c\u00f3mo se entrenan estos algoritmos, no eliminarlos."
+        },
+        {
+          "text": "Uso exclusivo de computaci\u00f3n cu\u00e1ntica",
+          "isCorrect": false,
+          "rationale": "Aunque la computaci\u00f3n cu\u00e1ntica es otra tendencia, el aprendizaje federado se centra en la privacidad y la descentralizaci\u00f3n, no en el hardware cu\u00e1ntico."
+        }
+      ],
+      "hint": "Piense en un m\u00e9todo que prioriza la privacidad de los datos manteni\u00e9ndolos en su origen mientras el modelo 'aprende'."
+    },
+    {
+      "question": "\u00bfA qu\u00e9 concepto del Big Data se refiere la m\u00e9trica de 'Timeliness' o actualizaci\u00f3n de los datos en menos de una hora para tiempo real?",
+      "answerOptions": [
+        {
+          "text": "Veracidad",
+          "isCorrect": true,
+          "rationale": "La puntualidad o 'Timeliness' se categoriza en el material como una m\u00e9trica de calidad dentro de la dimensi\u00f3n de Veracidad."
+        },
+        {
+          "text": "Velocidad",
+          "isCorrect": false,
+          "rationale": "Aunque suena relacionado con el tiempo, el material ubica espec\u00edficamente el cumplimiento de los tiempos de actualizaci\u00f3n como un factor de calidad y confianza (Veracidad)."
+        },
+        {
+          "text": "Variedad",
+          "isCorrect": false,
+          "rationale": "La variedad se refiere a la heterogeneidad de los formatos de datos (estructurados, no estructurados), no a su puntualidad."
+        },
+        {
+          "text": "Volumen",
+          "isCorrect": false,
+          "rationale": "El volumen trata sobre la escala masiva de los datos generados, independientemente de qu\u00e9 tan r\u00e1pido se validen o actualicen."
+        }
+      ],
+      "hint": "Se trata de asegurar que los datos sean correctos y \u00fatiles para la toma de decisiones en el momento preciso."
+    }
+  ]
+}

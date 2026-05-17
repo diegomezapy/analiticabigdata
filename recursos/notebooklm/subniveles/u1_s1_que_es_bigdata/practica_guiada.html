@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.1 Qué es Big Data y para qué sirve — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 20px; color: #222; line-height: 1.7; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 8px; }
+  h2 { color: #0D47A1; margin-top: 2em; }
+  h3 { color: #1976D2; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 16px; overflow-x: auto; border-radius: 4px; }
+  code { font-family: 'Courier New', monospace; font-size: 0.9em; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; }
+  td { padding: 8px; border: 1px solid #ddd; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  blockquote { border-left: 4px solid #1976D2; margin-left: 0; padding-left: 20px; color: #555; font-style: italic; }
+  .header-info { background: #E3F2FD; padding: 12px; border-radius: 4px; margin-bottom: 24px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="header-info">
+  <strong>Analítica de Big Data</strong> | FACEN - Universidad Nacional de Asunción | 2026<br>
+  Subnivel: 1.1 Qué es Big Data y para qué sirve
+</div>
+
+<h1>Práctica Guiada: 1.1 Qué es Big Data y para qué sirve</h1>
+<p><strong>Dataset:</strong> Usaremos datos simulados del sector salud paraguayo
+(puede descargarse desde el aula o generarse con el código de Ficha 0).</p>
+
+<hr>
+<h2>Ficha 0: Preparación del dataset</h2>
+<pre><code class="language-r">
+# R — Generar dataset simulado de historiales médicos
+set.seed(2026)
+n <- 100000  # 100K registros simulados
+
+historiales <- data.frame(
+  id_paciente    = 1:n,
+  edad           = sample(0:90, n, replace = TRUE),
+  sexo           = sample(c("M","F"), n, replace = TRUE),
+  diagnostico    = sample(c("Diabetes","Hipertension","Anemia","Otro"), n,
+                          replace = TRUE, prob = c(0.25,0.3,0.2,0.25)),
+  tiempo_espera  = round(rnorm(n, mean=45, sd=20)),
+  region         = sample(c("Central","Alto_Paraguay","Caaguazu","Itapua"), n, replace=TRUE),
+  resultado      = sample(c("Alta","Seguimiento","Referido"), n, replace = TRUE)
+)
+
+write.csv(historiales, "historiales_salud.csv", row.names = FALSE)
+cat("Dataset generado:", nrow(historiales), "registros
+")
+</code></pre>
+<p><strong>Criterio de completado:</strong> El archivo <code>historiales_salud.csv</code> existe
+y tiene exactamente 100.000 filas.</p>
+
+<hr>
+<h2>Ficha 1: ¿Es Big Data?</h2>
+<p><strong>Consigna:</strong> Evaluá si el dataset generado es Big Data.</p>
+<pre><code class="language-r">
+library(data.table)
+dt <- fread("historiales_salud.csv")
+
+# Diagnóstico de escala
+cat("Filas:", nrow(dt), "
+")
+cat("Columnas:", ncol(dt), "
+")
+cat("Tamaño en RAM:", format(object.size(dt), units="MB"), "
+")
+cat("Tipos de variable:", paste(sapply(dt, class), collapse=", "), "
+")
+</code></pre>
+<p><strong>Pregunta de reflexión:</strong> Con 100.000 registros, ¿este dataset es Big Data?
+¿Qué debería cambiar para que lo sea? ¿Qué escala usaría un ministerio de salud real?</p>
+<p><strong>Criterio de completado:</strong> Respondiste la pregunta de reflexión con al menos
+2 argumentos concretos que mencionan las 5V.</p>
+
+<hr>
+<h2>Ficha 2: Mapeando las 5V</h2>
+<p><strong>Consigna:</strong> Completá la siguiente tabla para el dataset generado
+Y para un sistema real del Ministerio de Salud Pública del Paraguay.</p>
+<pre><code class="language-r">
+# Código para extraer métricas relevantes
+summary_5v <- list(
+  Volumen   = paste(nrow(dt), "registros,", format(object.size(dt), units="MB")),
+  Velocidad = "Batch diario (no en tiempo real en este caso)",
+  Variedad  = paste(ncol(dt), "variables de tipos:", paste(unique(sapply(dt, class)), collapse="/")),
+  Veracidad = paste("NAs:", sum(is.na(dt)), "de", nrow(dt)*ncol(dt), "valores"),
+  Valor     = "Identificar regiones con mayor prevalencia de diagnósticos críticos"
+)
+print(summary_5v)
+</code></pre>
+<p><strong>Criterio de completado:</strong> Tabla 5V completada con valores concretos,
+no solo definiciones abstractas.</p>
+
+</body>
+</html>

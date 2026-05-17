@@ -1,0 +1,205 @@
+{
+  "title": "Modelos Tarjetas",
+  "cards": [
+    {
+      "front": "\u00bfCu\u00e1l es el objetivo principal de la interpretaci\u00f3n de modelos en Big Data?",
+      "back": "Convertir los datos procesados en acciones concretas y decisiones informadas."
+    },
+    {
+      "front": "En el contexto de clasificaci\u00f3n, \u00bfqu\u00e9 mide la m\u00e9trica 'Accuracy'?",
+      "back": "La proporci\u00f3n total de predicciones correctas realizadas por el modelo."
+    },
+    {
+      "front": "\u00bfPara qu\u00e9 tipo de problemas se utilizan espec\u00edficamente las m\u00e9tricas de Precision y Recall?",
+      "back": "Para evaluar modelos de clasificaci\u00f3n con conjuntos de datos desbalanceados."
+    },
+    {
+      "front": "M\u00e9trica: AUC-ROC",
+      "back": "Definici\u00f3n: \u00c1rea bajo la curva que mide la capacidad de un modelo para discriminar entre clases."
+    },
+    {
+      "front": "\u00bfQu\u00e9 representa el coeficiente $R^2$ en un modelo de regresi\u00f3n?",
+      "back": "La proporci\u00f3n de la varianza de la variable dependiente que es explicada por el modelo."
+    },
+    {
+      "front": "Concepto: Feature Importance",
+      "back": "Definici\u00f3n: T\u00e9cnica que cuantifica la contribuci\u00f3n individual de cada variable predictora al rendimiento del modelo."
+    },
+    {
+      "front": "\u00bfQu\u00e9 es el An\u00e1lisis Discriminante Lineal (LDA)?",
+      "back": "Un m\u00e9todo supervisado utilizado para la clasificaci\u00f3n de datos y la reducci\u00f3n dimensional."
+    },
+    {
+      "front": "\u00bfC\u00f3mo logra el LDA maximizar la separabilidad entre clases?",
+      "back": "Maximizando la distancia entre las medias de las clases y minimizando la varianza dentro de cada clase."
+    },
+    {
+      "front": "En la funci\u00f3n discriminante del LDA $\\delta_k(x) = x^T \\Sigma^{-1} \\mu_k - \\frac{1}{2} \\mu_k^T \\Sigma^{-1} \\mu_k + \\log \\pi_k$, \u00bfqu\u00e9 representa $\\Sigma$?",
+      "back": "La matriz de covarianza compartida entre todas las clases."
+    },
+    {
+      "front": "El LDA asume que los datos siguen una distribuci\u00f3n de tipo _____.",
+      "back": "Normal multivariada"
+    },
+    {
+      "front": "\u00bfQu\u00e9 supuesto del LDA establece que todas las clases comparten la misma matriz de covarianza?",
+      "back": "Homocedasticidad (o igualdad de varianza)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es una de las principales limitaciones del LDA respecto a la estructura de los datos?",
+      "back": "No es capaz de capturar relaciones o fronteras de decisi\u00f3n no lineales."
+    },
+    {
+      "front": "\u00bfPor qu\u00e9 el LDA es sensible a los 'outliers'?",
+      "back": "Porque los valores at\u00edpicos afectan significativamente el c\u00e1lculo de las medias y las matrices de covarianza."
+    },
+    {
+      "front": "\u00bfQu\u00e9 paquete de R se utiliza com\u00fanmente para ejecutar la funci\u00f3n `lda()`?",
+      "back": "El paquete MASS."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 funci\u00f3n del paquete `caret` permite calcular la importancia de las variables de un modelo?",
+      "back": "La funci\u00f3n `varImp()`."
+    },
+    {
+      "front": "Termino: Cross-Validation (Validaci\u00f3n Cruzada)",
+      "back": "Definici\u00f3n: M\u00e9todo de evaluaci\u00f3n que divide los datos en $k$ subconjuntos para probar la estabilidad del modelo."
+    },
+    {
+      "front": "\u00bfQu\u00e9 criterio de selecci\u00f3n de modelos utiliza la f\u00f3rmula $AIC = 2k - 2 \\ln(L)$?",
+      "back": "El Criterio de Informaci\u00f3n de Akaike (AIC)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el prop\u00f3sito del Criterio de Informaci\u00f3n Bayesiano (BIC) en la selecci\u00f3n de modelos?",
+      "back": "Balancear el ajuste estad\u00edstico del modelo con su complejidad para evitar el sobreajuste."
+    },
+    {
+      "front": "Concepto: Ensemble Voting",
+      "back": "Definici\u00f3n: T\u00e9cnica que combina las predicciones de m\u00faltiples modelos para obtener un resultado final por mayor\u00eda."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de R se utiliza para calcular curvas ROC multiclase (one-vs-all)?",
+      "back": "La funci\u00f3n `multiclass.roc()` del paquete pROC."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica permite interpretar modelos complejos proporcionando explicabilidad local y global?",
+      "back": "Los valores SHAP (SHAP Values)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la utilidad de `rmarkdown` en el an\u00e1lisis de Big Data?",
+      "back": "Generar informes reproducibles que integran c\u00f3digo, resultados estad\u00edsticos y narrativa."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de R permite la creaci\u00f3n de dashboards interactivos para comunicar hallazgos?",
+      "back": "Shiny."
+    },
+    {
+      "front": "\u00bfEn qu\u00e9 se diferencia el An\u00e1lisis Discriminante Cuadr\u00e1tico (QDA) del LDA?",
+      "back": "El QDA asume que cada clase tiene su propia matriz de covarianza individual."
+    },
+    {
+      "front": "\u00bfQu\u00e9 riesgo presenta el QDA en comparaci\u00f3n con el LDA al trabajar en alta dimensi\u00f3n?",
+      "back": "Un mayor riesgo de sobreajuste (overfitting) debido al aumento de par\u00e1metros a estimar."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la principal ventaja de la Regresi\u00f3n Log\u00edstica frente al LDA en entornos de Big Data?",
+      "back": "Su alta escalabilidad mediante herramientas como Spark ML."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la principal debilidad de las M\u00e1quinas de Vector de Soporte (SVM) en grandes vol\u00famenes de datos?",
+      "back": "Su elevado tiempo de procesamiento durante la fase de entrenamiento."
+    },
+    {
+      "front": "\u00bfEn qu\u00e9 aplicaci\u00f3n real de Big Data se utiliza el LDA bajo el concepto de 'Eigenfaces'?",
+      "back": "En el reconocimiento facial."
+    },
+    {
+      "front": "\u00bfQu\u00e9 beneficio aporta el uso de LDA en la clasificaci\u00f3n de documentos (Topic modeling)?",
+      "back": "Proporciona una reducci\u00f3n dimensional que facilita la escalabilidad del an\u00e1lisis."
+    },
+    {
+      "front": "\u00bfQu\u00e9 se busca al contrastar los resultados de un modelo discriminante?",
+      "back": "Verificar si las conclusiones son consistentes y aplicables para la toma de decisiones."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 funci\u00f3n se utiliza para generar particiones de datos de entrenamiento y prueba?",
+      "back": "La funci\u00f3n `createDataPartition()` del paquete caret."
+    },
+    {
+      "front": "Para asegurar una toma de decisiones \u00e9tica, es fundamental evitar el uso de modelos de tipo _____.",
+      "back": "Caja negra (black box)"
+    },
+    {
+      "front": "\u00bfQu\u00e9 propiedad matem\u00e1tica del LDA requiere que las matrices de covarianza sean invertibles?",
+      "back": "La ausencia de multicolinealidad perfecta entre las variables predictoras."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la fortaleza del modelo SVM en la clasificaci\u00f3n?",
+      "back": "Su efectividad para trabajar en espacios de alta dimensi\u00f3n mediante el margen m\u00e1ximo."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la funci\u00f3n del comando `rmarkdown::render()`?",
+      "back": "Procesar un archivo .Rmd para convertirlo en un documento final (HTML, PDF o Word)."
+    },
+    {
+      "front": "Dentro del flujo de trabajo de la Unidad 4, \u00bfqu\u00e9 debe sintetizarse en el informe final?",
+      "back": "Conclusiones, riesgos identificados y recomendaciones para la toma de decisiones."
+    },
+    {
+      "front": "\u00bfQu\u00e9 asunci\u00f3n de linealidad comparte la Regresi\u00f3n Log\u00edstica?",
+      "back": "Asume linealidad en el logit de las probabilidades."
+    },
+    {
+      "front": "En bioinform\u00e1tica, \u00bfpara qu\u00e9 se utiliza la selecci\u00f3n de modelos en Big Data?",
+      "back": "Para identificar genes relevantes en datasets gen\u00f3micos masivos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 ventaja computacional ofrece el LDA sobre modelos m\u00e1s complejos?",
+      "back": "Es r\u00e1pido y computacionalmente ligero, facilitando su ejecuci\u00f3n en datasets medianos."
+    },
+    {
+      "front": "Concepto: XAI (Explainable AI)",
+      "back": "Definici\u00f3n: Campo que busca proporcionar transparencia y explicabilidad a los resultados de modelos de IA complejos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 indica un valor de AUC-ROC cercano a $1.0$?",
+      "back": "Que el modelo tiene una capacidad de discriminaci\u00f3n casi perfecta entre las clases."
+    },
+    {
+      "front": "En un informe de anal\u00edtica, \u00bfqu\u00e9 secci\u00f3n aborda los fallos potenciales o contextos donde el modelo no es v\u00e1lido?",
+      "back": "La secci\u00f3n de limitaciones."
+    },
+    {
+      "front": "\u00bfQu\u00e9 componente de la f\u00f3rmula del LDA representa la probabilidad a priori de pertenencia a una clase?",
+      "back": "El t\u00e9rmino $\\pi_k$."
+    },
+    {
+      "front": "Al evaluar un modelo con `confusionMatrix`, \u00bfqu\u00e9 informaci\u00f3n se obtiene principalmente?",
+      "back": "El cruce entre las predicciones del modelo y los valores reales de los datos de prueba."
+    },
+    {
+      "front": "\u00bfPor qu\u00e9 es preferible el LDA para la reducci\u00f3n dimensional antes de aplicar otros algoritmos?",
+      "back": "Porque proyecta los datos en un espacio de baja dimensi\u00f3n manteniendo la separaci\u00f3n de clases."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de modelos se priorizan en Big Data seg\u00fan su capacidad de procesamiento?",
+      "back": "Modelos que permiten la paralelizaci\u00f3n de sus c\u00e1lculos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 se entiende por 'Varianza intra-clase' en el contexto de LDA?",
+      "back": "La dispersi\u00f3n de los datos pertenecientes a una misma categor\u00eda alrededor de su media."
+    },
+    {
+      "front": "En el desarrollo de un proyecto, \u00bfqu\u00e9 sigue inmediatamente despu\u00e9s de aplicar el an\u00e1lisis discriminante?",
+      "back": "El contraste de los resultados obtenidos con las m\u00e9tricas y supuestos iniciales."
+    },
+    {
+      "front": "\u00bfQu\u00e9 autor es una referencia clave para el aprendizaje estad\u00edstico mencionado en la bibliograf\u00eda?",
+      "back": "Hastie (The Elements of Statistical Learning)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 funci\u00f3n cumple el par\u00e1metro `set.seed()` en los ejemplos de R?",
+      "back": "Garantizar la reproducibilidad de los resultados al fijar el generador de n\u00fameros aleatorios."
+    }
+  ]
+}

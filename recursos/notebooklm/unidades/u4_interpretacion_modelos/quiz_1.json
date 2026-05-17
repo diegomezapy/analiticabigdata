@@ -1,0 +1,265 @@
+{
+  "title": "An\u00e1lisis Cuestionario",
+  "questions": [
+    {
+      "question": "En el contexto de un An\u00e1lisis Discriminante Lineal (LDA), \u00bfqu\u00e9 supuesto fundamental sobre la matriz de covarianza diferencia a este m\u00e9todo del An\u00e1lisis Discriminante Cuadr\u00e1tico (QDA)?",
+      "answerOptions": [
+        {
+          "text": "LDA asume que todas las clases comparten la misma matriz de covarianza (homocedasticidad).",
+          "isCorrect": true,
+          "rationale": "El LDA busca una frontera de decisi\u00f3n lineal bajo el supuesto de que las matrices de covarianza $\\Sigma$ son id\u00e9nticas para todas las clases."
+        },
+        {
+          "text": "LDA permite que cada clase posea su propia matriz de covarianza distinta.",
+          "isCorrect": false,
+          "rationale": "Este es el supuesto del QDA, lo que resulta en fronteras de decisi\u00f3n cuadr\u00e1ticas en lugar de lineales."
+        },
+        {
+          "text": "LDA no requiere supuestos sobre la covarianza, solo sobre la media de los grupos.",
+          "isCorrect": false,
+          "rationale": "Para calcular la funci\u00f3n discriminante, es imperativo estimar la estructura de la varianza-covarianza de los datos."
+        },
+        {
+          "text": "LDA asume que la matriz de covarianza debe ser siempre una matriz identidad.",
+          "isCorrect": false,
+          "rationale": "Aunque simplificar\u00eda el c\u00e1lculo, el LDA maneja matrices de covarianza generales, siempre que sean iguales entre grupos."
+        }
+      ],
+      "hint": "Considere qu\u00e9 propiedad geom\u00e9trica de la frontera de decisi\u00f3n se busca mantener constante en todo el espacio de variables."
+    },
+    {
+      "question": "Al interpretar la funci\u00f3n discriminante $\\delta_k(x) = x^T \\Sigma^{-1} \\mu_k - \\frac{1}{2} \\mu_k^T \\Sigma^{-1} \\mu_k + \\log \\pi_k$, \u00bfqu\u00e9 representa el t\u00e9rmino $\\pi_k$?",
+      "answerOptions": [
+        {
+          "text": "La probabilidad a priori de que una observaci\u00f3n pertenezca a la clase $k$.",
+          "isCorrect": true,
+          "rationale": "$\\pi_k$ representa la proporci\u00f3n o peso inicial de la clase en el conjunto de datos antes de observar las variables explicativas."
+        },
+        {
+          "text": "El logaritmo de la varianza explicada por el primer componente discriminante.",
+          "isCorrect": false,
+          "rationale": "La varianza explicada se deriva de los autovalores de la descomposici\u00f3n, no de las probabilidades de clase."
+        },
+        {
+          "text": "La distancia de Mahalanobis entre la observaci\u00f3n $x$ y el centroide $\\mu_k$.",
+          "isCorrect": false,
+          "rationale": "La distancia de Mahalanobis est\u00e1 involucrada en la estructura cuadr\u00e1tica del exponente de la normal, pero $\\pi_k$ es un escalar de probabilidad."
+        },
+        {
+          "text": "El coeficiente de importancia de la variable $x$ en la discriminaci\u00f3n de clases.",
+          "isCorrect": false,
+          "rationale": "La importancia se suele derivar de los coeficientes del vector $x^T \\Sigma^{-1} \\mu_k$."
+        }
+      ],
+      "hint": "Piense en la informaci\u00f3n que tenemos sobre la frecuencia de las clases en la poblaci\u00f3n antes de medir cualquier caracter\u00edstica."
+    },
+    {
+      "question": "Se desea evaluar un modelo de clasificaci\u00f3n en un dataset de Big Data con clases altamente desbalanceadas. \u00bfPor qu\u00e9 el Accuracy podr\u00eda ser una m\u00e9trica enga\u00f1osa en este escenario?",
+      "answerOptions": [
+        {
+          "text": "Porque puede mostrar un valor alto simplemente prediciendo siempre la clase mayoritaria.",
+          "isCorrect": true,
+          "rationale": "En datos desbalanceados, un modelo trivial puede obtener un accuracy elevado sin identificar realmente a la clase minoritaria de inter\u00e9s."
+        },
+        {
+          "text": "Porque el Accuracy no es calculable cuando se utiliza validaci\u00f3n cruzada ($k$-fold CV).",
+          "isCorrect": false,
+          "rationale": "El accuracy es perfectamente calculable en CV; el problema es su interpretaci\u00f3n conceptual en desbalance."
+        },
+        {
+          "text": "Porque el Accuracy solo se aplica a modelos de regresi\u00f3n lineal y no a clasificaci\u00f3n.",
+          "isCorrect": false,
+          "rationale": "El accuracy es espec\u00edficamente una m\u00e9trica de clasificaci\u00f3n que mide la proporci\u00f3n de aciertos totales."
+        },
+        {
+          "text": "Porque requiere que la matriz de confusi\u00f3n sea sim\u00e9trica para ser v\u00e1lida.",
+          "isCorrect": false,
+          "rationale": "La validez del c\u00e1lculo del accuracy no depende de la simetr\u00eda de los errores cometidos entre clases."
+        }
+      ],
+      "hint": "Imagine un dataset donde el $99\\%$ de los casos pertenecen a una sola clase y el modelo falla en todos los casos del $1\\%$ restante."
+    },
+    {
+      "question": "En el desarrollo de un proyecto en R, se utiliza la funci\u00f3n `varImp(model)` del paquete `caret`. \u00bfCu\u00e1l es el prop\u00f3sito primordial de esta instrucci\u00f3n?",
+      "answerOptions": [
+        {
+          "text": "Cuantificar la contribuci\u00f3n relativa de cada variable predictora al rendimiento del modelo.",
+          "isCorrect": true,
+          "rationale": "Esta funci\u00f3n permite identificar qu\u00e9 'features' son m\u00e1s influyentes para que el modelo tome sus decisiones o reduzca el error."
+        },
+        {
+          "text": "Importar variables externas desde un archivo CSV al entorno de trabajo de R.",
+          "isCorrect": false,
+          "rationale": "La importaci\u00f3n de datos se realiza con funciones como `read.csv()`, no con an\u00e1lisis de importancia de variables."
+        },
+        {
+          "text": "Validar si los residuos del modelo siguen una distribuci\u00f3n normal multivariada.",
+          "isCorrect": false,
+          "rationale": "La normalidad de residuos se analiza con tests estad\u00edsticos o gr\u00e1ficos Q-Q, no con importancia de variables."
+        },
+        {
+          "text": "Calcular la matriz de covarianza compartida necesaria para el algoritmo LDA.",
+          "isCorrect": false,
+          "rationale": "El c\u00e1lculo de matrices de covarianza es interno al entrenamiento del modelo y no es el objetivo de `varImp`."
+        }
+      ],
+      "hint": "Considere qu\u00e9 t\u00e9cnica ayudar\u00eda a un cient\u00edfico de datos a decidir qu\u00e9 variables eliminar para simplificar un modelo complejo."
+    },
+    {
+      "question": "Al seleccionar modelos basados en el Criterio de Informaci\u00f3n de Akaike (AIC), \u00bfcu\u00e1l es la regla de decisi\u00f3n general?",
+      "answerOptions": [
+        {
+          "text": "Se prefiere el modelo con el menor valor de AIC, ya que penaliza la complejidad innecesaria.",
+          "isCorrect": true,
+          "rationale": "El AIC balancea la bondad de ajuste (verosimilitud) con el n\u00famero de par\u00e1metros, favoreciendo la parsimonia."
+        },
+        {
+          "text": "Se prefiere el modelo con el mayor valor de AIC para maximizar la varianza explicada.",
+          "isCorrect": false,
+          "rationale": "Un AIC alto suele indicar un mal ajuste o un exceso de par\u00e1metros injustificado por la verosimilitud."
+        },
+        {
+          "text": "El AIC debe ser igual a cero para que el modelo sea considerado estad\u00edsticamente significativo.",
+          "isCorrect": false,
+          "rationale": "El AIC es una medida relativa de comparaci\u00f3n; su valor absoluto no tiene una interpretaci\u00f3n de significancia fija."
+        },
+        {
+          "text": "El AIC solo es v\u00e1lido si el modelo tiene un $R^2$ superior a $0.95$.",
+          "isCorrect": false,
+          "rationale": "El AIC se puede utilizar independientemente del valor de $R^2$, incluso en modelos de clasificaci\u00f3n donde $R^2$ no es est\u00e1ndar."
+        }
+      ],
+      "hint": "Piense en el AIC como un costo: \u00bfquiere que el costo de su modelo sea alto o bajo?"
+    },
+    {
+      "question": "Dentro del flujo de trabajo de R Markdown, \u00bfqu\u00e9 funci\u00f3n cumple el comando `rmarkdown::render('report.Rmd')`?",
+      "answerOptions": [
+        {
+          "text": "Procesa el c\u00f3digo y el texto para generar un documento final (HTML, PDF o Word) reproducible.",
+          "isCorrect": true,
+          "rationale": "Renderizar combina la ejecuci\u00f3n del c\u00f3digo con el formateo de la narrativa para producir el informe de salida."
+        },
+        {
+          "text": "Entrena autom\u00e1ticamente un modelo LDA sobre los datos cargados en el script.",
+          "isCorrect": false,
+          "rationale": "El entrenamiento del modelo debe estar especificado dentro de los 'chunks' de c\u00f3digo, la funci\u00f3n `render` solo coordina la ejecuci\u00f3n."
+        },
+        {
+          "text": "Instala todas las librer\u00edas necesarias mencionadas en el archivo de texto.",
+          "isCorrect": false,
+          "rationale": "La instalaci\u00f3n de paquetes se hace con `install.packages()` y no es responsabilidad del motor de renderizado."
+        },
+        {
+          "text": "Limpia la memoria RAM de R para permitir el procesamiento de grandes vol\u00famenes de datos.",
+          "isCorrect": false,
+          "rationale": "La limpieza de memoria se suele hacer con `rm(list = ls())` o mediante la gesti\u00f3n de basura de R."
+        }
+      ],
+      "hint": "Es el paso final que transforma su 'borrador' t\u00e9cnico en un producto comunicable para la toma de decisiones."
+    },
+    {
+      "question": "En el marco de la Inteligencia Artificial Explicable (XAI), \u00bfqu\u00e9 ventaja ofrecen los valores SHAP frente a las m\u00e9tricas tradicionales de importancia global?",
+      "answerOptions": [
+        {
+          "text": "Permiten explicar la contribuci\u00f3n de cada variable a una predicci\u00f3n individual espec\u00edfica.",
+          "isCorrect": true,
+          "rationale": "SHAP proporciona explicabilidad tanto local (una observaci\u00f3n) como global, bas\u00e1ndose en la teor\u00eda de juegos de Shapley."
+        },
+        {
+          "text": "Garantizan que el modelo alcance siempre un Accuracy del $100\\%$.",
+          "isCorrect": false,
+          "rationale": "XAI se enfoca en la interpretaci\u00f3n y transparencia, no en mejorar directamente la capacidad predictiva del modelo."
+        },
+        {
+          "text": "Sustituyen la necesidad de realizar validaci\u00f3n cruzada en datasets masivos.",
+          "isCorrect": false,
+          "rationale": "La validaci\u00f3n cruzada sigue siendo necesaria para evaluar la generalizaci\u00f3n del modelo, independientemente de c\u00f3mo se explique."
+        },
+        {
+          "text": "Son computacionalmente m\u00e1s ligeros que el c\u00e1lculo de los coeficientes de una regresi\u00f3n lineal.",
+          "isCorrect": false,
+          "rationale": "El c\u00e1lculo de valores SHAP es a menudo intensivo en c\u00f3mputo, especialmente en modelos complejos como ensambles."
+        }
+      ],
+      "hint": "Considere la diferencia entre saber 'qu\u00e9 variables importan en general' y 'por qu\u00e9 este cliente espec\u00edfico fue rechazado'."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es una de las principales limitaciones del An\u00e1lisis Discriminante Lineal (LDA) cuando se enfrenta a problemas complejos de Big Data?",
+      "answerOptions": [
+        {
+          "text": "Su incapacidad inherente para capturar relaciones no lineales entre las variables.",
+          "isCorrect": true,
+          "rationale": "Al proyectar y separar clases con hiperplanos, el LDA no puede modelar fronteras curvas o interacciones complejas sin transformaciones previas."
+        },
+        {
+          "text": "Que requiere obligatoriamente que el n\u00famero de variables sea mayor al n\u00famero de observaciones.",
+          "isCorrect": false,
+          "rationale": "Al contrario, el LDA suele tener problemas (singularidad) cuando el n\u00famero de variables excede significativamente al de observaciones."
+        },
+        {
+          "text": "Su alta demanda de memoria RAM en comparaci\u00f3n con algoritmos de Deep Learning.",
+          "isCorrect": false,
+          "rationale": "El LDA es valorado precisamente por ser computacionalmente ligero y eficiente en t\u00e9rminos de recursos."
+        },
+        {
+          "text": "Que solo puede ser implementado en lenguajes de bajo nivel como C++ y no en R.",
+          "isCorrect": false,
+          "rationale": "El material demuestra expl\u00edcitamente c\u00f3mo implementar LDA en R utilizando la librer\u00eda `MASS`."
+        }
+      ],
+      "hint": "Piense en la forma geom\u00e9trica de la separaci\u00f3n que el propio nombre del algoritmo sugiere."
+    },
+    {
+      "question": "En un an\u00e1lisis de curvas ROC, \u00bfqu\u00e9 significa que un modelo tenga un AUC (\u00c1rea Bajo la Curva) cercano a $0.5$?",
+      "answerOptions": [
+        {
+          "text": "Que el modelo no tiene capacidad de discriminaci\u00f3n, actuando como un clasificador aleatorio.",
+          "isCorrect": true,
+          "rationale": "Un AUC de $0.5$ representa la diagonal en el espacio ROC, indicando que el modelo no separa las clases mejor que el azar."
+        },
+        {
+          "text": "Que el modelo es perfecto y clasifica correctamente todas las instancias.",
+          "isCorrect": false,
+          "rationale": "Un clasificador perfecto tendr\u00eda un AUC de $1.0$."
+        },
+        {
+          "text": "Que existe una alta multicolinealidad entre las variables predictoras del modelo.",
+          "isCorrect": false,
+          "rationale": "La multicolinealidad afecta la estimaci\u00f3n de coeficientes, pero el AUC mide la performance de clasificaci\u00f3n independientemente de la causa del error."
+        },
+        {
+          "text": "Que el modelo solo es aplicable si los datos siguen una distribuci\u00f3n de Poisson.",
+          "isCorrect": false,
+          "rationale": "El AUC es una m\u00e9trica no param\u00e9trica de evaluaci\u00f3n de clasificaci\u00f3n y no impone supuestos distribucionales sobre los datos."
+        }
+      ],
+      "hint": "Imagine una moneda lanzada al aire para decidir la clase de cada observaci\u00f3n."
+    },
+    {
+      "question": "De acuerdo con el material, \u00bfcu\u00e1l es el primer paso sugerido en la ruta de trabajo para la interpretaci\u00f3n de resultados?",
+      "answerOptions": [
+        {
+          "text": "Revisar m\u00e9tricas, supuestos y l\u00edmites del modelo.",
+          "isCorrect": true,
+          "rationale": "Antes de aplicar t\u00e9cnicas avanzadas o sintetizar conclusiones, es fundamental validar que el modelo cumple con las bases te\u00f3ricas y evaluar su performance inicial."
+        },
+        {
+          "text": "Publicar los resultados en un dashboard interactivo de Shiny.",
+          "isCorrect": false,
+          "rationale": "La comunicaci\u00f3n mediante dashboards es una etapa final para compartir hallazgos, no el primer paso t\u00e9cnico."
+        },
+        {
+          "text": "Aplicar un an\u00e1lisis discriminante lineal (LDA) de forma inmediata.",
+          "isCorrect": false,
+          "rationale": "El LDA es una herramienta que se aplica en el paso 2, una vez comprendido el contexto y las m\u00e9tricas."
+        },
+        {
+          "text": "Escribir las recomendaciones finales para la toma de decisiones.",
+          "isCorrect": false,
+          "rationale": "Las recomendaciones se derivan del an\u00e1lisis; no pueden preceder a la revisi\u00f3n de m\u00e9tricas y resultados."
+        }
+      ],
+      "hint": "Piense en la fase de diagn\u00f3stico previa a la ejecuci\u00f3n de algoritmos espec\u00edficos."
+    }
+  ]
+}

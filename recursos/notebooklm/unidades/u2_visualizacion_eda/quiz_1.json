@@ -1,0 +1,265 @@
+{
+  "title": "Datos Cuestionario",
+  "questions": [
+    {
+      "question": "En el contexto de la preparaci\u00f3n de datos, \u00bfcu\u00e1l es la principal diferencia conceptual entre la binarizaci\u00f3n y el escalado de variables cuantitativas?",
+      "answerOptions": [
+        {
+          "text": "La binarizaci\u00f3n transforma variables cualitativas en num\u00e9ricas, mientras que el escalado ajusta el rango de variables ya cuantitativas.",
+          "isCorrect": false,
+          "rationale": "La binarizaci\u00f3n tambi\u00e9n puede aplicarse a variables cuantitativas mediante umbrales, por lo que esta distinci\u00f3n no es estrictamente correcta en todos los casos."
+        },
+        {
+          "text": "La binarizaci\u00f3n convierte una variable en valores de $0$ o $1$ seg\u00fan un umbral, mientras que el escalado ajusta la magnitud de los datos sin perder su naturaleza continua.",
+          "isCorrect": true,
+          "rationale": "La binarizaci\u00f3n es una t\u00e9cnica de discretizaci\u00f3n extrema (dos estados), mientras que el escalado (como la estandarizaci\u00f3n) mantiene la distribuci\u00f3n relativa de los valores originales en un nuevo rango."
+        },
+        {
+          "text": "El escalado se utiliza exclusivamente para eliminar valores at\u00edpicos (outliers), mientras que la binarizaci\u00f3n se usa para imputar valores faltantes.",
+          "isCorrect": false,
+          "rationale": "Ninguna de las dos t\u00e9cnicas tiene como prop\u00f3sito principal la eliminaci\u00f3n de outliers o la imputaci\u00f3n de valores faltantes (missing values)."
+        },
+        {
+          "text": "La binarizaci\u00f3n solo se puede realizar en Python con scikit-learn, mientras que el escalado es exclusivo del lenguaje R.",
+          "isCorrect": false,
+          "rationale": "Ambas t\u00e9cnicas son fundamentales en ciencia de datos y est\u00e1n disponibles en las librer\u00edas est\u00e1ndar tanto de Python como de R."
+        }
+      ],
+      "hint": "Considere qu\u00e9 sucede con la continuidad de los datos originales en cada proceso."
+    },
+    {
+      "question": "Al analizar un gr\u00e1fico de 'Heatmap' generado con `sns.heatmap(df.corr())`, se observa un valor de $-0.85$ entre dos variables. \u00bfQu\u00e9 interpretaci\u00f3n es correcta?",
+      "answerOptions": [
+        {
+          "text": "Existe una correlaci\u00f3n positiva d\u00e9bil; las variables no est\u00e1n relacionadas.",
+          "isCorrect": false,
+          "rationale": "Un valor cercano a $-1$ indica una relaci\u00f3n muy fuerte, no d\u00e9bil, y el signo negativo indica una relaci\u00f3n inversa."
+        },
+        {
+          "text": "Indica un error en el c\u00e1lculo, ya que los coeficientes de correlaci\u00f3n solo pueden ser valores positivos entre $0$ y $1$.",
+          "isCorrect": false,
+          "rationale": "El coeficiente de correlaci\u00f3n (generalmente de Pearson) oscila en el rango $[-1, 1]$."
+        },
+        {
+          "text": "Existe una fuerte relaci\u00f3n inversa; cuando una variable aumenta, la otra tiende a disminuir significativamente.",
+          "isCorrect": true,
+          "rationale": "Los valores cercanos a $-1$ representan una correlaci\u00f3n negativa fuerte, donde el movimiento de las variables es opuesto."
+        },
+        {
+          "text": "Representa que el $85\\%$ de los datos en ambas variables son valores nulos o faltantes.",
+          "isCorrect": false,
+          "rationale": "La correlaci\u00f3n mide la relaci\u00f3n lineal entre variables, no la proporci\u00f3n de valores ausentes (missing values)."
+        }
+      ],
+      "hint": "Recuerde el rango de valores del coeficiente de correlaci\u00f3n de Pearson y el significado de su signo."
+    },
+    {
+      "question": "Desea realizar una imputaci\u00f3n de valores faltantes en un dataset complejo donde las variables tienen dependencias locales. Seg\u00fan el material, \u00bfqu\u00e9 t\u00e9cnica ser\u00eda la m\u00e1s adecuada?",
+      "answerOptions": [
+        {
+          "text": "Eliminaci\u00f3n de registros (Listwise deletion), para asegurar que no se introduzca sesgo estad\u00edstico.",
+          "isCorrect": false,
+          "rationale": "La eliminaci\u00f3n puede introducir sesgos significativos si los datos no faltan de forma completamente aleatoria y conlleva p\u00e9rdida de informaci\u00f3n."
+        },
+        {
+          "text": "Imputaci\u00f3n por la media, debido a su rapidez computacional y capacidad para mantener la varianza original.",
+          "isCorrect": false,
+          "rationale": "La imputaci\u00f3n por la media suele reducir artificialmente la varianza y no considera las relaciones entre variables."
+        },
+        {
+          "text": "Imputaci\u00f3n mediante K-Nearest Neighbors (KNN), ya que considera las similitudes entre observaciones para estimar el valor faltante.",
+          "isCorrect": true,
+          "rationale": "KNN utiliza la proximidad en el espacio de caracter\u00edsticas para imputar valores, lo que lo hace ideal para capturar dependencias locales en datasets complejos."
+        },
+        {
+          "text": "Imputaci\u00f3n por la moda, puesto que es la t\u00e9cnica est\u00e1ndar recomendada para cualquier variable de tipo cuantitativo continuo.",
+          "isCorrect": false,
+          "rationale": "La moda se utiliza principalmente para variables cualitativas (nominales), no para datos cuantitativos continuos."
+        }
+      ],
+      "hint": "Piense en qu\u00e9 m\u00e9todo utiliza la informaci\u00f3n de 'vecinos' similares para realizar la estimaci\u00f3n."
+    },
+    {
+      "question": "En R, tras cargar la librer\u00eda `ggplot2`, usted ejecuta el comando: `ggplot(df, aes(x=ingresos, y=gastos)) + geom_point()`. \u00bfQu\u00e9 tipo de an\u00e1lisis est\u00e1 realizando?",
+      "answerOptions": [
+        {
+          "text": "An\u00e1lisis univariado para observar la distribuci\u00f3n de la variable ingresos.",
+          "isCorrect": false,
+          "rationale": "El an\u00e1lisis univariado solo utiliza una variable (como un histograma); aqu\u00ed se est\u00e1n mapeando dos ejes ($x$ e $y$)."
+        },
+        {
+          "text": "An\u00e1lisis bivariado para explorar la relaci\u00f3n o dispersi\u00f3n entre ingresos y gastos.",
+          "isCorrect": true,
+          "rationale": "El uso de `geom_point()` con dos variables est\u00e9ticas crea un gr\u00e1fico de dispersi\u00f3n (scatter plot), herramienta clave del EDA bivariado."
+        },
+        {
+          "text": "An\u00e1lisis de series temporales para predecir el comportamiento futuro de los gastos.",
+          "isCorrect": false,
+          "rationale": "Un scatter plot muestra relaciones en un punto del tiempo; no implica necesariamente una estructura de serie temporal a menos que un eje sea el tiempo."
+        },
+        {
+          "text": "Detecci\u00f3n autom\u00e1tica de outliers mediante la funci\u00f3n de densidad de probabilidad.",
+          "isCorrect": false,
+          "rationale": "Aunque visualmente permite ver puntos alejados, `geom_point()` no es un algoritmo de detecci\u00f3n autom\u00e1tica de outliers por s\u00ed mismo."
+        }
+      ],
+      "hint": "Observe cu\u00e1ntas variables se est\u00e1n comparando y qu\u00e9 geometr\u00eda se est\u00e1 utilizando."
+    },
+    {
+      "question": "Si una variable se clasifica como 'Cualitativa Ordinal', \u00bfcu\u00e1l de los siguientes ejemplos se ajusta mejor a esta definici\u00f3n seg\u00fan la Tabla 1 del material?",
+      "answerOptions": [
+        {
+          "text": "El color de un veh\u00edculo (Rojo, Verde, Azul).",
+          "isCorrect": false,
+          "rationale": "Los colores no tienen un orden intr\u00ednseco o jer\u00e1rquico natural, por lo que son nominales."
+        },
+        {
+          "text": "La temperatura exacta registrada en grados Celsius ($25.4^{\\circ}C$).",
+          "isCorrect": false,
+          "rationale": "Esta es una variable cuantitativa continua, ya que representa una medici\u00f3n en una escala num\u00e9rica infinita."
+        },
+        {
+          "text": "El nivel de satisfacci\u00f3n de un cliente (Bajo, Medio, Alto).",
+          "isCorrect": true,
+          "rationale": "Las categor\u00edas representan cualidades pero poseen un orden o jerarqu\u00eda l\u00f3gica, definiendo el tipo ordinal."
+        },
+        {
+          "text": "La cantidad de hijos en una familia ($0, 1, 2, ...$).",
+          "isCorrect": false,
+          "rationale": "Este es un valor contable entero, lo que lo clasifica como cuantitativo discreto."
+        }
+      ],
+      "hint": "Busque categor\u00edas que tengan una jerarqu\u00eda o secuencia l\u00f3gica pero que no sean n\u00fameros de medici\u00f3n."
+    },
+    {
+      "question": "En el preprocesado de datos, se decide aplicar una estandarizaci\u00f3n utilizando la f\u00f3rmula $z = \\frac{x - \\mu}{\\sigma}$. \u00bfCu\u00e1l es el resultado esperado sobre la variable transformada?",
+      "answerOptions": [
+        {
+          "text": "Que todos los valores se encuentren estrictamente entre $0$ y $1$.",
+          "isCorrect": false,
+          "rationale": "El rango $[0, 1]$ es t\u00edpico del escalado Min-Max, no de la estandarizaci\u00f3n Z-score."
+        },
+        {
+          "text": "Que la variable tenga una media igual a $0$ y una desviaci\u00f3n est\u00e1ndar igual a $1$.",
+          "isCorrect": true,
+          "rationale": "Esta transformaci\u00f3n (Z-score) centra los datos en el origen y escala la dispersi\u00f3n bas\u00e1ndose en la desviaci\u00f3n est\u00e1ndar."
+        },
+        {
+          "text": "La eliminaci\u00f3n completa de todos los valores nulos (NA) presentes en la muestra.",
+          "isCorrect": false,
+          "rationale": "La estandarizaci\u00f3n no imputa ni elimina valores nulos; de hecho, suele requerir que no existan nulos para computar $\\mu$ y $\\sigma$."
+        },
+        {
+          "text": "La conversi\u00f3n de una variable continua en una variable categ\u00f3rica nominal.",
+          "isCorrect": false,
+          "rationale": "La estandarizaci\u00f3n mantiene la naturaleza cuantitativa y continua de los datos."
+        }
+      ],
+      "hint": "Recuerde los par\u00e1metros estad\u00edsticos de una distribuci\u00f3n normal est\u00e1ndar."
+    },
+    {
+      "question": "Analizando el script de Python proporcionado en el material: `df.describe()`. \u00bfQu\u00e9 informaci\u00f3n cr\u00edtica se omitir\u00eda si solo nos basamos en este comando para el EDA?",
+      "answerOptions": [
+        {
+          "text": "La media y la mediana de las variables num\u00e9ricas.",
+          "isCorrect": false,
+          "rationale": "`describe()` incluye por defecto la media y el percentil $50\\%$ (mediana)."
+        },
+        {
+          "text": "La cantidad de registros no nulos presentes en cada columna.",
+          "isCorrect": false,
+          "rationale": "El conteo (count) es la primera fila de la salida de `describe()` en pandas."
+        },
+        {
+          "text": "La estructura visual de la distribuci\u00f3n y la existencia de patrones no lineales entre variables.",
+          "isCorrect": true,
+          "rationale": "Las estad\u00edsticas descriptivas son res\u00famenes num\u00e9ricos; el EDA requiere visualizaciones (como histogramas o scatter plots) para detectar formas de distribuci\u00f3n o relaciones complejas."
+        },
+        {
+          "text": "El valor m\u00e1ximo y m\u00ednimo de las columnas cuantitativas.",
+          "isCorrect": false,
+          "rationale": "Los valores 'min' y 'max' son parte fundamental del resumen estad\u00edstico de este comando."
+        }
+      ],
+      "hint": "Considere la limitaci\u00f3n de los n\u00fameros frente a las representaciones gr\u00e1ficas en el An\u00e1lisis Exploratorio de Datos."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la funci\u00f3n principal del diagrama de caja (Boxplot) en la etapa de limpieza de datos seg\u00fan el material extendido?",
+      "answerOptions": [
+        {
+          "text": "Determinar si la variable sigue una distribuci\u00f3n normal perfecta.",
+          "isCorrect": false,
+          "rationale": "Aunque da pistas sobre la simetr\u00eda, un histograma o un gr\u00e1fico Q-Q es m\u00e1s preciso para evaluar la normalidad."
+        },
+        {
+          "text": "Identificar visualmente la presencia de valores at\u00edpicos (outliers) mediante los bigotes del gr\u00e1fico.",
+          "isCorrect": true,
+          "rationale": "El Boxplot utiliza el rango intercuart\u00edlico para se\u00f1alar puntos que se alejan significativamente de la masa central de datos."
+        },
+        {
+          "text": "Sustituir autom\u00e1ticamente los valores faltantes por el valor de la mediana.",
+          "isCorrect": false,
+          "rationale": "El Boxplot es una herramienta de visualizaci\u00f3n, no un algoritmo de imputaci\u00f3n o transformaci\u00f3n de datos."
+        },
+        {
+          "text": "Comparar la correlaci\u00f3n lineal entre tres o m\u00e1s variables simult\u00e1neamente.",
+          "isCorrect": false,
+          "rationale": "Los Boxplots son principalmente univariados (o bivariados si se agrupa una continua por una categ\u00f3rica), no para correlaciones m\u00faltiples."
+        }
+      ],
+      "hint": "Piense en qu\u00e9 gr\u00e1fico utiliza 'puntos' aislados fuera de una estructura central para se\u00f1alar datos extra\u00f1os."
+    },
+    {
+      "question": "En R, \u00bfqu\u00e9 ventaja ofrece el uso del paquete `mice` frente a la funci\u00f3n `na.omit()` para el tratamiento de valores ausentes?",
+      "answerOptions": [
+        {
+          "text": "`mice` simplemente borra las columnas que tienen nulos, mientras que `na.omit()` las mantiene vac\u00edas.",
+          "isCorrect": false,
+          "rationale": "`na.omit()` borra filas, no columnas; y `mice` busca completar los datos, no borrarlos."
+        },
+        {
+          "text": "`na.omit()` es m\u00e1s preciso para datasets de Big Data, mientras que `mice` solo funciona con muestras peque\u00f1as.",
+          "isCorrect": false,
+          "rationale": "La precisi\u00f3n depende de la naturaleza de los datos faltantes; `na.omit()` suele ser el menos preciso al descartar informaci\u00f3n."
+        },
+        {
+          "text": "`mice` realiza imputaci\u00f3n m\u00faltiple creando varios datasets posibles, lo que ayuda a capturar la incertidumbre de los datos faltantes.",
+          "isCorrect": true,
+          "rationale": "A diferencia de la eliminaci\u00f3n simple, la imputaci\u00f3n m\u00faltiple (como la que hace `mice`) modela los valores ausentes de forma estad\u00edstica."
+        },
+        {
+          "text": "`mice` es una librer\u00eda de visualizaci\u00f3n que reemplaza a `ggplot2` para ver datos nulos.",
+          "isCorrect": false,
+          "rationale": "`mice` es espec\u00edficamente para imputaci\u00f3n multivariada, no es una librer\u00eda de visualizaci\u00f3n general."
+        }
+      ],
+      "hint": "Considere la diferencia entre descartar informaci\u00f3n y estimar informaci\u00f3n faltante de forma sofisticada."
+    },
+    {
+      "question": "Usted est\u00e1 utilizando la librer\u00eda `seaborn` en Python y ejecuta `sns.histplot(data=df, x='edad', kde=True)`. \u00bfPara qu\u00e9 sirve el par\u00e1metro `kde=True`?",
+      "answerOptions": [
+        {
+          "text": "Para eliminar autom\u00e1ticamente los valores nulos de la columna 'edad'.",
+          "isCorrect": false,
+          "rationale": "La limpieza de datos debe hacerse antes de la visualizaci\u00f3n; el par\u00e1metro KDE no modifica el dataset original."
+        },
+        {
+          "text": "Para superponer una curva de estimaci\u00f3n de densidad de kernel que suaviza la distribuci\u00f3n del histograma.",
+          "isCorrect": true,
+          "rationale": "KDE (Kernel Density Estimate) permite visualizar la forma de la distribuci\u00f3n de una manera continua m\u00e1s all\u00e1 de las barras del histograma."
+        },
+        {
+          "text": "Para cambiar el color de las barras a un formato apto para personas con daltonismo.",
+          "isCorrect": false,
+          "rationale": "Los colores se gestionan con par\u00e1metros como 'palette' o 'color', no con KDE."
+        },
+        {
+          "text": "Para dividir el histograma en m\u00faltiples sub-gr\u00e1ficos basados en una variable categ\u00f3rica.",
+          "isCorrect": false,
+          "rationale": "La divisi\u00f3n en sub-gr\u00e1ficos generalmente se realiza con par\u00e1metros como 'hue' o 'col'."
+        }
+      ],
+      "hint": "Piense en la l\u00ednea suave que a menudo acompa\u00f1a a las barras en gr\u00e1ficos de distribuci\u00f3n modernos."
+    }
+  ]
+}

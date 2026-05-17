@@ -1,0 +1,2 @@
+# URL del video overview de 2.2 Estadísticos Descriptivos y Limpieza de Datos
+# Usar NotebookLM o Loom

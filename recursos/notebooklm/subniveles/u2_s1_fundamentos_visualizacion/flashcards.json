@@ -1,0 +1,205 @@
+{
+  "title": "Datos Tarjetas",
+  "cards": [
+    {
+      "front": "\u00bfQu\u00e9 es el An\u00e1lisis Exploratorio de Datos (EDA)?",
+      "back": "Es un proceso para revelar la estructura y patrones de los datos antes del modelado."
+    },
+    {
+      "front": "Definici\u00f3n: Variable Cuantitativa Discreta",
+      "back": "Variable que toma valores contables enteros, como el n\u00famero de clientes."
+    },
+    {
+      "front": "Definici\u00f3n: Variable Cuantitativa Continua",
+      "back": "Variable que toma valores en un rango continuo, como el peso o el tiempo."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la diferencia entre una variable cualitativa nominal y una ordinal?",
+      "back": "La nominal carece de orden (color), mientras que la ordinal posee un orden intr\u00ednseco (nivel educativo)."
+    },
+    {
+      "front": "En Big Data, \u00bfpara qu\u00e9 sirven las transformaciones como log o Box-Cox?",
+      "back": "Para ajustar distribuciones sesgadas hacia una distribuci\u00f3n normal."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de Python se utiliza para obtener un resumen estad\u00edstico (media, mediana) de un DataFrame?",
+      "back": "La funci\u00f3n `pandas.describe()`."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de R genera un resumen estad\u00edstico b\u00e1sico de un dataset?",
+      "back": "La funci\u00f3n `summary()`."
+    },
+    {
+      "front": "Prop\u00f3sito de los Histogramas en el EDA.",
+      "back": "Visualizar la distribuci\u00f3n univariada de los datos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica visual es ideal para detectar outliers (valores at\u00edpicos) y dispersi\u00f3n?",
+      "back": "El diagrama de caja o Boxplot."
+    },
+    {
+      "front": "Prop\u00f3sito de los Scatter Plots (Diagramas de dispersi\u00f3n).",
+      "back": "Explorar las relaciones bivariadas entre variables."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica visual se utiliza para representar matrices de correlaci\u00f3n?",
+      "back": "Mapas de calor o Heatmaps."
+    },
+    {
+      "front": "Funci\u00f3n de la librer\u00eda seaborn para crear un histograma con estimaci\u00f3n de densidad (KDE).",
+      "back": "`sns.histplot(data=df, x='variable', kde=True)`."
+    },
+    {
+      "front": "Comando en R (ggplot2) para a\u00f1adir una capa de histograma.",
+      "back": "`geom_histogram()`."
+    },
+    {
+      "front": "La librer\u00eda de R utilizada para visualizar correlaciones mediante la funci\u00f3n `ggcorr` es _____.",
+      "back": "GGally"
+    },
+    {
+      "front": "\u00bfCu\u00e1les son las tres etapas clave del preprocesado de datos?",
+      "back": "Limpieza, transformaci\u00f3n y selecci\u00f3n de features."
+    },
+    {
+      "front": "En el preprocesado, \u00bfen qu\u00e9 consiste la etapa de 'Limpieza'?",
+      "back": "En eliminar duplicados y valores at\u00edpicos (outliers)."
+    },
+    {
+      "front": "T\u00e9cnica de Python (scikit-learn) para normalizar o escalar variables.",
+      "back": "`sklearn.StandardScaler`."
+    },
+    {
+      "front": "El objetivo de la etapa de 'Selecci\u00f3n' en el preprocesado es _____.",
+      "back": "Reducir la dimensionalidad de los datos."
+    },
+    {
+      "front": "Algoritmo com\u00fan para la reducci\u00f3n de dimensionalidad mencionado en el material.",
+      "back": "PCA (An\u00e1lisis de Componentes Principales)."
+    },
+    {
+      "front": "Funci\u00f3n base de R para escalar variables num\u00e9ricas.",
+      "back": "`scale()`."
+    },
+    {
+      "front": "En imputaci\u00f3n de datos, \u00bfcu\u00e1l es la principal desventaja de la 'Eliminaci\u00f3n'?",
+      "back": "Provoca una p\u00e9rdida de datos que puede ser significativa."
+    },
+    {
+      "front": "\u00bfBajo qu\u00e9 condici\u00f3n es aceptable usar la t\u00e9cnica de eliminaci\u00f3n de missing values?",
+      "back": "Cuando existe una baja proporci\u00f3n de datos faltantes."
+    },
+    {
+      "front": "\u00bfQu\u00e9 riesgo conlleva la imputaci\u00f3n mediante media o mediana?",
+      "back": "Puede sesgar la varianza de la variable."
+    },
+    {
+      "front": "Estrategia de imputaci\u00f3n recomendada para variables cualitativas (categ\u00f3ricas).",
+      "back": "Imputaci\u00f3n por la Moda."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la ventaja de utilizar KNN o Regresi\u00f3n para imputar valores?",
+      "back": "Considera las similitudes entre registros en lugar de usar un valor global."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la desventaja de los m\u00e9todos KNN o Regresi\u00f3n en datasets masivos?",
+      "back": "Son computacionalmente intensivos."
+    },
+    {
+      "front": "Clase de scikit-learn utilizada para imputaci\u00f3n basada en vecinos m\u00e1s cercanos.",
+      "back": "`KNNImputer`."
+    },
+    {
+      "front": "Paquete de R especializado en imputaci\u00f3n m\u00faltiple.",
+      "back": "mice"
+    },
+    {
+      "front": "M\u00e9todo de R para eliminar todas las filas con valores `NA`.",
+      "back": "`na.omit(df)`."
+    },
+    {
+      "front": "En el contexto de preparaci\u00f3n de variables cualitativas, \u00bfen qu\u00e9 consiste la binarizaci\u00f3n?",
+      "back": "En transformar categor\u00edas en vectores num\u00e9ricos (0 y 1) procesables por modelos."
+    },
+    {
+      "front": "\u00bfCu\u00e1les son los dos subconjuntos en los que se dividen los datos para validar modelos?",
+      "back": "Entrenamiento (train) y test."
+    },
+    {
+      "front": "Concepto: Outlier",
+      "back": "Definici\u00f3n: Valor at\u00edpico que se aleja significativamente del resto de las observaciones de una muestra."
+    },
+    {
+      "front": "\u00bfQu\u00e9 librer\u00eda de Python se usa t\u00edpicamente para cargar archivos CSV?",
+      "back": "pandas"
+    },
+    {
+      "front": "\u00bfQu\u00e9 visualizaci\u00f3n permite ver la densidad de probabilidad suavizada de una variable?",
+      "back": "KDE (Kernel Density Estimate)."
+    },
+    {
+      "front": "Para visualizar la relaci\u00f3n entre dos variables num\u00e9ricas en Python, se usa _____.",
+      "back": "`matplotlib.scatter()` o `sns.scatterplot()`."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 par\u00e1metro en `mean()` permite ignorar valores faltantes?",
+      "back": "`na.rm = TRUE`."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica de preprocesado busca que las variables tengan media 0 y desviaci\u00f3n est\u00e1ndar 1?",
+      "back": "Estandarizaci\u00f3n."
+    },
+    {
+      "front": "Prop\u00f3sito de la binarizaci\u00f3n de variables.",
+      "back": "Permitir que algoritmos matem\u00e1ticos procesen datos no num\u00e9ricos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 muestra el comando `df.isna().sum()` en Python?",
+      "back": "El conteo de valores faltantes por cada columna del dataset."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 funci\u00f3n se usa para verificar el n\u00famero total de valores faltantes en un objeto?",
+      "back": "`sum(is.na(objeto))`."
+    },
+    {
+      "front": "La t\u00e9cnica de imputaci\u00f3n que utiliza el valor m\u00e1s frecuente es la _____.",
+      "back": "Moda"
+    },
+    {
+      "front": "\u00bfQu\u00e9 autor es referenciado como base para la clasificaci\u00f3n de tipos de variables?",
+      "back": "Tukey (1977)."
+    },
+    {
+      "front": "En el flujo de trabajo de la Unidad 2, \u00bfqu\u00e9 sigue a la identificaci\u00f3n de variables y valores faltantes?",
+      "back": "Construir visualizaciones que respondan preguntas anal\u00edticas concretas."
+    },
+    {
+      "front": "Nombre de la t\u00e9cnica para reducir la cantidad de variables manteniendo la mayor informaci\u00f3n posible.",
+      "back": "Reducci\u00f3n de dimensionalidad (ej. PCA)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 componente de `ggplot2` define las etiquetas de t\u00edtulo y ejes?",
+      "back": "La funci\u00f3n `labs()`."
+    },
+    {
+      "front": "\u00bfPara qu\u00e9 sirve el par\u00e1metro `annot=True` en un heatmap de Seaborn?",
+      "back": "Para mostrar los valores num\u00e9ricos de las correlaciones dentro de las celdas."
+    },
+    {
+      "front": "En la imputaci\u00f3n con el paquete `mice` de R, \u00bfqu\u00e9 representa el par\u00e1metro `m=5`?",
+      "back": "El n\u00famero de imputaciones m\u00faltiples a generar."
+    },
+    {
+      "front": "\u00bfQu\u00e9 es un dataset 'incompleto' en el contexto de Big Data?",
+      "back": "Aquel que contiene valores ausentes o missing values en sus registros."
+    },
+    {
+      "front": "Estrategia de imputaci\u00f3n: KNN",
+      "back": "Utiliza los $k$ vecinos m\u00e1s cercanos para estimar el valor faltante bas\u00e1ndose en la proximidad de los datos."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el producto esperado del reporte exploratorio en la Unidad 2?",
+      "back": "Gr\u00e1ficos comentados y decisiones de preparaci\u00f3n justificadas."
+    }
+  ]
+}

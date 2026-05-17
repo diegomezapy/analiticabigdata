@@ -1,0 +1,129 @@
+{
+  "mind_map": {
+    "name": "Machine Learning en Big Data (Unidad 3)",
+    "children": [
+      {
+        "name": "Introducción",
+        "children": [
+          {
+            "name": "Definición: Aprendizaje de patrones sin programación explícita"
+          },
+          {
+            "name": "Tipos: Supervisado, No Supervisado, Reforzamiento, Semi-Supervisado"
+          },
+          {
+            "name": "Objetivo: Transformar Big Data en insights accionables"
+          }
+        ]
+      },
+      {
+        "name": "Flujo de Trabajo",
+        "children": [
+          {
+            "name": "Definición de variables (objetivo y predictores)"
+          },
+          {
+            "name": "Partición de datos (Entrenamiento y Test)"
+          },
+          {
+            "name": "Entrenamiento de modelos supervisados"
+          },
+          {
+            "name": "Evaluación: Matriz de confusión, Accuracy, Precision, Recall"
+          }
+        ]
+      },
+      {
+        "name": "Algoritmos Principales",
+        "children": [
+          {
+            "name": "K-Nearest Neighbors (KNN)",
+            "children": [
+              {
+                "name": "Basado en instancias y distancias (Euclídea)"
+              },
+              {
+                "name": "Ventaja: No paramétrico y simple"
+              },
+              {
+                "name": "Desventaja: Alto costo computacional en Big Data"
+              },
+              {
+                "name": "Uso: Sistemas de recomendación"
+              }
+            ]
+          },
+          {
+            "name": "Naive Bayes",
+            "children": [
+              {
+                "name": "Probabilístico (Teorema de Bayes)"
+              },
+              {
+                "name": "Asunción: Independencia entre variables"
+              },
+              {
+                "name": "Ventaja: Rápido y escalable para texto"
+              },
+              {
+                "name": "Uso: Filtro de spam y análisis de sentimiento"
+              }
+            ]
+          },
+          {
+            "name": "Regresión Logística",
+            "children": [
+              {
+                "name": "Clasificación binaria mediante función sigmoide"
+              },
+              {
+                "name": "Ventaja: Interpretabilidad y probabilidades directas"
+              },
+              {
+                "name": "Desventaja: Asume linealidad en el logit"
+              },
+              {
+                "name": "Uso: Riesgo crediticio y predicción de churn"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Implementación en R",
+        "children": [
+          {
+            "name": "Paquete caret (flujo unificado)"
+          },
+          {
+            "name": "Paquete e1071 (Naive Bayes)"
+          },
+          {
+            "name": "Paquete class (KNN)"
+          },
+          {
+            "name": "Función glm (Logística)"
+          }
+        ]
+      },
+      {
+        "name": "Actividades Académicas",
+        "children": [
+          {
+            "name": "Estudio de materiales (Formativa)"
+          },
+          {
+            "name": "Foro sobre problemas de aplicación (Interactiva)"
+          },
+          {
+            "name": "Cuestionario en línea (Autónoma evaluable)"
+          },
+          {
+            "name": "Producto final: Cuaderno reproducible"
+          }
+        ]
+      }
+    ]
+  },
+  "note_id": "d1b817a4-5d84-4c55-9ddc-125724c3fc1e"
+}

@@ -1,0 +1,144 @@
+{
+  "mind_map": {
+    "name": "Machine Learning en Big Data",
+    "children": [
+      {
+        "name": "Introducción",
+        "children": [
+          {
+            "name": "Definición: Aprendizaje de patrones sin programación explícita"
+          },
+          {
+            "name": "Tipos: Supervisado, No Supervisado, Reforzamiento, Semi-Supervisado"
+          },
+          {
+            "name": "Enfoque: Clasificación y Regresión"
+          }
+        ]
+      },
+      {
+        "name": "Algoritmos Principales",
+        "children": [
+          {
+            "name": "K-Nearest Neighbors (KNN)",
+            "children": [
+              {
+                "name": "Basado en instancias y distancias (Euclídea)"
+              },
+              {
+                "name": "Ventaja: No paramétrico y simple"
+              },
+              {
+                "name": "Desventaja: Alto costo computacional en Big Data"
+              },
+              {
+                "name": "Uso: Sistemas de recomendación"
+              }
+            ]
+          },
+          {
+            "name": "Naive Bayes",
+            "children": [
+              {
+                "name": "Probabilístico (Teorema de Bayes)"
+              },
+              {
+                "name": "Asunción: Independencia entre variables"
+              },
+              {
+                "name": "Ventaja: Rápido y eficiente para texto"
+              },
+              {
+                "name": "Uso: Filtro de spam y análisis de sentimiento"
+              }
+            ]
+          },
+          {
+            "name": "Regresión Logística",
+            "children": [
+              {
+                "name": "Modelado de probabilidades con función sigmoide"
+              },
+              {
+                "name": "Ventaja: Interpretabilidad de coeficientes"
+              },
+              {
+                "name": "Desventaja: Asume linealidad en logit"
+              },
+              {
+                "name": "Uso: Riesgo crediticio y churn prediction"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Flujo de Trabajo",
+        "children": [
+          {
+            "name": "1. Definición: Variables y partición (Train/Test)"
+          },
+          {
+            "name": "2. Entrenamiento: Uso de paquetes R (caret, e1071, class)"
+          },
+          {
+            "name": "3. Evaluación: Matriz de confusión, Accuracy, Recall, F1-score"
+          }
+        ]
+      },
+      {
+        "name": "Actividades Académicas",
+        "children": [
+          {
+            "name": "Actividad 1: Formativa",
+            "children": [
+              {
+                "name": "Estudio de materiales y videos"
+              },
+              {
+                "name": "Producto: Notas de lectura"
+              }
+            ]
+          },
+          {
+            "name": "Actividad 2: Interactiva",
+            "children": [
+              {
+                "name": "Foro de discusión sobre KNN"
+              },
+              {
+                "name": "Producto: Intervención argumentada"
+              }
+            ]
+          },
+          {
+            "name": "Actividad 3: Autónoma",
+            "children": [
+              {
+                "name": "Cuestionario en línea sobre Regresión Logística"
+              },
+              {
+                "name": "Propósito: Verificar comprensión individual"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Institución",
+        "children": [
+          {
+            "name": "FACEN - Universidad Nacional de Asunción"
+          },
+          {
+            "name": "Carrera: Matemática Estadística"
+          },
+          {
+            "name": "Año: 2026"
+          }
+        ]
+      }
+    ]
+  },
+  "note_id": "9fba2572-f22b-4889-99e8-e6dc7c0a55da"
+}

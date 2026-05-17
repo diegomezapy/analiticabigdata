@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>2.2 Guía de Funciones — Estadísticos y Limpieza — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 10px; }
+  h2 { color: #1976D2; margin-top: 2em; }
+  h3 { color: #0D47A1; }
+  .header-info { background: #E3F2FD; border-left: 4px solid #1565C0; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #0D47A1; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #E8F5E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #1565C0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 2</div>
+
+<h1>2.2 Guía de Funciones: Estadísticos Descriptivos y Limpieza</h1>
+<h2>R — dplyr + base R</h2>
+<pre><code class="language-r">
+library(dplyr)
+
+# ESTADÍSTICOS DESCRIPTIVOS
+# ─────────────────────────
+df <- data.frame(
+  valor = c(10, 20, NA, 35, 200, 15, 22, 18, 25, 30),
+  grupo = c("A","A","B","B","A","B","A","B","A","B")
+)
+
+# Resumen completo
+summary(df)
+# → Min, Q1, Mediana, Media, Q3, Máx; NAs contados
+
+# Estadísticos individuales
+mean(df$valor, na.rm = TRUE)      # media (ignora NA)
+median(df$valor, na.rm = TRUE)    # mediana
+sd(df$valor, na.rm = TRUE)        # desvío estándar
+var(df$valor, na.rm = TRUE)       # varianza
+IQR(df$valor, na.rm = TRUE)       # rango intercuartílico
+quantile(df$valor, probs = c(0.25, 0.75), na.rm = TRUE)  # Q1 y Q3
+
+# Detección de outliers (regla de Tukey)
+Q1 <- quantile(df$valor, 0.25, na.rm=TRUE)
+Q3 <- quantile(df$valor, 0.75, na.rm=TRUE)
+IQR_val <- Q3 - Q1
+outliers <- df$valor[df$valor < Q1 - 1.5*IQR_val |
+                     df$valor > Q3 + 1.5*IQR_val]
+# na.rm=TRUE: ignora NAs en el cálculo
+
+# LIMPIEZA DE DATOS
+# ─────────────────
+# Detectar NAs
+sum(is.na(df$valor))              # total de NAs
+colSums(is.na(df))                # NAs por columna
+
+# Eliminar filas con NA
+df_sin_na <- na.omit(df)
+# O con dplyr:
+df_sin_na <- df %>% filter(!is.na(valor))
+
+# Imputar con la mediana del grupo
+df_imputado <- df %>%
+  group_by(grupo) %>%
+  mutate(valor = ifelse(is.na(valor), median(valor, na.rm=TRUE), valor)) %>%
+  ungroup()
+# group_by: agrupa para imputar por grupo
+# ifelse: si es NA, reemplaza con mediana del grupo
+
+# Eliminar duplicados
+df_unico <- df %>% distinct()
+# distinct(columna1, columna2): duplicados basados en columnas específicas
+
+# Cambiar tipos
+df$grupo <- as.factor(df$grupo)   # texto → factor
+df$valor <- as.numeric(df$valor)  # texto → número
+
+# Normalización min-max
+normalizar <- function(x) (x - min(x, na.rm=T)) / (max(x, na.rm=T) - min(x, na.rm=T))
+df$valor_norm <- normalizar(df$valor)
+
+# Estandarización Z-score
+df$valor_z <- scale(df$valor)     # media=0, sd=1
+</code></pre>
+<h2>Python — pandas</h2>
+<pre><code class="language-python">
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({
+    'valor': [10, 20, None, 35, 200, 15, 22, 18, 25, 30],
+    'grupo': ['A','A','B','B','A','B','A','B','A','B']
+})
+
+# ESTADÍSTICOS DESCRIPTIVOS
+df['valor'].describe()        # resumen completo
+df['valor'].mean()            # media
+df['valor'].median()          # mediana
+df['valor'].std()             # desvío estándar
+df['valor'].quantile([.25,.75])  # Q1, Q3
+
+# Outliers (Tukey)
+Q1 = df['valor'].quantile(0.25)
+Q3 = df['valor'].quantile(0.75)
+IQR = Q3 - Q1
+outliers = df[(df['valor'] < Q1 - 1.5*IQR) | (df['valor'] > Q3 + 1.5*IQR)]
+
+# LIMPIEZA
+df.isnull().sum()             # NAs por columna
+df.dropna()                   # eliminar filas con NA
+df['valor'].fillna(df['valor'].median())  # imputar con mediana
+
+# Imputar por grupo
+df['valor'] = df.groupby('grupo')['valor'].transform(
+    lambda x: x.fillna(x.median())
+)
+# transform: aplica función y devuelve serie del mismo tamaño
+
+df.drop_duplicates()          # eliminar duplicados
+
+# Normalización min-max
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+scaler_mm = MinMaxScaler()
+df['valor_norm'] = scaler_mm.fit_transform(df[['valor']])
+
+scaler_z = StandardScaler()
+df['valor_z'] = scaler_z.fit_transform(df[['valor']])
+</code></pre>
+
+</body>
+</html>

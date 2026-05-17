@@ -1,0 +1,225 @@
+{
+  "title": "Aprendizaje Tarjetas",
+  "cards": [
+    {
+      "front": "\u00bfCu\u00e1l es el objetivo principal del Machine Learning supervisado?",
+      "back": "Aprender de datos etiquetados para predecir resultados o clasificar nuevas instancias."
+    },
+    {
+      "front": "En el contexto de Big Data, \u00bfqu\u00e9 caracteriza al aprendizaje no supervisado?",
+      "back": "La b\u00fasqueda de patrones o estructuras ocultas en datos que no tienen etiquetas previas."
+    },
+    {
+      "front": "\u00bfC\u00f3mo aprende un modelo de Machine Learning por reforzamiento?",
+      "back": "Mediante un proceso de ensayo y error basado en un sistema de recompensas."
+    },
+    {
+      "front": "El tipo de aprendizaje que combina una peque\u00f1a cantidad de datos etiquetados con una gran cantidad de datos no etiquetados se denomina _____.",
+      "back": "Semi-supervisado"
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica se utiliza com\u00fanmente para la segmentaci\u00f3n de clientes en e-commerce?",
+      "back": "Clustering (Aprendizaje No Supervisado)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el prop\u00f3sito de dividir el conjunto de datos en 'entrenamiento' (train) y 'prueba' (test)?",
+      "back": "Entrenar el modelo con una parte y evaluar su capacidad de generalizaci\u00f3n con la otra."
+    },
+    {
+      "front": "Concepto: Accuracy (Exactitud)",
+      "back": "Definici\u00f3n: Proporci\u00f3n de predicciones correctas totales entre el n\u00famero total de casos examinados."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 paquete facilita el flujo de trabajo de Machine Learning (partici\u00f3n, entrenamiento y evaluaci\u00f3n)?",
+      "back": "El paquete `caret`."
+    },
+    {
+      "front": "\u00bfQu\u00e9 funci\u00f3n de `caret` se utiliza para crear una partici\u00f3n de datos equilibrada seg\u00fan la variable objetivo?",
+      "back": "La funci\u00f3n `createDataPartition`."
+    },
+    {
+      "front": "Algoritmo: K-Nearest Neighbors (KNN)",
+      "back": "Definici\u00f3n: M\u00e9todo no param\u00e9trico que clasifica un punto seg\u00fan la mayor\u00eda de votos de sus vecinos m\u00e1s cercanos."
+    },
+    {
+      "front": "F\u00f3rmula: \u00bfCu\u00e1l es la ecuaci\u00f3n de la Distancia Eucl\u00eddea entre dos puntos $p$ y $q$?",
+      "back": "$d(p, q) = \\sqrt{\\sum (p_i - q_i)^2}$"
+    },
+    {
+      "front": "\u00bfPor qu\u00e9 se dice que KNN es un algoritmo 'basado en instancias'?",
+      "back": "Porque no genera un modelo abstracto, sino que utiliza los datos de entrenamiento directamente para predecir."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es una desventaja computacional significativa de KNN al trabajar con Big Data?",
+      "back": "Presenta un alto costo computacional durante la fase de predicci\u00f3n."
+    },
+    {
+      "front": "\u00bfQu\u00e9 impacto tiene un valor de $K$ muy peque\u00f1o en un modelo KNN?",
+      "back": "Aumenta la sensibilidad al ruido y a los valores at\u00edpicos (outliers)."
+    },
+    {
+      "front": "\u00bfPara qu\u00e9 se utilizan estructuras como los KD-trees en la implementaci\u00f3n de KNN?",
+      "back": "Para optimizar la b\u00fasqueda de vecinos y mejorar la escalabilidad en grandes vol\u00famenes de datos."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 librer\u00eda proporciona la funci\u00f3n `knn()` b\u00e1sica para clasificaci\u00f3n?",
+      "back": "La librer\u00eda `class`."
+    },
+    {
+      "front": "\u00bfPor qu\u00e9 es crucial normalizar las caracter\u00edsticas (features) antes de aplicar KNN?",
+      "back": "Para evitar que variables con escalas mayores dominen el c\u00e1lculo de la distancia."
+    },
+    {
+      "front": "F\u00f3rmula de Normalizaci\u00f3n Min-Max: \u00bfC\u00f3mo se escala un valor $x$ al rango $[0, 1]$?",
+      "back": "$\\frac{x - min(x)}{max(x) - min(x)}$"
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta se utiliza para visualizar el desempe\u00f1o de un clasificador comparando valores reales vs. predichos?",
+      "back": "La matriz de confusi\u00f3n (confusion matrix)."
+    },
+    {
+      "front": "Algoritmo: Naive Bayes",
+      "back": "Definici\u00f3n: Clasificador probabil\u00edstico basado en el Teorema de Bayes con una suposici\u00f3n fuerte de independencia."
+    },
+    {
+      "front": "F\u00f3rmula: \u00bfCu\u00e1l es la expresi\u00f3n del Teorema de Bayes para la probabilidad de una clase $C$ dado un vector de entrada $X$?",
+      "back": "$P(C|X) = \\frac{P(X|C) P(C)}{P(X)}$"
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la suposici\u00f3n 'ingenua' (naive) que da nombre al algoritmo Naive Bayes?",
+      "back": "Asume que todas las caracter\u00edsticas (features) son independientes entre s\u00ed dada la clase."
+    },
+    {
+      "front": "\u00bfQu\u00e9 variante de Naive Bayes se utiliza t\u00edpicamente para datos con distribuci\u00f3n continua?",
+      "back": "Gaussian Naive Bayes."
+    },
+    {
+      "front": "En el procesamiento de lenguaje natural (spam filtering), \u00bfqu\u00e9 variante de Naive Bayes es la m\u00e1s com\u00fan?",
+      "back": "Multinomial Naive Bayes."
+    },
+    {
+      "front": "\u00bfQu\u00e9 problema resuelve el suavizado de Laplace (Laplace smoothing) en Naive Bayes?",
+      "back": "Evita probabilidades de cero para palabras o categor\u00edas no vistas en el entrenamiento."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es una de las principales ventajas de Naive Bayes en entornos de Big Data?",
+      "back": "Su alta eficiencia y rapidez tanto en el entrenamiento como en la predicci\u00f3n."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 librer\u00eda contiene la funci\u00f3n `naiveBayes()`?",
+      "back": "La librer\u00eda `e1071`."
+    },
+    {
+      "front": "Algoritmo: Regresi\u00f3n Log\u00edstica",
+      "back": "Definici\u00f3n: Modelo que predice la probabilidad de pertenencia a una clase categ\u00f3rica usando la funci\u00f3n sigmoide."
+    },
+    {
+      "front": "F\u00f3rmula: \u00bfCu\u00e1l es la expresi\u00f3n de la funci\u00f3n log\u00edstica o sigmoide para predecir la probabilidad $p$?",
+      "back": "$p = \\frac{1}{1 + e^{-(\\beta_0 + \\beta_1 x)}}$"
+    },
+    {
+      "front": "\u00bfEn qu\u00e9 rango de valores se encuentran siempre las salidas de una funci\u00f3n sigmoide?",
+      "back": "Entre $0$ y $1$."
+    },
+    {
+      "front": "En la Regresi\u00f3n Log\u00edstica, \u00bfqu\u00e9 representan los 'Log-odds' o la funci\u00f3n logit?",
+      "back": "El logaritmo natural de la raz\u00f3n de probabilidades (odds), definido como $ln(\\frac{p}{1-p})$."
+    },
+    {
+      "front": "Concepto: Raz\u00f3n de Probabilidades (Odds Ratio)",
+      "back": "Definici\u00f3n: La probabilidad de que ocurra un evento dividida por la probabilidad de que no ocurra ($p / (1-p)$)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 m\u00e9todo estad\u00edstico se utiliza para estimar los coeficientes en la Regresi\u00f3n Log\u00edstica?",
+      "back": "Estimaci\u00f3n de M\u00e1xima Verosimilitud (Maximum Likelihood Estimation)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el 'umbral de decisi\u00f3n' (decision threshold) est\u00e1ndar para clasificar una observaci\u00f3n como positiva en Regresi\u00f3n Log\u00edstica?",
+      "back": "Generalmente es $0.5$."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 funci\u00f3n se utiliza para ajustar un modelo de Regresi\u00f3n Log\u00edstica binaria?",
+      "back": "La funci\u00f3n `glm()` con el argumento `family=\"binomial\"`."
+    },
+    {
+      "front": "Concepto: Regularizaci\u00f3n L1 (Lasso)",
+      "back": "Definici\u00f3n: T\u00e9cnica que a\u00f1ade una penalizaci\u00f3n proporcional al valor absoluto de los coeficientes para evitar el sobreajuste y realizar selecci\u00f3n de variables."
+    },
+    {
+      "front": "Concepto: Regularizaci\u00f3n L2 (Ridge)",
+      "back": "Definici\u00f3n: T\u00e9cnica que a\u00f1ade una penalizaci\u00f3n proporcional al cuadrado de los coeficientes para reducir su magnitud sin eliminarlos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 indica la Curva ROC (Receiver Operating Characteristic) en un modelo de clasificaci\u00f3n?",
+      "back": "La relaci\u00f3n entre la tasa de verdaderos positivos y la tasa de falsos positivos para diferentes umbrales."
+    },
+    {
+      "front": "Concepto: AUC (\u00c1rea Bajo la Curva)",
+      "back": "Definici\u00f3n: M\u00e9trica que mide la capacidad del modelo para distinguir entre clases; un valor de $1.0$ indica una clasificaci\u00f3n perfecta."
+    },
+    {
+      "front": "\u00bfQu\u00e9 sucede con los coeficientes de una Regresi\u00f3n Log\u00edstica si existe multicolinealidad severa?",
+      "back": "Se vuelven inestables y dif\u00edciles de interpretar, afectando la precisi\u00f3n del modelo."
+    },
+    {
+      "front": "Al comparar algoritmos, \u00bfcu\u00e1l es la principal fortaleza de la Regresi\u00f3n Log\u00edstica frente a KNN?",
+      "back": "La interpretabilidad de sus coeficientes y su eficiencia computacional en la predicci\u00f3n."
+    },
+    {
+      "front": "En clasificaci\u00f3n de texto masivo, \u00bfpor qu\u00e9 se suele preferir Naive Bayes sobre KNN?",
+      "back": "Debido a su capacidad para manejar alta dimensionalidad y su velocidad superior en Big Data."
+    },
+    {
+      "front": "\u00bfQu\u00e9 algoritmo de ML es la base de los sistemas de recomendaci\u00f3n de Spotify basados en similitud?",
+      "back": "K-Nearest Neighbors (KNN)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 modelo de ML es ideal para predecir el riesgo crediticio o la fuga de clientes (churn) debido a su output probabil\u00edstico?",
+      "back": "Regresi\u00f3n Log\u00edstica."
+    },
+    {
+      "front": "\u00bfC\u00f3mo se define el 'F1-score' en la evaluaci\u00f3n de modelos?",
+      "back": "Es la media arm\u00f3nica entre la precisi\u00f3n (precision) y la exhaustividad (recall)."
+    },
+    {
+      "front": "En el c\u00f3digo R `predict(model, test, type=\"response\")`, \u00bfqu\u00e9 devuelve el argumento `type=\"response\"` en una Regresi\u00f3n Log\u00edstica?",
+      "back": "Las probabilidades predichas en lugar de los log-odds."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de datos maneja la variante 'Bernoulli Naive Bayes'?",
+      "back": "Datos binarios (caracter\u00edsticas booleanas)."
+    },
+    {
+      "front": "\u00bfBajo qu\u00e9 condici\u00f3n KNN no escala bien en Big Data?",
+      "back": "Cuando el n\u00famero de observaciones y dimensiones es muy alto sin el uso de optimizaciones de b\u00fasqueda."
+    },
+    {
+      "front": "En un diagrama de frontera de decisi\u00f3n, \u00bfc\u00f3mo suele ser la separaci\u00f3n en la Regresi\u00f3n Log\u00edstica b\u00e1sica?",
+      "back": "Es una frontera de decisi\u00f3n lineal."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la principal ventaja de utilizar modelos no param\u00e9tricos como KNN?",
+      "back": "No asumen ninguna distribuci\u00f3n subyacente para los datos de entrada."
+    },
+    {
+      "front": "El paquete de R dise\u00f1ado para visualizaci\u00f3n elegante de datos de an\u00e1lisis es _____.",
+      "back": "ggplot2"
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de R permite convertir un modelo de regresi\u00f3n log\u00edstica binaria en clases discretas ($0$ o $1$)?",
+      "back": "La funci\u00f3n `ifelse()` aplicada sobre las probabilidades predichas."
+    },
+    {
+      "front": "\u00bfPor qu\u00e9 Naive Bayes es menos preciso en datasets con interacciones complejas entre variables?",
+      "back": "Debido a que su supuesto de independencia ignora las relaciones correlacionadas entre caracter\u00edsticas."
+    },
+    {
+      "front": "En el flujo de trabajo de ML, \u00bfqu\u00e9 significa 'set.seed(123)'?",
+      "back": "Establece una semilla aleatoria para asegurar que los resultados de la partici\u00f3n de datos sean reproducibles."
+    },
+    {
+      "front": "\u00bfQu\u00e9 aplicaci\u00f3n real de Big Data utiliza Naive Bayes para procesar flujos de datos en tiempo real?",
+      "back": "Filtros de spam en servicios de correo electr\u00f3nico como Gmail."
+    }
+  ]
+}

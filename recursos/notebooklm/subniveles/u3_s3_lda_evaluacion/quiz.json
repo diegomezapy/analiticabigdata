@@ -1,0 +1,203 @@
+{
+  "title": "Aprendizaje Cuestionario",
+  "questions": [
+    {
+      "question": "\u00bfCu\u00e1l es el tipo de Machine Learning que se enfoca en encontrar patrones o estructuras ocultas en los datos sin la ayuda de etiquetas predefinidas?",
+      "answerOptions": [
+        {
+          "text": "Aprendizaje No Supervisado",
+          "isCorrect": true,
+          "rationale": "Este enfoque busca relaciones intr\u00ednsecas en los datos, como el clustering o la segmentaci\u00f3n, sin una variable objetivo etiquetada."
+        },
+        {
+          "text": "Aprendizaje Supervisado",
+          "isCorrect": false,
+          "rationale": "Este tipo requiere datos previamente etiquetados para entrenar el modelo y realizar predicciones sobre nuevos casos."
+        },
+        {
+          "text": "Aprendizaje por Reforzamiento",
+          "isCorrect": false,
+          "rationale": "Se basa en un sistema de recompensas y castigos a trav\u00e9s del ensayo y error, no en la b\u00fasqueda de patrones en datos est\u00e1ticos."
+        },
+        {
+          "text": "Aprendizaje Semi-supervisado",
+          "isCorrect": false,
+          "rationale": "Combina una peque\u00f1a cantidad de datos etiquetados con una gran cantidad de datos no etiquetados para mejorar la precisi\u00f3n."
+        }
+      ],
+      "hint": "Piense en t\u00e9cnicas como la segmentaci\u00f3n de clientes donde no conocemos las categor\u00edas de antemano."
+    },
+    {
+      "question": "En el contexto de K-Nearest Neighbors (KNN), \u00bfc\u00f3mo se determina la clase de una nueva instancia de datos?",
+      "answerOptions": [
+        {
+          "text": "Por la mayor\u00eda de votos de los $K$ vecinos m\u00e1s cercanos.",
+          "isCorrect": true,
+          "rationale": "KNN clasifica bas\u00e1ndose en la etiqueta predominante entre los puntos de entrenamiento m\u00e1s pr\u00f3ximos en el espacio de caracter\u00edsticas."
+        },
+        {
+          "text": "Calculando la probabilidad posterior mediante el Teorema de Bayes.",
+          "isCorrect": false,
+          "rationale": "Esta es la base te\u00f3rica de Naive Bayes, que utiliza probabilidades condicionales en lugar de proximidad geom\u00e9trica."
+        },
+        {
+          "text": "Ajustando una funci\u00f3n sigmoide a la distribuci\u00f3n de los datos.",
+          "isCorrect": false,
+          "rationale": "La funci\u00f3n sigmoide es caracter\u00edstica de la Regresi\u00f3n Log\u00edstica para modelar probabilidades binarias."
+        },
+        {
+          "text": "Minimizando la suma de los errores cuadr\u00e1ticos de una l\u00ednea de tendencia.",
+          "isCorrect": false,
+          "rationale": "Este procedimiento es t\u00edpico de la regresi\u00f3n lineal, no de algoritmos basados en instancias como KNN."
+        }
+      ],
+      "hint": "El algoritmo se basa en la similitud local y la 'votaci\u00f3n' de los datos adyacentes."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la suposici\u00f3n 'ingenua' (naive) que da nombre al clasificador Naive Bayes?",
+      "answerOptions": [
+        {
+          "text": "Que todas las variables predictoras son independientes entre s\u00ed.",
+          "isCorrect": true,
+          "rationale": "El algoritmo asume que la presencia de una caracter\u00edstica no afecta a las dem\u00e1s, simplificando dr\u00e1sticamente el c\u00e1lculo de probabilidades."
+        },
+        {
+          "text": "Que los datos siguen necesariamente una distribuci\u00f3n normal o Gaussiana.",
+          "isCorrect": false,
+          "rationale": "Aunque existe una variante Gaussiana, el supuesto fundamental de independencia es lo que define al algoritmo en todas sus formas."
+        },
+        {
+          "text": "Que el tama\u00f1o del dataset de entrenamiento debe ser siempre peque\u00f1o.",
+          "isCorrect": false,
+          "rationale": "Naive Bayes es conocido por escalar muy bien con grandes vol\u00famenes de datos, especialmente en an\u00e1lisis de texto."
+        },
+        {
+          "text": "Que la variable objetivo siempre debe ser de naturaleza binaria.",
+          "isCorrect": false,
+          "rationale": "El clasificador puede manejar m\u00faltiples clases, no se limita \u00fanicamente a problemas de s\u00ed o no."
+        }
+      ],
+      "hint": "Considere la relaci\u00f3n estad\u00edstica que el algoritmo asume entre los predictores."
+    },
+    {
+      "question": "La Regresi\u00f3n Log\u00edstica utiliza la funci\u00f3n sigmoide para modelar la probabilidad. \u00bfCu\u00e1l es la representaci\u00f3n matem\u00e1tica correcta de esta funci\u00f3n seg\u00fan el material?",
+      "answerOptions": [
+        {
+          "text": "$p = \\frac{1}{1 + e^{-(\\beta_0 + \\beta_1 x)}}$",
+          "isCorrect": true,
+          "rationale": "Esta f\u00f3rmula transforma cualquier valor de entrada en un rango de $(0, 1)$, ideal para interpretar el resultado como una probabilidad."
+        },
+        {
+          "text": "$d(p, q) = \\sqrt{\\sum (p_i - q_i)^2}$",
+          "isCorrect": false,
+          "rationale": "Esta es la f\u00f3rmula de la distancia Euclidea, utilizada habitualmente en KNN para medir cercan\u00eda entre puntos."
+        },
+        {
+          "text": "$P(C|X) = \\frac{P(X|C) P(C)}{P(X)}$",
+          "isCorrect": false,
+          "rationale": "Esta expresi\u00f3n corresponde al Teorema de Bayes, pilar fundamental de los clasificadores probabil\u00edsticos como Naive Bayes."
+        },
+        {
+          "text": "$y = \\beta_0 + \\beta_1 x + \\epsilon$",
+          "isCorrect": false,
+          "rationale": "Esta es la ecuaci\u00f3n de una regresi\u00f3n lineal simple, que predice valores continuos en lugar de probabilidades categ\u00f3ricas."
+        }
+      ],
+      "hint": "Busque la funci\u00f3n que utiliza el n\u00famero $e$ y asegura un output entre cero y uno."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es una de las principales desventajas de KNN mencionadas en relaci\u00f3n con su escalabilidad en Big Data?",
+      "answerOptions": [
+        {
+          "text": "Presenta un alto costo computacional durante la fase de predicci\u00f3n.",
+          "isCorrect": true,
+          "rationale": "Dado que debe calcular la distancia a todos los puntos de entrenamiento para cada nueva predicci\u00f3n, el proceso se vuelve lento en datasets masivos."
+        },
+        {
+          "text": "Es extremadamente complejo de entender e implementar.",
+          "isCorrect": false,
+          "rationale": "Al contrario, el material destaca que su simplicidad y facilidad de implementaci\u00f3n son sus mayores ventajas."
+        },
+        {
+          "text": "Requiere obligatoriamente que los datos tengan una distribuci\u00f3n lineal.",
+          "isCorrect": false,
+          "rationale": "KNN es un modelo no param\u00e9trico y flexible que funciona bien con datos que presentan fronteras de decisi\u00f3n no lineales."
+        },
+        {
+          "text": "No permite realizar clasificaciones multi-clase.",
+          "isCorrect": false,
+          "rationale": "El algoritmo es naturalmente apto para manejar m\u00faltiples categor\u00edas sin necesidad de modificaciones complejas."
+        }
+      ],
+      "hint": "Piense en el esfuerzo necesario para encontrar los vecinos m\u00e1s cercanos cuando hay millones de registros."
+    },
+    {
+      "question": "En el flujo de trabajo de Machine Learning en R, \u00bfpara qu\u00e9 se utiliza la funci\u00f3n `createDataPartition` del paquete `caret`?",
+      "answerOptions": [
+        {
+          "text": "Para dividir el dataset original en conjuntos de entrenamiento y prueba.",
+          "isCorrect": true,
+          "rationale": "Esta funci\u00f3n asegura que la partici\u00f3n sea balanceada respecto a la variable objetivo, facilitando una evaluaci\u00f3n justa del modelo."
+        },
+        {
+          "text": "Para normalizar las variables num\u00e9ricas entre $0$ y $1$.",
+          "isCorrect": false,
+          "rationale": "La normalizaci\u00f3n suele realizarse con funciones personalizadas o `preProcess`, no es el objetivo principal de `createDataPartition`."
+        },
+        {
+          "text": "Para entrenar directamente el modelo de KNN o Regresi\u00f3n Log\u00edstica.",
+          "isCorrect": false,
+          "rationale": "El entrenamiento se realiza con la funci\u00f3n `train` o funciones espec\u00edficas de cada algoritmo tras haber particionado los datos."
+        },
+        {
+          "text": "Para generar la matriz de confusi\u00f3n y calcular el F1-score.",
+          "isCorrect": false,
+          "rationale": "La evaluaci\u00f3n del desempe\u00f1o se realiza con `confusionMatrix` una vez que se han obtenido las predicciones sobre el set de prueba."
+        }
+      ],
+      "hint": "Es el paso inicial necesario para evitar el sobreajuste evaluando en datos no vistos."
+    },
+    {
+      "question": "\u00bfQu\u00e9 variante de Naive Bayes es la m\u00e1s adecuada cuando se trabaja con variables predictoras continuas?",
+      "answerOptions": [
+        {
+          "text": "Naive Bayes Gaussiano",
+          "isCorrect": true,
+          "rationale": "Esta variante asume que los valores continuos asociados a cada clase siguen una distribuci\u00f3n normal."
+        },
+        {
+          "text": "Naive Bayes Multinomial",
+          "isCorrect": false,
+          "rationale": "Se utiliza principalmente para datos discretos, como el recuento de palabras en clasificaci\u00f3n de texto."
+        },
+        {
+          "text": "Naive Bayes Bernoulli",
+          "isCorrect": false,
+          "rationale": "Es ideal para caracter\u00edsticas binarias (presencia o ausencia), no para datos num\u00e9ricos continuos."
+        },
+        {
+          "text": "Laplace Smoothing Bayes",
+          "isCorrect": false,
+          "rationale": "El suavizado de Laplace es una t\u00e9cnica para manejar frecuencias cero, no una variante espec\u00edfica para datos continuos."
+        }
+      ],
+      "hint": "Piense en la distribuci\u00f3n estad\u00edstica que suele representar fen\u00f3menos naturales y continuos."
+    },
+    {
+      "question": "\u00bfVerdadero o Falso? En Big Data, la Regresi\u00f3n Log\u00edstica es valorada por su capacidad de proporcionar un output probabil\u00edstico directo y su interpretabilidad mediante coeficientes.",
+      "answerOptions": [
+        {
+          "text": "Verdadero",
+          "isCorrect": true,
+          "rationale": "A diferencia de otros modelos 'caja negra', la regresi\u00f3n log\u00edstica permite entender el impacto de cada predictor en la probabilidad final."
+        },
+        {
+          "text": "Falso",
+          "isCorrect": false,
+          "rationale": "El material indica expl\u00edcitamente que la interpretabilidad y el output probabil\u00edstico son fortalezas clave de este modelo."
+        }
+      ],
+      "hint": "Considere si los coeficientes del modelo ayudan a explicar la relaci\u00f3n entre variables."
+    }
+  ]
+}

@@ -1,0 +1,265 @@
+{
+  "title": "BigData Cuestionario",
+  "questions": [
+    {
+      "question": "De acuerdo con el material extendido, \u00bfcu\u00e1l fue el hito tecnol\u00f3gico de 2011 que permiti\u00f3 procesar datos en memoria, incrementando dr\u00e1sticamente la velocidad respecto a Hadoop?",
+      "answerOptions": [
+        {
+          "text": "Apache Spark",
+          "isCorrect": true,
+          "rationale": "Spark revolucion\u00f3 el ecosistema al introducir el procesamiento en memoria, superando las limitaciones de lectura/escritura en disco de MapReduce."
+        },
+        {
+          "text": "Google MapReduce",
+          "isCorrect": false,
+          "rationale": "Aunque fundamental, MapReduce fue la base del procesamiento distribuido en 2004, no el motor de procesamiento en memoria de 2011."
+        },
+        {
+          "text": "Apache Flink",
+          "isCorrect": false,
+          "rationale": "Flink es un motor de streaming de baja latencia posterior que se destaca por el procesamiento de eventos individuales m\u00e1s que por el hito inicial de memoria de 2011."
+        },
+        {
+          "text": "Amazon S3",
+          "isCorrect": false,
+          "rationale": "S3 es una soluci\u00f3n de almacenamiento de objetos en la nube, no un motor de procesamiento de datos."
+        }
+      ],
+      "hint": "Este motor es conocido por su capacidad de 'lightning-fast analytics' y su integraci\u00f3n con librer\u00edas como MLlib."
+    },
+    {
+      "question": "En el contexto del cambio de paradigma del Big Data, \u00bfpor qu\u00e9 el an\u00e1lisis integral de $10^7$ registros m\u00e9dicos supera al muestreo estad\u00edstico tradicional de $1,000$ registros?",
+      "answerOptions": [
+        {
+          "text": "Permite la detecci\u00f3n de patrones en enfermedades raras que el muestreo ignora.",
+          "isCorrect": true,
+          "rationale": "Al analizar el total de los datos, se capturan eventos de baja frecuencia (outliers o rarezas) que estad\u00edsticamente desaparecen en muestras peque\u00f1as."
+        },
+        {
+          "text": "Reduce la necesidad de utilizar algoritmos de aprendizaje autom\u00e1tico.",
+          "isCorrect": false,
+          "rationale": "El Big Data, por el contrario, requiere mayor uso de ML para procesar vol\u00famenes masivos de manera eficiente."
+        },
+        {
+          "text": "Garantiza que la correlaci\u00f3n de Pearson sea siempre igual a $1$.",
+          "isCorrect": false,
+          "rationale": "El tama\u00f1o del dataset no altera la definici\u00f3n matem\u00e1tica de la correlaci\u00f3n, solo proporciona m\u00e1s evidencia estad\u00edstica."
+        },
+        {
+          "text": "Elimina por completo el sesgo algor\u00edtmico en las predicciones.",
+          "isCorrect": false,
+          "rationale": "Tener m\u00e1s datos no garantiza la ausencia de sesgo si los datos recolectados ya contienen prejuicios hist\u00f3ricos."
+        }
+      ],
+      "hint": "Considere qu\u00e9 sucede con los eventos de baja probabilidad cuando se reduce dr\u00e1sticamente el tama\u00f1o de la poblaci\u00f3n analizada."
+    },
+    {
+      "question": "Al analizar la caracter\u00edstica de 'Variedad', \u00bfen qu\u00e9 categor\u00eda se clasificar\u00edan los archivos JSON, XML y los Logs de servidores?",
+      "answerOptions": [
+        {
+          "text": "Datos semi-estructurados",
+          "isCorrect": true,
+          "rationale": "Estos formatos poseen etiquetas o metadatos que definen una jerarqu\u00eda, pero no se ajustan a la rigidez de las tablas relacionales."
+        },
+        {
+          "text": "Datos estructurados",
+          "isCorrect": false,
+          "rationale": "Los datos estructurados se refieren estrictamente a bases de datos SQL, CSV o Excel con esquemas fijos."
+        },
+        {
+          "text": "Datos no estructurados",
+          "isCorrect": false,
+          "rationale": "Esta categor\u00eda se reserva para contenido sin un modelo predefinido, como audio, video o im\u00e1genes."
+        },
+        {
+          "text": "Series temporales de grafos",
+          "isCorrect": false,
+          "rationale": "Aunque los logs pueden tener una marca de tiempo, el formato JSON/XML en s\u00ed mismo define la estructura del dato, no su relaci\u00f3n de red."
+        }
+      ],
+      "hint": "Representan aproximadamente el $30\\%$ del ecosistema de datos y contienen esquemas flexibles incorporados."
+    },
+    {
+      "question": "En una arquitectura moderna de Big Data, \u00bfqu\u00e9 componente permite implementar transacciones ACID y gobernanza sobre un Data Lake convencional?",
+      "answerOptions": [
+        {
+          "text": "Delta Lake",
+          "isCorrect": true,
+          "rationale": "Delta Lake act\u00faa como una capa de almacenamiento que aporta confiabilidad y estructura (Lakehouse) a los sistemas de archivos distribuidos."
+        },
+        {
+          "text": "Apache Kafka",
+          "isCorrect": false,
+          "rationale": "Kafka es una plataforma de streaming distribuido para la ingesta de datos, no para la persistencia transaccional de archivos."
+        },
+        {
+          "text": "Apache NiFi",
+          "isCorrect": false,
+          "rationale": "NiFi se utiliza para la orquestaci\u00f3n y flujo visual de datos (ETL), no para proveer propiedades ACID al almacenamiento."
+        },
+        {
+          "text": "Spark MLlib",
+          "isCorrect": false,
+          "rationale": "Esta es la librer\u00eda de aprendizaje autom\u00e1tico de Spark y no gestiona la capa de consistencia del almacenamiento."
+        }
+      ],
+      "hint": "Es la tecnolog\u00eda clave para convertir un Data Lake en un Data Lakehouse."
+    },
+    {
+      "question": "Seg\u00fan el ejemplo de c\u00f3digo de Apache Flink, \u00bfcu\u00e1l es la funci\u00f3n de la cl\u00e1usula `WATERMARK FOR timestamp`?",
+      "answerOptions": [
+        {
+          "text": "Manejar datos que llegan con retraso o fuera de orden en el stream.",
+          "isCorrect": true,
+          "rationale": "Los watermarks permiten al sistema saber cu\u00e1nto tiempo esperar por datos tard\u00edos antes de cerrar una ventana de procesamiento."
+        },
+        {
+          "text": "Encriptar los datos de los sensores para garantizar la veracidad.",
+          "isCorrect": false,
+          "rationale": "El concepto de marca de agua en streaming se refiere a la gesti\u00f3n del tiempo de eventos, no a la seguridad criptogr\u00e1fica."
+        },
+        {
+          "text": "Reducir el consumo energ\u00e9tico del cl\u00faster de procesamiento.",
+          "isCorrect": false,
+          "rationale": "Aunque el procesamiento eficiente ayuda, los watermarks son una herramienta l\u00f3gica de control de flujo temporal."
+        },
+        {
+          "text": "Convertir autom\u00e1ticamente datos JSON a formato Parquet.",
+          "isCorrect": false,
+          "rationale": "La conversi\u00f3n de formatos es una tarea de serializaci\u00f3n/deserializaci\u00f3n, independiente del control de tiempo de llegada."
+        }
+      ],
+      "hint": "Es fundamental en el procesamiento de eventos en tiempo real cuando el orden de llegada no coincide con el orden de generaci\u00f3n."
+    },
+    {
+      "question": "El caso de \u00e9xito de Netflix destaca un ahorro anual de $\\$1.5B$ en 'churn'. \u00bfA qu\u00e9 se refiere este t\u00e9rmino en el contexto de anal\u00edtica?",
+      "answerOptions": [
+        {
+          "text": "La tasa de cancelaci\u00f3n de suscriptores.",
+          "isCorrect": true,
+          "rationale": "El churn mide la p\u00e9rdida de clientes, y Netflix lo mitiga mediante algoritmos de recomendaci\u00f3n que aumentan el compromiso del usuario."
+        },
+        {
+          "text": "El tiempo de latencia en la carga de videos 4K.",
+          "isCorrect": false,
+          "rationale": "Aunque la velocidad de carga es vital, el t\u00e9rmino t\u00e9cnico para la p\u00e9rdida de clientes es churn."
+        },
+        {
+          "text": "El costo de almacenamiento de metadatos en AWS.",
+          "isCorrect": false,
+          "rationale": "Este ser\u00eda un costo operativo de infraestructura, no un ahorro derivado directamente de la retenci\u00f3n por algoritmos."
+        },
+        {
+          "text": "La cantidad de errores en la transcodificaci\u00f3n de audio.",
+          "isCorrect": false,
+          "rationale": "Esto se relaciona con la calidad del servicio t\u00e9cnico, mientras que el ahorro mencionado proviene de la personalizaci\u00f3n de contenido."
+        }
+      ],
+      "hint": "Se relaciona con la capacidad de los algoritmos para mantener al usuario interesado en la plataforma."
+    },
+    {
+      "question": "Dentro de los desaf\u00edos \u00e9ticos, \u00bfqu\u00e9 t\u00e9cnica se menciona para proteger la privacidad de los individuos permitiendo al mismo tiempo el an\u00e1lisis estad\u00edstico?",
+      "answerOptions": [
+        {
+          "text": "Privacidad Diferencial (Differential Privacy)",
+          "isCorrect": true,
+          "rationale": "Esta t\u00e9cnica a\u00f1ade 'ruido' matem\u00e1tico a los datos para que no se pueda identificar a un individuo espec\u00edfico sin alterar los resultados globales."
+        },
+        {
+          "text": "Particionamiento de datos en Cloud",
+          "isCorrect": false,
+          "rationale": "El particionamiento es una t\u00e9cnica de optimizaci\u00f3n de rendimiento y b\u00fasqueda, no una medida de protecci\u00f3n de privacidad individual."
+        },
+        {
+          "text": "Auto-scaling de cl\u00fasteres",
+          "isCorrect": false,
+          "rationale": "El auto-escalado gestiona recursos computacionales seg\u00fan la demanda de tr\u00e1fico, sin relaci\u00f3n con la \u00e9tica de datos."
+        },
+        {
+          "text": "Balanceo de carga (Load Balancing)",
+          "isCorrect": false,
+          "rationale": "Esta t\u00e9cnica distribuye el tr\u00e1fico de red, pero no altera el contenido de los datos para proteger la identidad."
+        }
+      ],
+      "hint": "Es un enfoque que equilibra la utilidad de los datos con la imposibilidad de re-identificaci\u00f3n."
+    },
+    {
+      "question": "Al implementar un modelo de detecci\u00f3n de fraude en FinTech, \u00bfpor qu\u00e9 se utiliza un 'Autoencoder' de redes neuronales seg\u00fan el material?",
+      "answerOptions": [
+        {
+          "text": "Para detectar anomal\u00edas de forma no supervisada bas\u00e1ndose en el error de reconstrucci\u00f3n.",
+          "isCorrect": true,
+          "rationale": "Un autoencoder aprende a representar datos normales; si una transacci\u00f3n genera un error de reconstrucci\u00f3n alto, se marca como an\u00f3mala."
+        },
+        {
+          "text": "Para clasificar transacciones en 'legales' o 'ilegales' usando etiquetas previas.",
+          "isCorrect": false,
+          "rationale": "Ese ser\u00eda un enfoque supervisado (como regresi\u00f3n log\u00edstica); el autoencoder se destaca por detectar patrones desconocidos sin etiquetas."
+        },
+        {
+          "text": "Para reducir el tama\u00f1o f\u00edsico de la base de datos de transacciones.",
+          "isCorrect": false,
+          "rationale": "Aunque comprime informaci\u00f3n internamente, su prop\u00f3sito en el caso de estudio es la detecci\u00f3n de fraude, no el almacenamiento."
+        },
+        {
+          "text": "Para predecir el valor del d\u00f3lar en el mercado de divisas.",
+          "isCorrect": false,
+          "rationale": "Esta es una tarea de pron\u00f3stico de series temporales, no de detecci\u00f3n de anomal\u00edas en transacciones bancarias puntuales."
+        }
+      ],
+      "hint": "Considere c\u00f3mo un modelo puede identificar algo como 'extra\u00f1o' si solo ha sido entrenado para conocer lo 'normal'."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la tendencia emergente para 2025-2030 que propone el entrenamiento de modelos de IA de forma distribuida sin necesidad de compartir los datos sensibles entre servidores?",
+      "answerOptions": [
+        {
+          "text": "Federated Learning",
+          "isCorrect": true,
+          "rationale": "El aprendizaje federado permite que el modelo viaje a los datos, se entrene localmente y solo comparta actualizaciones de par\u00e1metros, no los datos brutos."
+        },
+        {
+          "text": "Data Mesh 2.0",
+          "isCorrect": false,
+          "rationale": "El Data Mesh se centra en la descentralizaci\u00f3n de la propiedad de los datos por dominios de negocio, no espec\u00edficamente en el m\u00e9todo de entrenamiento de IA."
+        },
+        {
+          "text": "Quantum-Enhanced Analytics",
+          "isCorrect": false,
+          "rationale": "Esta tendencia se enfoca en usar la computaci\u00f3n cu\u00e1ntica para acelerar c\u00e1lculos complejos, no en la distribuci\u00f3n privada de datos."
+        },
+        {
+          "text": "Green Data Ops",
+          "isCorrect": false,
+          "rationale": "Esta tendencia busca reducir la huella de carbono y el consumo energ\u00e9tico de los centros de datos."
+        }
+      ],
+      "hint": "Piense en un modelo de aprendizaje 'colaborativo' pero que respeta la soberan\u00eda local de la informaci\u00f3n."
+    },
+    {
+      "question": "En el c\u00f3digo de predicci\u00f3n de demanda con Prophet, \u00bfqu\u00e9 funci\u00f3n cumplen los `add_regressor` como 'clima_temp'?",
+      "answerOptions": [
+        {
+          "text": "Mejorar la precisi\u00f3n del pron\u00f3stico incorporando variables externas que afectan las ventas.",
+          "isCorrect": true,
+          "rationale": "Las ventas no solo dependen del tiempo pasado, sino de factores externos como el clima o promociones, que estos regresores modelan."
+        },
+        {
+          "text": "Eliminar autom\u00e1ticamente los valores nulos (NaN) del dataset original.",
+          "isCorrect": false,
+          "rationale": "La limpieza de datos debe hacerse antes de alimentar el modelo; los regresores son variables predictoras adicionales."
+        },
+        {
+          "text": "Acelerar el tiempo de entrenamiento del modelo en un $50\\%$.",
+          "isCorrect": false,
+          "rationale": "A\u00f1adir variables externas aumenta la complejidad del modelo y, por ende, el tiempo de c\u00e1lculo, no lo reduce."
+        },
+        {
+          "text": "Limitar el rango de la predicci\u00f3n para que nunca sea negativa.",
+          "isCorrect": false,
+          "rationale": "Esto se logra mediante transformaciones de la variable objetivo o par\u00e1metros de saturaci\u00f3n del modelo, no por a\u00f1adir regresores."
+        }
+      ],
+      "hint": "Considere por qu\u00e9 un vendedor de helados querr\u00eda saber el pron\u00f3stico del tiempo adem\u00e1s de sus ventas hist\u00f3ricas."
+    }
+  ]
+}

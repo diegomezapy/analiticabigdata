@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>3.2 Regresión Logística — Microlectura — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #2E7D32; border-bottom: 3px solid #2E7D32; padding-bottom: 10px; }
+  h2 { color: #388E3C; margin-top: 2em; }
+  h3 { color: #1B5E20; }
+  .header-info { background: #E8F5E9; border-left: 4px solid #2E7D32; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #1B5E20; }
+  pre { background: #F5F5F5; border-left: 4px solid #4CAF50; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F1F8E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #2E7D32; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #2E7D32; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 3</div>
+
+<h1>3.2 Regresión Logística</h1>
+<h2>1. ¿Por qué no usar regresión lineal para clasificar?</h2>
+<p>La regresión lineal predice valores en (−∞, +∞), pero una probabilidad debe estar en [0,1]. Si aplicamos regresión lineal directamente, podemos obtener predicciones como −0.3 o 1.7 — sin sentido como probabilidades.</p>
+<p>Además, la regresión lineal asume distribución normal de los residuos, lo cual no se cumple cuando la variable de respuesta es binaria (0/1).</p>
+<h2>2. La función sigmoide: el puente</h2>
+<p>La solución es transformar la combinación lineal de features (z = Xβ) con la función sigmoide:</p>
+<p style="text-align:center">P(Y=1|X) = σ(z) = 1 / (1 + e^{-z})</p>
+<p>La sigmoide tiene propiedades perfectas para este propósito: siempre produce valores en (0,1), tiene derivada continua (necesaria para el gradiente), y es monótonamente creciente (preserva el orden relativo de predicciones).</p>
+<h2>3. El umbral de decisión</h2>
+<p>Por defecto, se clasifica como clase 1 si P(Y=1|X) ≥ 0.5. Pero este umbral se puede ajustar según el contexto del problema. Un umbral de 0.3 en detección de fraude significa que clasificamos como fraudulenta cualquier transacción con más del 30% de probabilidad — preferimos falsos positivos a falsos negativos.</p>
+<h2>4. Interpretación de coeficientes</h2>
+<p>En regresión logística, los coeficientes β no son directamente interpretables en la escala de la probabilidad. En cambio, exp(β) es el <em>odds ratio</em>:</p>
+<ul>
+<li>exp(β) = 2 → el odds de clase 1 se duplica por cada unidad de aumento en x.</li>
+<li>exp(β) = 0.5 → el odds se reduce a la mitad.</li>
+<li>exp(β) = 1 → la variable no tiene efecto en el odds.</li>
+</ul>
+<div class="ejemplo"><strong>Ejemplo:</strong> En un modelo de mora bancaria, si β_edad = 0.05, entonces exp(0.05) ≈ 1.05: por cada año más de edad, el odds de caer en mora aumenta un 5%.</div>
+<h2>5. Regularización: combatir el overfitting</h2>
+<p>Sin regularización, modelos con muchas variables pueden sobreajustarse. La regularización agrega una penalización por coeficientes grandes a la función de pérdida:</p>
+<ul>
+<li><strong>L2 (Ridge):</strong> penaliza Σβᵢ² — reduce todos los coeficientes proporcionalmente.</li>
+<li><strong>L1 (Lasso):</strong> penaliza Σ|βᵢ| — puede hacer algunos β exactamente cero (selección automática de variables).</li>
+</ul>
+<h2>6. Supuestos de la regresión logística</h2>
+<p>No requiere normalidad de los errores (como sí requiere la regresión lineal). Sí requiere: ausencia de multicolinealidad fuerte, linealidad en el log-odds (relación lineal entre X y log[p/(1-p)]), y observaciones independientes. Es sensible a outliers extremos.</p>
+
+</body>
+</html>

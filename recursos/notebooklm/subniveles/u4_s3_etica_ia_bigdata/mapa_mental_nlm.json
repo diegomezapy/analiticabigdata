@@ -1,0 +1,156 @@
+{
+  "mind_map": {
+    "name": "Interpretación de Resultados y Modelos Estadísticos en Big Data",
+    "children": [
+      {
+        "name": "Conceptos Fundamentales",
+        "children": [
+          {
+            "name": "Importancia de la Interpretación"
+          },
+          {
+            "name": "Evitar 'Caja Negra'"
+          },
+          {
+            "name": "Toma de Decisiones Éticas"
+          }
+        ]
+      },
+      {
+        "name": "Métricas de Performance",
+        "children": [
+          {
+            "name": "Accuracy"
+          },
+          {
+            "name": "Precision/Recall"
+          },
+          {
+            "name": "AUC-ROC"
+          },
+          {
+            "name": "R-squared"
+          },
+          {
+            "name": "Feature Importance"
+          }
+        ]
+      },
+      {
+        "name": "Análisis Discriminante Lineal (LDA)",
+        "children": [
+          {
+            "name": "Método Supervisado"
+          },
+          {
+            "name": "Reducción Dimensional"
+          },
+          {
+            "name": "Maximización de Separación"
+          },
+          {
+            "name": "Asunción de Normalidad"
+          },
+          {
+            "name": "Librerías R: MASS y caret"
+          }
+        ]
+      },
+      {
+        "name": "Selección de Modelos",
+        "children": [
+          {
+            "name": "Cross-Validation"
+          },
+          {
+            "name": "AIC / BIC"
+          },
+          {
+            "name": "Ensemble Voting"
+          },
+          {
+            "name": "SHAP Values (Explicabilidad)"
+          }
+        ]
+      },
+      {
+        "name": "Generación de Información",
+        "children": [
+          {
+            "name": "Informes Reproducibles (rmarkdown)"
+          },
+          {
+            "name": "Dashboards Interactivos (Shiny)"
+          },
+          {
+            "name": "Narrativa de Datos"
+          }
+        ]
+      },
+      {
+        "name": "Actividades y Evaluación",
+        "children": [
+          {
+            "name": "Actividad 1: Formativa",
+            "children": [
+              {
+                "name": "Lectura de Materiales"
+              },
+              {
+                "name": "Videos Tutoriales"
+              }
+            ]
+          },
+          {
+            "name": "Actividad 2: Interactiva",
+            "children": [
+              {
+                "name": "Foro sobre LDA"
+              },
+              {
+                "name": "Argumentación de Aplicaciones"
+              }
+            ]
+          },
+          {
+            "name": "Actividad 3: Evaluativa",
+            "children": [
+              {
+                "name": "Cuestionario en Línea"
+              }
+            ]
+          },
+          {
+            "name": "Evidencia Final",
+            "children": [
+              {
+                "name": "Informe Final"
+              },
+              {
+                "name": "Metodología y Resultados"
+              },
+              {
+                "name": "Riesgos y Recomendaciones"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Aplicaciones Reales",
+        "children": [
+          {
+            "name": "Reconocimiento Facial"
+          },
+          {
+            "name": "Riesgo Financiero"
+          },
+          {
+            "name": "Bioinformática y Genómica"
+          }
+        ]
+      }
+    ]
+  },
+  "note_id": "d49922e0-1b1c-4e69-9c4d-a57c004fa6e9"
+}

@@ -163,6 +163,8 @@
             calendarView: localStorage.getItem('abd_calendar_view') || 'month',
             calendarCursor: localStorage.getItem('abd_calendar_cursor') || '',
             calendarSelectedDate: localStorage.getItem('abd_calendar_selected_date') || '',
+            notebookLmIndex: null,
+            sublevelEvaluation: null,
         };
 
         const COURSE_CONFIG = {
@@ -171,6 +173,74 @@
             publicBaseUrl: 'https://diegomezapy.github.io/analiticabigdata/',
             sheetsWebAppUrl: 'https://script.google.com/macros/s/AKfycbzr2gQky-zzvBBZFNDeUCsJ2uGJ6gF04QyNXyoh_WzAD_wQW5dv2-b6ZUtPOO4aEgGg/exec'
         };
+
+        const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
+
+        const NOTEBOOK_STAGE_CONFIG = [
+            {
+                kind: 'intro',
+                stage: 'Inicio',
+                stageOrder: 1,
+                fileKey: 'resumen',
+                label: 'Resumen NotebookLM',
+                lead: sub => `Entrada breve al subnivel ${sub.code}. Lee la sintesis para ubicar el problema, el vocabulario clave y el producto esperado.`,
+                checks: ['Lee el resumen completo.', 'Identifica tres conceptos principales.', 'Ubica el tema dentro de la unidad.']
+            },
+            {
+                kind: 'concept',
+                stage: 'Conceptos',
+                stageOrder: 2,
+                fileKey: 'microlectura',
+                label: 'Microlectura',
+                lead: sub => `Profundiza el tema ${sub.code} con la lectura completa, ejemplos, contexto y errores frecuentes.`,
+                checks: ['Reconoce la definicion central.', 'Anota una duda o ejemplo.', 'Relaciona el tema con una situacion real.']
+            },
+            {
+                kind: 'function',
+                stage: 'Funciones',
+                stageOrder: 3,
+                fileKey: 'funciones',
+                label: 'Guia R/Python',
+                lead: () => 'Compara las funciones y procedimientos equivalentes en R/data.table y Python/Polars antes de ejecutar codigo.',
+                checks: ['Identifica entrada y salida de cada bloque.', 'Distingue R de Python.', 'Elige una linea de codigo y explicala.']
+            },
+            {
+                kind: 'formula',
+                stage: 'Procedimiento',
+                stageOrder: 4,
+                fileKey: 'procedimiento',
+                label: 'Procedimiento paso a paso',
+                lead: () => 'Sigue el procedimiento como una receta reproducible: preparar, ejecutar, revisar e interpretar.',
+                checks: ['Enumera los pasos principales.', 'Detecta donde podria aparecer un error.', 'Explica el resultado esperado.']
+            },
+            {
+                kind: 'practice',
+                stage: 'Practica',
+                stageOrder: 5,
+                fileKey: 'practica',
+                label: 'Practica guiada',
+                lead: () => 'Resuelve las fichas progresivas del subnivel y usa el laboratorio cuando necesites ejecutar codigo.',
+                checks: ['Completa al menos una ficha.', 'Contrasta el resultado con la lectura.', 'Guarda una conclusion breve.']
+            },
+            {
+                kind: 'activity',
+                stage: 'Aplicacion',
+                stageOrder: 6,
+                fileKey: 'aplicacion',
+                label: 'Caso aplicado',
+                lead: () => 'Transfiere lo aprendido a un caso contextualizado antes de cerrar el subnivel.',
+                checks: ['Resume el caso aplicado.', 'Justifica una decision tecnica.', 'Reconoce un limite o riesgo.']
+            },
+            {
+                kind: 'assessment',
+                stage: 'Evaluacion',
+                stageOrder: 7,
+                fileKey: 'evaluacion',
+                label: 'Evaluacion formal',
+                lead: () => 'Responde la evaluacion parcial del subnivel. Tu resultado queda guardado como evidencia de avance.',
+                checks: ['Responde todas las preguntas.', 'Lee la retroalimentacion.', 'Registra el resultado antes de avanzar.']
+            }
+        ];
 
         const DEFAULT_SEMESTER_CONFIG = {
             semesterName: 'Primer período 2026',
@@ -363,7 +433,7 @@
         // ================================================================
         // INIT
         // ================================================================
-        function init() {
+        async function init() {
             // Auth check
             const stored = sessionStorage.getItem('abd_user');
             if (!stored) { window.location.href = 'index.html'; return; }
@@ -392,6 +462,8 @@
 
             // First login badge
             earnBadge('first_login');
+
+            await loadNotebookLmIndex();
 
             const route = (window.location.hash || '').replace('#', '');
             if (['calendar', 'practices', 'lab', 'account', 'admin'].includes(route)) showPage(route);
@@ -530,6 +602,128 @@
 
         function jsArg(value) {
             return JSON.stringify(value ?? '').replace(/</g, '\\u003c');
+        }
+
+        async function loadNotebookLmIndex() {
+            try {
+                const resp = await fetch(NOTEBOOKLM_INDEX_URL, { cache: 'reload' });
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                STATE.notebookLmIndex = await resp.json();
+            } catch (error) {
+                console.warn('No se pudo cargar el indice NotebookLM:', error.message);
+                STATE.notebookLmIndex = null;
+            }
+        }
+
+        function getNotebookSublevels(unitNum) {
+            return (STATE.notebookLmIndex?.subniveles || [])
+                .filter(item => Number(item.unit) === Number(unitNum))
+                .sort((a, b) => Number(a.sublevel) - Number(b.sublevel));
+        }
+
+        function getNotebookSublevel(unitNum, sublevelIndex) {
+            return getNotebookSublevels(unitNum)
+                .find(item => Number(item.sublevel) === Number(sublevelIndex));
+        }
+
+        function getNotebookUnit(unitNum) {
+            return (STATE.notebookLmIndex?.unidades || [])
+                .find(item => Number(item.unit) === Number(unitNum));
+        }
+
+        function notebookResourceType(file = '') {
+            if (/\.html$/i.test(file)) return 'html';
+            if (/\.json$/i.test(file)) return 'json';
+            if (/\.md$/i.test(file)) return 'markdown';
+            if (/\.txt$/i.test(file)) return 'text';
+            return 'file';
+        }
+
+        function normalizeFlashcardsData(data) {
+            const raw = Array.isArray(data)
+                ? data
+                : (Array.isArray(data?.cards) ? data.cards : (Array.isArray(data?.flashcards) ? data.flashcards : []));
+            return raw.map(item => ({
+                front: item.front || item.question || item.term || item.pregunta || '',
+                back: item.back || item.answer || item.definition || item.respuesta || ''
+            })).filter(item => item.front && item.back);
+        }
+
+        function renderMindMapNode(node, depth = 0, limit = 32) {
+            if (!node || limit <= 0) return '';
+            const children = Array.isArray(node.children) ? node.children.slice(0, Math.max(0, limit - 1)) : [];
+            return `
+      <li style="--mind-depth:${depth}">
+        <span>${escapeHtml(node.name || node.label || node.title || 'Nodo')}</span>
+        ${children.length ? `<ul>${children.map(child => renderMindMapNode(child, depth + 1, Math.floor(limit / Math.max(children.length, 1)))).join('')}</ul>` : ''}
+      </li>`;
+        }
+
+        function normalizeEvaluationData(data, titleFallback = 'Evaluacion parcial') {
+            const raw = Array.isArray(data?.preguntas)
+                ? data.preguntas
+                : (Array.isArray(data?.questions) ? data.questions : []);
+            return {
+                title: data?.titulo || data?.title || titleFallback,
+                questions: raw.map((item, index) => {
+                    const options = item.opciones || item.options || item.answerOptions || [];
+                    const normalizedOptions = options.map(option => {
+                        if (typeof option === 'string') return option;
+                        return option.text || option.label || option.value || '';
+                    }).filter(Boolean);
+                    const correctFromOption = options.findIndex(option => option && typeof option === 'object' && option.isCorrect);
+                    const answer = item.respuesta ?? item.answer ?? item.correctAnswer ?? (correctFromOption >= 0 ? correctFromOption : '');
+                    const type = item.tipo || item.type || (normalizedOptions.length ? 'opcion_multiple' : 'abierta');
+                    return {
+                        num: item.num || index + 1,
+                        tipo: type,
+                        pregunta: item.pregunta || item.question || item.prompt || '',
+                        opciones: normalizedOptions,
+                        respuesta: answer,
+                        retroalimentacion: item.retroalimentacion || item.explicacion || item.rationale || item.feedback || '',
+                        puntos: item.puntos || 1
+                    };
+                }).filter(item => item.pregunta)
+            };
+        }
+
+        function normalizedText(value) {
+            return String(value ?? '')
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9]+/g, ' ')
+                .trim();
+        }
+
+        function answerLetterFromIndex(index) {
+            return ['A', 'B', 'C', 'D', 'E', 'F'][index] || String(index + 1);
+        }
+
+        function isEvaluationAnswerCorrect(question, answer) {
+            if (answer === undefined || answer === null || answer === '') return false;
+            const type = normalizedText(question.tipo);
+            if (type.includes('abierta')) return normalizedText(answer).length >= 24;
+            if (type.includes('completar')) {
+                const expected = normalizedText(question.respuesta);
+                const given = normalizedText(answer);
+                return Boolean(expected && (given === expected || given.includes(expected) || expected.includes(given)));
+            }
+            if (type.includes('verdadero') || type.includes('falso')) {
+                const expected = typeof question.respuesta === 'boolean'
+                    ? (question.respuesta ? 'verdadero' : 'falso')
+                    : normalizedText(question.respuesta);
+                const given = normalizedText(answer);
+                const trueValues = ['v', 'verdadero', 'true', 'cierto'];
+                const falseValues = ['f', 'falso', 'false'];
+                if (trueValues.includes(expected)) return trueValues.includes(given);
+                if (falseValues.includes(expected)) return falseValues.includes(given);
+                return given === expected;
+            }
+            const expected = question.respuesta;
+            if (typeof expected === 'number') return Number(answer) === expected;
+            const expectedText = normalizedText(expected);
+            return normalizedText(answer) === expectedText || normalizedText(answer) === expectedText.charAt(0);
         }
 
         function resourceIcon(kind) {
@@ -1538,7 +1732,79 @@
             ]
         };
 
+        function buildNotebookSublevelSlides(unitNum) {
+            const notebookSublevels = getNotebookSublevels(unitNum);
+            if (!notebookSublevels.length) return [];
+            const fallbackSublevels = UNIT_SUBLEVELS[unitNum] || [];
+            return notebookSublevels.flatMap((sublevel, subIndex) => {
+                const fallback = fallbackSublevels[subIndex] || {};
+                const sublevelIndex = Number(sublevel.sublevel || subIndex + 1);
+                const activityResource = `activity${Math.min(sublevelIndex, 3)}`;
+                const practiceStepIndex = Math.min(sublevelIndex - 1, 2);
+                const base = {
+                    sublevelIndex,
+                    sublevelCode: sublevel.code,
+                    sublevelTitle: sublevel.title,
+                    slug: sublevel.slug,
+                    dataset: fallback.dataset,
+                    practiceId: fallback.practiceId || (unitNum === 1 ? 'lab_datos' : unitNum === 2 ? 'lab_visualizacion' : unitNum === 3 ? 'lab_modelos' : 'lab_interpretacion'),
+                    practiceStepIndex,
+                    notebookSupport: {
+                        mapaMental: sublevel.archivos?.mapaMental,
+                        flashcards: sublevel.archivos?.flashcards,
+                        quiz: sublevel.archivos?.quiz,
+                        storyboard: sublevel.archivos?.storyboard,
+                        audioMicroclaseUrl: sublevel.archivos?.audioMicroclaseUrl,
+                        audioRepasoUrl: sublevel.archivos?.audioRepasoUrl,
+                        videoOverviewUrl: sublevel.archivos?.videoOverviewUrl
+                    },
+                    notebookMeta: sublevel.estado || {}
+                };
+                return NOTEBOOK_STAGE_CONFIG.map((stage, localIndex) => {
+                    const file = sublevel.archivos?.[stage.fileKey] || '';
+                    const isAssessment = stage.kind === 'assessment';
+                    const officialResources = stage.kind === 'intro'
+                        ? ['orientation']
+                        : (['practice', 'activity', 'assessment'].includes(stage.kind) ? [activityResource] : ['materials']);
+                    return {
+                        ...base,
+                        kind: stage.kind,
+                        stage: stage.stage,
+                        stageOrder: stage.stageOrder,
+                        title: `${stage.stage}: ${sublevel.code} ${sublevel.title}`,
+                        lead: typeof stage.lead === 'function' ? stage.lead(sublevel) : stage.lead,
+                        bullets: isAssessment
+                            ? [
+                                `${sublevel.estado?.preguntasEvaluacion || 0} preguntas de evaluacion formal.`,
+                                sublevel.estado?.quizNotebookLm ? `${sublevel.estado?.preguntasQuiz || 0} preguntas adicionales de repaso NotebookLM.` : 'Quiz NotebookLM adicional pendiente para este subnivel.',
+                                'La retroalimentacion se muestra despues de enviar.'
+                            ]
+                            : [
+                                `Tema central: ${sublevel.topic}.`,
+                                `Recurso principal: ${stage.label}.`,
+                                'Avanza cuando puedas explicarlo con tus palabras.'
+                            ],
+                        checks: stage.checks,
+                        resources: officialResources,
+                        evaluationFile: sublevel.archivos?.evaluacion,
+                        quizFile: sublevel.archivos?.quiz,
+                        notebookResource: file ? {
+                            file,
+                            key: stage.fileKey,
+                            label: stage.label,
+                            type: notebookResourceType(file)
+                        } : null
+                    };
+                }).map((slide, localIndex) => ({
+                    ...slide,
+                    globalIndex: (subIndex * NOTEBOOK_STAGE_CONFIG.length) + localIndex
+                }));
+            });
+        }
+
         function buildSublevelSlides(unitNum) {
+            const notebookSlides = buildNotebookSublevelSlides(unitNum);
+            if (notebookSlides.length) return notebookSlides;
             const sublevels = UNIT_SUBLEVELS[unitNum] || [];
             return sublevels.flatMap((sublevel, subIndex) => {
                 const sublevelIndex = subIndex + 1;
@@ -1715,6 +1981,10 @@
                 openPractice(slide.practiceId, slide.practiceStepIndex || 0);
                 return;
             }
+            if (slide.kind === 'assessment' && slide.evaluationFile && !isUnitPathSlideComplete(unitNum, slide, slideIndex)) {
+                startSublevelEvaluation(unitNum, slideIndex, 'formal');
+                return;
+            }
             const key = unitPathSlideKey(unitNum, slideIndex);
             const wasNew = !STATE.completedActivities[key];
             STATE.completedActivities[key] = true;
@@ -1781,6 +2051,73 @@
             return `learningOfficialTitle_${unitNum}_${slideIndex}`;
         }
 
+        function trackNotebookResourceLoad(unitNum, slideIndex) {
+            const slide = getUnitLearningPath(unitNum)[slideIndex];
+            if (!slide?.notebookResource) return;
+            trackEvent('recurso_notebooklm', {
+                unidad: unitNum,
+                recurso: slide.notebookResource.file,
+                detalle: slide.notebookResource.label
+            });
+        }
+
+        function renderLearningPathNotebookResource(unitNum, slide, slideIndex) {
+            const resource = slide.notebookResource;
+            if (!resource) return '';
+            if (slide.kind === 'assessment') return renderLearningPathAssessment(unitNum, slide, slideIndex);
+            if (resource.type === 'html') {
+                return `
+      <section class="learning-notebook-resource">
+        <div class="learning-notebook-toolbar">
+          <div>
+            <span>Recurso NotebookLM</span>
+            <strong>${escapeHtml(resource.label)} · ${escapeHtml(slide.sublevelCode || '')}</strong>
+          </div>
+          <div class="learning-official-actions">
+            <a class="btn-secondary as-link" href="${escapeHtml(resource.file)}" target="_blank" rel="noopener">Abrir</a>
+          </div>
+        </div>
+        <iframe
+          src="${escapeHtml(resource.file)}"
+          title="${escapeHtml(resource.label)}"
+          loading="lazy"
+          onload="trackNotebookResourceLoad(${unitNum}, ${slideIndex})"></iframe>
+      </section>`;
+            }
+            return `
+      <section class="learning-notebook-resource compact">
+        <div class="learning-notebook-toolbar">
+          <div>
+            <span>Recurso NotebookLM</span>
+            <strong>${escapeHtml(resource.label)}</strong>
+          </div>
+          <a class="btn-secondary as-link" href="${escapeHtml(resource.file)}" target="_blank" rel="noopener">Abrir recurso</a>
+        </div>
+      </section>`;
+        }
+
+        function renderLearningPathAssessment(unitNum, slide, slideIndex) {
+            const done = isUnitPathSlideComplete(unitNum, slide, slideIndex);
+            const questionCount = slide.notebookMeta?.preguntasEvaluacion || 0;
+            const quizCount = slide.notebookMeta?.preguntasQuiz || 0;
+            return `
+      <div class="learning-assessment-card ${done ? 'completed' : ''}">
+        <div>
+          <span class="material-badge badge-quiz">${done ? 'Completado' : 'Evaluacion por subnivel'}</span>
+          <h4>${escapeHtml(slide.title)}</h4>
+          <p>${escapeHtml(slide.lead)}</p>
+          <div class="learning-assessment-stats">
+            <span><strong>${questionCount || '--'}</strong> preguntas formales</span>
+            <span><strong>${quizCount || 0}</strong> repaso NotebookLM</span>
+          </div>
+        </div>
+        <div class="practice-actions">
+          <button class="btn-primary" onclick="startSublevelEvaluation(${unitNum}, ${slideIndex}, 'formal')">${done ? 'Revisar / reintentar' : 'Responder evaluacion'}</button>
+          ${slide.quizFile ? `<button class="btn-secondary" onclick="startSublevelEvaluation(${unitNum}, ${slideIndex}, 'repaso')">Quiz de repaso</button>` : '<span class="learning-muted-note">Quiz de repaso pendiente</span>'}
+        </div>
+      </div>`;
+        }
+
         function toggleLearningOfficialDoc(unitNum, slideIndex, file, name, download = '') {
             const panel = document.getElementById(learningOfficialDocId(unitNum, slideIndex));
             const frame = document.getElementById(learningOfficialFrameId(unitNum, slideIndex));
@@ -1804,6 +2141,7 @@
         }
 
         function renderLearningPathOfficialDocument(unitNum, slide, slideIndex) {
+            if (slide.notebookResource) return '';
             const resources = slideResources(unitNum, slide);
             if (!resources.length) return '';
             const first = resources[0];
@@ -1851,6 +2189,7 @@
             if (!panel) return;
             const visible = panel.classList.toggle('is-visible');
             button?.setAttribute('aria-expanded', visible ? 'true' : 'false');
+            if (visible) loadNotebookSupportData(unitNum, slideIndex);
             trackEvent('apoyo_secuencia', {
                 unidad: unitNum,
                 recurso: `u${unitNum}_path_${slideIndex}`,
@@ -1909,6 +2248,55 @@
             return base[slide.kind] || base.concept;
         }
 
+        async function loadNotebookSupportData(unitNum, slideIndex) {
+            const slide = getUnitLearningPath(unitNum)[slideIndex];
+            const support = slide?.notebookSupport;
+            const container = document.getElementById(`notebookSupportData_${unitNum}_${slideIndex}`);
+            if (!container || !support || container.dataset.loaded === 'true') return;
+            const hasAny = support.mapaMental || support.flashcards || support.storyboard;
+            if (!hasAny) {
+                container.innerHTML = '<p>No hay recursos ampliados NotebookLM para este bloque.</p>';
+                container.dataset.loaded = 'true';
+                return;
+            }
+            container.innerHTML = '<p>Cargando mapa mental y tarjetas de repaso...</p>';
+            try {
+                const [mindMapResp, flashcardsResp, storyboardResp] = await Promise.all([
+                    support.mapaMental ? fetch(support.mapaMental) : Promise.resolve(null),
+                    support.flashcards ? fetch(support.flashcards) : Promise.resolve(null),
+                    support.storyboard ? fetch(support.storyboard) : Promise.resolve(null)
+                ]);
+                const mindMapData = mindMapResp?.ok ? await mindMapResp.json() : null;
+                const flashcardsData = flashcardsResp?.ok ? await flashcardsResp.json() : null;
+                const storyboardText = storyboardResp?.ok ? await storyboardResp.text() : '';
+                const mindRoot = mindMapData?.mind_map || mindMapData;
+                const flashcards = normalizeFlashcardsData(flashcardsData).slice(0, 6);
+                container.dataset.loaded = 'true';
+                container.innerHTML = `
+          <div class="notebook-support-grid">
+            <div class="notebook-support-panel">
+              <h4>Mapa mental NotebookLM</h4>
+              ${mindRoot ? `<ul class="mind-map-tree">${renderMindMapNode(mindRoot, 0, 36)}</ul>` : '<p>Mapa mental no disponible.</p>'}
+            </div>
+            <div class="notebook-support-panel">
+              <h4>Flashcards de repaso</h4>
+              ${flashcards.length ? flashcards.map(card => `
+                <details>
+                  <summary>${escapeHtml(card.front)}</summary>
+                  <p>${escapeHtml(card.back)}</p>
+                </details>
+              `).join('') : '<p>Flashcards no disponibles.</p>'}
+            </div>
+            <div class="notebook-support-panel">
+              <h4>Guion de video</h4>
+              ${storyboardText ? `<p>${escapeHtml(storyboardText).slice(0, 900)}</p>` : '<p>Guion pendiente o no disponible.</p>'}
+            </div>
+          </div>`;
+            } catch (error) {
+                container.innerHTML = '<p>No se pudieron cargar los recursos ampliados. Intenta nuevamente.</p>';
+            }
+        }
+
         function renderLearningSupport(unitNum, slide, slideIndex) {
             const support = learningSupportContent(unitNum, slide);
             const unit = UNITS[unitNum - 1];
@@ -1929,6 +2317,10 @@
             <p>${escapeHtml(support.practice)}</p>
           </div>
         </div>
+        ${slide.notebookSupport ? `
+        <div class="notebook-support-data" id="notebookSupportData_${unitNum}_${slideIndex}">
+          <p>Abre este apoyo para cargar mapa mental, flashcards y guion del subnivel.</p>
+        </div>` : ''}
         <div class="learning-support-actions">
           <button class="btn-secondary" onclick="showPage('guia')">Consultar guia didactica</button>
           <a class="btn-secondary as-link" href="${videoUrl}" target="_blank" rel="noopener">Buscar videos explicativos</a>
@@ -2054,6 +2446,7 @@
         <div class="learning-slide-main">
           <p class="learning-lead">${escapeHtml(slide.lead)}</p>
           ${bullets}
+          ${renderLearningPathNotebookResource(unitNum, slide, slideIndex)}
           ${renderLearningPathFormulas(slide)}
           ${renderLearningPathCode(slide)}
           ${renderLearningPathOfficialDocument(unitNum, slide, slideIndex)}
@@ -2146,6 +2539,37 @@
           </div>
         </div>
       </section>`;
+        }
+
+        function renderNotebookUnitResources(unitNum) {
+            const unitResources = getNotebookUnit(unitNum);
+            if (!unitResources) return '';
+            const files = Object.entries(unitResources.archivos || {});
+            const media = unitResources.mediaPendiente || [];
+            return `
+      <div class="card notebook-unit-card">
+        <h3>Recursos NotebookLM de sintesis</h3>
+        <p>Materiales de nivel unidad ya indexados para repaso global y uso embebible.</p>
+        <div class="materials-list" style="margin-top:1rem">
+          ${files.map(([key, file]) => `
+            <a class="material-item" href="${escapeHtml(file)}" target="_blank" rel="noopener">
+              <span class="material-icon">📚</span>
+              <div class="material-info">
+                <h4>${escapeHtml(key.replaceAll('_', ' '))}</h4>
+                <p>${escapeHtml(file)}</p>
+              </div>
+              <span class="material-badge badge-pdf">JSON</span>
+            </a>
+          `).join('')}
+        </div>
+        ${media.length ? `
+          <div class="notebook-media-pending">
+            <h4>Medios pendientes de publicacion diferida</h4>
+            ${media.map(item => `
+              <span>${escapeHtml(item.archivo)} · ${Math.round((item.bytes || 0) / 1048576)} MB · ${escapeHtml(item.recomendado)}</span>
+            `).join('')}
+          </div>` : ''}
+      </div>`;
         }
 
         function renderUnitDetail(n, activeTab = 'ruta') {
@@ -2256,6 +2680,7 @@
           <span class="material-badge badge-quiz">100 XP disponibles</span>
         </div>
       </div>
+      ${renderNotebookUnitResources(n)}
     `;
             }
         }
@@ -2277,6 +2702,196 @@
                 detalle: name
             });
             syncProgressSnapshot();
+        }
+
+        async function startSublevelEvaluation(unitNum, slideIndex, mode = 'formal') {
+            const slides = getUnitLearningPath(unitNum);
+            const slide = slides[slideIndex];
+            if (!slide) return;
+            const file = mode === 'repaso' ? slide.quizFile : slide.evaluationFile;
+            if (!file) {
+                showToast('Este subnivel aun no tiene ese recurso de evaluacion.', 'info');
+                return;
+            }
+            try {
+                const resp = await fetch(file);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const data = await resp.json();
+                const evaluation = normalizeEvaluationData(data, `${mode === 'repaso' ? 'Quiz de repaso' : 'Evaluacion'} ${slide.sublevelCode || ''}`);
+                if (!evaluation.questions.length) throw new Error('sin preguntas');
+                STATE.sublevelEvaluation = {
+                    unitNum,
+                    slideIndex,
+                    mode,
+                    file,
+                    slide,
+                    evaluation,
+                    answers: new Array(evaluation.questions.length).fill('')
+                };
+                renderSublevelEvaluation();
+            } catch (error) {
+                showToast('No se pudo cargar la evaluacion del subnivel.', 'error');
+            }
+        }
+
+        function evaluationOptionValue(question, optionIndex) {
+            if (typeof question.respuesta === 'number') return String(optionIndex);
+            return answerLetterFromIndex(optionIndex);
+        }
+
+        function renderEvaluationQuestion(question, index) {
+            const type = normalizedText(question.tipo);
+            if (type.includes('opcion') || question.opciones.length) {
+                return `
+        <div class="sublevel-eval-options">
+          ${question.opciones.map((option, optionIndex) => `
+            <label>
+              <input type="radio" name="eval_q_${index}" value="${escapeHtml(evaluationOptionValue(question, optionIndex))}">
+              <span>${escapeHtml(option)}</span>
+            </label>
+          `).join('')}
+        </div>`;
+            }
+            if (type.includes('verdadero') || type.includes('falso')) {
+                return `
+        <div class="sublevel-eval-options two">
+          <label><input type="radio" name="eval_q_${index}" value="verdadero"> <span>Verdadero</span></label>
+          <label><input type="radio" name="eval_q_${index}" value="falso"> <span>Falso</span></label>
+        </div>`;
+            }
+            if (type.includes('completar')) {
+                return `<input class="sublevel-eval-input" name="eval_q_${index}" placeholder="Escribe la palabra o frase faltante">`;
+            }
+            return `<textarea class="sublevel-eval-textarea" name="eval_q_${index}" rows="4" placeholder="Redacta tu respuesta con tus palabras"></textarea>`;
+        }
+
+        function renderSublevelEvaluation() {
+            const state = STATE.sublevelEvaluation;
+            if (!state) return;
+            const { unitNum, slideIndex, mode, slide, evaluation } = state;
+            const content = document.getElementById('pageContent');
+            content.innerHTML = `
+      <div class="sublevel-eval-shell unit-theme-u${unitNum} sublevel-theme-s${slide.sublevelIndex || 1}">
+        <div class="sublevel-eval-head">
+          <button class="btn-back" onclick="renderUnitDetail(${unitNum}, 'ruta')">← Volver a la ruta</button>
+          <div>
+            <span class="doc-status-pill">${mode === 'repaso' ? 'Quiz de repaso' : 'Evaluacion formal'}</span>
+            <h2>${escapeHtml(evaluation.title)}</h2>
+            <p>${escapeHtml(slide.sublevelCode || '')} · ${escapeHtml(slide.sublevelTitle || '')}</p>
+          </div>
+        </div>
+        <div class="sublevel-eval-list">
+          ${evaluation.questions.map((question, index) => `
+            <section class="sublevel-eval-question">
+              <div class="question-number">Pregunta ${index + 1} / ${evaluation.questions.length}</div>
+              <h3>${escapeHtml(question.pregunta)}</h3>
+              ${renderEvaluationQuestion(question, index)}
+            </section>
+          `).join('')}
+        </div>
+        <div class="sublevel-eval-actions">
+          <button class="btn-secondary" onclick="renderUnitDetail(${unitNum}, 'ruta')">Cancelar</button>
+          <button class="btn-primary" onclick="finishSublevelEvaluation()">Enviar evaluacion</button>
+        </div>
+      </div>`;
+        }
+
+        function collectSublevelEvaluationAnswers() {
+            const state = STATE.sublevelEvaluation;
+            if (!state) return [];
+            return state.evaluation.questions.map((question, index) => {
+                const checked = document.querySelector(`input[name="eval_q_${index}"]:checked`);
+                if (checked) return checked.value;
+                const input = document.querySelector(`[name="eval_q_${index}"]`);
+                return input?.value || '';
+            });
+        }
+
+        function finishSublevelEvaluation() {
+            const state = STATE.sublevelEvaluation;
+            if (!state) return;
+            const answers = collectSublevelEvaluationAnswers();
+            const unanswered = answers.findIndex(answer => !String(answer || '').trim());
+            if (unanswered >= 0) {
+                showToast(`Completa la pregunta ${unanswered + 1} antes de enviar.`, 'info');
+                return;
+            }
+            const questions = state.evaluation.questions;
+            const details = questions.map((question, index) => {
+                const correct = isEvaluationAnswerCorrect(question, answers[index]);
+                return { question, answer: answers[index], correct };
+            });
+            const correct = details.filter(item => item.correct).length;
+            const total = questions.length;
+            const pct = Math.round((correct / total) * 100);
+            const slide = state.slide;
+            const isFormal = state.mode === 'formal';
+            if (isFormal) {
+                const key = unitPathSlideKey(state.unitNum, state.slideIndex);
+                const wasNew = !STATE.completedActivities[key];
+                STATE.completedActivities[key] = true;
+                if (wasNew) addXP(20, 'Evaluacion de subnivel completada');
+                else saveProgress();
+                setCurrentUnitPathSlide(state.unitNum, Math.min(state.slideIndex + 1, getUnitLearningPath(state.unitNum).length - 1));
+            } else {
+                addXP(8, 'Quiz de repaso completado');
+            }
+            sendToSheets({
+                kind: 'calificacion',
+                timestamp: new Date().toISOString(),
+                usuario: STATE.user.username,
+                nombre: STATE.user.nombre,
+                unidad: state.unitNum,
+                actividad: slide.title,
+                tipo: isFormal ? 'evaluacion_subnivel' : 'quiz_repaso_subnivel',
+                puntaje: pct,
+                porcentaje: pct,
+                correctas: correct,
+                total,
+                fecha: new Date().toLocaleString('es-PY'),
+                xp: isFormal ? 20 : 8,
+                detalle: {
+                    subnivel: slide.sublevelCode || slide.sublevelIndex || '',
+                    slug: slide.slug || '',
+                    archivo: state.file,
+                    modo: state.mode,
+                    respuestas: answers
+                }
+            });
+            syncProgressSnapshot();
+            renderSublevelEvaluationResult(details, pct, correct, total);
+        }
+
+        function renderSublevelEvaluationResult(details, pct, correct, total) {
+            const state = STATE.sublevelEvaluation;
+            if (!state) return;
+            const slide = state.slide;
+            const content = document.getElementById('pageContent');
+            content.innerHTML = `
+      <div class="sublevel-eval-shell unit-theme-u${state.unitNum} sublevel-theme-s${slide.sublevelIndex || 1}">
+        <div class="sublevel-eval-result">
+          <span class="doc-status-pill">${state.mode === 'formal' ? 'Evaluacion registrada' : 'Repaso completado'}</span>
+          <h2>${pct}%</h2>
+          <p>${correct} de ${total} respuestas correctas o suficientemente desarrolladas.</p>
+          <div class="sublevel-feedback-list">
+            ${details.map((item, index) => `
+              <details ${item.correct ? '' : 'open'}>
+                <summary>
+                  <span>${item.correct ? 'Correcta' : 'Revisar'}</span>
+                  Pregunta ${index + 1}
+                </summary>
+                <p><strong>Tu respuesta:</strong> ${escapeHtml(item.answer)}</p>
+                ${item.question.retroalimentacion ? `<p><strong>Retroalimentacion:</strong> ${escapeHtml(item.question.retroalimentacion)}</p>` : ''}
+                ${item.question.respuesta !== undefined && item.question.respuesta !== '' ? `<p><strong>Referencia:</strong> ${escapeHtml(item.question.respuesta)}</p>` : ''}
+              </details>
+            `).join('')}
+          </div>
+          <div class="sublevel-eval-actions">
+            <button class="btn-secondary" onclick="startSublevelEvaluation(${state.unitNum}, ${state.slideIndex}, ${jsArg(state.mode)})">Reintentar</button>
+            <button class="btn-primary" onclick="renderUnitDetail(${state.unitNum}, 'ruta')">Volver a la ruta</button>
+          </div>
+        </div>
+      </div>`;
         }
 
         // ================================================================

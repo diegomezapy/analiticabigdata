@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.2 Comunicación de Resultados — Microlectura — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.2 Comunicación de Resultados y Reportes</h1>
+<h2>1. El problema de la brecha de comunicación</h2>
+<p>Una encuesta de Kaggle (2022) a 24,000 científicos de datos reveló que el 75% considera que la comunicación con stakeholders no técnicos es uno de los principales desafíos. El modelo más sofisticado del mundo no genera valor si el tomador de decisiones no entiende qué hacer con los resultados.</p>
+<p>La brecha existe en dos direcciones: el científico de datos no habla el lenguaje del negocio (ROI, costos de error, tiempo de implementación), y el decisor no entiende el lenguaje técnico (AUC, overfitting, p-valor).</p>
+<h2>2. La pirámide invertida del periodismo</h2>
+<p>Los periodistas aprendieron hace un siglo que los lectores necesitan el mensaje principal primero. Los reportes de datos deben seguir el mismo principio: el resumen ejecutivo con la conclusión y recomendación va primero. Los detalles metodológicos van al final en apéndice.</p>
+<p>Un decisor con 5 minutos debe poder leer solo el resumen ejecutivo y entender: qué se analizó, qué se encontró, y qué debería hacerse. Alguien con más tiempo puede ir al análisis detallado.</p>
+<h2>3. Traducir métricas técnicas al lenguaje del negocio</h2>
+<ul>
+<li>AUC = 0.85 → "El modelo detecta correctamente al 85% de los clientes de riesgo"</li>
+<li>Recall = 0.78 → "De cada 100 clientes que caerán en mora, el modelo identifica a 78"</li>
+<li>Precision = 0.65 → "De cada 100 alertas del modelo, 65 corresponden a clientes que realmente caen en mora"</li>
+<li>F1 = 0.71 → "Balance entre no perder casos de mora y no generar falsas alarmas"</li>
+</ul>
+<h2>4. R Markdown y Quarto: documentos reproducibles</h2>
+<p>R Markdown y su sucesor Quarto permiten crear documentos que mezclan código, texto y resultados en un solo archivo. Cuando los datos se actualizan, se re-ejecuta el documento y todos los números, gráficos y tablas se actualizan automáticamente — sin copiar-pegar.</p>
+<p>Esto resuelve el problema de reproducibilidad: otro analista puede ejecutar el mismo archivo y obtener exactamente los mismos resultados. Las tablas ya no tienen errores de trascripción. Los gráficos ya no son imágenes desconectadas del código.</p>
+<h2>5. El dashboard: comunicación continua</h2>
+<p>Para análisis que deben monitorearse continuamente (ventas diarias, mora mensual, ejecutabilidad de proyectos), un dashboard interactivo es más apropiado que un reporte estático. En R: Shiny + flexdashboard. En Python: Dash o Streamlit.</p>
+<p>Un buen dashboard tiene: 3-5 KPIs principales visibles sin scroll, capacidad de filtrar por dimensiones relevantes (departamento, período, categoría), y alertas automáticas cuando los indicadores cruzan umbrales críticos.</p>
+<h2>6. La ética de la visualización</h2>
+<p>Las visualizaciones pueden ser honestas o manipuladoras. Ejes Y truncados exageran diferencias. Promedios que ignoran variabilidad ocultan información. Correlaciones presentadas como causalidades engañan. El científico de datos tiene responsabilidad ética de representar los datos con precisión y honestidad, incluso cuando los resultados no son los que el cliente quería escuchar.</p>
+
+</body>
+</html>

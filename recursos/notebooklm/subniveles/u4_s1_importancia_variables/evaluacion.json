@@ -1,0 +1,53 @@
+{
+  "subnivel": "4.1",
+  "titulo": "Evaluación: Importancia de Variables y Feature Selection",
+  "preguntas": [
+    {
+      "num": 1,
+      "tipo": "opcion_multiple",
+      "pregunta": "¿Cuál es la ventaja del permutation importance sobre la importancia Gini de Random Forest?",
+      "opciones": [
+        "A) Es más rápido de calcular",
+        "B) Es aplicable a cualquier modelo y no sobreestima variables con muchas categorías",
+        "C) Produce valores entre 0 y 1",
+        "D) Requiere menos datos de entrenamiento"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "La importancia Gini de Random Forest puede sobreestimar la importancia de variables continuas o con muchas categorías porque tienen más puntos de corte posibles. Permutation importance es modelo-agnóstica y mide directamente el impacto en el rendimiento al perturbar cada variable."
+    },
+    {
+      "num": 2,
+      "tipo": "verdadero_falso",
+      "pregunta": "Agregar más features a un modelo siempre mejora su rendimiento predictivo.",
+      "respuesta": "Falso",
+      "retroalimentacion": "La 'maldición de la dimensionalidad' muestra que demasiadas features pueden degradar el rendimiento. Features irrelevantes o ruidosas añaden ruido al modelo, aumentan el riesgo de overfitting y dificultan la interpretación. Menos features bien seleccionadas generalmente superan a más features sin selección."
+    },
+    {
+      "num": 3,
+      "tipo": "opcion_multiple",
+      "pregunta": "SHAP values tienen la propiedad de que la suma de los SHAP de todas las features para una predicción individual es igual a:",
+      "opciones": [
+        "A) 1.0 (por ser probabilidades)",
+        "B) La predicción del modelo menos el valor base (promedio de predicciones)",
+        "C) La accuracy del modelo",
+        "D) 0 (por ser contribuciones relativas)"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "La propiedad de eficiencia de SHAP garantiza que la suma de valores SHAP = predicción para esa observación − valor base. Esto hace que la explicación sea exacta y consistente con la predicción del modelo."
+    },
+    {
+      "num": 4,
+      "tipo": "completar",
+      "pregunta": "El método RFE (Recursive Feature Elimination) funciona eliminando iterativamente la feature de ________ importancia en cada paso hasta alcanzar el número deseado de variables.",
+      "respuesta": "menor (más baja)",
+      "retroalimentacion": "RFE entrena el modelo, rankea las features por importancia, elimina la menos importante, y repite. Con validación cruzada (RFECV), selecciona automáticamente el número óptimo de features."
+    },
+    {
+      "num": 5,
+      "tipo": "abierta",
+      "pregunta": "¿Cuál es la diferencia entre los métodos de selección de features 'filter', 'wrapper' y 'embedded'? Dé un ejemplo de cada uno.",
+      "respuesta": "Filter methods: seleccionan features usando estadísticos que no involucran al modelo predictivo. Son rápidos e independientes del algoritmo. Ejemplo: chi-cuadrado para variables categóricas vs respuesta, correlación de Pearson para variables numéricas, mutual information. Wrapper methods: evalúan subconjuntos de features entrenando el modelo real. Son más precisos pero computacionalmente costosos. Ejemplo: RFE (Recursive Feature Elimination) con validación cruzada. Embedded methods: la selección ocurre dentro del proceso de entrenamiento. Ejemplo: regularización Lasso (L1) que fuerza algunos coeficientes a exactamente cero, efectivamente descartando esas variables. Son eficientes y consideran interacciones entre features.",
+      "retroalimentacion": "Cada enfoque tiene su nicho: filter para alta dimensionalidad inicial como en genómica, wrapper cuando se puede costear el cómputo extra, embedded cuando ya se usa regularización. En práctica se combinan: primero filter para reducir el espacio, luego wrapper o embedded."
+    }
+  ]
+}

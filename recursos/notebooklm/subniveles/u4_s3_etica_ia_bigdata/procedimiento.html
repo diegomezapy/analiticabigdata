@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.3 Procedimiento — Auditoría Ética de un Modelo — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.3 Procedimiento: Auditoría Ética de un Modelo Predictivo</h1>
+<h2>Pasos</h2>
+<h3>Paso 1: Identificar variables sensibles</h3>
+<pre># Listar variables demográficas o sensibles en el dataset
+# Sexo, edad, raza/etnia, religion, estado civil, zona geográfica
+# Verificar si están usadas directamente o si existen proxies
+cat("Variables en el dataset:
+")
+print(names(datos))
+cat("¿Alguna es variable demográfica sensible?
+")</pre>
+<h3>Paso 2: Calcular métricas por grupo</h3>
+<pre>grupos <- unique(datos$sexo)
+for (g in grupos) {
+  subset_g <- test[test$sexo == g, ]
+  pred_g <- predict(modelo, subset_g)
+  real_g <- subset_g$resultado
+  acc_g <- mean(pred_g == real_g)
+  cat(sprintf("Grupo %s: n=%d, Accuracy=%.3f
+", g, nrow(subset_g), acc_g))
+}</pre>
+<h3>Paso 3: Calcular Disparate Impact Ratio</h3>
+<pre>tasa_positivos <- tapply(pred_test=="Si", test$sexo, mean)
+dir <- min(tasa_positivos) / max(tasa_positivos)
+cat(sprintf("DIR = %.3f (%s)
+",
+            dir,
+            ifelse(dir < 0.8, "ALERTA: posible discriminacion", "OK")))</pre>
+<h3>Paso 4: Calibrar umbrales por grupo</h3>
+<pre># Si el Recall difiere entre grupos, ajustar umbrales
+# para equiparar la tasa de detección
+probs <- predict(modelo, test, type="prob")[,"Si"]
+for (g in unique(test$sexo)) {
+  mask <- test$sexo == g
+  umbral_g <- quantile(probs[mask & test$resultado=="No"], 0.7)
+  cat(sprintf("Umbral sugerido para %s: %.3f
+", g, umbral_g))
+}</pre>
+<h3>Paso 5: Documentar y reportar</h3>
+<pre>cat("
+=== REPORTE DE FAIRNESS ===
+")
+cat("Modelo: Regresión Logística — Crédito
+")
+cat("Grupo sensible auditado: sexo
+")
+cat(sprintf("Disparate Impact Ratio: %.3f
+", dir))
+cat(sprintf("Conclusión: %s
+",
+            ifelse(dir < 0.8,
+                   "Se detectó posible discriminación. Revisar datos históricos y variables proxy.",
+                   "No se detectó discriminación significativa por este criterio.")))</pre>
+
+</body>
+</html>

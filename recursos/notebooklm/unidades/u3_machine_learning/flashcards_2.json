@@ -1,0 +1,221 @@
+{
+  "title": "Aprendizaje Tarjetas",
+  "cards": [
+    {
+      "front": "\u00bfCu\u00e1l es la definici\u00f3n b\u00e1sica de Machine Learning en el contexto de Big Data?",
+      "back": "Es la capacidad de las m\u00e1quinas para aprender patrones de datos sin ser programadas expl\u00edcitamente."
+    },
+    {
+      "front": "\u00bfEn qu\u00e9 consiste el aprendizaje supervisado?",
+      "back": "El algoritmo aprende de datos etiquetados para predecir resultados futuros."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el prop\u00f3sito del aprendizaje no supervisado?",
+      "back": "Encontrar patrones o estructuras ocultas en datos que no tienen etiquetas."
+    },
+    {
+      "front": "\u00bfC\u00f3mo aprende un modelo mediante el aprendizaje por reforzamiento?",
+      "back": "Aprende a trav\u00e9s de un proceso de ensayo y error basado en recompensas."
+    },
+    {
+      "front": "Mencione un ejemplo de uso del aprendizaje supervisado en Big Data.",
+      "back": "La predicci\u00f3n de fuga de clientes (churn) en empresas de telecomunicaciones."
+    },
+    {
+      "front": "Mencione un ejemplo de aplicaci\u00f3n del aprendizaje no supervisado.",
+      "back": "La segmentaci\u00f3n de clientes en una plataforma de e-commerce."
+    },
+    {
+      "front": "\u00bfQu\u00e9 es el aprendizaje semi-supervisado?",
+      "back": "Es un enfoque que combina una peque\u00f1a cantidad de datos etiquetados con una gran cantidad de datos no etiquetados."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el primer paso tras definir el problema en el flujo de creaci\u00f3n de un modelo predictivo?",
+      "back": "Dividir los datos en conjuntos de entrenamiento (train) y de prueba (test)."
+    },
+    {
+      "front": "\u00bfPara qu\u00e9 sirve el conjunto de entrenamiento en Machine Learning?",
+      "back": "Para que el algoritmo aprenda los patrones y ajuste sus par\u00e1metros internos."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la funci\u00f3n del conjunto de prueba (test set)?",
+      "back": "Evaluar el desempe\u00f1o del modelo con datos que no ha visto previamente."
+    },
+    {
+      "front": "\u00bfQu\u00e9 paquete de R se menciona como una herramienta integral para partici\u00f3n, entrenamiento y evaluaci\u00f3n de modelos?",
+      "back": "El paquete `caret`."
+    },
+    {
+      "front": "Nombre tres m\u00e9tricas comunes para evaluar modelos de clasificaci\u00f3n.",
+      "back": "Exactitud (accuracy), precisi\u00f3n (precision) y sensibilidad (recall)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 es el algoritmo K-Nearest Neighbors (KNN)?",
+      "back": "Es un m\u00e9todo no param\u00e9trico que clasifica un punto seg\u00fan la mayor\u00eda de votos de sus vecinos m\u00e1s cercanos."
+    },
+    {
+      "front": "F\u00f3rmula: Distancia Euclidea entre dos puntos $p$ y $q$.",
+      "back": "$d(p, q) = \\sqrt{\\sum (p_i - q_i)^2}$"
+    },
+    {
+      "front": "\u00bfQu\u00e9 significa que KNN sea un algoritmo 'basado en instancias'?",
+      "back": "Que no construye un modelo interno, sino que memoriza las instancias de entrenamiento para comparar."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es una ventaja principal de utilizar KNN?",
+      "back": "Su simplicidad y que no asume una distribuci\u00f3n espec\u00edfica de los datos."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es una de las mayores desventajas de KNN en Big Data?",
+      "back": "Su alto costo computacional durante la fase de predicci\u00f3n."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica se recomienda para mejorar la escalabilidad de KNN en grandes vol\u00famenes de datos?",
+      "back": "El uso de aproximaciones como KD-trees."
+    },
+    {
+      "front": "En KNN, \u00bfc\u00f3mo afecta un valor de $K$ demasiado peque\u00f1o al modelo?",
+      "back": "Hace al modelo muy sensible al ruido y a los valores at\u00edpicos (outliers)."
+    },
+    {
+      "front": "\u00bfPor qu\u00e9 es importante normalizar los datos antes de aplicar KNN?",
+      "back": "Porque el c\u00e1lculo de distancias es sensible a las diferentes escalas de las variables."
+    },
+    {
+      "front": "\u00bfQu\u00e9 biblioteca de R se utiliza espec\u00edficamente para la funci\u00f3n `knn()`?",
+      "back": "La biblioteca `class`."
+    },
+    {
+      "front": "\u00bfEn qu\u00e9 teorema se basa el clasificador Naive Bayes?",
+      "back": "En el Teorema de Bayes."
+    },
+    {
+      "front": "F\u00f3rmula: Teorema de Bayes para la probabilidad de una clase $C$ dado un vector $X$.",
+      "back": "$P(C|X) = \\frac{P(X|C) P(C)}{P(X)}$"
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el supuesto 'ingenuo' (naive) de Naive Bayes?",
+      "back": "Asume que todas las variables predictoras son independientes entre s\u00ed dada la clase."
+    },
+    {
+      "front": "\u00bfQu\u00e9 variante de Naive Bayes es ideal para variables predictoras continuas?",
+      "back": "Gaussian Naive Bayes."
+    },
+    {
+      "front": "\u00bfPara qu\u00e9 tipo de datos es m\u00e1s adecuado el Naive Bayes Multinomial?",
+      "back": "Para datos discretos, com\u00fanmente utilizado en conteo de palabras para clasificaci\u00f3n de texto."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es una ventaja clave de Naive Bayes al manejar Big Data?",
+      "back": "Es extremadamente r\u00e1pido tanto en el entrenamiento como en la predicci\u00f3n."
+    },
+    {
+      "front": "\u00bfQu\u00e9 es el problema de 'frecuencia cero' en Naive Bayes?",
+      "back": "Ocurre cuando una categor\u00eda no aparece en el entrenamiento, resultando en una probabilidad posterior de cero."
+    },
+    {
+      "front": "\u00bfC\u00f3mo se soluciona t\u00edpicamente el problema de frecuencia cero en Naive Bayes?",
+      "back": "Mediante el uso de t\u00e9cnicas de suavizado como el suavizado de Laplace (Laplace smoothing)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 paquete de R contiene la funci\u00f3n `naiveBayes()`?",
+      "back": "El paquete `e1071`."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el objetivo principal de la Regresi\u00f3n Log\u00edstica?",
+      "back": "Modelar la probabilidad de que una instancia pertenezca a una categor\u00eda determinada."
+    },
+    {
+      "front": "\u00bfQu\u00e9 funci\u00f3n matem\u00e1tica utiliza la Regresi\u00f3n Log\u00edstica para transformar el output en una probabilidad entre 0 y 1?",
+      "back": "La funci\u00f3n sigmoide o funci\u00f3n log\u00edstica."
+    },
+    {
+      "front": "F\u00f3rmula: Funci\u00f3n log\u00edstica para la probabilidad $p$.",
+      "back": "$p = \\frac{1}{1 + e^{-(\\beta_0 + \\beta_1 x)}}$"
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de clasificaci\u00f3n se realiza cuando solo hay dos categor\u00edas posibles?",
+      "back": "Clasificaci\u00f3n binaria."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es una ventaja cr\u00edtica de la Regresi\u00f3n Log\u00edstica en t\u00e9rminos de interpretaci\u00f3n?",
+      "back": "Permite entender la influencia de cada variable predictora a trav\u00e9s de sus coeficientes."
+    },
+    {
+      "front": "\u00bfQu\u00e9 supuesto de linealidad mantiene la Regresi\u00f3n Log\u00edstica?",
+      "back": "Asume una relaci\u00f3n lineal entre las variables predictoras y el logit (log-odds) de la probabilidad."
+    },
+    {
+      "front": "\u00bfA qu\u00e9 es sensible la Regresi\u00f3n Log\u00edstica en t\u00e9rminos de relaci\u00f3n entre predictores?",
+      "back": "Es sensible a la multicolinealidad (alta correlaci\u00f3n entre variables independientes)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 funci\u00f3n de R se utiliza para entrenar una Regresi\u00f3n Log\u00edstica binaria?",
+      "back": "La funci\u00f3n `glm()` con el argumento `family=\"binomial\"`."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el uso t\u00edpico de la Regresi\u00f3n Log\u00edstica en el sector bancario?",
+      "back": "Evaluaci\u00f3n del riesgo crediticio (predecir si un cliente pagar\u00e1 o no un pr\u00e9stamo)."
+    },
+    {
+      "front": "Comparaci\u00f3n: \u00bfQu\u00e9 algoritmo es preferible si los l\u00edmites de decisi\u00f3n son altamente no lineales?",
+      "back": "KNN."
+    },
+    {
+      "front": "Comparaci\u00f3n: \u00bfQu\u00e9 algoritmo suele ser m\u00e1s eficiente para el procesamiento de texto y filtrado de spam en streams?",
+      "back": "Naive Bayes."
+    },
+    {
+      "front": "Comparaci\u00f3n: \u00bfQu\u00e9 algoritmo elegir\u00edas si la prioridad es la interpretaci\u00f3n directa de la probabilidad de \u00e9xito?",
+      "back": "Regresi\u00f3n Log\u00edstica."
+    },
+    {
+      "front": "\u00bfQu\u00e9 representa una Matriz de Confusi\u00f3n?",
+      "back": "Una tabla que resume los aciertos y errores de un modelo comparando valores reales contra predicciones."
+    },
+    {
+      "front": "En una matriz de confusi\u00f3n binaria, \u00bfqu\u00e9 es un Falso Positivo?",
+      "back": "Cuando el modelo predice la clase positiva pero el valor real es negativo."
+    },
+    {
+      "front": "En una matriz de confusi\u00f3n binaria, \u00bfqu\u00e9 es un Falso Negativo?",
+      "back": "Cuando el modelo predice la clase negativa pero el valor real es positivo."
+    },
+    {
+      "front": "\u00bfQu\u00e9 mide la m\u00e9trica 'F1-score'?",
+      "back": "Es la media arm\u00f3nica entre la precisi\u00f3n y la sensibilidad (recall)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la aplicaci\u00f3n real de KNN en plataformas como Spotify?",
+      "back": "Sistemas de recomendaci\u00f3n basados en la similitud entre usuarios o contenidos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica se utiliza en Big Data para manejar variables categ\u00f3ricas en Regresi\u00f3n Log\u00edstica?",
+      "back": "Conversi\u00f3n a factores o variables dummy."
+    },
+    {
+      "front": "\u00bfPor qu\u00e9 Naive Bayes escala bien con Big Data?",
+      "back": "Porque sus c\u00e1lculos se basan en conteos de frecuencias y probabilidades simples que requieren poco c\u00f3mputo."
+    },
+    {
+      "front": "\u00bfBajo qu\u00e9 circunstancia la Regresi\u00f3n Log\u00edstica no maneja bien los datos?",
+      "back": "Cuando existen interacciones no lineales complejas entre las variables sin transformaci\u00f3n previa."
+    },
+    {
+      "front": "Concepto: Hiperpar\u00e1metro $K$",
+      "back": "Definici\u00f3n: N\u00famero de vecinos considerados por KNN para tomar una decisi\u00f3n de clasificaci\u00f3n."
+    },
+    {
+      "front": "Concepto: Frontera de Decisi\u00f3n",
+      "back": "Definici\u00f3n: Superficie que separa las diferentes clases predichas por un clasificador en el espacio de caracter\u00edsticas."
+    },
+    {
+      "front": "\u00bfQu\u00e9 indica el valor de salida de la funci\u00f3n `predict(..., type=\"response\")` en una Regresi\u00f3n Log\u00edstica en R?",
+      "back": "La probabilidad estimada de pertenecer a la clase de referencia (usualmente 1)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el beneficio de usar el paquete `caret` para comparar diferentes algoritmos?",
+      "back": "Proporciona una interfaz unificada para entrenar y evaluar modelos usando la misma sintaxis."
+    }
+  ]
+}

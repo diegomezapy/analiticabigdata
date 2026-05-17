@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.2 Entorno de trabajo: R/RStudio, archivos y lectura de datos — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 20px; color: #222; line-height: 1.7; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 8px; }
+  h2 { color: #0D47A1; margin-top: 2em; }
+  h3 { color: #1976D2; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 16px; overflow-x: auto; border-radius: 4px; }
+  code { font-family: 'Courier New', monospace; font-size: 0.9em; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; }
+  td { padding: 8px; border: 1px solid #ddd; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  blockquote { border-left: 4px solid #1976D2; margin-left: 0; padding-left: 20px; color: #555; font-style: italic; }
+  .header-info { background: #E3F2FD; padding: 12px; border-radius: 4px; margin-bottom: 24px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="header-info">
+  <strong>Analítica de Big Data</strong> | FACEN - Universidad Nacional de Asunción | 2026<br>
+  Subnivel: 1.2 Entorno de trabajo: R/RStudio, archivos y lectura de datos
+</div>
+
+<h1>Procedimiento: 1.2 Configurar entorno y leer datos</h1>
+<ol>
+  <li><strong>Instalar R ≥ 4.3</strong> desde cran.r-project.org. Verificar con <code>R.version</code>.</li>
+  <li><strong>Instalar RStudio ≥ 2024</strong> desde posit.co. Abrir RStudio y verificar que R está conectado (esquina inferior izquierda de la consola).</li>
+  <li><strong>Crear proyecto RStudio</strong>: File → New Project → New Directory. Nombrar con patrón <code>ABD_UNIDAD1</code>.</li>
+  <li><strong>Crear estructura de carpetas</strong> ejecutando en consola:
+    <pre><code>dir.create("data/raw", recursive=TRUE); dir.create("data/processed"); dir.create("scripts"); dir.create("outputs")</code></pre>
+  </li>
+  <li><strong>Instalar paquetes esenciales</strong>: ejecutar el bloque de instalación de la guía de funciones.</li>
+  <li><strong>Cargar el dataset</strong> con la función correspondiente al formato (.csv → fread, .xlsx → read_excel, .parquet → read_parquet).</li>
+  <li><strong>Ejecutar diagnóstico</strong>: dim(), str(), summary(), colSums(is.na(df)).</li>
+  <li><strong>Documentar hallazgos</strong> en un comentario al inicio del script: filas, columnas, tipos problemáticos, columnas con NAs.</li>
+</ol>
+
+</body>
+</html>

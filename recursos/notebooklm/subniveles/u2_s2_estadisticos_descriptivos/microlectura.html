@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>2.2 Estadísticos Descriptivos — Microlectura — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 10px; }
+  h2 { color: #1976D2; margin-top: 2em; }
+  h3 { color: #0D47A1; }
+  .header-info { background: #E3F2FD; border-left: 4px solid #1565C0; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #0D47A1; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #E8F5E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #1565C0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 2</div>
+
+<h1>2.2 Estadísticos Descriptivos y Limpieza de Datos</h1>
+<h2>1. El ciclo de datos sucios</h2>
+<p>Se estima que los científicos de datos dedican entre el 60% y el 80% de su tiempo a limpiar y preparar datos. Los datos "sucios" incluyen: valores faltantes (NA/NaN), tipos incorrectos, duplicados, outliers, inconsistencias de formato y codificaciones erróneas.</p>
+<p>Un dato sucio no detectado puede invalidar todo un análisis. La regla de oro: nunca confiar en datos sin haberlos explorado con estadísticos descriptivos y visualizaciones.</p>
+<h2>2. Estadísticos descriptivos: el resumen numérico</h2>
+<p>Los estadísticos descriptivos se dividen en cuatro grupos:</p>
+<ul>
+<li><strong>Tendencia central:</strong> dónde está el "centro" de los datos (media, mediana, moda).</li>
+<li><strong>Dispersión:</strong> cuánto se alejan los datos del centro (varianza, SD, IQR, rango).</li>
+<li><strong>Forma:</strong> asimetría (skewness) y curtosis (kurtosis) de la distribución.</li>
+<li><strong>Posición:</strong> cuartiles, percentiles, valores extremos.</li>
+</ul>
+<p>En R, <code>summary(df)</code> entrega los 6 números de Tukey para cada variable numérica: mínimo, Q1, mediana, media, Q3, máximo.</p>
+<h2>3. Distribuciones asimétricas</h2>
+<p>Cuando la distribución es simétrica, media ≈ mediana. Cuando hay sesgo positivo (cola derecha larga, como ingresos), media &gt; mediana: la media es "jalada" por los valores extremos. En ese caso, la mediana es más representativa del "centro".</p>
+<div class="ejemplo"><strong>Ejemplo:</strong> Si 9 personas ganan 2.000.000 Gs y 1 persona gana 50.000.000 Gs, la media sería 6.800.000 Gs — muy alejada de lo que gana la mayoría. La mediana de 2.000.000 Gs es más informativa.</div>
+<h2>4. La regla de Tukey para outliers</h2>
+<p>John Tukey definió los "bigotes" del boxplot: los valores que caen fuera de [Q1 − 1.5×IQR, Q3 + 1.5×IQR] se consideran outliers. Para distribuciones normales, esto captura ≈0.7% de los datos como outliers.</p>
+<p>Los outliers pueden ser: errores de captura (hay que corregirlos), valores legítimos raros (hay que investigarlos), o señales importantes (¡hay que analizarlos!).</p>
+<h2>5. Normalización vs estandarización</h2>
+<p><strong>Min-Max (normalización):</strong> transforma a rango [0,1]: x_norm = (x - min)/(max - min). Sensible a outliers.</p>
+<p><strong>Z-score (estandarización):</strong> transforma a media=0, sd=1: z = (x - μ)/σ. Más robusta, necesaria para algoritmos que asumen distribución normal o que comparan distancias (KNN, regresión logística, LDA).</p>
+<h2>6. Imputación de valores faltantes</h2>
+<p>Estrategias según el tipo de missingness:</p>
+<ul>
+<li><strong>MCAR</strong> (Missing Completely At Random): cualquier estrategia funciona; la más simple es omitir.</li>
+<li><strong>MAR</strong> (Missing At Random): imputar con la media/mediana del grupo correspondiente.</li>
+<li><strong>MNAR</strong> (Missing Not At Random): requiere modelos de imputación sofisticados (mice, KNN imputer).</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.1 Qué es Big Data y para qué sirve — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 20px; color: #222; line-height: 1.7; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 8px; }
+  h2 { color: #0D47A1; margin-top: 2em; }
+  h3 { color: #1976D2; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 16px; overflow-x: auto; border-radius: 4px; }
+  code { font-family: 'Courier New', monospace; font-size: 0.9em; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; }
+  td { padding: 8px; border: 1px solid #ddd; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  blockquote { border-left: 4px solid #1976D2; margin-left: 0; padding-left: 20px; color: #555; font-style: italic; }
+  .header-info { background: #E3F2FD; padding: 12px; border-radius: 4px; margin-bottom: 24px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="header-info">
+  <strong>Analítica de Big Data</strong> | FACEN - Universidad Nacional de Asunción | 2026<br>
+  Subnivel: 1.1 Qué es Big Data y para qué sirve
+</div>
+
+<h1>Microlectura: 1.1 Qué es Big Data y para qué sirve</h1>
+
+<h2>1. Contexto histórico</h2>
+<p>La historia del Big Data no comienza con Google o Amazon. En los años 1960,
+laboratorios de defensa y ciencia gestionaban los primeros sistemas de datos masivos.
+En 1990, investigadores de NASA acuñaron el término al enfrentarse a conjuntos de
+datos de visualización científica que desbordaban la RAM disponible.</p>
+
+<table border="1" style="border-collapse:collapse; width:100%">
+  <tr><th>Año</th><th>Hito</th><th>Impacto</th></tr>
+  <tr><td>1960s</td><td>Bases de datos para defensa y ciencia</td><td>Primeros sistemas de almacenamiento masivo</td></tr>
+  <tr><td>1990</td><td>NASA acuña "Big Data"</td><td>El término entra al vocabulario técnico</td></tr>
+  <tr><td>2004</td><td>Google publica MapReduce</td><td>Procesamiento distribuido escalable</td></tr>
+  <tr><td>2006</td><td>Apache Hadoop</td><td>Democratización open-source</td></tr>
+  <tr><td>2011</td><td>Apache Spark</td><td>Procesamiento en memoria, 100x más rápido</td></tr>
+  <tr><td>2015-2020</td><td>Cloud Computing: AWS, Azure, GCP</td><td>Big Data accesible para empresas medianas</td></tr>
+  <tr><td>2023+</td><td>GenAI + Big Data</td><td>Los datos masivos alimentan modelos GPT y similares</td></tr>
+</table>
+
+<h2>2. El cambio de paradigma: del muestreo al análisis integral</h2>
+<p>La estadística clásica resuelve un problema práctico: no podemos medir a toda
+la población, entonces tomamos una muestra representativa e inferimos. Big Data
+disuelve esa restricción.</p>
+
+<blockquote>
+  <p><em>"Más datos superan a algoritmos más inteligentes."</em> — Peter Norvig, Google</p>
+</blockquote>
+
+<p><strong>Caso concreto:</strong> Un banco con 50M de transacciones diarias puede
+entrenar un modelo de fraude con la totalidad de sus datos históricos, no con el
+1% que cabría en memoria RAM convencional. El resultado: reducción de falsos
+positivos del 40% y ahorro de USD 200M anuales.</p>
+
+<h2>3. Las 5V en profundidad</h2>
+
+<h3>3.1 Volumen</h3>
+<p>Las métricas globales de 2025 ilustran la escala:</p>
+<ul>
+  <li>181 Zettabytes generados anualmente a nivel mundial (IDC, 2025)</li>
+  <li>YouTube: 720.000 horas de video subidas cada día</li>
+  <li>CERN LHC: 15 petabytes/segundo durante experimentos</li>
+  <li>Meta: 4 petabytes nuevos cada día</li>
+</ul>
+
+<h3>3.2 Velocidad</h3>
+<p>Tres niveles de procesamiento según latencia requerida:</p>
+<ol>
+  <li><strong>Batch:</strong> Horas/días. Ej: reportes mensuales de ventas.</li>
+  <li><strong>Micro-batch:</strong> Segundos/minutos. Ej: alertas de inventario.</li>
+  <li><strong>Streaming:</strong> Milisegundos. Ej: detección de fraude, trading algorítmico.</li>
+</ol>
+
+<h3>3.3 Variedad</h3>
+<p>Distribución típica de tipos de datos en organizaciones modernas:</p>
+<ul>
+  <li>Estructurados: 20% (SQL, CSV, Excel)</li>
+  <li>Semi-estructurados: 30% (JSON, XML, logs)</li>
+  <li>No estructurados: 50% (texto, imágenes, audio, video)</li>
+</ul>
+
+<h3>3.4 Veracidad</h3>
+<p>Métricas clave de calidad de datos:</p>
+<ul>
+  <li>Completitud: &lt;20% valores faltantes en datasets curados</li>
+  <li>Precisión: &gt;95% en datos validados</li>
+  <li>Consistencia: 0 inconsistencias de formato entre sistemas</li>
+</ul>
+
+<h3>3.5 Valor</h3>
+<p>El ROI de Big Data según McKinsey (2024):</p>
+<ul>
+  <li>Reducción de costos operativos: 20-30%</li>
+  <li>Incremento de ingresos: 15-25%</li>
+  <li>Mejora en eficiencia: data-driven decisions reemplazan intuición</li>
+</ul>
+
+<h2>4. ¿Qué NO es Big Data?</h2>
+<p>No toda base de datos grande es Big Data. Una planilla Excel con 100.000 filas
+no requiere infraestructura distribuida. Big Data implica que las herramientas
+convencionales son insuficientes. La regla práctica: si R o Python en una sola
+máquina pueden procesarlo en menos de 10 minutos, probablemente no es Big Data.</p>
+
+<h2>5. Caso de estudio: Netflix</h2>
+<p>Netflix procesa más de 1.000 millones de eventos de usuario diarios para alimentar
+su sistema de recomendación. Cada perfil tiene más de 5.000 features. El ahorro
+estimado en retención de clientes supera USD 1.500M anuales. Sin Big Data, cada
+recomendación sería un costo, no una inversión.</p>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "subnivel": "2.3",
+  "titulo": "Evaluación: Correlación y Análisis de Agrupación",
+  "preguntas": [
+    {
+      "num": 1,
+      "tipo": "opcion_multiple",
+      "pregunta": "Si la correlación de Pearson entre dos variables es r = 0.92, ¿qué se puede concluir?",
+      "opciones": [
+        "A) Existe causalidad fuerte entre las variables",
+        "B) Existe una relación lineal positiva fuerte entre las variables",
+        "C) Ambas variables son independientes",
+        "D) Una variable es el doble de la otra"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "r = 0.92 indica una relación lineal positiva fuerte (valores altos de X asociados a valores altos de Y). Pero correlación no implica causalidad — se necesita diseño experimental o métodos causales para establecer causalidad."
+    },
+    {
+      "num": 2,
+      "tipo": "verdadero_falso",
+      "pregunta": "La correlación de Spearman mide la relación entre los valores originales de las variables, no entre sus rangos.",
+      "respuesta": "Falso",
+      "retroalimentacion": "La correlación de Spearman trabaja con los rangos (posiciones ordenadas) de las variables, no con sus valores originales. Esto la hace más robusta a outliers y apropiada para variables ordinales."
+    },
+    {
+      "num": 3,
+      "tipo": "opcion_multiple",
+      "pregunta": "¿Cuál es el código correcto para calcular la media de 'salario' por 'departamento' y 'sexo' en dplyr?",
+      "opciones": [
+        "A) df %>% summarise(salario, by=c(departamento,sexo))",
+        "B) df %>% group_by(departamento, sexo) %>% summarise(media = mean(salario))",
+        "C) aggregate(salario ~ departamento + sexo, df, FUN=mean)",
+        "D) B y C son correctas"
+      ],
+      "respuesta": "D",
+      "retroalimentacion": "Tanto la opción B (dplyr, moderna y encadenable) como la C (base R, más antigua) calculan la media de salario por departamento y sexo. La opción A tiene sintaxis incorrecta."
+    },
+    {
+      "num": 4,
+      "tipo": "completar",
+      "pregunta": "En data.table, el equivalente de group_by + summarise de dplyr es la sintaxis: dt[, .(media = mean(valor)), ________ = grupo].",
+      "respuesta": "by",
+      "retroalimentacion": "En data.table, el tercer argumento 'by' especifica la variable de agrupación. La sintaxis completa es dt[i, j, by] donde i filtra filas, j calcula valores y by agrupa."
+    },
+    {
+      "num": 5,
+      "tipo": "abierta",
+      "pregunta": "¿Qué es la multicolinealidad y por qué es problemática en los modelos de regresión? ¿Cómo puede detectarse usando la matriz de correlación?",
+      "respuesta": "La multicolinealidad ocurre cuando dos o más variables predictoras están fuertemente correlacionadas entre sí (r > 0.7-0.8). En regresión lineal es problemática porque: los coeficientes se vuelven inestables (alta varianza), pequeños cambios en los datos producen grandes cambios en los coeficientes, y es difícil interpretar el efecto individual de cada variable. Se detecta con la matriz de correlación buscando pares con |r| > 0.7-0.8, o con el Factor de Inflación de Varianza (VIF > 5-10 indica multicolinealidad). La solución es eliminar una de las variables correlacionadas, combinarlas (PCA), o usar regularización (Ridge, Lasso).",
+      "retroalimentacion": "La multicolinealidad es uno de los supuestos que puede violarse en regresión lineal. No afecta la capacidad predictiva del modelo pero sí la interpretación de los coeficientes y la inferencia estadística."
+    }
+  ]
+}

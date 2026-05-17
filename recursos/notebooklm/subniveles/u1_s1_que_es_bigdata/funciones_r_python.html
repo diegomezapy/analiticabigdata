@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.1 Qué es Big Data y para qué sirve — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 20px; color: #222; line-height: 1.7; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 8px; }
+  h2 { color: #0D47A1; margin-top: 2em; }
+  h3 { color: #1976D2; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 16px; overflow-x: auto; border-radius: 4px; }
+  code { font-family: 'Courier New', monospace; font-size: 0.9em; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; }
+  td { padding: 8px; border: 1px solid #ddd; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  blockquote { border-left: 4px solid #1976D2; margin-left: 0; padding-left: 20px; color: #555; font-style: italic; }
+  .header-info { background: #E3F2FD; padding: 12px; border-radius: 4px; margin-bottom: 24px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="header-info">
+  <strong>Analítica de Big Data</strong> | FACEN - Universidad Nacional de Asunción | 2026<br>
+  Subnivel: 1.1 Qué es Big Data y para qué sirve
+</div>
+
+<h1>Guía de Funciones: 1.1 Big Data — R y Python</h1>
+<p><em>En este subnivel aún no hay código de análisis de datos como tal, pero sí
+exploraremos cómo verificar el entorno y hacer una primera lectura de datos grandes.</em></p>
+
+<h2>R — Verificación del entorno y lectura inicial</h2>
+<pre><code class="language-r">
+# Verificar version de R
+R.version$version.string
+
+# Instalar y cargar paquetes esenciales de Big Data en R
+if (!require("data.table")) install.packages("data.table")
+if (!require("arrow"))      install.packages("arrow")
+library(data.table)
+library(arrow)
+
+# Leer un CSV grande con data.table (mucho más rápido que read.csv)
+# data.table usa todos los cores disponibles automáticamente
+dt <- fread("dataset_grande.csv")
+
+# Ver estructura
+str(dt)         # Tipos de variables y primeras filas
+dim(dt)         # Filas y columnas
+head(dt, 10)    # Primeras 10 filas
+summary(dt)     # Estadísticas descriptivas básicas
+
+# Verificar memoria usada
+object.size(dt)  # Tamaño en bytes
+format(object.size(dt), units = "MB")  # En megabytes
+
+# Número de núcleos disponibles (para paralelismo)
+parallel::detectCores()
+</code></pre>
+
+<h3>Explicación línea a línea</h3>
+<ol>
+  <li><code>R.version$version.string</code>: Confirma que R está actualizado.</li>
+  <li><code>fread()</code>: Lee CSV grandes usando múltiples núcleos. Es 10-100x más rápido que <code>read.csv()</code>.</li>
+  <li><code>str(dt)</code>: Muestra la estructura interna: tipos de columnas, primeras observaciones.</li>
+  <li><code>dim(dt)</code>: Retorna [n_filas, n_columnas]. Fundamental para conocer la escala.</li>
+  <li><code>object.size()</code>: Cuánta RAM ocupa el dataset. Si supera el 80% de tu RAM, necesitás procesamiento por chunks.</li>
+</ol>
+
+<h2>Python — Verificación del entorno y lectura inicial</h2>
+<pre><code class="language-python">
+import sys
+import polars as pl
+import pandas as pd
+
+# Verificar versiones
+print(f"Python: {sys.version}")
+print(f"Polars: {pl.__version__}")
+print(f"Pandas: {pd.__version__}")
+
+# Leer CSV con Polars (más rápido que Pandas para datos grandes)
+df = pl.read_csv("dataset_grande.csv")
+
+# Exploración inicial
+print(df.shape)         # (n_filas, n_columnas)
+print(df.dtypes)        # Tipos de datos por columna
+print(df.head(10))      # Primeras 10 filas
+print(df.describe())    # Estadísticas descriptivas
+
+# Ver uso de memoria aproximado
+print(f"Memoria estimada: {df.estimated_size('mb'):.2f} MB")
+
+# Lazy evaluation: solo ejecuta cuando se llama .collect()
+# Útil para datasets que no caben en memoria
+lazy_df = pl.scan_csv("dataset_grande.csv")
+resultado = lazy_df.filter(pl.col("columna") > 100).collect()
+</code></pre>
+
+<h3>Explicación línea a línea</h3>
+<ol>
+  <li><code>pl.read_csv()</code>: Polars lee CSVs usando Rust internamente, ~3-5x más rápido que pandas.</li>
+  <li><code>df.shape</code>: Tupla (filas, columnas). Primer diagnóstico del dataset.</li>
+  <li><code>df.dtypes</code>: Lista de tipos. Detecta si columnas numéricas fueron leídas como texto.</li>
+  <li><code>df.estimated_size("mb")</code>: Tamaño en RAM. Si supera 4 GB en una máquina de 8 GB, usar lazy evaluation.</li>
+  <li><code>pl.scan_csv()</code>: Lazy mode — construye el plan de ejecución sin leer datos todavía.</li>
+  <li><code>.collect()</code>: Ejecuta el plan optimizado. Polars optimiza automáticamente el orden de operaciones.</li>
+</ol>
+
+</body>
+</html>

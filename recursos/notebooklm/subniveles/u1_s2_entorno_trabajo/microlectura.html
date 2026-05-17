@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.2 Entorno de trabajo: R/RStudio, archivos y lectura de datos — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 20px; color: #222; line-height: 1.7; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 8px; }
+  h2 { color: #0D47A1; margin-top: 2em; }
+  h3 { color: #1976D2; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 16px; overflow-x: auto; border-radius: 4px; }
+  code { font-family: 'Courier New', monospace; font-size: 0.9em; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; }
+  td { padding: 8px; border: 1px solid #ddd; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  blockquote { border-left: 4px solid #1976D2; margin-left: 0; padding-left: 20px; color: #555; font-style: italic; }
+  .header-info { background: #E3F2FD; padding: 12px; border-radius: 4px; margin-bottom: 24px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="header-info">
+  <strong>Analítica de Big Data</strong> | FACEN - Universidad Nacional de Asunción | 2026<br>
+  Subnivel: 1.2 Entorno de trabajo: R/RStudio, archivos y lectura de datos
+</div>
+
+<h1>Microlectura: 1.2 Entorno de trabajo</h1>
+
+<h2>1. Instalación y configuración</h2>
+<p>R se descarga desde <a href="https://cran.r-project.org">cran.r-project.org</a>.
+RStudio desde <a href="https://posit.co">posit.co</a>. Instalar en ese orden.
+Versiones mínimas recomendadas para el curso: R ≥ 4.3, RStudio ≥ 2024.01.</p>
+
+<h2>2. Estructura de un proyecto reproducible</h2>
+<pre><code>
+mi_proyecto/
+  data/
+    raw/       ← datos originales, nunca modificar
+    processed/ ← datos limpios listos para análisis
+  scripts/
+    01_lectura.R
+    02_limpieza.R
+    03_analisis.R
+  outputs/
+    graficos/
+    tablas/
+  README.md
+</code></pre>
+<p>Esta estructura garantiza reproducibilidad: cualquier persona puede reproducir
+el análisis ejecutando los scripts en orden numérico.</p>
+
+<h2>3. Paquetes esenciales del curso</h2>
+<table border="1" style="border-collapse:collapse; width:100%">
+  <tr><th>Paquete</th><th>Función principal</th><th>Instalación</th></tr>
+  <tr><td>data.table</td><td>Lectura y manipulación de datos grandes</td><td>install.packages("data.table")</td></tr>
+  <tr><td>arrow</td><td>Lectura/escritura de Parquet</td><td>install.packages("arrow")</td></tr>
+  <tr><td>readxl</td><td>Lectura de archivos Excel</td><td>install.packages("readxl")</td></tr>
+  <tr><td>jsonlite</td><td>Lectura/escritura de JSON</td><td>install.packages("jsonlite")</td></tr>
+  <tr><td>ggplot2</td><td>Visualización avanzada</td><td>install.packages("ggplot2")</td></tr>
+  <tr><td>dplyr</td><td>Manipulación de datos con sintaxis legible</td><td>install.packages("dplyr")</td></tr>
+</table>
+
+<h2>4. Formatos de archivo en detalle</h2>
+<h3>CSV — Comma Separated Values</h3>
+<p>Formato universal, legible por cualquier herramienta. Desventaja: no guarda
+tipos de datos (todo se lee como texto inicialmente). Para archivos grandes,
+<code>fread()</code> de data.table es ~10x más rápido que <code>read.csv()</code>.</p>
+
+<h3>Parquet — El formato del Big Data</h3>
+<p>Almacenamiento columnar: guarda los datos por columna, no por fila. Ventajas:</p>
+<ul>
+  <li>Compresión automática: un CSV de 5 GB puede ser 800 MB en Parquet.</li>
+  <li>Lectura selectiva de columnas: si querés solo "edad" y "diagnostico", no lee las otras 50 columnas.</li>
+  <li>Preserva tipos de datos: evita el problema de leer fechas como texto.</li>
+</ul>
+
+</body>
+</html>

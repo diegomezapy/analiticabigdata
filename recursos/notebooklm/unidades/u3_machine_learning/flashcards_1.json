@@ -1,0 +1,205 @@
+{
+  "title": "ML Tarjetas",
+  "cards": [
+    {
+      "front": "\u00bfQu\u00e9 capacidad define fundamentalmente al Machine Learning (ML)?",
+      "back": "Permite a las m\u00e1quinas aprender patrones a partir de datos sin ser programadas expl\u00edcitamente."
+    },
+    {
+      "front": "En el contexto de Big Data, \u00bfcu\u00e1l es el objetivo primordial del Machine Learning?",
+      "back": "Extraer insights o conocimientos accionables de grandes vol\u00famenes de datos."
+    },
+    {
+      "front": "Tipo de ML que utiliza datos etiquetados para realizar predicciones.",
+      "back": "Aprendizaje Supervisado (Supervised Learning)."
+    },
+    {
+      "front": "Tipo de ML que busca encontrar patrones o estructuras ocultas en datos sin etiquetas.",
+      "back": "Aprendizaje No Supervisado (Unsupervised Learning)."
+    },
+    {
+      "front": "\u00bfEn qu\u00e9 consiste el aprendizaje por reforzamiento?",
+      "back": "En aprender mediante un proceso de ensayo y error basado en un sistema de recompensas."
+    },
+    {
+      "front": "El uso de una mezcla de datos etiquetados y no etiquetados se denomina _____.",
+      "back": "Aprendizaje Semi-Supervisado."
+    },
+    {
+      "front": "Mencione un uso com\u00fan del aprendizaje supervisado en el sector de telecomunicaciones.",
+      "back": "Predicci\u00f3n de abandono de clientes (churn)."
+    },
+    {
+      "front": "Mencione un ejemplo de aplicaci\u00f3n para el aprendizaje no supervisado en e-commerce.",
+      "back": "Segmentaci\u00f3n de clientes."
+    },
+    {
+      "front": "Mencione un ejemplo de uso del aprendizaje por reforzamiento en el \u00e1rea de log\u00edstica.",
+      "back": "Optimizaci\u00f3n de rutas."
+    },
+    {
+      "front": "En el flujo de trabajo de ML, \u00bfcu\u00e1l es el prop\u00f3sito de dividir los datos en un conjunto de entrenamiento (train)?",
+      "back": "Proporcionar los datos necesarios para que el modelo aprenda los patrones."
+    },
+    {
+      "front": "En el flujo de trabajo de ML, \u00bfcu\u00e1l es el prop\u00f3sito del conjunto de prueba (test)?",
+      "back": "Evaluar el desempe\u00f1o del modelo con datos que no ha visto previamente."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 funci\u00f3n del paquete `caret` se utiliza frecuentemente para realizar la partici\u00f3n de datos?",
+      "back": "La funci\u00f3n `createDataPartition`."
+    },
+    {
+      "front": "Mencione tres m\u00e9tricas estad\u00edsticas comunes para evaluar modelos de clasificaci\u00f3n.",
+      "back": "Accuracy (exactitud), Precision (precisi\u00f3n) y Recall (sensibilidad)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta permite visualizar e interpretar los errores de clasificaci\u00f3n comparando valores reales vs. predichos?",
+      "back": "La matriz de confusi\u00f3n (Confusion Matrix)."
+    },
+    {
+      "front": "Concepto: K-Nearest Neighbors (KNN)",
+      "back": "Definici\u00f3n: Algoritmo no param\u00e9trico que clasifica un punto nuevo seg\u00fan la mayor\u00eda de votos de sus vecinos m\u00e1s cercanos."
+    },
+    {
+      "front": "F\u00f3rmula: Distancia Eucl\u00eddea entre dos puntos $p$ y $q$.",
+      "back": "$d(p, q) = \\sqrt{\\sum (p_i - q_i)^2}$"
+    },
+    {
+      "front": "\u00bfC\u00f3mo afecta la presencia de ruido y outliers al algoritmo KNN?",
+      "back": "El algoritmo es altamente sensible a ellos, lo que puede degradar su precisi\u00f3n."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la principal desventaja computacional de KNN durante la fase de predicci\u00f3n?",
+      "back": "Tiene un alto costo computacional ya que debe calcular distancias contra todos los puntos de entrenamiento."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica se sugiere para mejorar la escalabilidad de KNN en entornos de Big Data?",
+      "back": "El uso de aproximaciones como los KD-trees."
+    },
+    {
+      "front": "En la implementaci\u00f3n de KNN en R, \u00bfpor qu\u00e9 es recomendable normalizar las caracter\u00edsticas (features)?",
+      "back": "Para evitar que variables con escalas mayores dominen el c\u00e1lculo de la distancia."
+    },
+    {
+      "front": "\u00bfQu\u00e9 paquete de R contiene la funci\u00f3n `knn` para el aprendizaje basado en instancias?",
+      "back": "El paquete `class`."
+    },
+    {
+      "front": "Concepto: Naive Bayes",
+      "back": "Definici\u00f3n: Clasificador probabil\u00edstico basado en el Teorema de Bayes que asume independencia entre las caracter\u00edsticas."
+    },
+    {
+      "front": "F\u00f3rmula: Teorema de Bayes para la probabilidad de una clase $C$ dado un vector de caracter\u00edsticas $X$.",
+      "back": "$P(C|X) = \\frac{P(X|C) P(C)}{P(X)}$"
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la principal debilidad te\u00f3rica del modelo Naive Bayes?",
+      "back": "Su asunci\u00f3n de que todas las caracter\u00edsticas son independientes entre s\u00ed, lo cual rara vez ocurre en la realidad."
+    },
+    {
+      "front": "\u00bfPara qu\u00e9 tipo de datos es especialmente eficiente y popular el algoritmo Naive Bayes?",
+      "back": "Datos de texto y alta dimensionalidad (como filtrado de spam)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 variante de Naive Bayes se utiliza cuando las caracter\u00edsticas siguen una distribuci\u00f3n normal?",
+      "back": "Gaussian Naive Bayes."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica se utiliza en Naive Bayes para solucionar el problema de la 'frecuencia cero'?",
+      "back": "Laplace smoothing (suavizado de Laplace)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 paquete de R se utiliza com\u00fanmente para implementar Naive Bayes mediante la funci\u00f3n `naiveBayes`?",
+      "back": "El paquete `e1071`."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el objetivo principal de la Regresi\u00f3n Log\u00edstica?",
+      "back": "Modelar la probabilidad de que una instancia pertenezca a una categor\u00eda espec\u00edfica."
+    },
+    {
+      "front": "F\u00f3rmula: Funci\u00f3n log\u00edstica (Sigmoide) para obtener la probabilidad $p$.",
+      "back": "$p = \\frac{1}{1 + e^{-(\\beta_0 + \\beta_1 x)}}$"
+    },
+    {
+      "front": "\u00bfQu\u00e9 ventaja ofrece la Regresi\u00f3n Log\u00edstica en t\u00e9rminos de interpretaci\u00f3n de resultados?",
+      "back": "Permite interpretar f\u00e1cilmente la influencia de cada predictor mediante sus coeficientes."
+    },
+    {
+      "front": "\u00bfQu\u00e9 suposici\u00f3n de linealidad mantiene la Regresi\u00f3n Log\u00edstica?",
+      "back": "Asume una relaci\u00f3n lineal entre las variables independientes y el logit (log-odds) de la variable dependiente."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 funci\u00f3n y qu\u00e9 familia de distribuci\u00f3n se utilizan para una Regresi\u00f3n Log\u00edstica binaria?",
+      "back": "Se utiliza la funci\u00f3n `glm` con el par\u00e1metro `family=\"binomial\"`."
+    },
+    {
+      "front": "Mencione una aplicaci\u00f3n real de la Regresi\u00f3n Log\u00edstica en el sector financiero.",
+      "back": "Evaluaci\u00f3n de riesgo crediticio."
+    },
+    {
+      "front": "Para predecir listas de reproducci\u00f3n personalizadas (sistemas de recomendaci\u00f3n), el algoritmo m\u00e1s adecuado seg\u00fan el material es _____.",
+      "back": "KNN (basado en similitud)."
+    },
+    {
+      "front": "Comparaci\u00f3n: \u00bfQu\u00e9 algoritmo es preferible para manejar vol\u00famenes masivos de texto en streams?",
+      "back": "Naive Bayes, debido a su rapidez y eficiencia en alta dimensionalidad."
+    },
+    {
+      "front": "Comparaci\u00f3n: \u00bfQu\u00e9 algoritmo es m\u00e1s robusto para capturar relaciones no lineales complejas sin asumir una distribuci\u00f3n de datos?",
+      "back": "KNN."
+    },
+    {
+      "front": "\u00bfQu\u00e9 m\u00e9trica de evaluaci\u00f3n se calcula como la proporci\u00f3n de predicciones correctas sobre el total de casos?",
+      "back": "Accuracy (Exactitud)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 indica el F1-score en un modelo de clasificaci\u00f3n?",
+      "back": "Es una media arm\u00f3nica que busca el balance entre la precisi\u00f3n (precision) y la sensibilidad (recall)."
+    },
+    {
+      "front": "En el c\u00f3digo de R, \u00bfpara qu\u00e9 se utiliza la funci\u00f3n `predict(model, test)`?",
+      "back": "Para generar las predicciones del modelo entrenado utilizando los datos del conjunto de prueba."
+    },
+    {
+      "front": "En un problema de clasificaci\u00f3n binaria con Regresi\u00f3n Log\u00edstica, \u00bfqu\u00e9 se suele hacer con las probabilidades resultantes para obtener una clase?",
+      "back": "Se aplica un umbral (threshold), com\u00fanmente $0.5$, para decidir si la clase es 0 o 1."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la funci\u00f3n del paquete `caret` para evaluar el desempe\u00f1o global incluyendo sensibilidad y especificidad?",
+      "back": "`confusionMatrix`."
+    },
+    {
+      "front": "Mencione una debilidad de la Regresi\u00f3n Log\u00edstica frente a modelos m\u00e1s complejos.",
+      "back": "No maneja bien las interacciones no lineales complejas entre variables."
+    },
+    {
+      "front": "Mencione una debilidad de Naive Bayes respecto a la relaci\u00f3n entre variables.",
+      "back": "Pierde precisi\u00f3n si existe una fuerte correlaci\u00f3n o interacci\u00f3n entre los predictores."
+    },
+    {
+      "front": "En el contexto de Big Data, \u00bfqu\u00e9 caracter\u00edstica de Naive Bayes lo hace ideal para el procesamiento r\u00e1pido?",
+      "back": "Su capacidad de entrenamiento y predicci\u00f3n linealmente escalable."
+    },
+    {
+      "front": "En R, la funci\u00f3n `set.seed()` se utiliza antes de particionar datos para _____.",
+      "back": "Asegurar la reproducibilidad de los resultados al fijar la semilla del generador de n\u00fameros aleatorios."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tecnolog\u00eda se menciona como el futuro para lograr escalabilidad extrema en ML con R?",
+      "back": "Integraci\u00f3n con Apache Spark."
+    },
+    {
+      "front": "Concepto: Clasificador Bernoulli Naive Bayes.",
+      "back": "Definici\u00f3n: Variante de Naive Bayes utilizada cuando las caracter\u00edsticas son variables binarias o booleanas."
+    },
+    {
+      "front": "\u00bfQu\u00e9 problema puede surgir en la Regresi\u00f3n Log\u00edstica si las variables independientes est\u00e1n muy correlacionadas?",
+      "back": "Multicolinealidad."
+    },
+    {
+      "front": "Mencione un beneficio clave de usar el paquete `caret` en R para Machine Learning.",
+      "back": "Proporciona una interfaz unificada y simplificada para entrenar y evaluar cientos de algoritmos diferentes."
+    }
+  ]
+}

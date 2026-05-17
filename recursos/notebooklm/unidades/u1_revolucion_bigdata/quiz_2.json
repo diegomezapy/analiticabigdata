@@ -1,0 +1,375 @@
+{
+  "title": "BigData Cuestionario",
+  "questions": [
+    {
+      "question": "\u00bfCu\u00e1l es la implicancia fundamental del cambio de paradigma desde el muestreo estad\u00edstico tradicional hacia el an\u00e1lisis integral de datasets completos en Big Data?",
+      "answerOptions": [
+        {
+          "text": "La transici\u00f3n de inferencias basadas en muestras a descubrimientos no hipot\u00e9ticos y predicciones en tiempo real.",
+          "isCorrect": true,
+          "rationale": "El Big Data permite analizar la totalidad de los datos, eliminando la necesidad de suposiciones iniciales basadas en una fracci\u00f3n representativa del conjunto."
+        },
+        {
+          "text": "La reducci\u00f3n del sesgo algor\u00edtmico mediante el uso de muestras aleatorias m\u00e1s peque\u00f1as y controladas.",
+          "isCorrect": false,
+          "rationale": "El paradigma busca precisamente lo contrario: evitar el muestreo para capturar patrones de baja frecuencia que se pierden en muestras peque\u00f1as."
+        },
+        {
+          "text": "El aumento de la latencia en el procesamiento debido a la carga exhaustiva de registros hist\u00f3ricos \u00fanicos.",
+          "isCorrect": false,
+          "rationale": "Aunque el volumen aumenta, las arquitecturas modernas buscan reducir la latencia, no es una 'implicancia fundamental' del cambio de l\u00f3gica anal\u00edtica."
+        },
+        {
+          "text": "La dependencia exclusiva de modelos descriptivos en lugar de modelos predictivos o prescriptivos.",
+          "isCorrect": false,
+          "rationale": "El an\u00e1lisis integral de datos masivos es el combustible principal para la anal\u00edtica predictiva avanzada, no una limitaci\u00f3n a lo descriptivo."
+        }
+      ],
+      "hint": "Considere la diferencia entre validar una hip\u00f3tesis preexistente y permitir que los datos revelen patrones inesperados por s\u00ed mismos."
+    },
+    {
+      "question": "En el contexto de las $5V$, \u00bfqu\u00e9 m\u00e9trica de Calidad de Datos (Veracidad) se considera aceptable para un dataset curado seg\u00fan el material extendido?",
+      "answerOptions": [
+        {
+          "text": "Una completitud con menos del $20\\%$ de valores faltantes.",
+          "isCorrect": true,
+          "rationale": "El material establece espec\u00edficamente este umbral de completitud para datasets que han pasado por procesos de curadur\u00eda."
+        },
+        {
+          "text": "Una precisi\u00f3n de datos validados superior al $80\\%$.",
+          "isCorrect": false,
+          "rationale": "El est\u00e1ndar mencionado para la precisi\u00f3n en datos validados es m\u00e1s exigente, situ\u00e1ndose por encima del $95\\%$."
+        },
+        {
+          "text": "Una puntualidad (timeliness) de actualizaci\u00f3n superior a las $24$ horas para sistemas real-time.",
+          "isCorrect": false,
+          "rationale": "Para sistemas de tiempo real, la puntualidad debe ser inferior a $1$ hora para mantener la relevancia de los insights."
+        },
+        {
+          "text": "Una consistencia de formato que admita al menos un $10\\%$ de discrepancias entre sistemas.",
+          "isCorrect": false,
+          "rationale": "La meta de consistencia mencionada es de $0$ inconsistencias entre formatos o sistemas cruzados."
+        }
+      ],
+      "hint": "Revise los umbrales espec\u00edficos de calidad definidos para la Veracidad en el apartado 1.3."
+    },
+    {
+      "question": "Analizando el ejemplo de c\u00f3digo de Apache Flink, \u00bfcu\u00e1l es el prop\u00f3sito de la cl\u00e1usula $WATERMARK\\ FOR\\ timestamp\\ AS\\ timestamp - INTERVAL\\ '5'\\ SECOND$?",
+      "answerOptions": [
+        {
+          "text": "Gestionar el procesamiento de eventos que llegan con retraso, permitiendo un margen de tolerancia.",
+          "isCorrect": true,
+          "rationale": "Los watermarks definen hasta qu\u00e9 punto el sistema espera por datos tard\u00edos antes de cerrar una ventana de tiempo en streaming."
+        },
+        {
+          "text": "Reducir el consumo de memoria del cl\u00faster eliminando registros cada $5$ segundos.",
+          "isCorrect": false,
+          "rationale": "El intervalo no se refiere a una purga de datos, sino a una l\u00f3gica de progresi\u00f3n del tiempo en el stream."
+        },
+        {
+          "text": "Aumentar la velocidad de ingesta desde Kafka aplicando un retraso artificial en la escritura.",
+          "isCorrect": false,
+          "rationale": "Retrasar el procesamiento no aumenta la velocidad de ingesta; es una medida de correcci\u00f3n para la integridad temporal."
+        },
+        {
+          "text": "Encriptar el campo de marca de tiempo para cumplir con normativas de privacidad como el GDPR.",
+          "isCorrect": false,
+          "rationale": "Watermark es un concepto de flujo de datos (streaming), no una t\u00e9cnica de seguridad o cifrado."
+        }
+      ],
+      "hint": "Este concepto es clave para manejar el desorden en los flujos de datos en tiempo real (event-time processing)."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la principal ventaja operativa que reporta Netflix gracias a sus algoritmos de recomendaci\u00f3n impulsados por Big Data?",
+      "answerOptions": [
+        {
+          "text": "Un ahorro anual superior a $1.5$ mil millones de d\u00f3lares mediante la reducci\u00f3n de la tasa de cancelaci\u00f3n (churn).",
+          "isCorrect": true,
+          "rationale": "La hiper-personalizaci\u00f3n permite mantener a los usuarios comprometidos, lo que se traduce directamente en una retenci\u00f3n masiva de ingresos."
+        },
+        {
+          "text": "La eliminaci\u00f3n total de la necesidad de producir contenido original basado en datos demogr\u00e1ficos.",
+          "isCorrect": false,
+          "rationale": "Netflix utiliza Big Data para guiar la creaci\u00f3n de contenido inteligente, no para eliminar la producci\u00f3n original."
+        },
+        {
+          "text": "El procesamiento de un m\u00e1ximo de $10$ millones de eventos diarios por perfil de usuario.",
+          "isCorrect": false,
+          "rationale": "La escala es mucho mayor; se mencionan m\u00e1s de $1$ bill\u00f3n de eventos diarios a nivel global de usuario."
+        },
+        {
+          "text": "La reducci\u00f3n del $50\\%$ en los costos de almacenamiento en servidores locales f\u00edsicos.",
+          "isCorrect": false,
+          "rationale": "El \u00e9xito mencionado se enfoca en el valor del negocio (churn y visualizaciones), no primariamente en ahorros de hardware local."
+        }
+      ],
+      "hint": "Busque el impacto econ\u00f3mico cuantificable derivado de la retenci\u00f3n de clientes en la secci\u00f3n de casos de \u00e9xito."
+    },
+    {
+      "question": "En una arquitectura moderna de Big Data, \u00bfqu\u00e9 herramienta se recomienda espec\u00edficamente para la gesti\u00f3n de metadatos y gobernanza de datos?",
+      "answerOptions": [
+        {
+          "text": "Apache Atlas.",
+          "isCorrect": true,
+          "rationale": "Apache Atlas es la soluci\u00f3n est\u00e1ndar mencionada para el manejo de linaje y cat\u00e1logo de metadatos en el ecosistema open-source."
+        },
+        {
+          "text": "Apache NiFi.",
+          "isCorrect": false,
+          "rationale": "NiFi se utiliza para la ingesta y flujos de datos visuales (ETL), no para la gobernanza de metadatos per se."
+        },
+        {
+          "text": "Amazon S3.",
+          "isCorrect": false,
+          "rationale": "S3 es un servicio de almacenamiento de objetos, no una herramienta de gobernanza o cat\u00e1logo."
+        },
+        {
+          "text": "Apache Flink.",
+          "isCorrect": false,
+          "rationale": "Flink es un motor de procesamiento de streams, enfocado en la computaci\u00f3n, no en la administraci\u00f3n de metadatos."
+        }
+      ],
+      "hint": "Identifique el componente de la arquitectura de referencia encargado de la 'Gobernanza' y descubrimiento de datos."
+    },
+    {
+      "question": "\u00bfVerdadero o Falso? El t\u00e9rmino 'Big Data' se origin\u00f3 en el a\u00f1o $2006$ con el lanzamiento de la plataforma Hadoop.",
+      "answerOptions": [
+        {
+          "text": "Falso",
+          "isCorrect": true,
+          "rationale": "El t\u00e9rmino naci\u00f3 en la d\u00e9cada de $1990$ en art\u00edculos de la NASA; Hadoop (2006) fue un hito de democratizaci\u00f3n, no el origen del t\u00e9rmino."
+        },
+        {
+          "text": "Verdadero",
+          "isCorrect": false,
+          "rationale": "Aunque Hadoop es fundamental, el concepto y el t\u00e9rmino preceden a su lanzamiento por m\u00e1s de una d\u00e9cada."
+        }
+      ],
+      "hint": "Revise el 'Timeline de Hitos Clave' en la secci\u00f3n de Or\u00edgenes y Evoluci\u00f3n Hist\u00f3rica."
+    },
+    {
+      "question": "Dentro de la Variedad de datos, \u00bfqu\u00e9 porcentaje aproximado representan los datos no estructurados (videos, im\u00e1genes, audios) en las organizaciones modernas?",
+      "answerOptions": [
+        {
+          "text": "$50\\%$",
+          "isCorrect": true,
+          "rationale": "El material indica que los datos no estructurados constituyen la mayor parte de la heterogeneidad de datos, alcanzando la mitad del total."
+        },
+        {
+          "text": "$20\\%$",
+          "isCorrect": false,
+          "rationale": "El $20\\%$ corresponde usualmente a los datos estructurados tradicionales como SQL o CSV."
+        },
+        {
+          "text": "$80\\%$",
+          "isCorrect": false,
+          "rationale": "Aunque la tendencia es creciente, el material distribuye el resto entre estructurados y semi-estructurados ($30\\%$)."
+        },
+        {
+          "text": "$5\\%$",
+          "isCorrect": false,
+          "rationale": "Este porcentaje es demasiado bajo para la realidad del tr\u00e1fico digital actual impulsado por multimedia y sensores."
+        }
+      ],
+      "hint": "Considere la distribuci\u00f3n porcentual entre datos estructurados, semi-estructurados y no estructurados mencionada en el apartado 1.3."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es el objetivo principal de la tendencia emergente denominada 'Federated Learning' para el periodo $2025-2030$?",
+      "answerOptions": [
+        {
+          "text": "Entrenar modelos de inteligencia artificial de forma distribuida sin necesidad de compartir datos sensibles entre nodos.",
+          "isCorrect": true,
+          "rationale": "Esta t\u00e9cnica permite que los datos permanezcan en su origen (privacidad), compartiendo solo las actualizaciones del modelo."
+        },
+        {
+          "text": "Centralizar todos los Data Lakes mundiales en un \u00fanico supercomputador cu\u00e1ntico para optimizar procesos.",
+          "isCorrect": false,
+          "rationale": "Esto contradice el concepto de 'federaci\u00f3n', que implica descentralizaci\u00f3n y autonom\u00eda."
+        },
+        {
+          "text": "Automatizar la generaci\u00f3n de c\u00f3digo SQL mediante modelos conversacionales como GPT-5.",
+          "isCorrect": false,
+          "rationale": "Si bien es una tendencia (GenAI), no es la definici\u00f3n ni el prop\u00f3sito del aprendizaje federado."
+        },
+        {
+          "text": "Reducir el consumo energ\u00e9tico de los centros de datos mediante el apagado din\u00e1mico de servidores.",
+          "isCorrect": false,
+          "rationale": "Esto se refiere a 'Sustainable Data Ops', no a una t\u00e9cnica de entrenamiento de modelos."
+        }
+      ],
+      "hint": "Piense en una soluci\u00f3n que combine el entrenamiento de modelos con la estricta privacidad de los datos locales."
+    },
+    {
+      "question": "En el modelo de Surge Pricing de Uber mostrado en el c\u00f3digo, \u00bfqu\u00e9 funci\u00f3n cumple la clase $StandardScaler$ de la librer\u00eda sklearn?",
+      "answerOptions": [
+        {
+          "text": "Normalizar las variables de entrada para que tengan media $0$ y varianza $1$, mejorando la convergencia del modelo.",
+          "isCorrect": true,
+          "rationale": "La normalizaci\u00f3n es cr\u00edtica en modelos lineales para evitar que variables con escalas grandes (ej. eventos) dominen sobre variables de escala peque\u00f1a."
+        },
+        {
+          "text": "Eliminar autom\u00e1ticamente los valores at\u00edpicos (outliers) que podr\u00edan sesgar el precio din\u00e1mico.",
+          "isCorrect": false,
+          "rationale": "El escalador cambia la magnitud de los datos pero no elimina registros; la limpieza de outliers es un paso previo diferente."
+        },
+        {
+          "text": "Codificar variables categ\u00f3ricas como el clima en valores num\u00e9ricos procesables por la regresi\u00f3n.",
+          "isCorrect": false,
+          "rationale": "Para codificar categor\u00edas se usar\u00edan t\u00e9cnicas como One-Hot Encoding, no un escalador est\u00e1ndar."
+        },
+        {
+          "text": "Dividir el dataset en conjuntos de entrenamiento y prueba para validar la precisi\u00f3n del multiplicador.",
+          "isCorrect": false,
+          "rationale": "La divisi\u00f3n de datos se realiza con funciones como train_test_split, no con un transformador de escala."
+        }
+      ],
+      "hint": "Recuerde la importancia de la escala de las caracter\u00edsticas (features) al trabajar con algoritmos basados en distancias o gradientes."
+    },
+    {
+      "question": "\u00bfQu\u00e9 desaf\u00edo \u00e9tico busca mitigar el uso de herramientas como 'FairML' y auditor\u00edas regulares seg\u00fan el texto?",
+      "answerOptions": [
+        {
+          "text": "La propagaci\u00f3n y amplificaci\u00f3n de sesgos inherentes en los modelos de inteligencia artificial.",
+          "isCorrect": true,
+          "rationale": "Dado que el $50\\%+$ de los modelos pueden presentar sesgos, estas herramientas son vitales para garantizar la equidad algor\u00edtmica."
+        },
+        {
+          "text": "La falta de escalabilidad t\u00e9cnica al procesar petabytes de datos en la nube.",
+          "isCorrect": false,
+          "rationale": "La escalabilidad es un desaf\u00edo t\u00e9cnico-operativo, no una cuesti\u00f3n de \u00e9tica o justicia (fairness)."
+        },
+        {
+          "text": "El incumplimiento de leyes de soberan\u00eda de datos en jurisdicciones espec\u00edficas.",
+          "isCorrect": false,
+          "rationale": "La soberan\u00eda de datos se gestiona con pol\u00edticas de Data Sovereignty y localizaci\u00f3n, no primariamente con FairML."
+        },
+        {
+          "text": "La baja rentabilidad (ROI) de los proyectos de anal\u00edtica avanzada.",
+          "isCorrect": false,
+          "rationale": "El retorno de inversi\u00f3n es una m\u00e9trica de negocio (Valor), no un dilema \u00e9tico sobre la equidad."
+        }
+      ],
+      "hint": "Considere los problemas que surgen cuando los datos hist\u00f3ricos utilizados para entrenar modelos reflejan prejuicios humanos."
+    },
+    {
+      "question": "\u00bfVerdadero o Falso? Un Data Lakehouse es un h\u00edbrido que combina la flexibilidad de un Data Lake con las transacciones ACID y la gobernanza propias de un Data Warehouse.",
+      "answerOptions": [
+        {
+          "text": "Verdadero",
+          "isCorrect": true,
+          "rationale": "Esta es la definici\u00f3n t\u00e9cnica precisa del Data Lakehouse, buscando lo mejor de ambos mundos para la anal\u00edtica y el ML."
+        },
+        {
+          "text": "Falso",
+          "isCorrect": false,
+          "rationale": "El t\u00e9rmino define exactamente la convergencia de capacidades de almacenamiento masivo y rigor transaccional."
+        }
+      ],
+      "hint": "Revise el glosario de t\u00e9rminos t\u00e9cnicos avanzados al final del material extendido."
+    },
+    {
+      "question": "Seg\u00fan el material, \u00bfqu\u00e9 hito tecnol\u00f3gico de $2004$ sent\u00f3 las bases para el procesamiento distribuido escalable que conocemos hoy?",
+      "answerOptions": [
+        {
+          "text": "Google MapReduce.",
+          "isCorrect": true,
+          "rationale": "MapReduce fue el paper fundamental que permiti\u00f3 dividir tareas masivas entre miles de nodos comunes."
+        },
+        {
+          "text": "El lanzamiento de Apache Spark.",
+          "isCorrect": false,
+          "rationale": "Spark lleg\u00f3 mucho despu\u00e9s ($2011$), mejorando la velocidad mediante procesamiento en memoria."
+        },
+        {
+          "text": "La creaci\u00f3n de ARPANET.",
+          "isCorrect": false,
+          "rationale": "ARPANET fue un precursor de internet en los a\u00f1os $60$, mucho antes de la era del Big Data moderno."
+        },
+        {
+          "text": "La integraci\u00f3n de modelos GPT en Data Lakes.",
+          "isCorrect": false,
+          "rationale": "Esta integraci\u00f3n es una tendencia muy reciente ($2023+$), no un hito de principios de los $2000$."
+        }
+      ],
+      "hint": "Piense en la innovaci\u00f3n de Google que permiti\u00f3 procesar la web de forma masiva y econ\u00f3mica."
+    },
+    {
+      "question": "En la detecci\u00f3n de anomal\u00edas para FinTech, \u00bfpor qu\u00e9 se utiliza un 'Autoencoder' (Red Neuronal) en lugar de un modelo supervisado tradicional seg\u00fan el ejemplo?",
+      "answerOptions": [
+        {
+          "text": "Porque permite la detecci\u00f3n no supervisada aprendiendo a reconstruir transacciones normales y marcando como anomal\u00eda lo que no puede reconstruir bien.",
+          "isCorrect": true,
+          "rationale": "En fraudes, a menudo no se tienen suficientes ejemplos etiquetados de todas las formas posibles de ataque, por lo que modelar la 'normalidad' es m\u00e1s robusto."
+        },
+        {
+          "text": "Porque los modelos supervisados son incapaces de procesar m\u00e1s de $1,000$ transacciones por segundo.",
+          "isCorrect": false,
+          "rationale": "La capacidad de throughput depende de la infraestructura y optimizaci\u00f3n del modelo, no de si es supervisado o no."
+        },
+        {
+          "text": "Porque un Autoencoder garantiza un $100\\%$ de precisi\u00f3n eliminando todos los falsos positivos por dise\u00f1o.",
+          "isCorrect": false,
+          "rationale": "Ning\u00fan modelo de ML garantiza precisi\u00f3n absoluta; de hecho, el control de falsos positivos es un desaf\u00edo constante mencionado."
+        },
+        {
+          "text": "Porque el Autoencoder solo funciona con datos tabulares en formato Excel.",
+          "isCorrect": false,
+          "rationale": "Las redes neuronales de este tipo son vers\u00e1tiles y se integran com\u00fanmente con flujos de datos complejos como Kafka/TensorFlow."
+        }
+      ],
+      "hint": "Reflexione sobre la dificultad de etiquetar 'fraude' cuando los ataques cambian constantemente y son muy escasos frente a las transacciones leg\u00edtimas."
+    },
+    {
+      "question": "\u00bfQu\u00e9 m\u00e9trica define la 'Velocidad' en el contexto de sistemas de Trading Algor\u00edtmico seg\u00fan los est\u00e1ndares de $2025$?",
+      "answerOptions": [
+        {
+          "text": "\u00d3rdenes ejecutadas en menos de $10\\ \\mu s$.",
+          "isCorrect": true,
+          "rationale": "En trading de alta frecuencia, la latencia se mide en microsegundos, siendo este el est\u00e1ndar de competitividad mencionado."
+        },
+        {
+          "text": "An\u00e1lisis de tendencias completado en menos de $10$ segundos.",
+          "isCorrect": false,
+          "rationale": "Diez segundos es una eternidad en trading algor\u00edtmico, donde las oportunidades desaparecen en milisegundos."
+        },
+        {
+          "text": "Procesamiento de $1$ petabyte de datos hist\u00f3ricos por hora.",
+          "isCorrect": false,
+          "rationale": "Esto se refiere m\u00e1s al 'Volumen' o throughput de procesamiento por lotes que a la latencia de respuesta inmediata (Velocidad)."
+        },
+        {
+          "text": "Actualizaci\u00f3n de la base de datos de clientes cada $50$ milisegundos.",
+          "isCorrect": false,
+          "rationale": "Aunque es r\u00e1pido, no es el caso de uso de trading algor\u00edtmico que requiere latencias sub-milisegundo extremas."
+        }
+      ],
+      "hint": "Observe la unidad de tiempo extremadamente peque\u00f1a asociada a las aplicaciones de alta velocidad en finanzas."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la funci\u00f3n principal de la herramienta 'dbt' (data build tool) dentro del stack tecnol\u00f3gico de An\u00e1lisis & ML?",
+      "answerOptions": [
+        {
+          "text": "Realizar transformaciones de datos directamente en el data warehouse mediante c\u00f3digo SQL.",
+          "isCorrect": true,
+          "rationale": "dbt se ha convertido en el est\u00e1ndar para la capa de transformaci\u00f3n (la 'T' de ELT) permitiendo versionado y pruebas."
+        },
+        {
+          "text": "Entrenar modelos de Deep Learning utilizando GPUs distribuidas.",
+          "isCorrect": false,
+          "rationale": "Esa funci\u00f3n corresponde a herramientas como TensorFlow o PyTorch, no a dbt."
+        },
+        {
+          "text": "Visualizar tableros de control interactivos para la gerencia.",
+          "isCorrect": false,
+          "rationale": "dbt trabaja en la capa de datos/ingenier\u00eda; la visualizaci\u00f3n es tarea de herramientas de BI como Tableau o PowerBI."
+        },
+        {
+          "text": "Gestionar el almacenamiento f\u00edsico de archivos en el Data Lake.",
+          "isCorrect": false,
+          "rationale": "El almacenamiento es gestionado por sistemas de archivos como HDFS o servicios de objetos como S3."
+        }
+      ],
+      "hint": "Considere en qu\u00e9 parte del pipeline de datos se sit\u00faa dbt tras la ingesta de los datos crudos."
+    }
+  ]
+}

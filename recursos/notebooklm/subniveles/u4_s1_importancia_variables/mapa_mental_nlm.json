@@ -1,0 +1,176 @@
+{
+  "mind_map": {
+    "name": "Unidad 4: Interpretación de resultados y modelos estadísticos",
+    "children": [
+      {
+        "name": "Interpretación de Modelos",
+        "children": [
+          {
+            "name": "Métricas Clave",
+            "children": [
+              {
+                "name": "Accuracy"
+              },
+              {
+                "name": "Precision/Recall"
+              },
+              {
+                "name": "AUC-ROC"
+              },
+              {
+                "name": "R-squared"
+              },
+              {
+                "name": "Feature Importance"
+              }
+            ]
+          },
+          {
+            "name": "Conceptos",
+            "children": [
+              {
+                "name": "Evitar caja negra"
+              },
+              {
+                "name": "Explicabilidad"
+              },
+              {
+                "name": "Toma de decisiones éticas"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Análisis Discriminante Lineal (LDA)",
+        "children": [
+          {
+            "name": "Definición",
+            "children": [
+              {
+                "name": "Método supervisado"
+              },
+              {
+                "name": "Reducción dimensional"
+              }
+            ]
+          },
+          {
+            "name": "Asunciones",
+            "children": [
+              {
+                "name": "Normalidad multivariada"
+              },
+              {
+                "name": "Homocedasticidad"
+              }
+            ]
+          },
+          {
+            "name": "Ventajas",
+            "children": [
+              {
+                "name": "Eficiencia computacional"
+              },
+              {
+                "name": "Interpretabilidad"
+              }
+            ]
+          },
+          {
+            "name": "Aplicaciones",
+            "children": [
+              {
+                "name": "Reconocimiento facial"
+              },
+              {
+                "name": "Clasificación de documentos"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Selección de Modelos",
+        "children": [
+          {
+            "name": "Criterios",
+            "children": [
+              {
+                "name": "Cross-Validation"
+              },
+              {
+                "name": "AIC/BIC"
+              },
+              {
+                "name": "Ensemble Voting"
+              },
+              {
+                "name": "SHAP Values"
+              }
+            ]
+          },
+          {
+            "name": "Comparativa Big Data",
+            "children": [
+              {
+                "name": "LDA (Escalable)"
+              },
+              {
+                "name": "Regresión Logística (Spark ML)"
+              },
+              {
+                "name": "SVM"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Generación de Información",
+        "children": [
+          {
+            "name": "Herramientas R",
+            "children": [
+              {
+                "name": "Shiny (Dashboards)"
+              },
+              {
+                "name": "RMarkdown (Reportes)"
+              }
+            ]
+          },
+          {
+            "name": "Productos",
+            "children": [
+              {
+                "name": "Narrativas"
+              },
+              {
+                "name": "Visualizaciones"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Actividades Académicas",
+        "children": [
+          {
+            "name": "Estudio de materiales (AI)"
+          },
+          {
+            "name": "Foro de discusión (AA)"
+          },
+          {
+            "name": "Cuestionario en línea (AA)"
+          },
+          {
+            "name": "Informe final (Evidencia)"
+          }
+        ]
+      }
+    ]
+  },
+  "note_id": "790fda5b-332f-44b9-b026-c08507cd0bc1"
+}

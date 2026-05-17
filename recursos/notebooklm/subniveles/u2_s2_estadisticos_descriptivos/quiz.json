@@ -1,0 +1,255 @@
+{
+  "title": "Estad\u00edstica Cuestionario",
+  "questions": [
+    {
+      "question": "\u00bfC\u00f3mo se clasifica una variable que representa el 'N\u00famero de clientes' en un establecimiento, considerando que solo puede tomar valores enteros?",
+      "answerOptions": [
+        {
+          "text": "Cuantitativa discreta",
+          "isCorrect": true,
+          "rationale": "Las variables cuantitativas discretas se caracterizan por representar valores contables enteros, como el conteo de individuos."
+        },
+        {
+          "text": "Cuantitativa continua",
+          "isCorrect": false,
+          "rationale": "Las variables continuas pueden tomar cualquier valor dentro de un rango real, incluyendo decimales, lo cual no aplica al conteo de personas."
+        },
+        {
+          "text": "Cualitativa ordinal",
+          "isCorrect": false,
+          "rationale": "Aunque existe un orden num\u00e9rico, se trata de una magnitud medida y no de categor\u00edas jer\u00e1rquicas como niveles de satisfacci\u00f3n."
+        },
+        {
+          "text": "Cualitativa nominal",
+          "isCorrect": false,
+          "rationale": "Esta categor\u00eda se reserva para etiquetas sin un orden intr\u00ednseco, mientras que el n\u00famero de clientes es una medida num\u00e9rica."
+        }
+      ],
+      "hint": "Recuerda si los valores se pueden contar como unidades enteras o si requieren una escala infinita de precisi\u00f3n."
+    },
+    {
+      "question": "En el contexto del An\u00e1lisis Exploratorio de Datos (EDA), \u00bfcu\u00e1l es la utilidad principal de un 'Boxplot'?",
+      "answerOptions": [
+        {
+          "text": "Detectar outliers y visualizar la dispersi\u00f3n de los datos",
+          "isCorrect": true,
+          "rationale": "El diagrama de caja o boxplot permite identificar visualmente valores at\u00edpicos y entender c\u00f3mo se distribuyen los cuartiles."
+        },
+        {
+          "text": "Visualizar la correlaci\u00f3n exacta entre dos variables num\u00e9ricas",
+          "isCorrect": false,
+          "rationale": "Para observar la relaci\u00f3n bivariada y correlaci\u00f3n se suelen utilizar Scatter Plots o Heatmaps, no boxplots."
+        },
+        {
+          "text": "Resumir la media aritm\u00e9tica de una distribuci\u00f3n normal",
+          "isCorrect": false,
+          "rationale": "Aunque muestra la mediana, su enfoque principal es la estructura de los cuartiles y la identificaci\u00f3n de valores fuera del rango esperado."
+        },
+        {
+          "text": "Clasificar variables cualitativas en nominales u ordinales",
+          "isCorrect": false,
+          "rationale": "El boxplot es una herramienta para datos cuantitativos y no una t\u00e9cnica de clasificaci\u00f3n de tipos de datos."
+        }
+      ],
+      "hint": "Piensa en qu\u00e9 gr\u00e1fico utilizar\u00edas para ver r\u00e1pidamente si hay valores extremadamente alejados del resto."
+    },
+    {
+      "question": "De acuerdo con el material, \u00bfqu\u00e9 impacto negativo puede tener el uso de la media para la imputaci\u00f3n de valores ausentes?",
+      "answerOptions": [
+        {
+          "text": "Puede sesgar la varianza de la variable",
+          "isCorrect": true,
+          "rationale": "Al insertar el mismo valor central repetidamente, se reduce artificialmente la variabilidad natural de los datos."
+        },
+        {
+          "text": "Requiere una alta capacidad computacional",
+          "isCorrect": false,
+          "rationale": "Al contrario, la imputaci\u00f3n por la media es descrita como una t\u00e9cnica r\u00e1pida y sencilla en comparaci\u00f3n con modelos como KNN."
+        },
+        {
+          "text": "Elimina registros valiosos del dataset",
+          "isCorrect": false,
+          "rationale": "La eliminaci\u00f3n es una estrategia distinta a la imputaci\u00f3n; la imputaci\u00f3n busca preservar los registros completando los huecos."
+        },
+        {
+          "text": "Solo se puede aplicar a variables cualitativas nominales",
+          "isCorrect": false,
+          "rationale": "La media es una medida estad\u00edstica para variables num\u00e9ricas; para variables cualitativas se suele utilizar la moda."
+        }
+      ],
+      "hint": "Considera qu\u00e9 sucede con la dispersi\u00f3n de los datos si reemplazamos muchos valores distintos por un \u00fanico valor central."
+    },
+    {
+      "question": "Para explorar relaciones bivariadas en un conjunto de datos masivo, \u00bfqu\u00e9 t\u00e9cnica visual permite identificar patrones de correlaci\u00f3n mediante una matriz de colores?",
+      "answerOptions": [
+        {
+          "text": "Heatmaps",
+          "isCorrect": true,
+          "rationale": "Los mapas de calor son ideales para visualizar matrices de correlaci\u00f3n, facilitando la detecci\u00f3n de relaciones fuertes entre m\u00faltiples variables."
+        },
+        {
+          "text": "Histogramas",
+          "isCorrect": false,
+          "rationale": "Los histogramas son herramientas univariadas dise\u00f1adas para mostrar la distribuci\u00f3n de frecuencia de una sola variable."
+        },
+        {
+          "text": "Diagramas de dispersi\u00f3n (Scatter Plots)",
+          "isCorrect": false,
+          "rationale": "Aunque exploran relaciones bivariadas, no utilizan una matriz de colores para resumir m\u00faltiples correlaciones simult\u00e1neamente."
+        },
+        {
+          "text": "Gr\u00e1ficos de barras",
+          "isCorrect": false,
+          "rationale": "Estos se utilizan com\u00fanmente para comparar frecuencias de categor\u00edas en variables cualitativas."
+        }
+      ],
+      "hint": "Esta herramienta suele acompa\u00f1arse de una escala de colores para indicar la intensidad de la relaci\u00f3n entre variables."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es el prop\u00f3sito fundamental de la etapa de 'Transformaci\u00f3n' dentro del preprocesado de datos?",
+      "answerOptions": [
+        {
+          "text": "Normalizar o escalar variables para prepararlas para el modelado",
+          "isCorrect": true,
+          "rationale": "La transformaci\u00f3n busca ajustar los datos a escalas comparables, facilitando la convergencia de algoritmos de Big Data."
+        },
+        {
+          "text": "Eliminar filas duplicadas para mejorar la calidad del dato",
+          "isCorrect": false,
+          "rationale": "Esta acci\u00f3n pertenece espec\u00edficamente a la etapa de limpieza y no a la de transformaci\u00f3n de escala."
+        },
+        {
+          "text": "Reducir el n\u00famero de columnas mediante t\u00e9cnicas como PCA",
+          "isCorrect": false,
+          "rationale": "Esto se define como selecci\u00f3n de atributos o reducci\u00f3n de dimensionalidad, no transformaci\u00f3n b\u00e1sica."
+        },
+        {
+          "text": "Identificar si una variable es de tipo nominal u ordinal",
+          "isCorrect": false,
+          "rationale": "La identificaci\u00f3n de tipos de datos es un paso previo al preprocesado que ocurre durante el estudio inicial de las variables."
+        }
+      ],
+      "hint": "Piensa en procesos como el uso de `StandardScaler` en Python para igualar los rangos de las variables."
+    },
+    {
+      "question": "Verdadero o Falso: La estrategia de eliminaci\u00f3n de datos faltantes es recomendable cuando la proporci\u00f3n de valores ausentes es muy alta para no perder informaci\u00f3n cr\u00edtica.",
+      "answerOptions": [
+        {
+          "text": "Falso",
+          "isCorrect": true,
+          "rationale": "La eliminaci\u00f3n solo se recomienda cuando la proporci\u00f3n de valores faltantes es baja; si es alta, se perder\u00eda demasiada informaci\u00f3n del dataset."
+        },
+        {
+          "text": "Verdadero",
+          "isCorrect": false,
+          "rationale": "Eliminar registros cuando faltan muchos datos resultar\u00eda en un sesgo masivo y en una muestra insuficiente para el an\u00e1lisis."
+        }
+      ],
+      "hint": "Considera el costo de descartar filas enteras si el problema de los datos faltantes est\u00e1 muy extendido."
+    },
+    {
+      "question": "Al trabajar con el lenguaje R, \u00bfqu\u00e9 librer\u00eda es la m\u00e1s adecuada para generar visualizaciones elegantes y profesionales basadas en la gram\u00e1tica de los gr\u00e1ficos?",
+      "answerOptions": [
+        {
+          "text": "ggplot2",
+          "isCorrect": true,
+          "rationale": "ggplot2 es la librer\u00eda est\u00e1ndar en R para crear visualizaciones complejas mediante la superposici\u00f3n de capas."
+        },
+        {
+          "text": "pandas",
+          "isCorrect": false,
+          "rationale": "Pandas es una librer\u00eda de Python para manipulaci\u00f3n de datos, no una librer\u00eda nativa de R para gr\u00e1ficos."
+        },
+        {
+          "text": "mice",
+          "isCorrect": false,
+          "rationale": "La librer\u00eda mice se utiliza espec\u00edficamente para la imputaci\u00f3n m\u00faltiple de datos faltantes, no para visualizaci\u00f3n general."
+        },
+        {
+          "text": "seaborn",
+          "isCorrect": false,
+          "rationale": "Seaborn es una librer\u00eda de visualizaci\u00f3n de alto nivel basada en Matplotlib para el lenguaje Python."
+        }
+      ],
+      "hint": "Es una de las librer\u00edas m\u00e1s famosas de R y utiliza funciones como `geom_histogram` o `geom_boxplot`."
+    },
+    {
+      "question": "\u00bfQu\u00e9 t\u00e9cnica de imputaci\u00f3n se considera 'intensiva computacionalmente' pero tiene la ventaja de considerar las similitudes entre registros?",
+      "answerOptions": [
+        {
+          "text": "Imputaci\u00f3n por KNN (K-Nearest Neighbors)",
+          "isCorrect": true,
+          "rationale": "KNN busca los vecinos m\u00e1s cercanos para estimar el valor faltante, lo que requiere m\u00e1s c\u00e1lculos que los m\u00e9todos estad\u00edsticos simples."
+        },
+        {
+          "text": "Imputaci\u00f3n por la moda",
+          "isCorrect": false,
+          "rationale": "La moda es un c\u00e1lculo estad\u00edstico directo que simplemente identifica el valor m\u00e1s frecuente, sin considerar similitudes complejas."
+        },
+        {
+          "text": "Eliminaci\u00f3n de registros",
+          "isCorrect": false,
+          "rationale": "Borrar registros no es un proceso intensivo y no intenta estimar valores basados en otros datos."
+        },
+        {
+          "text": "Imputaci\u00f3n por la mediana",
+          "isCorrect": false,
+          "rationale": "Este m\u00e9todo es r\u00e1pido y sencillo, ya que solo requiere calcular el valor central de una distribuci\u00f3n num\u00e9rica."
+        }
+      ],
+      "hint": "Este m\u00e9todo se basa en encontrar 'vecinos' que se parezcan al registro que tiene el dato faltante."
+    },
+    {
+      "question": "Si una variable cualitativa tiene categor\u00edas con un orden intr\u00ednseco, como 'Nivel Educativo', \u00bfcu\u00e1l es su subtipo espec\u00edfico?",
+      "answerOptions": [
+        {
+          "text": "Ordinal",
+          "isCorrect": true,
+          "rationale": "Las variables ordinales representan categor\u00edas cualitativas donde la jerarqu\u00eda u orden es fundamental para su interpretaci\u00f3n."
+        },
+        {
+          "text": "Nominal",
+          "isCorrect": false,
+          "rationale": "Las nominales representan categor\u00edas sin un orden l\u00f3gico, como los colores o el g\u00e9nero."
+        },
+        {
+          "text": "Discreta",
+          "isCorrect": false,
+          "rationale": "El t\u00e9rmino 'discreta' se aplica a variables cuantitativas (num\u00e9ricas), no a categor\u00edas cualitativas."
+        },
+        {
+          "text": "Continua",
+          "isCorrect": false,
+          "rationale": "Este es un subtipo de variable cuantitativa que permite valores infinitos en un rango, lo cual no aplica a categor\u00edas de texto."
+        }
+      ],
+      "hint": "Enf\u00f3cate en la palabra que describe algo que sigue una secuencia o jerarqu\u00eda."
+    },
+    {
+      "question": "En el flujo de trabajo de Big Data propuesto, \u00bfqu\u00e9 acci\u00f3n se debe realizar inmediatamente despu\u00e9s de identificar variables y valores faltantes?",
+      "answerOptions": [
+        {
+          "text": "Construir visualizaciones que respondan preguntas anal\u00edticas",
+          "isCorrect": true,
+          "rationale": "Seg\u00fan la ruta de trabajo sugerida, la visualizaci\u00f3n exploratoria sigue a la identificaci\u00f3n inicial para guiar el an\u00e1lisis."
+        },
+        {
+          "text": "Aplicar algoritmos de Machine Learning directamente",
+          "isCorrect": false,
+          "rationale": "Antes del modelado, es imperativo realizar el EDA y la preparaci\u00f3n de variables (imputaci\u00f3n, escalado)."
+        },
+        {
+          "text": "Publicar el reporte final de resultados",
+          "isCorrect": false,
+          "rationale": "El reporte es la evidencia final del aprendizaje, no un paso intermedio tras la carga de datos."
+        },
+        {
+          "text": "Realizar la binarizaci\u00f3n de todas las variables cuantitativas",
+          "isCorrect": false,
+          "rationale": "La binarizaci\u00f3n es una t\u00e9cnica de preparaci\u00f3n que se aplica solo si es necesario, no como paso inmediato universal."
+        }
+      ],
+      "hint": "Consulta el punto 2 de la 'Ruta de trabajo sugerida' mencionada en los documentos de la unidad."
+    }
+  ]
+}

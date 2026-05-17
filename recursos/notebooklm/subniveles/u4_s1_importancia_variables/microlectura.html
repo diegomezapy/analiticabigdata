@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.1 Importancia de Variables — Microlectura — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.1 Importancia de Variables y Feature Selection</h1>
+<h2>1. ¿Por qué importa la importancia?</h2>
+<p>Cuando un modelo predice que un cliente caerá en mora, la empresa necesita saber <em>por qué</em>: ¿Es el nivel de deuda? ¿La edad? ¿El número de préstamos previos? Sin interpretabilidad, el modelo es una caja negra que puede ser discriminatoria, inaplicable en regulaciones estrictas, y difícil de mejorar.</p>
+<p>La importancia de variables responde: "¿qué features tienen mayor impacto en las predicciones?" Esto sirve tanto para interpretabilidad como para optimizar el modelo eliminando features irrelevantes.</p>
+<h2>2. La maldición de la dimensionalidad</h2>
+<p>Richard Bellman acuñó este término para describir cómo el espacio crece exponencialmente con la dimensionalidad. Con 2 features, 100 puntos pueden cubrir bien el espacio. Con 100 features, necesitarías 2^100 puntos para la misma densidad.</p>
+<p>Consecuencias prácticas: los algoritmos basados en distancia (KNN) se degradan porque todas las distancias se vuelven similares; más features puede significar más ruido y overfitting; el tiempo de entrenamiento crece.</p>
+<h2>3. Métodos de importancia</h2>
+<p><strong>Coeficientes (modelos lineales):</strong> en regresión logística normalizada, |β| indica importancia relativa. Variable con mayor |β| tiene mayor impacto en el log-odds.</p>
+<p><strong>Impurity-based (Random Forest, árboles):</strong> acumula cuánto reduce cada feature la impureza de los nodos donde se usa. Rápido pero puede sobreestimar variables continuas o con muchas categorías.</p>
+<p><strong>Permutation importance:</strong> más confiable — permuta aleatoriamente los valores de cada feature y mide cuánto cae el rendimiento. Una caída grande indica que la feature es importante.</p>
+<h2>4. SHAP: la revolución de la interpretabilidad</h2>
+<p>SHAP (SHapley Additive exPlanations) se basa en la teoría de juegos cooperativos de Shapley (1953). La idea: cada feature es un "jugador" en un juego cuya "ganancia" es la diferencia entre el valor predicho y el promedio. El valor SHAP de una feature es su contribución marginal promediada sobre todas las posibles coaliciones de features.</p>
+<p>Propiedades únicas de SHAP: eficiencia (suma de SHAP = predicción − valor base), simetría (features iguales reciben SHAP iguales), nulidad (feature sin efecto tiene SHAP=0), aditividad (se pueden sumar SHAP de features).</p>
+<div class="ejemplo"><strong>Ejemplo SHAP:</strong> Para un cliente con probabilidad de mora = 0.72 (vs. promedio 0.35), SHAP podría descomponer: deuda_alta +0.25, ingresos_bajos +0.15, edad_joven +0.05, tiene_garantia −0.08. Suma: 0.35 + 0.25 + 0.15 + 0.05 - 0.08 = 0.72.</div>
+<h2>5. Recursive Feature Elimination (RFE)</h2>
+<p>RFE es un método iterativo de selección de features: (1) entrenar modelo con todas las features, (2) calcular importancia, (3) eliminar la feature menos importante, (4) repetir hasta llegar al número deseado. Usa validación cruzada para elegir el número óptimo de features.</p>
+<h2>6. Cuando no hacer feature selection</h2>
+<p>Si el modelo ya tiene buena performance y el número de features es manejable, la feature selection puede no valer la pena. En modelos de redes neuronales profundas, la arquitectura ya realiza selección interna. Y siempre: no eliminar features por importancia baja sin entender el contexto del negocio — una feature de baja importancia estadística puede ser crítica para la legalidad o ética del modelo.</p>
+
+</body>
+</html>

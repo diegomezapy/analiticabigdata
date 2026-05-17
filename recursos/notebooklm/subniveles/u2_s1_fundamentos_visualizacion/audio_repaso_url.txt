@@ -1,0 +1,2 @@
+# URL del audio repaso de 2.1 Fundamentos de Visualización de Datos
+# Generar con NotebookLM

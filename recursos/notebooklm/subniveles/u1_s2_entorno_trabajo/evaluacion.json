@@ -1,0 +1,58 @@
+{
+  "subnivel": "1.2 Entorno de trabajo",
+  "preguntas": [
+    {
+      "id": 1,
+      "tipo": "multiple_opcion",
+      "pregunta": "¿Cuál función de R es más apropiada para leer un CSV de 3 GB?",
+      "opciones": [
+        "A) read.csv()",
+        "B) fread() de data.table",
+        "C) read.table()",
+        "D) import() de rio"
+      ],
+      "respuesta_correcta": "B",
+      "retroalimentacion": "fread() usa múltiples núcleos y C++ internamente, siendo 10-100x más rápido que read.csv() para archivos grandes."
+    },
+    {
+      "id": 2,
+      "tipo": "verdadero_falso",
+      "pregunta": "El formato Parquet ocupa más espacio en disco que CSV porque almacena tipos de datos adicionales.",
+      "respuesta_correcta": "Falso",
+      "retroalimentacion": "Parquet ocupa menos espacio (hasta 10x) gracias a compresión columnar. Además preserva tipos, lo que evita errores de lectura."
+    },
+    {
+      "id": 3,
+      "tipo": "multiple_opcion",
+      "pregunta": "En un proyecto R reproducible, ¿dónde deben guardarse los datos originales sin modificar?",
+      "opciones": [
+        "A) En la carpeta raíz del proyecto",
+        "B) En data/raw/",
+        "C) En scripts/",
+        "D) En outputs/"
+      ],
+      "respuesta_correcta": "B",
+      "retroalimentacion": "data/raw/ es la carpeta sagrada: datos originales nunca se modifican. Las transformaciones se guardan en data/processed/."
+    },
+    {
+      "id": 4,
+      "tipo": "interpretacion",
+      "pregunta": "fread() tardó 0.3s en leer un archivo. read.csv() tardó 45s en el mismo archivo. ¿Qué implica esto para proyectos con múltiples iteraciones de análisis?",
+      "respuesta_correcta": "En un proyecto con 50 lecturas del mismo archivo, fread() ahorra 50×44.7s ≈ 37 minutos de tiempo de ejecución. Para análisis iterativos o pipelines automatizados, la diferencia es crítica.",
+      "retroalimentacion": "El tiempo de I/O se acumula. En producción, leer datos rápido permite más iteraciones de análisis en el mismo tiempo disponible."
+    },
+    {
+      "id": 5,
+      "tipo": "multiple_opcion",
+      "pregunta": "¿Cuál paquete de R se usa para leer archivos Parquet?",
+      "opciones": [
+        "A) readxl",
+        "B) jsonlite",
+        "C) arrow",
+        "D) haven"
+      ],
+      "respuesta_correcta": "C",
+      "retroalimentacion": "El paquete arrow de R implementa el estándar Apache Arrow, que permite leer Parquet (y otros formatos columnar) con evaluación lazy opcional."
+    }
+  ]
+}

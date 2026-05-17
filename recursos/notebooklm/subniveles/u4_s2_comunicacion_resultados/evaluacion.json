@@ -1,0 +1,53 @@
+{
+  "subnivel": "4.2",
+  "titulo": "Evaluación: Comunicación de Resultados y Reportes",
+  "preguntas": [
+    {
+      "num": 1,
+      "tipo": "opcion_multiple",
+      "pregunta": "¿Cuál es el principio de la 'pirámide invertida' aplicado a reportes de datos?",
+      "opciones": [
+        "A) Empezar con los datos crudos y llegar gradualmente a las conclusiones",
+        "B) Presentar primero la conclusión y recomendación, luego la evidencia, luego los detalles técnicos",
+        "C) Usar siempre pirámides como elementos visuales en los gráficos",
+        "D) Ordenar los capítulos de más técnico a menos técnico"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "La pirámide invertida, tomada del periodismo, coloca el mensaje más importante al inicio. El decisor con 5 minutos lee solo el resumen ejecutivo y obtiene la conclusión y recomendación. Los detalles técnicos van al final para quienes necesitan verificar la metodología."
+    },
+    {
+      "num": 2,
+      "tipo": "verdadero_falso",
+      "pregunta": "Un documento R Markdown puede renderizarse a HTML, PDF y Word desde el mismo archivo fuente sin modificaciones.",
+      "respuesta": "Verdadero",
+      "retroalimentacion": "R Markdown (y Quarto) separan el contenido (código + texto) del formato de salida. Cambiando el campo 'output' en el YAML se puede generar HTML, PDF (requiere LaTeX), Word, presentaciones y más desde exactamente el mismo archivo."
+    },
+    {
+      "num": 3,
+      "tipo": "opcion_multiple",
+      "pregunta": "¿Cómo se traduciría el dato técnico 'Recall = 0.78' al lenguaje ejecutivo?",
+      "opciones": [
+        "A) 'El modelo tiene una precisión del 78%'",
+        "B) 'De cada 100 casos positivos reales, el modelo detecta 78'",
+        "C) 'El 78% de las predicciones positivas son correctas'",
+        "D) 'El modelo funciona el 78% del tiempo'"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "Recall = TP/(TP+FN) = proporción de casos positivos reales que el modelo detecta. Se traduce como: 'De cada 100 casos [de mora/fraude/enfermedad], el modelo identifica 78'. La opción C describe Precision, no Recall."
+    },
+    {
+      "num": 4,
+      "tipo": "completar",
+      "pregunta": "En R Markdown, la opción de chunk `echo=FALSE` hace que el código ________ aparezca en el documento de salida, pero los resultados sí aparecen.",
+      "respuesta": "no (no aparezca)",
+      "retroalimentacion": "echo=FALSE oculta el código fuente pero muestra los outputs (gráficos, tablas, valores). Ideal para reportes ejecutivos donde el lector no necesita ver el código. echo=TRUE muestra el código (útil para tutoriales técnicos)."
+    },
+    {
+      "num": 5,
+      "tipo": "abierta",
+      "pregunta": "Un análisis muestra que los hombres tienen el doble de probabilidad de mora que las mujeres según el modelo. ¿Cómo reportaría este hallazgo de manera ética y responsable?",
+      "respuesta": "El reporte debe: (1) Distinguir correlación de causalidad — el sexo puede ser un proxy de otras variables (tipo de empleo, nivel de ingresos, acceso a crédito). (2) Verificar si el modelo usa 'sexo' como variable o si el patrón emerge de otras variables correlacionadas. (3) Reportar el hallazgo descriptivamente ('en los datos históricos, los hombres presentan mayor tasa de mora') sin inferencia causal. (4) Alertar sobre posible sesgo discriminatorio — usar el sexo directamente para denegar créditos puede ser ilegal en muchos países y éticamente cuestionable. (5) Recomendar investigar las causas subyacentes (variables de empleo, ingresos) y evaluar si el modelo debería excluir variables demográficas sensibles aunque mejoren la accuracy. La comunicación ética incluye tanto los hallazgos como sus limitaciones y riesgos.",
+      "retroalimentacion": "Los modelos de ML pueden perpetuar o amplificar sesgos históricos. La comunicación responsable de resultados incluye siempre discutir las limitaciones, el contexto de los datos, y las implicancias éticas — no solo reportar las métricas de rendimiento."
+    }
+  ]
+}

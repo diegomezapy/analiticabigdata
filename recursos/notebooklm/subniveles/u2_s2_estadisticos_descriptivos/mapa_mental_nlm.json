@@ -1,0 +1,156 @@
+{
+  "mind_map": {
+    "name": "Unidad 2: Visualización y Exploración de Datos en Big Data",
+    "children": [
+      {
+        "name": "Conceptos Fundamentales",
+        "children": [
+          {
+            "name": "Tipos de Variables",
+            "children": [
+              {
+                "name": "Cuantitativas (Discretas/Continuas)"
+              },
+              {
+                "name": "Cualitativas (Nominales/Ordinales)"
+              }
+            ]
+          },
+          {
+            "name": "Distribuciones",
+            "children": [
+              {
+                "name": "Normal"
+              },
+              {
+                "name": "Sesgada"
+              },
+              {
+                "name": "Transformaciones (Log/Box-Cox)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Análisis Exploratorio de Datos (EDA)",
+        "children": [
+          {
+            "name": "Estadísticas Descriptivas",
+            "children": [
+              {
+                "name": "Media y Mediana"
+              },
+              {
+                "name": "Resumen Estadístico"
+              }
+            ]
+          },
+          {
+            "name": "Visualizaciones",
+            "children": [
+              {
+                "name": "Histogramas (Distribución)"
+              },
+              {
+                "name": "Boxplots (Outliers/Dispersión)"
+              },
+              {
+                "name": "Scatter Plots (Relaciones Bivariadas)"
+              },
+              {
+                "name": "Heatmaps (Correlaciones)"
+              }
+            ]
+          },
+          {
+            "name": "Herramientas Tecnológicas",
+            "children": [
+              {
+                "name": "Python (Pandas, Seaborn, Matplotlib)"
+              },
+              {
+                "name": "R (ggplot2, GGally, mice)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Preprocesado de Datos",
+        "children": [
+          {
+            "name": "Etapas Clave",
+            "children": [
+              {
+                "name": "Limpieza (Duplicados/Outliers)"
+              },
+              {
+                "name": "Transformación (Normalización/Escalado)"
+              },
+              {
+                "name": "Selección (PCA/Dimensionalidad)"
+              },
+              {
+                "name": "Binarización de Variables"
+              }
+            ]
+          },
+          {
+            "name": "Imputación de Valores Ausentes",
+            "children": [
+              {
+                "name": "Eliminación (Proporción baja)"
+              },
+              {
+                "name": "Estadística (Media/Mediana/Moda)"
+              },
+              {
+                "name": "Modelada (KNN/Regresión)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Actividades Académicas (FACEN)",
+        "children": [
+          {
+            "name": "Actividad 1: Estudio Conceptual",
+            "children": [
+              {
+                "name": "Materiales de lectura"
+              },
+              {
+                "name": "Videos tutoriales"
+              }
+            ]
+          },
+          {
+            "name": "Actividad 2: Foro de Discusión",
+            "children": [
+              {
+                "name": "Problemas de aplicación"
+              },
+              {
+                "name": "Intervención argumentada"
+              }
+            ]
+          },
+          {
+            "name": "Actividad 3: Evaluación",
+            "children": [
+              {
+                "name": "Cuestionario en línea"
+              },
+              {
+                "name": "Verificación de comprensión"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "note_id": "10ae5af8-3fc2-4ad8-9090-07c418224f99"
+}

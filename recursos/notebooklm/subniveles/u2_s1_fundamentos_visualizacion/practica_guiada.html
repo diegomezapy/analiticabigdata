@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>2.1 Práctica Guiada — Visualización EDA — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 10px; }
+  h2 { color: #1976D2; margin-top: 2em; }
+  h3 { color: #0D47A1; }
+  .header-info { background: #E3F2FD; border-left: 4px solid #1565C0; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #0D47A1; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #E8F5E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #1565C0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 2</div>
+
+<h1>2.1 Práctica Guiada: Exploración Visual del Dataset Gapminder</h1>
+<p><strong>Dataset:</strong> gapminder (esperanza de vida, PIB, población por país y año)</p>
+<p><strong>Duración estimada:</strong> 45-60 minutos</p>
+<div class="ficha">
+<h2>Ficha 1: Configuración</h2>
+<pre>install.packages(c("gapminder", "ggplot2", "dplyr"))
+library(gapminder); library(ggplot2); library(dplyr)
+glimpse(gapminder)  # ¿Cuántas filas? ¿Cuántas variables?</pre>
+<p><strong>Responde:</strong> ¿Qué tipos de variables tiene el dataset? ¿Hay valores faltantes?</p>
+</div>
+<div class="ficha">
+<h2>Ficha 2: Distribución de esperanza de vida</h2>
+<pre>ggplot(gapminder, aes(x = lifeExp)) +
+  geom_histogram(bins = 30, fill = "#0288D1") +
+  facet_wrap(~ year, ncol = 4) +
+  labs(title = "Distribución de la esperanza de vida por año")</pre>
+<p><strong>Observa:</strong> ¿Cómo cambia la distribución a lo largo de los años? ¿Hay bimodalidad?</p>
+</div>
+<div class="ficha">
+<h2>Ficha 3: El famoso gráfico de Gapminder</h2>
+<pre>gapminder_2007 <- gapminder %>% filter(year == 2007)
+ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp,
+                            size = pop, color = continent)) +
+  geom_point(alpha = 0.7) +
+  scale_x_log10(labels = scales::comma) +
+  scale_size_continuous(range = c(2, 15)) +
+  labs(title = "Riqueza vs Salud (2007)",
+       x = "PIB per cápita (escala log)", y = "Esperanza de vida")</pre>
+<p><strong>Analiza:</strong> ¿Qué continente tiene más variabilidad en PIB? ¿Existe una relación clara?</p>
+</div>
+<div class="ficha">
+<h2>Ficha 4: Evolución de América</h2>
+<pre>americas <- gapminder %>%
+  filter(continent == "Americas") %>%
+  mutate(highlight = country == "Paraguay")
+
+ggplot(americas, aes(x = year, y = lifeExp, group = country)) +
+  geom_line(color = "gray70", alpha = 0.6) +
+  geom_line(data = filter(americas, highlight), color = "red", size = 1.5) +
+  labs(title = "Esperanza de vida — Américas (Paraguay en rojo)")</pre>
+<p><strong>Reflexiona:</strong> ¿Cómo se ubica Paraguay respecto al continente?</p>
+</div>
+<div class="ficha">
+<h2>Ficha 5: Tu gráfico original</h2>
+<p>Crea un gráfico que responda una pregunta de tu interés sobre el dataset. Documentar: pregunta, gráfico elegido, observación principal.</p>
+</div>
+
+</body>
+</html>

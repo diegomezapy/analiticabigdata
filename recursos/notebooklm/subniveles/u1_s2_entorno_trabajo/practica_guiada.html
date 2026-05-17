@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.2 Entorno de trabajo: R/RStudio, archivos y lectura de datos — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 20px; color: #222; line-height: 1.7; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 8px; }
+  h2 { color: #0D47A1; margin-top: 2em; }
+  h3 { color: #1976D2; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 16px; overflow-x: auto; border-radius: 4px; }
+  code { font-family: 'Courier New', monospace; font-size: 0.9em; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; }
+  td { padding: 8px; border: 1px solid #ddd; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  blockquote { border-left: 4px solid #1976D2; margin-left: 0; padding-left: 20px; color: #555; font-style: italic; }
+  .header-info { background: #E3F2FD; padding: 12px; border-radius: 4px; margin-bottom: 24px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="header-info">
+  <strong>Analítica de Big Data</strong> | FACEN - Universidad Nacional de Asunción | 2026<br>
+  Subnivel: 1.2 Entorno de trabajo: R/RStudio, archivos y lectura de datos
+</div>
+
+<h1>Práctica Guiada: 1.2 Entorno y lectura de datos</h1>
+
+<h2>Ficha 1: Configuración del entorno</h2>
+<p><strong>Consigna:</strong> Verificá que tenés R y RStudio correctamente instalados
+y los paquetes del curso disponibles.</p>
+<pre><code class="language-r">
+# Verificar instalación
+cat("R version:", R.version$version.string, "
+")
+pkgs_necesarios <- c("data.table", "arrow", "readxl", "jsonlite", "ggplot2", "caret", "MASS")
+pkgs_faltantes <- pkgs_necesarios[!pkgs_necesarios %in% installed.packages()[,"Package"]]
+if (length(pkgs_faltantes) > 0) {
+  install.packages(pkgs_faltantes)
+} else {
+  cat("Todos los paquetes están instalados!
+")
+}
+</code></pre>
+<p><strong>Criterio:</strong> El mensaje "Todos los paquetes están instalados!" aparece sin errores.</p>
+
+<h2>Ficha 2: Leer el dataset del curso</h2>
+<pre><code class="language-r">
+library(data.table)
+# Descargar dataset de práctica desde el aula o usar el generado en 1.1
+dt <- fread("historiales_salud.csv")
+cat("Leído correctamente:", nrow(dt), "filas,", ncol(dt), "columnas
+")
+</code></pre>
+<p><strong>Pregunta de reflexión:</strong> ¿Cuántos milisegundos tardó fread() en comparación con read.csv()? ¿Por qué es más rápido?</p>
+
+<h2>Ficha 3: Diagnóstico completo</h2>
+<pre><code class="language-r">
+# Ejecutar diagnóstico completo
+str(dt)
+summary(dt)
+cat("NAs totales:", sum(is.na(dt)), "
+")
+cat("Columnas con NAs:
+")
+print(colSums(is.na(dt))[colSums(is.na(dt)) > 0])
+</code></pre>
+<p><strong>Criterio:</strong> Podés responder: ¿cuántas variables numéricas hay? ¿cuántas categóricas? ¿alguna tiene NAs?</p>
+
+</body>
+</html>

@@ -1,0 +1,265 @@
+{
+  "title": "Clasificaci\u00f3n Cuestionario",
+  "questions": [
+    {
+      "question": "En el contexto de la Regresi\u00f3n Log\u00edstica, \u00bfcu\u00e1l es la funci\u00f3n matem\u00e1tica que permite transformar una combinaci\u00f3n lineal de predictores en una probabilidad acotada entre $0$ y $1$?",
+      "answerOptions": [
+        {
+          "text": "La funci\u00f3n sigmoide o log\u00edstica: $p = \\\\frac{1}{1 + e^{-z}}$.",
+          "isCorrect": true,
+          "rationale": "Esta funci\u00f3n mapea cualquier valor real al rango $(0, 1)$, lo que permite interpretar el resultado como una probabilidad de pertenencia a una clase."
+        },
+        {
+          "text": "La funci\u00f3n de distancia Eucl\u00eddea: $d = \\\\sqrt{\\\\sum (p_i - q_i)^2}$.",
+          "isCorrect": false,
+          "rationale": "Esta m\u00e9trica se utiliza para medir la cercan\u00eda entre puntos en algoritmos basados en instancias como KNN, no para modelar probabilidades en regresi\u00f3n."
+        },
+        {
+          "text": "La funci\u00f3n de densidad Gaussiana.",
+          "isCorrect": false,
+          "rationale": "Aunque se usa en variantes de Naive Bayes para datos continuos, no es la base de la transformaci\u00f3n de salida en la regresi\u00f3n log\u00edstica binaria."
+        },
+        {
+          "text": "La funci\u00f3n de partici\u00f3n de datos `createDataPartition`.",
+          "isCorrect": false,
+          "rationale": "Esta es una funci\u00f3n procedimental del paquete caret en R para dividir el dataset, no una funci\u00f3n matem\u00e1tica del modelo predictivo."
+        }
+      ],
+      "hint": "Considere la funci\u00f3n que utiliza el exponente de Euler para crear una curva en forma de 'S'."
+    },
+    {
+      "question": "Al implementar el algoritmo K-Nearest Neighbors (KNN), \u00bfpor qu\u00e9 es fundamental realizar una normalizaci\u00f3n de los datos como paso previo al entrenamiento?",
+      "answerOptions": [
+        {
+          "text": "Para evitar que las variables con rangos num\u00e9ricos mayores dominen injustificadamente el c\u00e1lculo de la distancia.",
+          "isCorrect": true,
+          "rationale": "KNN se basa en distancias; si una variable tiene un rango de $0$ a $1000$ y otra de $0$ a $1$, la primera influir\u00e1 desproporcionadamente en la clasificaci\u00f3n."
+        },
+        {
+          "text": "Para cumplir con el supuesto de independencia entre las variables predictoras.",
+          "isCorrect": false,
+          "rationale": "La independencia de variables es un supuesto cr\u00edtico de Naive Bayes, no un requerimiento t\u00e9cnico para el funcionamiento de KNN."
+        },
+        {
+          "text": "Para reducir el costo computacional de buscar los vecinos m\u00e1s cercanos en Big Data.",
+          "isCorrect": false,
+          "rationale": "La normalizaci\u00f3n escala los valores pero no reduce el n\u00famero de comparaciones necesarias, que es el factor principal del costo computacional en KNN."
+        },
+        {
+          "text": "Porque el paquete `class` en R solo acepta valores entre $0$ y $1$.",
+          "isCorrect": false,
+          "rationale": "Las librer\u00edas de R pueden procesar datos sin normalizar, pero los resultados del modelo carecer\u00edan de rigor estad\u00edstico si las escalas difieren significativamente."
+        }
+      ],
+      "hint": "Piense en c\u00f3mo afectar\u00eda una variable de 'Salario Anual' comparada con una de 'Edad' al calcular la distancia Eucl\u00eddea."
+    },
+    {
+      "question": "Se le solicita analizar un gran volumen de correos electr\u00f3nicos para detectar spam. Seg\u00fan el material, \u00bfcu\u00e1l es el algoritmo m\u00e1s eficiente para este tipo de tareas de clasificaci\u00f3n de texto y por qu\u00e9?",
+      "answerOptions": [
+        {
+          "text": "Naive Bayes, por su rapidez y capacidad para manejar alta dimensionalidad en datos categ\u00f3ricos.",
+          "isCorrect": true,
+          "rationale": "Naive Bayes es altamente escalable y asume independencia de t\u00e9rminos, lo que lo hace ideal para el an\u00e1lisis de frecuencias de palabras en Big Data."
+        },
+        {
+          "text": "KNN, porque clasifica los correos bas\u00e1ndose en la similitud exacta con ejemplos previos.",
+          "isCorrect": false,
+          "rationale": "KNN es extremadamente lento para predecir en grandes vol\u00famenes de datos de texto debido a la alta dimensionalidad y el costo de c\u00e1lculo de distancias."
+        },
+        {
+          "text": "Regresi\u00f3n Log\u00edstica, debido a su capacidad para manejar relaciones no lineales complejas.",
+          "isCorrect": false,
+          "rationale": "La regresi\u00f3n log\u00edstica asume una relaci\u00f3n lineal en el logit, y no es tradicionalmente la primera opci\u00f3n para clasificaci\u00f3n masiva de texto comparado con Bayes."
+        },
+        {
+          "text": "K-Means Clustering, por ser un modelo supervisado de alta precisi\u00f3n.",
+          "isCorrect": false,
+          "rationale": "K-Means es un algoritmo de aprendizaje no supervisado para agrupamiento, no para clasificaci\u00f3n etiquetada como la detecci\u00f3n de spam."
+        }
+      ],
+      "hint": "Busque el algoritmo que utiliza probabilidades condicionales y es mencionado espec\u00edficamente para filtros de spam."
+    },
+    {
+      "question": "En el c\u00f3digo R: `trainIndex <- createDataPartition(iris$Species, p=0.8, list=FALSE)`, \u00bfcu\u00e1l es el prop\u00f3sito t\u00e9cnico del par\u00e1metro `p=0.8`?",
+      "answerOptions": [
+        {
+          "text": "Asignar el $80\\\\%$ de las observaciones al conjunto de entrenamiento, manteniendo la proporci\u00f3n de las clases.",
+          "isCorrect": true,
+          "rationale": "Este par\u00e1metro define la fracci\u00f3n de datos que se utilizar\u00e1n para entrenar el modelo, asegurando una partici\u00f3n estratificada por la variable objetivo."
+        },
+        {
+          "text": "Indicar que el modelo debe alcanzar una precisi\u00f3n ($accuracy$) m\u00ednima del $80\\\\%$.",
+          "isCorrect": false,
+          "rationale": "La precisi\u00f3n es un resultado de la evaluaci\u00f3n del modelo, no un par\u00e1metro de entrada para la divisi\u00f3n de los datos."
+        },
+        {
+          "text": "Establecer un intervalo de confianza del $80\\\\%$ para las predicciones del modelo KNN.",
+          "isCorrect": false,
+          "rationale": "El par\u00e1metro `p` en esta funci\u00f3n espec\u00edfica de caret se refiere estrictamente a la proporci\u00f3n de la partici\u00f3n de la muestra."
+        },
+        {
+          "text": "Definir que el $80\\\\%$ de las variables predictoras ser\u00e1n seleccionadas aleatoriamente.",
+          "isCorrect": false,
+          "rationale": "La funci\u00f3n selecciona filas (observaciones), no columnas (predictores), para crear los subconjuntos de datos."
+        }
+      ],
+      "hint": "Relacione este valor con la fase de preparaci\u00f3n de datos antes del entrenamiento."
+    },
+    {
+      "question": "\u00bfQu\u00e9 debilidad cr\u00edtica presenta el algoritmo Naive Bayes cuando se enfrenta a una categor\u00eda en el conjunto de prueba que no apareci\u00f3 en el conjunto de entrenamiento?",
+      "answerOptions": [
+        {
+          "text": "El problema de la frecuencia cero, que resulta en una probabilidad condicional de cero para toda la clase.",
+          "isCorrect": true,
+          "rationale": "Debido a la multiplicaci\u00f3n de probabilidades, un solo valor de cero anula todo el c\u00e1lculo; esto se soluciona com\u00fanmente con el suavizado de Laplace."
+        },
+        {
+          "text": "Un error de multicolinealidad que invalida los coeficientes del modelo.",
+          "isCorrect": false,
+          "rationale": "La multicolinealidad es una preocupaci\u00f3n principal en la Regresi\u00f3n Log\u00edstica, no en el c\u00e1lculo probabil\u00edstico de Naive Bayes."
+        },
+        {
+          "text": "Un aumento dr\u00e1stico en la varianza que conduce al sobreajuste ($overfitting$).",
+          "isCorrect": false,
+          "rationale": "Naive Bayes tiende a ser un modelo de alta sesgo pero baja varianza; el problema de datos no vistos es una falla de c\u00e1lculo, no de sobreajuste."
+        },
+        {
+          "text": "La imposibilidad de calcular la distancia Eucl\u00eddea entre las categor\u00edas.",
+          "isCorrect": false,
+          "rationale": "Naive Bayes no utiliza distancias geom\u00e9tricas entre puntos, sino frecuencias y probabilidades basadas en el Teorema de Bayes."
+        }
+      ],
+      "hint": "Considere qu\u00e9 sucede si multiplica cualquier serie de n\u00fameros por cero."
+    },
+    {
+      "question": "Al evaluar un modelo con una matriz de confusi\u00f3n, si observamos un alto n\u00famero de casos donde el modelo predijo que un cliente no abandonar\u00eda la empresa (clase $0$) pero en realidad s\u00ed lo hizo (clase $1$), \u00bfqu\u00e9 tipo de error estamos identificando?",
+      "answerOptions": [
+        {
+          "text": "Falso Negativo.",
+          "isCorrect": true,
+          "rationale": "Ocurre cuando la predicci\u00f3n es negativa (clase $0$) pero el valor real es positivo (clase $1$)."
+        },
+        {
+          "text": "Falso Positivo.",
+          "isCorrect": false,
+          "rationale": "Un falso positivo ser\u00eda predecir que el cliente abandonar\u00e1 (clase $1$) cuando en realidad se queda (clase $0$)."
+        },
+        {
+          "text": "Verdadero Positivo.",
+          "isCorrect": false,
+          "rationale": "Esto representar\u00eda un acierto donde el modelo predice correctamente el abandono del cliente."
+        },
+        {
+          "text": "Error de Normalizaci\u00f3n.",
+          "isCorrect": false,
+          "rationale": "La normalizaci\u00f3n es un paso de preprocesamiento, mientras que los t\u00e9rminos de la matriz de confusi\u00f3n describen errores de clasificaci\u00f3n."
+        }
+      ],
+      "hint": "Piense en la diferencia entre lo que el modelo 'dice' (predicci\u00f3n) y lo que 'es' (realidad)."
+    },
+    {
+      "question": "Dentro del ecosistema de R, \u00bfcu\u00e1l es la principal ventaja de utilizar el paquete `caret` en lugar de funciones individuales como `knn()` o `glm()`?",
+      "answerOptions": [
+        {
+          "text": "Proporciona una interfaz unificada para el entrenamiento, la sintonizaci\u00f3n de par\u00e1metros y la evaluaci\u00f3n de m\u00faltiples algoritmos.",
+          "isCorrect": true,
+          "rationale": "Caret estandariza el flujo de trabajo de Machine Learning, permitiendo cambiar de modelo f\u00e1cilmente manteniendo la misma estructura de c\u00f3digo."
+        },
+        {
+          "text": "Es el \u00fanico paquete que permite la ejecuci\u00f3n de algoritmos en entornos de Big Data distribuidos como Spark.",
+          "isCorrect": false,
+          "rationale": "Aunque facilita el trabajo, la integraci\u00f3n con Big Data extremo suele requerir otras herramientas; caret es principalmente para flujos de trabajo en memoria local."
+        },
+        {
+          "text": "Elimina autom\u00e1ticamente los outliers y los valores faltantes del dataset sin intervenci\u00f3n del usuario.",
+          "isCorrect": false,
+          "rationale": "Caret ofrece herramientas para el preprocesamiento, pero el analista debe invocar y configurar estas funciones expl\u00edcitamente."
+        },
+        {
+          "text": "Garantiza que el modelo Naive Bayes no asuma la independencia de las variables.",
+          "isCorrect": false,
+          "rationale": "Caret no cambia la l\u00f3gica interna de los algoritmos; el supuesto de independencia es intr\u00ednseco a Naive Bayes independientemente de la librer\u00eda usada."
+        }
+      ],
+      "hint": "Piense en la 'escalabilidad' del flujo de trabajo y la consistencia entre diferentes modelos."
+    },
+    {
+      "question": "En el contexto de Big Data, \u00bfqu\u00e9 limitaci\u00f3n principal presenta el algoritmo KNN tradicional?",
+      "answerOptions": [
+        {
+          "text": "Su alto costo computacional durante la fase de predicci\u00f3n, ya que debe calcular distancias contra todos los puntos de entrenamiento.",
+          "isCorrect": true,
+          "rationale": "KNN es un 'lazy learner'; no aprende una funci\u00f3n, por lo que el esfuerzo computacional ocurre cada vez que se quiere clasificar un dato nuevo."
+        },
+        {
+          "text": "La imposibilidad de trabajar con variables de tipo num\u00e9rico continuo.",
+          "isCorrect": false,
+          "rationale": "KNN es ideal para datos num\u00e9ricos continuos precisamente porque puede calcular distancias m\u00e9tricas entre ellos."
+        },
+        {
+          "text": "Su excesiva dependencia de supuestos probabil\u00edsticos r\u00edgidos como la distribuci\u00f3n normal.",
+          "isCorrect": false,
+          "rationale": "KNN es un algoritmo no param\u00e9trico, lo que significa que no hace suposiciones sobre la distribuci\u00f3n subyacente de los datos."
+        },
+        {
+          "text": "Que solo puede ser utilizado para problemas de clasificaci\u00f3n binaria.",
+          "isCorrect": false,
+          "rationale": "KNN es naturalmente flexible y funciona muy bien para problemas de clasificaci\u00f3n multi-clase mediante el voto mayoritario."
+        }
+      ],
+      "hint": "Considere qu\u00e9 sucede con el tiempo de respuesta si el dataset de entrenamiento tiene millones de registros."
+    },
+    {
+      "question": "El Teorema de Bayes se expresa como $P(C|X) = \\\\frac{P(X|C) P(C)}{P(X)}$. \u00bfQu\u00e9 representa el t\u00e9rmino $P(C|X)$ en un modelo de clasificaci\u00f3n?",
+      "answerOptions": [
+        {
+          "text": "La probabilidad a posteriori: la probabilidad de que pertenezca a una clase dado que observamos ciertos atributos.",
+          "isCorrect": true,
+          "rationale": "Este es el resultado final que busca el clasificador para decidir a qu\u00e9 categor\u00eda asignar una nueva observaci\u00f3n."
+        },
+        {
+          "text": "La probabilidad a priori: la probabilidad general de la clase en el dataset antes de ver los atributos.",
+          "isCorrect": false,
+          "rationale": "Esto est\u00e1 representado por $P(C)$, que indica qu\u00e9 tan frecuente es una clase independientemente de los datos espec\u00edficos."
+        },
+        {
+          "text": "La verosimilitud ($likelihood$): la probabilidad de observar los atributos dado que conocemos la clase.",
+          "isCorrect": false,
+          "rationale": "Este concepto corresponde al t\u00e9rmino $P(X|C)$ en la f\u00f3rmula de Bayes."
+        },
+        {
+          "text": "La evidencia: la probabilidad total de observar los atributos en todos los escenarios posibles.",
+          "isCorrect": false,
+          "rationale": "La evidencia es el denominador $P(X)$, que act\u00faa como una constante de normalizaci\u00f3n en el c\u00e1lculo."
+        }
+      ],
+      "hint": "Se refiere a lo que 'aprendemos' despu\u00e9s de analizar los datos disponibles."
+    },
+    {
+      "question": "Al comparar algoritmos, \u00bfcu\u00e1l es una ventaja distintiva de la Regresi\u00f3n Log\u00edstica sobre modelos como KNN o Naive Bayes?",
+      "answerOptions": [
+        {
+          "text": "La interpretabilidad de sus coeficientes, que permiten entender el impacto de cada predictor en la probabilidad de la clase.",
+          "isCorrect": true,
+          "rationale": "A diferencia de KNN (caja negra) o Bayes (probabilidades crudas), la regresi\u00f3n log\u00edstica ofrece una estructura lineal interpretable a trav\u00e9s de sus pesos o betas."
+        },
+        {
+          "text": "Su capacidad de clasificar datos que no son linealmente separables sin necesidad de ajustes.",
+          "isCorrect": false,
+          "rationale": "La regresi\u00f3n log\u00edstica asume una frontera de decisi\u00f3n lineal; para datos no lineales, KNN suele ser m\u00e1s efectivo."
+        },
+        {
+          "text": "Que no requiere que los datos est\u00e9n balanceados para producir resultados precisos.",
+          "isCorrect": false,
+          "rationale": "La regresi\u00f3n log\u00edstica es sensible al desbalanceo de clases, lo que puede sesgar la predicci\u00f3n hacia la clase mayoritaria."
+        },
+        {
+          "text": "Su extrema rapidez en el procesamiento de texto masivo sin preprocesamiento.",
+          "isCorrect": false,
+          "rationale": "Naive Bayes es generalmente superior en velocidad y manejo de texto comparado con la regresi\u00f3n log\u00edstica est\u00e1ndar."
+        }
+      ],
+      "hint": "Piense en qu\u00e9 modelo le permitir\u00eda explicar a un gerente exactamente cu\u00e1nto aumenta el riesgo si una variable espec\u00edfica cambia."
+    }
+  ]
+}

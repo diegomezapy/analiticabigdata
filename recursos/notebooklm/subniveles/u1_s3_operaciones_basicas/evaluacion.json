@@ -1,0 +1,52 @@
+{
+  "subnivel": "1.3 Operaciones básicas",
+  "preguntas": [
+    {
+      "id": 1,
+      "tipo": "multiple_opcion",
+      "pregunta": "En data.table, ¿qué parte de dt[i, j, by] se usa para filtrar filas?",
+      "opciones": [
+        "A) j",
+        "B) by",
+        "C) i",
+        "D) dt"
+      ],
+      "respuesta_correcta": "C",
+      "retroalimentacion": "En la sintaxis dt[i, j, by]: i filtra filas (como WHERE en SQL), j selecciona/calcula columnas (como SELECT), by agrupa (como GROUP BY)."
+    },
+    {
+      "id": 2,
+      "tipo": "interpretacion",
+      "pregunta": "Un boxplot muestra que el 75% de los tiempos de espera está por debajo de 45 minutos, pero la media es 62 minutos. ¿Qué indica esto?",
+      "respuesta_correcta": "Indica distribución fuertemente sesgada a la derecha (positiva). Hay outliers extremos (algunos tiempos de espera muy altos) que elevan la media. La mediana (Q2, ≈30 min) sería mejor medida de tendencia central aquí.",
+      "retroalimentacion": "Cuando media >> mediana, hay sesgo positivo o outliers que jalan la media hacia arriba. Para tiempos de espera, informar la mediana es más representativo de la experiencia típica del paciente."
+    },
+    {
+      "id": 3,
+      "tipo": "verdadero_falso",
+      "pregunta": "Un histograma es el tipo de gráfico más apropiado para comparar la distribución de una variable numérica entre dos grupos.",
+      "respuesta_correcta": "Falso",
+      "retroalimentacion": "Para comparar distribuciones entre grupos, el boxplot es más apropiado (compara mediana, rango intercuartílico y outliers simultáneamente). Los histogramas superpuestos son difíciles de leer con múltiples grupos."
+    },
+    {
+      "id": 4,
+      "tipo": "multiple_opcion",
+      "pregunta": "¿Cuál gráfico elegís para visualizar la relación entre edad y tiempo de espera?",
+      "opciones": [
+        "A) Histograma",
+        "B) Gráfico de torta",
+        "C) Scatter plot (dispersión)",
+        "D) Gráfico de barras"
+      ],
+      "respuesta_correcta": "C",
+      "retroalimentacion": "El scatter plot es el gráfico estándar para relaciones entre dos variables continuas. Si la relación es lineal, se puede agregar una línea de tendencia (geom_smooth)."
+    },
+    {
+      "id": 5,
+      "tipo": "codigo",
+      "pregunta": "¿Qué produce este código? dt[diagnostico == 'Diabetes', .(n = .N, media_edad = mean(edad)), by = region]",
+      "respuesta_correcta": "Una tabla con una fila por región, que muestra: el número de pacientes (n) con diagnóstico de Diabetes y su edad promedio, para cada región. Equivale a: SELECT region, COUNT(*) as n, AVG(edad) as media_edad FROM dt WHERE diagnostico='Diabetes' GROUP BY region.",
+      "retroalimentacion": "Este es el patrón más frecuente en análisis exploratorio: filtrar, agrupar y resumir. La traducción SQL es útil para entender la lógica."
+    }
+  ]
+}

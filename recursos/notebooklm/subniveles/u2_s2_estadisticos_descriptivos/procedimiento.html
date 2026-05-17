@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>2.2 Procedimiento — Limpieza de Datos Sistemática — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 10px; }
+  h2 { color: #1976D2; margin-top: 2em; }
+  h3 { color: #0D47A1; }
+  .header-info { background: #E3F2FD; border-left: 4px solid #1565C0; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #0D47A1; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #E8F5E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #1565C0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 2</div>
+
+<h1>2.2 Procedimiento: Limpieza de Datos Sistemática en R</h1>
+<h2>Objetivo</h2>
+<p>Aplicar un pipeline de limpieza reproducible a un dataset con problemas típicos: NAs, duplicados, outliers y tipos incorrectos.</p>
+<h2>Pasos</h2>
+<h3>Paso 1: Cargar y auditar</h3>
+<pre>library(dplyr); library(ggplot2)
+# Dataset con problemas intencionales
+set.seed(1)
+n <- 200
+df <- data.frame(
+  id = c(1:198, 10, 50),               # duplicados: id 10 y 50
+  nombre = rep(LETTERS[1:5], 40),
+  edad = c(rnorm(195, 30, 8), NA, NA, 200, -5),  # NAs y outliers
+  ingreso = c(rexp(198, 1/3000000), NA, NA),
+  categoria = c(sample(c("A","B","C"), 198, replace=TRUE), "x", "D")
+)
+str(df)
+summary(df)</pre>
+<h3>Paso 2: Valores faltantes</h3>
+<pre>cat("NAs por columna:
+")
+print(colSums(is.na(df)))
+# Visualizar patrón de NAs
+library(naniar)
+gg_miss_var(df)  # requiere naniar
+# Imputar con mediana
+df$edad[is.na(df$edad)] <- median(df$edad, na.rm=TRUE)
+df$ingreso[is.na(df$ingreso)] <- median(df$ingreso, na.rm=TRUE)</pre>
+<h3>Paso 3: Outliers</h3>
+<pre># Función genérica de detección
+detectar_outliers <- function(x) {
+  Q1 <- quantile(x, 0.25, na.rm=TRUE)
+  Q3 <- quantile(x, 0.75, na.rm=TRUE)
+  IQR_val <- Q3 - Q1
+  x < Q1 - 1.5*IQR_val | x > Q3 + 1.5*IQR_val
+}
+cat("Outliers en edad:", sum(detectar_outliers(df$edad)), "
+")
+# Boxplot para visualizar
+ggplot(df, aes(y = edad)) +
+  geom_boxplot(fill = "#FF7043", outlier.color = "red") +
+  ggtitle("Boxplot — edad (con outliers)")
+# Reemplazar outliers con límites de Tukey (winsorizing)
+cap_outliers <- function(x) {
+  Q1 <- quantile(x, 0.25, na.rm=TRUE)
+  Q3 <- quantile(x, 0.75, na.rm=TRUE)
+  IQR_val <- Q3 - Q1
+  pmax(pmin(x, Q3 + 1.5*IQR_val), Q1 - 1.5*IQR_val)
+}
+df$edad <- cap_outliers(df$edad)</pre>
+<h3>Paso 4: Duplicados y tipos</h3>
+<pre>cat("Filas duplicadas:", sum(duplicated(df$id)), "
+")
+df <- df[!duplicated(df$id), ]
+df$nombre <- as.factor(df$nombre)
+# Normalizar categoría
+df$categoria <- toupper(df$categoria)  # "x" → "X"
+df$categoria[!df$categoria %in% c("A","B","C")] <- NA</pre>
+<h3>Paso 5: Reporte final</h3>
+<pre>cat("Dataset limpio:
+")
+cat("  Filas:", nrow(df), "
+")
+cat("  NAs restantes:", sum(is.na(df)), "
+")
+summary(df)</pre>
+
+</body>
+</html>

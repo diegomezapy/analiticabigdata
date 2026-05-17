@@ -1,0 +1,53 @@
+{
+  "subnivel": "3.3",
+  "titulo": "Evaluación: LDA y Evaluación de Modelos",
+  "preguntas": [
+    {
+      "num": 1,
+      "tipo": "opcion_multiple",
+      "pregunta": "¿Cuál es la diferencia fundamental entre LDA y QDA?",
+      "opciones": [
+        "A) LDA usa features cuadráticos; QDA usa features lineales",
+        "B) LDA asume matrices de covarianza iguales entre clases produciendo fronteras lineales; QDA permite covarianzas distintas por clase produciendo fronteras cuadráticas",
+        "C) LDA solo funciona con 2 clases; QDA con múltiples clases",
+        "D) LDA minimiza varianza; QDA maximiza varianza"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "LDA supone que todas las clases tienen la misma matriz de covarianza (homocedasticidad), lo que resulta en fronteras de decisión lineales. QDA permite matrices de covarianza diferentes por clase, resultando en fronteras cuadráticas — más flexible pero requiere más datos."
+    },
+    {
+      "num": 2,
+      "tipo": "verdadero_falso",
+      "pregunta": "En validación cruzada 10-fold, el dataset de prueba (test) se usa para ajustar los hiperparámetros del modelo.",
+      "respuesta": "Falso",
+      "retroalimentacion": "En CV k-fold, cada fold actúa como conjunto de validación (no de prueba) para estimar el rendimiento del modelo con los hiperparámetros dados. El ajuste de hiperparámetros se hace internamente en los k-1 folds de entrenamiento, y se reserva un test set totalmente aparte para evaluación final."
+    },
+    {
+      "num": 3,
+      "tipo": "opcion_multiple",
+      "pregunta": "¿Qué métrica es más apropiada para evaluar un modelo de detección de enfermedades raras donde importa no perder casos positivos?",
+      "opciones": [
+        "A) Accuracy",
+        "B) Precision",
+        "C) Recall (Sensitivity)",
+        "D) Specificity"
+      ],
+      "respuesta": "C",
+      "retroalimentacion": "Recall (Sensitivity) = TP/(TP+FN) mide qué proporción de los casos positivos reales fueron detectados. Para enfermedades raras, un FN (no detectar un caso positivo) es muy costoso. Maximizar Recall minimiza los falsos negativos."
+    },
+    {
+      "num": 4,
+      "tipo": "completar",
+      "pregunta": "El F1-Score es la media ________ entre Precision y Recall, y su valor máximo es ___.",
+      "respuesta": "armónica; 1",
+      "retroalimentacion": "F1 = 2×(Precision×Recall)/(Precision+Recall). La media armónica penaliza fuertemente cuando uno de los dos valores es muy bajo, lo que refleja mejor el balance entre ambas métricas. F1=1 indica Precision=Recall=1 (clasificación perfecta)."
+    },
+    {
+      "num": 5,
+      "tipo": "abierta",
+      "pregunta": "Explique qué es el 'data leakage' y cómo puede ocurrir específicamente en el paso de normalización de features. ¿Cuál es la solución correcta?",
+      "respuesta": "El data leakage ocurre cuando información del conjunto de test (o del futuro) se filtra al proceso de entrenamiento, produciendo estimaciones de rendimiento demasiado optimistas que no se reproducen en producción. En la normalización: si se calcula la media y SD de todos los datos (train+test juntos) y luego se normalizan todos, las estadísticas del test se usan para normalizar el train. Esto 'contamina' el entrenamiento con información del futuro. La solución correcta: (1) dividir en train/test ANTES de cualquier transformación, (2) calcular media y SD SOLO del train (fit_transform en train), (3) aplicar esa misma transformación al test (solo transform — nunca fit_transform). En sklearn, esto se gestiona correctamente con Pipeline.",
+      "retroalimentacion": "El data leakage es uno de los errores más frecuentes en proyectos de ML y puede dar la falsa impresión de que un modelo es excelente cuando en producción falla. El uso de Pipeline en sklearn ayuda a prevenir este error automáticamente."
+    }
+  ]
+}

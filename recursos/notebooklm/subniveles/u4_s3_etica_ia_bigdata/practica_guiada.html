@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.3 Práctica Guiada — Detección de Sesgo — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.3 Práctica Guiada: Detectando y Mitigando Sesgo Algorítmico</h1>
+<div class="ficha">
+<h2>Ficha 1: Crear dataset con sesgo deliberado</h2>
+<pre>set.seed(2026)
+n <- 600
+contrataciones <- data.frame(
+  experiencia_anos = round(rexp(n, 0.3)),
+  habilidades_score = round(rnorm(n, 70, 15)),
+  educacion = sample(c("Universitario","Postgrad","Tecnico"), n, replace=TRUE),
+  sexo = factor(sample(c("M","F"), n, replace=TRUE))
+)
+# Sesgo: históricamente, hombres fueron contratados más
+lp <- -2 + 0.3*contrataciones$experiencia_anos +
+      0.04*contrataciones$habilidades_score +
+      0.5*(contrataciones$educacion=="Postgrad") +
+      1.2*(contrataciones$sexo=="M")  # SESGO: hombres favorecidos
+contrataciones$contratado <- factor(rbinom(n,1,1/(1+exp(-lp))), labels=c("No","Si"))
+table(contrataciones$sexo, contrataciones$contratado)</pre>
+<p>¿Qué diferencia hay en la tasa de contratación entre hombres y mujeres?</p>
+</div>
+<div class="ficha">
+<h2>Ficha 2: Modelo con y sin variable sexo</h2>
+<pre>library(caret)
+set.seed(42)
+idx <- createDataPartition(contrataciones$contratado, p=0.8, list=FALSE)
+train <- contrataciones[idx,]; test <- contrataciones[-idx,]
+
+# Modelo 1: incluye sexo
+m1 <- glm(contratado ~ ., data=train, family=binomial)
+# Modelo 2: excluye sexo
+m2 <- glm(contratado ~ experiencia_anos + habilidades_score + educacion,
+          data=train, family=binomial)
+pred1 <- predict(m1, test, type="response")
+pred2 <- predict(m2, test, type="response")</pre>
+</div>
+<div class="ficha">
+<h2>Ficha 3: Auditar ambos modelos</h2>
+<pre>for (nombre in c("Con sexo", "Sin sexo")) {
+  pred <- if(nombre=="Con sexo") pred1 else pred2
+  pred_f <- factor(ifelse(pred>=0.5,"Si","No"), levels=c("No","Si"))
+  cat(sprintf("
+=== Modelo %s ===
+", nombre))
+  for (g in c("M","F")) {
+    mask <- test$sexo == g
+    tasa <- mean(pred_f[mask]=="Si")
+    cat(sprintf("Grupo %s: tasa aprobacion = %.3f
+", g, tasa))
+  }
+  tasa_g <- tapply(pred_f=="Si", test$sexo, mean)
+  cat(sprintf("DIR = %.3f
+", min(tasa_g)/max(tasa_g)))
+}</pre>
+</div>
+<div class="ficha">
+<h2>Ficha 4: Reflexión ética</h2>
+<p>¿Eliminar la variable 'sexo' del modelo resuelve el sesgo? ¿Por qué sí o por qué no? ¿Qué otras medidas tomarías para construir un sistema de selección de candidatos equitativo?</p>
+</div>
+
+</body>
+</html>

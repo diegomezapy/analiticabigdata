@@ -1,0 +1,205 @@
+{
+  "title": "BigData Tarjetas",
+  "cards": [
+    {
+      "front": "\u00bfQu\u00e9 es el Big Data en el contexto de la transformaci\u00f3n digital?",
+      "back": "Es un paradigma que integra vol\u00famenes masivos de datos con inteligencia artificial y computaci\u00f3n distribuida para generar valor estrat\u00e9gico."
+    },
+    {
+      "front": "Mencione las 5V que definen el marco conceptual del Big Data.",
+      "back": "Volumen, Velocidad, Variedad, Veracidad y Valor."
+    },
+    {
+      "front": "\u00bfEn qu\u00e9 se diferencia el an\u00e1lisis integral del Big Data frente al muestreo estad\u00edstico tradicional?",
+      "back": "El Big Data analiza datasets completos en lugar de muestras, permitiendo descubrimientos no hipot\u00e9ticos y predicciones en tiempo real."
+    },
+    {
+      "front": "Defina el concepto de 'Volumen' en Big Data.",
+      "back": "Se refiere a la escala exponencial de datos generados, alcanzando magnitudes de Zettabytes ($ZB$) a nivel global."
+    },
+    {
+      "front": "Defina el concepto de 'Velocidad' en Big Data.",
+      "back": "Es la capacidad de procesar flujos de datos en tiempo real o streaming, con latencias a menudo menores a $50 ms$."
+    },
+    {
+      "front": "Defina el concepto de 'Variedad' en Big Data.",
+      "back": "Es la integraci\u00f3n de datos heterog\u00e9neos: estructurados ($20\\%$), semi-estructurados ($30\\%$) y no estructurados ($50\\%$)."
+    },
+    {
+      "front": "Defina el concepto de 'Veracidad' en Big Data.",
+      "back": "Se refiere al aseguramiento de la calidad, precisi\u00f3n y consistencia de los datos para garantizar confianza en los an\u00e1lisis."
+    },
+    {
+      "front": "Defina el concepto de 'Valor' en Big Data.",
+      "back": "Es la extracci\u00f3n de insights estrat\u00e9gicos que se traducen en un retorno de inversi\u00f3n ($ROI$) medible y eficiencia operativa."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de los datos globales actuales se consideran no estructurados (textos, im\u00e1genes, videos)?",
+      "back": "Se estima que representan el $50\\%$ del total de los datos."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la funci\u00f3n principal de Apache Hadoop en el ecosistema de Big Data?",
+      "back": "Proporcionar una base de c\u00f3digo abierto para el almacenamiento y procesamiento distribuido escalable de datos masivos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 ventaja t\u00e9cnica introdujo Apache Spark frente a los modelos anteriores de procesamiento?",
+      "back": "Revolucion\u00f3 la velocidad mediante el procesamiento de datos directamente en memoria."
+    },
+    {
+      "front": "En el sector financiero, \u00bfcu\u00e1l es un caso de uso cr\u00edtico para el procesamiento de alta velocidad?",
+      "back": "La detecci\u00f3n de fraude en tiempo real analizando millones de transacciones por minuto con latencias m\u00ednimas."
+    },
+    {
+      "front": "En el sector salud, \u00bfc\u00f3mo impacta el an\u00e1lisis de datos masivos en el diagn\u00f3stico de enfermedades?",
+      "back": "Permite detectar patrones en millones de historiales cl\u00ednicos, reduciendo diagn\u00f3sticos err\u00f3neos y personalizando tratamientos."
+    },
+    {
+      "front": "\u00bfC\u00f3mo utiliza Uber el Big Data para la gesti\u00f3n de su plataforma?",
+      "back": "Implementa algoritmos de 'surge pricing' y optimizaci\u00f3n de rutas basados en datos geoespaciales y demanda en tiempo real."
+    },
+    {
+      "front": "\u00bfQu\u00e9 hito tecnol\u00f3gico de Google en 2004 sent\u00f3 las bases para el procesamiento distribuido moderno?",
+      "back": "El lanzamiento de Google MapReduce."
+    },
+    {
+      "front": "Concepto: Datos Estructurados",
+      "back": "Definici\u00f3n: Datos que siguen un formato r\u00edgido y predefinido, como tablas SQL, archivos CSV o Excel."
+    },
+    {
+      "front": "Concepto: Datos Semi-estructurados",
+      "back": "Definici\u00f3n: Datos que no tienen una estructura tabular fija pero contienen etiquetas jer\u00e1rquicas, como archivos JSON y XML."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de Apache es preferible a Spark cuando se requiere un procesamiento de streaming con latencia extremadamente baja?",
+      "back": "Apache Flink."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el prop\u00f3sito de utilizar el formato de archivo Parquet en an\u00e1lisis de Big Data?",
+      "back": "Optimizar la eficiencia del almacenamiento y la velocidad de consulta mediante una estructura orientada a columnas."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tecnolog\u00eda se recomienda para la ingesta de flujos de datos de alto rendimiento (high-throughput streaming)?",
+      "back": "Apache Kafka."
+    },
+    {
+      "front": "\u00bfQu\u00e9 m\u00e9trica de calidad asegura que un dataset tenga menos del $20\\%$ de valores faltantes?",
+      "back": "La completitud."
+    },
+    {
+      "front": "\u00bfQu\u00e9 funci\u00f3n cumple Amazon S3 en una arquitectura de Big Data h\u00edbrida?",
+      "back": "Act\u00faa como almacenamiento de objetos (Object Storage) escalable en la nube."
+    },
+    {
+      "front": "\u00bfQu\u00e9 es un Data Lakehouse?",
+      "back": "Es un h\u00edbrido que combina la flexibilidad de un data lake con las transacciones ACID y el gobierno de un data warehouse."
+    },
+    {
+      "front": "En el contexto de gobernanza, \u00bfpara qu\u00e9 se utiliza Apache Atlas?",
+      "back": "Para la gesti\u00f3n de metadatos y el seguimiento del linaje de los datos en el ecosistema."
+    },
+    {
+      "front": "\u00bfQu\u00e9 KPI de Netflix destaca el \u00e9xito de sus algoritmos de recomendaci\u00f3n?",
+      "back": "M\u00e1s del $75\\%$ de las visualizaciones en la plataforma son impulsadas por sus algoritmos de personalizaci\u00f3n."
+    },
+    {
+      "front": "\u00bfQu\u00e9 desaf\u00edo \u00e9tico implica que el $50\\%$ de los modelos de AI puedan tener sesgos inherentes?",
+      "back": "La necesidad de implementar herramientas de FairML y auditor\u00edas regulares para mitigar la discriminaci\u00f3n algor\u00edtmica."
+    },
+    {
+      "front": "Concepto: Data Drift",
+      "back": "Definici\u00f3n: Cambio gradual en la distribuci\u00f3n de los datos de entrada que degrada el rendimiento de los modelos predictivos."
+    },
+    {
+      "front": "Concepto: MLOps",
+      "back": "Definici\u00f3n: Pr\u00e1cticas de DevOps aplicadas al aprendizaje autom\u00e1tico para automatizar el ciclo de vida de los modelos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 es la IA Explicable (XAI)?",
+      "back": "Conjunto de t\u00e9cnicas dise\u00f1adas para hacer que los resultados de los modelos de ML sean interpretables y auditables por humanos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tendencia futura propone dominios de datos aut\u00f3nomos con gobernanza integrada por IA?",
+      "back": "Data Mesh 2.0."
+    },
+    {
+      "front": "\u00bfEn qu\u00e9 consiste el 'Federated Learning'?",
+      "back": "Es un m\u00e9todo de entrenamiento distribuido de modelos sin necesidad de compartir o centralizar datos sensibles."
+    },
+    {
+      "front": "\u00bfPara qu\u00e9 se utiliza un Autoencoder en un sistema de detecci\u00f3n de anomal\u00edas de FinTech?",
+      "back": "Para aprender patrones de transacciones normales y se\u00f1alar como anomal\u00eda cualquier desviaci\u00f3n significativa en la reconstrucci\u00f3n."
+    },
+    {
+      "front": "\u00bfQu\u00e9 librer\u00eda de Python se menciona para realizar predicciones de demanda (forecasting) en la cadena de suministro?",
+      "back": "Prophet (desarrollada por Facebook)."
+    },
+    {
+      "front": "En una arquitectura Cloud-Native, \u00bfqu\u00e9 herramienta permite realizar flujos de datos visuales (ETL)?",
+      "back": "Apache NiFi."
+    },
+    {
+      "front": "Concepto: Batch Processing",
+      "back": "Definici\u00f3n: Procesamiento de grandes vol\u00famenes de datos en lotes para tareas que no requieren respuesta inmediata."
+    },
+    {
+      "front": "\u00bfQu\u00e9 significa la 'Soberan\u00eda de Datos'?",
+      "back": "Requisitos legales que obligan a que el almacenamiento de los datos se realice dentro de jurisdicciones geogr\u00e1ficas espec\u00edficas."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica de privacidad se utiliza para cumplir con normativas como GDPR mediante la anonimizaci\u00f3n?",
+      "back": "Privacidad diferencial (Differential Privacy)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la latencia objetivo t\u00edpica para una transacci\u00f3n en un sistema moderno de detecci\u00f3n de anomal\u00edas?",
+      "back": "Menos de $100 ms$ por transacci\u00f3n."
+    },
+    {
+      "front": "\u00bfQu\u00e9 es un 'Watermark' en el procesamiento de flujos con Apache Flink?",
+      "back": "Un mecanismo para manejar eventos que llegan con retraso, definiendo hasta cu\u00e1ndo esperar datos en una ventana de tiempo."
+    },
+    {
+      "front": "En el modelo de surge pricing, \u00bfqu\u00e9 variables se consideran adem\u00e1s de la oferta y la demanda?",
+      "back": "Tr\u00e1fico, eventos locales y condiciones clim\u00e1ticas."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el volumen global de datos proyectado que se generar\u00e1 anualmente para el a\u00f1o 2025?",
+      "back": "Aproximadamente $181 ZB$ (Zettabytes)."
+    },
+    {
+      "front": "\u00bfCu\u00e1ntas horas de video se suben diariamente a YouTube seg\u00fan las estad\u00edsticas de 2025?",
+      "back": "720,000 horas de video al d\u00eda."
+    },
+    {
+      "front": "Concepto: Data Fabric",
+      "back": "Definici\u00f3n: Arquitectura virtual que integra datos de diversos silos sin necesidad de moverlos f\u00edsicamente."
+    },
+    {
+      "front": "\u00bfQu\u00e9 ventaja ofrece el 'Edge Computing' en el monitoreo IoT con redes 5G?",
+      "back": "Permite procesar eventos cerca de la fuente (sensores), reduciendo la latencia y el consumo de ancho de banda hacia la nube."
+    },
+    {
+      "front": "\u00bfQu\u00e9 objetivo persigue el 'Sustainable Data Ops'?",
+      "back": "Reducir el consumo energ\u00e9tico de los centros de datos mediante la optimizaci\u00f3n de procesos (objetivo del $30\\%$)."
+    },
+    {
+      "front": "Concepto: Zero-Trust Data Access",
+      "back": "Definici\u00f3n: Modelo de seguridad donde cada intento de acceso a los datos debe ser verificado din\u00e1micamente, sin asumir confianza previa."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de procesamiento se utiliza para el an\u00e1lisis continuo de datos en movimiento?",
+      "back": "Stream Processing."
+    },
+    {
+      "front": "\u00bfQu\u00e9 componente de Spark se utiliza espec\u00edficamente para el aprendizaje autom\u00e1tico distribuido?",
+      "back": "Spark MLlib."
+    },
+    {
+      "front": "\u00bfQu\u00e9 sistema de archivos distribuido es fundamental en el ecosistema Hadoop para el almacenamiento masivo?",
+      "back": "HDFS (Hadoop Distributed File System)."
+    },
+    {
+      "front": "En el an\u00e1lisis de correlaciones m\u00e9dicas, \u00bfqu\u00e9 permite revelar el uso de Big Data frente a una muestra tradicional de 1,000 registros?",
+      "back": "Revela una mayor cantidad de correlaciones significativas que el muestreo tradicional no logra capturar."
+    }
+  ]
+}

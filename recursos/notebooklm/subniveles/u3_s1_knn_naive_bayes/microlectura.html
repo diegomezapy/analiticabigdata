@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>3.1 KNN y Naive Bayes — Microlectura — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #2E7D32; border-bottom: 3px solid #2E7D32; padding-bottom: 10px; }
+  h2 { color: #388E3C; margin-top: 2em; }
+  h3 { color: #1B5E20; }
+  .header-info { background: #E8F5E9; border-left: 4px solid #2E7D32; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #1B5E20; }
+  pre { background: #F5F5F5; border-left: 4px solid #4CAF50; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F1F8E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #2E7D32; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #2E7D32; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 3</div>
+
+<h1>3.1 KNN y Naive Bayes</h1>
+<h2>1. La intuición detrás de KNN</h2>
+<p>"Dime con quién andas y te diré quién eres." Esta frase resume KNN: un punto desconocido se clasifica por la mayoría de sus K vecinos más cercanos en el espacio de features.</p>
+<p>El algoritmo funciona en tres pasos: (1) calcular la distancia entre el punto nuevo y todos los puntos de entrenamiento, (2) seleccionar los K puntos más cercanos, (3) asignar la clase más frecuente entre esos K vecinos.</p>
+<p>No hay ecuación que "aprender": el modelo <em>es</em> el conjunto de datos de entrenamiento. Por eso se llama "lazy learner" — no aprende durante el entrenamiento pero trabaja duro al predecir.</p>
+<h2>2. La elección de K</h2>
+<p>K es el hiperparámetro más crítico de KNN. Si K=1, el modelo es muy sensible al ruido — un outlier puede clasificar mal un punto cercano (overfitting). Si K=n (todos los vecinos), siempre predice la clase mayoritaria global (underfitting).</p>
+<p>La regla empírica es K = √n, donde n es el tamaño del dataset. En la práctica, se usa validación cruzada para seleccionar el K óptimo probando varios valores y eligiendo el que minimiza el error de clasificación.</p>
+<h2>3. Por qué normalizar es obligatorio en KNN</h2>
+<p>Si un dataset tiene "edad" (rango 0-100) y "salario" (rango 0-10,000,000), sin normalizar la distancia euclidiana estará dominada por el salario. Un punto con misma edad pero diferente salario será "lejano" aunque conceptualmente sean similares.</p>
+<p>La solución: escalar todas las features al mismo rango con Min-Max o Z-score antes de aplicar KNN. Esto garantiza que cada variable contribuya equitativamente a la distancia.</p>
+<h2>4. El teorema de Bayes y Naive Bayes</h2>
+<p>El teorema de Bayes actualiza la probabilidad de una hipótesis dado nueva evidencia:</p>
+<p style="text-align:center">P(H|E) = P(E|H) × P(H) / P(E)</p>
+<p>En clasificación: H es la clase, E son los features. P(H) es la probabilidad a priori (frecuencia de cada clase). P(E|H) es la verosimilitud (cómo se distribuyen los features dado la clase). P(H|E) es la probabilidad a posteriori que queremos maximizar.</p>
+<h2>5. La suposición "naive"</h2>
+<p>El nombre "naive" (ingenuo) viene de la suposición de independencia condicional: dados la clase, todos los features son independientes entre sí. Esto raramente es cierto — por ejemplo, en un email, las palabras "promoción" y "oferta" no son independientes. Sin embargo, el algoritmo funciona sorprendentemente bien en la práctica incluso violando este supuesto.</p>
+<div class="ejemplo"><strong>Caso de uso clásico:</strong> Filtro de spam. Naive Bayes calcula la probabilidad de spam dado las palabras del email, y la de no-spam dado las mismas palabras. Clasifica como spam si P(spam|palabras) > P(no-spam|palabras).</div>
+<h2>6. Evaluación de modelos de clasificación</h2>
+<p>Métricas clave: Accuracy, Precision, Recall, F1-Score, y la Matriz de Confusión. Para datasets desbalanceados, la accuracy puede ser engañosa — si el 95% son clase A, predecir siempre A da 95% accuracy pero 0% utilidad.</p>
+
+</body>
+</html>

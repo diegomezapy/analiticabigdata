@@ -1,0 +1,177 @@
+{
+  "title": "Datos Cuestionario",
+  "questions": [
+    {
+      "question": "De acuerdo con la clasificaci\u00f3n de variables en Big Data, una variable que registra el nivel educativo de un cliente como 'B\u00e1sico', 'Medio' o 'Superior' se define como:",
+      "answerOptions": [
+        {
+          "text": "Cualitativa Nominal",
+          "isCorrect": false,
+          "rationale": "Las variables nominales se utilizan para categor\u00edas que no poseen un orden intr\u00ednseco, a diferencia de los niveles educativos."
+        },
+        {
+          "text": "Cualitativa Ordinal",
+          "isCorrect": true,
+          "rationale": "Esta categor\u00eda es correcta porque describe datos cualitativos donde existe una jerarqu\u00eda o progresi\u00f3n l\u00f3gica entre las etiquetas."
+        },
+        {
+          "text": "Cuantitativa Discreta",
+          "isCorrect": false,
+          "rationale": "Este tipo se refiere a valores num\u00e9ricos enteros contables, no a etiquetas de categor\u00edas educativas."
+        },
+        {
+          "text": "Cuantitativa Continua",
+          "isCorrect": false,
+          "rationale": "Las variables continuas representan mediciones en un rango infinito de valores, lo cual no aplica a niveles jer\u00e1rquicos definidos."
+        }
+      ],
+      "hint": "Considere si las categor\u00edas mencionadas tienen una jerarqu\u00eda o un orden l\u00f3gico entre ellas."
+    },
+    {
+      "question": "\u00bfCu\u00e1l de las siguientes t\u00e9cnicas de visualizaci\u00f3n es la m\u00e1s recomendada para identificar espec\u00edficamente la presencia de valores at\u00edpicos (outliers) y observar la dispersi\u00f3n de los datos?",
+      "answerOptions": [
+        {
+          "text": "Histogramas",
+          "isCorrect": false,
+          "rationale": "Aunque permiten ver la distribuci\u00f3n general, no est\u00e1n dise\u00f1ados primordialmente para la detecci\u00f3n precisa de puntos individuales fuera de rango como otros diagramas."
+        },
+        {
+          "text": "Heatmaps",
+          "isCorrect": false,
+          "rationale": "Los mapas de calor son herramientas para visualizar la intensidad de relaciones o correlaciones, no para identificar outliers en una distribuci\u00f3n univariada."
+        },
+        {
+          "text": "Boxplots",
+          "isCorrect": true,
+          "rationale": "Los diagramas de caja resaltan visualmente los valores que se encuentran fuera de los bigotes, facilitando la detecci\u00f3n de datos an\u00f3malos."
+        },
+        {
+          "text": "Scatter Plots",
+          "isCorrect": false,
+          "rationale": "Se utilizan principalmente para explorar la relaci\u00f3n entre dos variables num\u00e9ricas, no para el an\u00e1lisis de dispersi\u00f3n univariada y outliers de forma est\u00e1ndar."
+        }
+      ],
+      "hint": "Piense en el gr\u00e1fico que utiliza cuartiles y 'bigotes' para representar la estructura de los datos."
+    },
+    {
+      "question": "En el contexto del preprocesamiento de datos, cuando se requiere manejar valores faltantes en un conjunto de datos complejo considerando las similitudes entre registros, la estrategia m\u00e1s avanzada es:",
+      "answerOptions": [
+        {
+          "text": "Imputaci\u00f3n por la Media",
+          "isCorrect": false,
+          "rationale": "Es una t\u00e9cnica r\u00e1pida pero simple que no considera las relaciones o similitudes espec\u00edficas entre los registros individuales."
+        },
+        {
+          "text": "Eliminaci\u00f3n de registros",
+          "isCorrect": false,
+          "rationale": "Esta opci\u00f3n conlleva una p\u00e9rdida de informaci\u00f3n que puede ser perjudicial si el conjunto de datos no es masivo o los faltantes son significativos."
+        },
+        {
+          "text": "Imputaci\u00f3n KNN (K-Nearest Neighbors)",
+          "isCorrect": true,
+          "rationale": "Este m\u00e9todo utiliza la cercan\u00eda o similitud entre observaciones para estimar el valor faltante, siendo m\u00e1s preciso en estructuras de datos complejas."
+        },
+        {
+          "text": "Imputaci\u00f3n por la Moda",
+          "isCorrect": false,
+          "rationale": "Se utiliza generalmente para variables categ\u00f3ricas e ignora las relaciones subyacentes entre las otras variables del dataset."
+        }
+      ],
+      "hint": "Busque la t\u00e9cnica que utiliza el concepto de 'vecinos' para estimar la informaci\u00f3n ausente."
+    },
+    {
+      "question": "Dentro de las etapas de preprocesado de datos, la acci\u00f3n de normalizar o escalar variables para que el modelo no se vea sesgado por las magnitudes de los datos se clasifica como:",
+      "answerOptions": [
+        {
+          "text": "Limpieza",
+          "isCorrect": false,
+          "rationale": "La limpieza se enfoca en corregir errores, eliminar duplicados o tratar outliers, no en cambiar la escala de las mediciones v\u00e1lidas."
+        },
+        {
+          "text": "Selecci\u00f3n",
+          "isCorrect": false,
+          "rationale": "Esta etapa se refiere a la reducci\u00f3n de dimensionalidad o elecci\u00f3n de caracter\u00edsticas relevantes, no a la modificaci\u00f3n de sus valores."
+        },
+        {
+          "text": "Transformaci\u00f3n",
+          "isCorrect": true,
+          "rationale": "La transformaci\u00f3n incluye el escalado y la normalizaci\u00f3n, procesos esenciales para ajustar los datos antes de aplicar algoritmos de modelado."
+        },
+        {
+          "text": "Carga de datos",
+          "isCorrect": false,
+          "rationale": "La carga es el proceso t\u00e9cnico de importar el archivo al entorno de trabajo, previo a cualquier manipulaci\u00f3n anal\u00edtica."
+        }
+      ],
+      "hint": "Esta etapa implica modificar la forma o escala de los datos existentes sin eliminar registros."
+    },
+    {
+      "question": "Al trabajar con el lenguaje R para el An\u00e1lisis Exploratorio de Datos (EDA), \u00bfqu\u00e9 funci\u00f3n o biblioteca es mencionada espec\u00edficamente para generar visualizaciones de correlaci\u00f3n etiquetadas?",
+      "answerOptions": [
+        {
+          "text": "library(mice)",
+          "isCorrect": false,
+          "rationale": "Esta biblioteca se especializa en la imputaci\u00f3n m\u00faltiple de datos faltantes, no en la visualizaci\u00f3n de correlaciones."
+        },
+        {
+          "text": "ggcorr() de la librer\u00eda GGally",
+          "isCorrect": true,
+          "rationale": "El material destaca a ggcorr como la herramienta para producir mapas de correlaci\u00f3n visuales dentro del flujo de trabajo de R."
+        },
+        {
+          "text": "geom_histogram() de ggplot2",
+          "isCorrect": false,
+          "rationale": "Esta funci\u00f3n se utiliza exclusivamente para representar la distribuci\u00f3n de una sola variable continua, no matrices de correlaci\u00f3n."
+        },
+        {
+          "text": "summary(df)",
+          "isCorrect": false,
+          "rationale": "Es una funci\u00f3n de R base que proporciona res\u00famenes estad\u00edsticos textuales, pero no genera visualizaciones gr\u00e1ficas."
+        }
+      ],
+      "hint": "Se trata de una extensi\u00f3n de ggplot2 que facilita el an\u00e1lisis multivariado."
+    },
+    {
+      "question": "Determine la veracidad de la siguiente afirmaci\u00f3n: La eliminaci\u00f3n de registros con valores ausentes es la estrategia preferida en Big Data siempre que exista cualquier cantidad de datos faltantes.",
+      "answerOptions": [
+        {
+          "text": "Falso",
+          "isCorrect": true,
+          "rationale": "La eliminaci\u00f3n solo se recomienda cuando la proporci\u00f3n de faltantes es muy baja; de lo contrario, se introduce sesgo y p\u00e9rdida cr\u00edtica de informaci\u00f3n."
+        },
+        {
+          "text": "Verdadero",
+          "isCorrect": false,
+          "rationale": "Eliminar datos de forma indiscriminada puede arruinar la representatividad de la muestra, especialmente si los datos no faltan de forma aleatoria."
+        }
+      ],
+      "hint": "Considere el impacto que tiene perder una gran parte de la base de datos en la calidad del an\u00e1lisis final."
+    },
+    {
+      "question": "Complete el siguiente enunciado t\u00e9cnico: Las distribuciones de los datos, ya sean normales o sesgadas, sirven como gu\u00eda para decidir la aplicaci\u00f3n de transformaciones matem\u00e1ticas tales como el _______ o la t\u00e9cnica de Box-Cox.",
+      "answerOptions": [
+        {
+          "text": "Escalado",
+          "isCorrect": false,
+          "rationale": "El escalado ajusta el rango de los datos, pero no cambia la forma de la distribuci\u00f3n (como eliminar el sesgo) de la manera que lo hacen las transformaciones mencionadas."
+        },
+        {
+          "text": "Logaritmo",
+          "isCorrect": true,
+          "rationale": "La transformaci\u00f3n logar\u00edtmica es la t\u00e9cnica citada en el material para tratar con distribuciones sesgadas y estabilizar la varianza."
+        },
+        {
+          "text": "Promedio",
+          "isCorrect": false,
+          "rationale": "El promedio es una medida de tendencia central, no una transformaci\u00f3n funcional aplicada a cada punto de datos para corregir distribuciones."
+        },
+        {
+          "text": "Imputaci\u00f3n",
+          "isCorrect": false,
+          "rationale": "La imputaci\u00f3n es el proceso de llenar datos faltantes, no una transformaci\u00f3n de la distribuci\u00f3n de valores ya existentes."
+        }
+      ],
+      "hint": "Se refiere a una funci\u00f3n matem\u00e1tica com\u00fan utilizada para comprimir escalas de valores muy grandes o sesgados."
+    }
+  ]
+}

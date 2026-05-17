@@ -1,0 +1,170 @@
+{
+  "mind_map": {
+    "name": "Visualización y Exploración de Datos en Big Data",
+    "children": [
+      {
+        "name": "Análisis Exploratorio de Datos (EDA)",
+        "children": [
+          {
+            "name": "Tipos de Variables",
+            "children": [
+              {
+                "name": "Cuantitativas",
+                "children": [
+                  {
+                    "name": "Discretas"
+                  },
+                  {
+                    "name": "Continuas"
+                  }
+                ]
+              },
+              {
+                "name": "Cualitativas",
+                "children": [
+                  {
+                    "name": "Nominales"
+                  },
+                  {
+                    "name": "Ordinales"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Técnicas y Herramientas",
+            "children": [
+              {
+                "name": "Estadísticas Descriptivas (Pandas/R)"
+              },
+              {
+                "name": "Histogramas (Distribución)"
+              },
+              {
+                "name": "Boxplots (Outliers)"
+              },
+              {
+                "name": "Scatter Plots (Relaciones)"
+              },
+              {
+                "name": "Heatmaps (Correlación)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Preprocesado de Datos",
+        "children": [
+          {
+            "name": "Etapas Clave",
+            "children": [
+              {
+                "name": "Limpieza (Duplicados)"
+              },
+              {
+                "name": "Transformación (Escalado/Normalización)"
+              },
+              {
+                "name": "Selección (PCA/Dimensionalidad)"
+              }
+            ]
+          },
+          {
+            "name": "Manejo de Valores Ausentes",
+            "children": [
+              {
+                "name": "Eliminación"
+              },
+              {
+                "name": "Imputación Media/Mediana"
+              },
+              {
+                "name": "Imputación Moda (Categóricas)"
+              },
+              {
+                "name": "Métodos Avanzados (KNN/mice)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ruta de Actividades (Unidad 2)",
+        "children": [
+          {
+            "name": "Actividad 1: Estudio",
+            "children": [
+              {
+                "name": "Librerías de R"
+              },
+              {
+                "name": "Carga y procesamiento"
+              }
+            ]
+          },
+          {
+            "name": "Actividad 2: Foro",
+            "children": [
+              {
+                "name": "Binarización"
+              },
+              {
+                "name": "División Entrenamiento/Test"
+              }
+            ]
+          },
+          {
+            "name": "Actividad 3: Cuestionario",
+            "children": [
+              {
+                "name": "Técnicas de imputación"
+              },
+              {
+                "name": "Estandarización y escalado"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Software Recomendado",
+        "children": [
+          {
+            "name": "Python",
+            "children": [
+              {
+                "name": "Pandas"
+              },
+              {
+                "name": "Seaborn"
+              },
+              {
+                "name": "Matplotlib"
+              },
+              {
+                "name": "Scikit-learn"
+              }
+            ]
+          },
+          {
+            "name": "R",
+            "children": [
+              {
+                "name": "ggplot2"
+              },
+              {
+                "name": "GGally"
+              },
+              {
+                "name": "mice"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "note_id": "f9733e16-9a3e-494d-a0e1-ab6ca247b922"
+}

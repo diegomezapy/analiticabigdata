@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.1 Aplicación — Interpretabilidad en Sector Público — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.1 Aplicación: Feature Selection para Modelos en el Sector Público</h1>
+<h2>Contexto</h2>
+<p>Una institución pública paraguaya quiere implementar un sistema predictivo para identificar proyectos de inversión con riesgo de ejecución deficiente. El modelo debe ser interpretable para justificar las alertas ante auditores.</p>
+<h2>Dataset y modelo</h2>
+<pre>set.seed(33)
+n <- 800
+proyectos <- data.frame(
+  duracion_meses = round(rexp(n, 0.1) + 6),
+  presupuesto_m = round(rexp(n, 0.2) + 0.5, 2),
+  num_licitaciones = rpois(n, 2),
+  porcentaje_adelantos = pmin(100, pmax(0, rnorm(n, 30, 20))),
+  num_modificaciones = rpois(n, 1),
+  unidad_ejecutora = sample(c("MIN_A","MIN_B","MIN_C","GOB"), n, replace=TRUE),
+  region = sample(c("Central","Interior","Frontera"), n, replace=TRUE)
+)
+lp <- -2 + 0.02*proyectos$duracion_meses + 0.1*proyectos$num_modificaciones -
+      0.01*proyectos$porcentaje_adelantos + 0.3*proyectos$num_licitaciones
+proyectos$bajo_rendimiento <- factor(rbinom(n,1,1/(1+exp(-lp))), labels=c("No","Si"))
+
+# One-hot encoding para factores
+library(caret)
+dummies <- dummyVars(bajo_rendimiento ~ ., data=proyectos)
+X_proj <- predict(dummies, proyectos)
+y_proj <- proyectos$bajo_rendimiento
+
+# RFE
+ctrl_rfe <- rfeControl(functions=lrFuncs, method="cv", number=5)
+rfe_proj <- rfe(X_proj, y_proj, sizes=1:ncol(X_proj), rfeControl=ctrl_rfe)
+cat("Variables clave identificadas:
+")
+print(predictors(rfe_proj))
+
+# Modelo final interpretable
+features_pub <- predictors(rfe_proj)
+X_sel <- X_proj[, features_pub]
+m_final <- train(x=as.data.frame(X_sel), y=y_proj,
+                 method="glm", family="binomial",
+                 preProcess=c("center","scale"),
+                 trControl=trainControl(method="cv", number=10))
+
+# Reporte de coeficientes para auditores
+coef_reporte <- round(exp(coef(m_final$finalModel)), 3)
+cat("
+Odds Ratios para reporte institucional:
+")
+print(coef_reporte)</pre>
+<div class="importante"><strong>Principio de responsabilidad pública:</strong> Los modelos usados en decisiones gubernamentales deben poder explicarse a ciudadanos y auditores. La regresión logística con feature selection es preferible a modelos más complejos aunque sean marginalmente más precisos.</div>
+
+</body>
+</html>

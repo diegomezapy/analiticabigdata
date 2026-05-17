@@ -1,0 +1,133 @@
+{
+  "name": "Interpretación de Resultados y Modelos Estadísticos en Big Data",
+  "children": [
+    {
+      "name": "Conceptos Fundamentales",
+      "children": [
+        {
+          "name": "Importancia de la Interpretación"
+        },
+        {
+          "name": "Toma de Decisiones Éticas"
+        },
+        {
+          "name": "Evitar Modelos de 'Caja Negra'"
+        }
+      ]
+    },
+    {
+      "name": "Métricas Clave de Interpretación",
+      "children": [
+        {
+          "name": "Accuracy (Exactitud)"
+        },
+        {
+          "name": "Precision y Recall"
+        },
+        {
+          "name": "AUC-ROC"
+        },
+        {
+          "name": "R-squared"
+        },
+        {
+          "name": "Feature Importance"
+        }
+      ]
+    },
+    {
+      "name": "Análisis Discriminante Lineal (LDA)",
+      "children": [
+        {
+          "name": "Propósito: Clasificación y Reducción Dimensional"
+        },
+        {
+          "name": "Supuestos: Normalidad y Homocedasticidad"
+        },
+        {
+          "name": "Ventajas: Eficiencia y Escalabilidad"
+        },
+        {
+          "name": "Desventajas: Sensibilidad a Outliers"
+        }
+      ]
+    },
+    {
+      "name": "Selección de Modelos",
+      "children": [
+        {
+          "name": "Criterios: AIC, BIC y Cross-Validation"
+        },
+        {
+          "name": "Ensemble Voting"
+        },
+        {
+          "name": "Valores SHAP (Explicabilidad)"
+        },
+        {
+          "name": "Comparación: LDA vs QDA vs SVM"
+        }
+      ]
+    },
+    {
+      "name": "Comunicación de Resultados",
+      "children": [
+        {
+          "name": "R Markdown (Informes Reproducibles)"
+        },
+        {
+          "name": "Shiny (Dashboards Interactivos)"
+        },
+        {
+          "name": "Narrativas de Datos"
+        }
+      ]
+    },
+    {
+      "name": "Actividades Académicas",
+      "children": [
+        {
+          "name": "Actividad 1: Lectura Activa",
+          "children": [
+            {
+              "name": "Material de Lectura"
+            },
+            {
+              "name": "Videos Tutoriales"
+            }
+          ]
+        },
+        {
+          "name": "Actividad 2: Foro de Discusión",
+          "children": [
+            {
+              "name": "Problemas de Aplicación"
+            },
+            {
+              "name": "Réplica Académica"
+            }
+          ]
+        },
+        {
+          "name": "Actividad 3: Evaluación",
+          "children": [
+            {
+              "name": "Cuestionario en Línea"
+            }
+          ]
+        },
+        {
+          "name": "Evidencia Final",
+          "children": [
+            {
+              "name": "Informe de Investigación"
+            },
+            {
+              "name": "Metodología y Recomendaciones"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

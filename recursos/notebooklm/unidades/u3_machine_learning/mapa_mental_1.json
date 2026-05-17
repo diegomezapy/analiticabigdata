@@ -1,0 +1,132 @@
+{
+  "name": "Machine Learning en Big Data (Unidad 3)",
+  "children": [
+    {
+      "name": "Conceptos Fundamentales",
+      "children": [
+        {
+          "name": "Tipos de ML: Supervisado, No Supervisado, Reforzamiento"
+        },
+        {
+          "name": "Flujo: Partición, Entrenamiento, Evaluación"
+        },
+        {
+          "name": "Métricas: Accuracy, Precision, Recall, F1-score"
+        }
+      ]
+    },
+    {
+      "name": "Algoritmos Principales",
+      "children": [
+        {
+          "name": "K-Nearest Neighbors (KNN)",
+          "children": [
+            {
+              "name": "Basado en instancias y distancia euclídea"
+            },
+            {
+              "name": "Ventaja: No paramétrico y simple"
+            },
+            {
+              "name": "Desventaja: Alto costo computacional en Big Data"
+            }
+          ]
+        },
+        {
+          "name": "Naive Bayes",
+          "children": [
+            {
+              "name": "Basado en Teorema de Bayes"
+            },
+            {
+              "name": "Asunción: Independencia entre predictores"
+            },
+            {
+              "name": "Uso: Clasificación de texto y spam"
+            }
+          ]
+        },
+        {
+          "name": "Regresión Logística",
+          "children": [
+            {
+              "name": "Modelado de probabilidades (Función Sigmoide)"
+            },
+            {
+              "name": "Clasificación binaria y multinomial"
+            },
+            {
+              "name": "Ventaja: Interpretabilidad de coeficientes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Actividades Académicas",
+      "children": [
+        {
+          "name": "Actividad 1: Formativa",
+          "children": [
+            {
+              "name": "Estudio de materiales y videos"
+            },
+            {
+              "name": "Producto: Notas de lectura y registro de dudas"
+            }
+          ]
+        },
+        {
+          "name": "Actividad 2: Interactiva",
+          "children": [
+            {
+              "name": "Foro de discusión sobre KNN"
+            },
+            {
+              "name": "Producto: Intervención argumentada y réplica"
+            }
+          ]
+        },
+        {
+          "name": "Actividad 3: Autónoma",
+          "children": [
+            {
+              "name": "Cuestionario en línea sobre Regresión Logística"
+            },
+            {
+              "name": "Evidencia: Evaluación de comprensión individual"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Implementación en R",
+      "children": [
+        {
+          "name": "Paquetes: caret, class, e1071"
+        },
+        {
+          "name": "Funciones: train(), knn(), naiveBayes(), glm()"
+        },
+        {
+          "name": "Herramientas: Cuaderno reproducible y matriz de confusión"
+        }
+      ]
+    },
+    {
+      "name": "Información Institucional",
+      "children": [
+        {
+          "name": "Carrera: Matemática Estadística (Virtual)"
+        },
+        {
+          "name": "Institución: FACEN - Universidad Nacional de Asunción"
+        },
+        {
+          "name": "Año Académico: 2026"
+        }
+      ]
+    }
+  ]
+}

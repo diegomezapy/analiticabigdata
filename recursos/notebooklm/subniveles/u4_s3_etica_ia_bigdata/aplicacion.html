@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.3 Aplicación — Marco Ético para Proyectos de IA — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.3 Aplicación: Marco Ético para Proyectos de IA en el Sector Público Paraguayo</h1>
+<h2>Contexto</h2>
+<p>El MITIC (Ministerio de Tecnología de la Información y Comunicación) de Paraguay está evaluando implementar sistemas predictivos en tres áreas: salud pública, tributación y educación. Se necesita un marco ético para evaluar cada propuesta.</p>
+<h2>Checklist Ético para Proyectos de IA</h2>
+<pre>marco_etico <- data.frame(
+  Dimensión = c(
+    "1. Propósito y legitimidad",
+    "2. Datos y privacidad",
+    "3. Equidad",
+    "4. Explicabilidad",
+    "5. Robustez",
+    "6. Responsabilidad",
+    "7. Participación ciudadana",
+    "8. Monitoreo continuo"
+  ),
+  Preguntas_clave = c(
+    "¿Está claro el propósito? ¿Hay base legal para el uso de los datos?",
+    "¿Los datos son relevantes, mínimos y con consentimiento adecuado?",
+    "¿El sistema trata equitativamente a todos los grupos demográficos?",
+    "¿Las decisiones automatizadas pueden explicarse a los afectados?",
+    "¿El sistema funciona correctamente bajo condiciones adversas?",
+    "¿Hay un humano responsable identificable de las decisiones?",
+    "¿Las comunidades afectadas participaron en el diseño?",
+    "¿Hay un proceso para detectar y corregir errores en producción?"
+  ),
+  Semáforo = c("verde","verde","amarillo","amarillo","verde","rojo","rojo","amarillo")
+)
+
+# Aplicar a caso real
+cat("
+=== EVALUACIÓN ÉTICA: Sistema de Detección de Evasión Tributaria ===
+")
+cat("Propósito: Identificar contribuyentes con alta probabilidad de evasión
+")
+cat("Datos usados: Declaraciones juradas, facturación electrónica, movimientos bancarios
+
+")
+cat("RIESGOS IDENTIFICADOS:
+")
+cat("1. Sesgo por sector: el sistema puede sobre-alertar sectores informales
+")
+cat("   que tienen patrones distintos pero legítimos.
+")
+cat("2. Privacidad: cruce de datos bancarios requiere autorización legal explícita.
+")
+cat("3. Explicabilidad: si se usa Random Forest, ¿cómo explica la SET la alerta?
+")
+cat("4. Apelación: el contribuyente debe poder cuestionar la alerta y recibir explicación.
+
+")
+cat("RECOMENDACIONES:
+")
+cat("- Usar regresión logística (explicable) sobre modelos de caja negra
+")
+cat("- Publicar el marco metodológico (sin revelar el modelo exacto para evitar evasión)
+")
+cat("- Garantizar proceso de apelación con revisión humana
+")
+cat("- Auditar anualmente la tasa de falsos positivos por sector económico
+")</pre>
+<div class="importante"><strong>Compromiso ético del científico de datos:</strong> Antes de cada proyecto, responder explícitamente: ¿Quién se beneficia? ¿Quién podría ser perjudicado? ¿Tengo el derecho de usar estos datos para este propósito? ¿El sistema podría perpetuar injusticias existentes?</div>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+{
+  "mind_map": {
+    "name": "Unidad 1: Introducción al manejo de datos en Big Data",
+    "children": [
+      {
+        "name": "Fundamentos y Evolución",
+        "children": [
+          {
+            "name": "Orígenes (1960s - NASA)"
+          },
+          {
+            "name": "Hitos (Hadoop, Spark, Cloud)"
+          },
+          {
+            "name": "Cambio de Paradigma (Muestreo vs Análisis Integral)"
+          }
+        ]
+      },
+      {
+        "name": "Las 5V del Big Data",
+        "children": [
+          {
+            "name": "Volumen (Escala Exponencial)"
+          },
+          {
+            "name": "Velocidad (Tiempo Real/Streaming)"
+          },
+          {
+            "name": "Variedad (Datos Estructurados y No Estructurados)"
+          },
+          {
+            "name": "Veracidad (Calidad y Confianza)"
+          },
+          {
+            "name": "Valor (ROI e Insights)"
+          }
+        ]
+      },
+      {
+        "name": "Arquitectura y Tecnología",
+        "children": [
+          {
+            "name": "Ingesta (Kafka, NiFi)"
+          },
+          {
+            "name": "Procesamiento (Spark, Flink, Databricks)"
+          },
+          {
+            "name": "Almacenamiento (HDFS, S3, Delta Lake)"
+          },
+          {
+            "name": "Análisis (MLlib, TensorFlow, dbt)"
+          }
+        ]
+      },
+      {
+        "name": "Casos de Éxito",
+        "children": [
+          {
+            "name": "Netflix (Personalización)"
+          },
+          {
+            "name": "Uber (Optimización Logística)"
+          },
+          {
+            "name": "FinTech (Detección de Fraude)"
+          }
+        ]
+      },
+      {
+        "name": "Desafíos y Ética",
+        "children": [
+          {
+            "name": "Escalabilidad técnica"
+          },
+          {
+            "name": "Privacidad y Cumplimiento (GDPR)"
+          },
+          {
+            "name": "Mitigación de sesgos en AI"
+          }
+        ]
+      },
+      {
+        "name": "Plan de Actividades",
+        "children": [
+          {
+            "name": "Actividad 1.1: Estudio de materiales"
+          },
+          {
+            "name": "Actividad 1.2: Foro de discusión"
+          },
+          {
+            "name": "Actividad 1.3: Cuestionario en línea"
+          },
+          {
+            "name": "Evidencia: Bitácora de R/RStudio"
+          }
+        ]
+      },
+      {
+        "name": "Tendencias Futuras",
+        "children": [
+          {
+            "name": "GenAI + Big Data"
+          },
+          {
+            "name": "Data Mesh 2.0"
+          },
+          {
+            "name": "Quantum Analytics"
+          },
+          {
+            "name": "Sustainable Data Ops"
+          }
+        ]
+      }
+    ]
+  },
+  "note_id": "88dad049-6b55-4c8a-99ec-1f5f227accd6"
+}

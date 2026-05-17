@@ -1,0 +1,255 @@
+{
+  "title": "Clasificaci\u00f3n Cuestionario",
+  "questions": [
+    {
+      "question": "\u00bfCu\u00e1l de los siguientes es un supuesto fundamental del An\u00e1lisis Discriminante Lineal (LDA) para garantizar resultados \u00f3ptimos en la clasificaci\u00f3n?",
+      "answerOptions": [
+        {
+          "text": "Los datos deben seguir una distribuci\u00f3n normal multivariada y poseer matrices de covarianza iguales entre clases.",
+          "isCorrect": true,
+          "rationale": "LDA asume normalidad y homocedasticidad para derivar sus fronteras de decisi\u00f3n lineales de manera eficiente."
+        },
+        {
+          "text": "La variable dependiente debe ser continua y seguir una relaci\u00f3n lineal con los predictores.",
+          "isCorrect": false,
+          "rationale": "Este supuesto es caracter\u00edstico de la regresi\u00f3n lineal simple, no de los m\u00e9todos de clasificaci\u00f3n como LDA."
+        },
+        {
+          "text": "No debe existir correlaci\u00f3n entre las variables independientes (ausencia de multicolinealidad).",
+          "isCorrect": false,
+          "rationale": "Aunque la colinealidad dificulta la inversi\u00f3n de matrices, LDA puede manejar correlaciones mientras la matriz de covarianza sea invertible."
+        },
+        {
+          "text": "Las clases deben estar balanceadas en una proporci\u00f3n exacta de $50/50$.",
+          "isCorrect": false,
+          "rationale": "LDA incorpora las probabilidades a priori $\\pi_k$ para manejar clases con diferentes frecuencias de aparici\u00f3n."
+        }
+      ],
+      "hint": "Revise los supuestos estad\u00edsticos sobre la distribuci\u00f3n de los datos y sus varianzas."
+    },
+    {
+      "question": "En la funci\u00f3n discriminante de LDA, $\\delta_k(x) = x^T \\Sigma^{-1} \\mu_k - \\frac{1}{2} \\mu_k^T \\Sigma^{-1} \\mu_k + \\log \\pi_k$, \u00bfqu\u00e9 representa el t\u00e9rmino $\\pi_k$?",
+      "answerOptions": [
+        {
+          "text": "La probabilidad a priori de que una observaci\u00f3n pertenezca a la clase $k$.",
+          "isCorrect": true,
+          "rationale": "El t\u00e9rmino $\\pi_k$ ajusta la frontera de decisi\u00f3n bas\u00e1ndose en la prevalencia hist\u00f3rica o esperada de cada categor\u00eda."
+        },
+        {
+          "text": "El error residual del modelo tras la proyecci\u00f3n dimensional.",
+          "isCorrect": false,
+          "rationale": "El error no se representa con $\\pi_k$ en esta f\u00f3rmula, la cual se enfoca en la probabilidad de pertenencia."
+        },
+        {
+          "text": "La matriz de covarianza compartida entre todas las clases del dataset.",
+          "isCorrect": false,
+          "rationale": "La matriz de covarianza est\u00e1 representada por el s\u00edmbolo $\\Sigma$ en la ecuaci\u00f3n."
+        },
+        {
+          "text": "El vector de medias de las variables predictoras para la clase $k$.",
+          "isCorrect": false,
+          "rationale": "Las medias de las clases est\u00e1n denotadas por el par\u00e1metro $\\mu_k$."
+        }
+      ],
+      "hint": "Recuerde los componentes bayesianos que influyen en la clasificaci\u00f3n estad\u00edstica."
+    },
+    {
+      "question": "Para un problema de clasificaci\u00f3n en Big Data con un desbalance severo de clases, \u00bfqu\u00e9 m\u00e9trica es preferible sobre el Accuracy para evaluar el rendimiento?",
+      "answerOptions": [
+        {
+          "text": "Precision/Recall y el \u00e1rea bajo la curva ROC (AUC-ROC).",
+          "isCorrect": true,
+          "rationale": "Estas m\u00e9tricas eval\u00faan la capacidad del modelo para identificar correctamente la clase minoritaria sin dejarse sesgar por la mayor\u00eda."
+        },
+        {
+          "text": "El coeficiente de determinaci\u00f3n $R^2$.",
+          "isCorrect": false,
+          "rationale": "El $R^2$ es una m\u00e9trica espec\u00edfica para modelos de regresi\u00f3n y no para problemas de clasificaci\u00f3n categ\u00f3rica."
+        },
+        {
+          "text": "El error cuadr\u00e1tico medio (MSE).",
+          "isCorrect": false,
+          "rationale": "El MSE mide distancias entre valores num\u00e9ricos, lo cual no aplica directamente a etiquetas de clase discretas."
+        },
+        {
+          "text": "La varianza explicada por el primer componente principal.",
+          "isCorrect": false,
+          "rationale": "Esta es una m\u00e9trica de reducci\u00f3n dimensional (PCA) y no una medida directa de la precisi\u00f3n de clasificaci\u00f3n."
+        }
+      ],
+      "hint": "Piense en qu\u00e9 m\u00e9tricas se enfocan en los falsos positivos y falsos negativos."
+    },
+    {
+      "question": "Al utilizar la librer\u00eda `caret` en R para la selecci\u00f3n de modelos, \u00bfqu\u00e9 funci\u00f3n se emplea com\u00fanmente para determinar qu\u00e9 variables contribuyen m\u00e1s a la predicci\u00f3n?",
+      "answerOptions": [
+        {
+          "text": "varImp()",
+          "isCorrect": true,
+          "rationale": "Esta funci\u00f3n calcula la importancia relativa de cada variable bas\u00e1ndose en la estructura del modelo entrenado."
+        },
+        {
+          "text": "summary(lm())",
+          "isCorrect": false,
+          "rationale": "Aunque muestra coeficientes, no es la herramienta est\u00e1ndar de `caret` para comparar importancia entre distintos tipos de modelos."
+        },
+        {
+          "text": "predict()",
+          "isCorrect": false,
+          "rationale": "Esta funci\u00f3n se utiliza para generar nuevas predicciones a partir de datos de prueba, no para analizar la importancia de las features."
+        },
+        {
+          "text": "confusionMatrix()",
+          "isCorrect": false,
+          "rationale": "Esta funci\u00f3n eval\u00faa el desempe\u00f1o del modelo comparando predicciones contra valores reales, no la relevancia de las variables."
+        }
+      ],
+      "hint": "Busque un t\u00e9rmino que signifique 'importancia de variables' en ingl\u00e9s."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la principal ventaja de utilizar LDA frente a otros m\u00e9todos como SVM o Redes Neuronales en el contexto de Big Data?",
+      "answerOptions": [
+        {
+          "text": "Es computacionalmente ligero, permite reducci\u00f3n dimensional y ofrece una interpretaci\u00f3n clara de sus coeficientes.",
+          "isCorrect": true,
+          "rationale": "Su simplicidad matem\u00e1tica permite procesar grandes vol\u00famenes de datos con menor costo computacional manteniendo la interpretabilidad."
+        },
+        {
+          "text": "No requiere que los datos sigan ninguna distribuci\u00f3n espec\u00edfica.",
+          "isCorrect": false,
+          "rationale": "Por el contrario, LDA es un m\u00e9todo param\u00e9trico que exige supuestos fuertes como la normalidad."
+        },
+        {
+          "text": "Puede capturar relaciones no lineales complejas de forma nativa.",
+          "isCorrect": false,
+          "rationale": "LDA, por definici\u00f3n, genera fronteras de decisi\u00f3n lineales; para no-linealidad se requerir\u00eda QDA o m\u00e9todos de kernel."
+        },
+        {
+          "text": "Garantiza siempre un error de entrenamiento de cero.",
+          "isCorrect": false,
+          "rationale": "Ning\u00fan modelo estad\u00edstico serio garantiza error cero, y hacerlo suele ser signo de sobreajuste (overfitting)."
+        }
+      ],
+      "hint": "Considere el equilibrio entre eficiencia computacional y facilidad de explicar los resultados."
+    },
+    {
+      "question": "Verdadero o Falso: El Criterio de Informaci\u00f3n de Akaike (AIC) penaliza la complejidad del modelo para evitar el sobreajuste durante la selecci\u00f3n.",
+      "answerOptions": [
+        {
+          "text": "Verdadero",
+          "isCorrect": true,
+          "rationale": "El AIC utiliza la f\u00f3rmula $2k - 2\\ln(L)$, donde $k$ es el n\u00famero de par\u00e1metros, penalizando modelos excesivamente complejos."
+        },
+        {
+          "text": "Falso",
+          "isCorrect": false,
+          "rationale": "El AIC precisamente busca un equilibrio entre la bondad de ajuste y la parsimonia del modelo mediante una penalizaci\u00f3n."
+        }
+      ],
+      "hint": "Recuerde c\u00f3mo se equilibran el ajuste y el n\u00famero de par\u00e1metros en la selecci\u00f3n de modelos."
+    },
+    {
+      "question": "\u00bfQu\u00e9 herramienta de R es la m\u00e1s adecuada para generar informes reproducibles que integren c\u00f3digo, resultados estad\u00edsticos y narrativa para la toma de decisiones?",
+      "answerOptions": [
+        {
+          "text": "R Markdown",
+          "isCorrect": true,
+          "rationale": "Permite crear documentos (PDF, HTML, Word) que ejecutan el c\u00f3digo en tiempo real, garantizando que los resultados sean trazables."
+        },
+        {
+          "text": "Shiny",
+          "isCorrect": false,
+          "rationale": "Shiny se utiliza para dashboards interactivos, no primordialmente para informes est\u00e1ticos o reproducibles de investigaci\u00f3n."
+        },
+        {
+          "text": "Ggplot2",
+          "isCorrect": false,
+          "rationale": "Es una librer\u00eda espec\u00edfica para visualizaci\u00f3n de datos, no para la estructuraci\u00f3n de informes completos."
+        },
+        {
+          "text": "Tidyverse",
+          "isCorrect": false,
+          "rationale": "Es una colecci\u00f3n de paquetes para ciencia de datos, pero no un formato de documento por s\u00ed mismo."
+        }
+      ],
+      "hint": "Piense en el formato que combina texto enriquecido con bloques de c\u00f3digo ejecutables."
+    },
+    {
+      "question": "En el contexto de la Explicabilidad (XAI), \u00bfqu\u00e9 representan los valores SHAP en un modelo de Big Data?",
+      "answerOptions": [
+        {
+          "text": "La contribuci\u00f3n individual de cada variable al resultado final de una predicci\u00f3n espec\u00edfica.",
+          "isCorrect": true,
+          "rationale": "Los valores SHAP ayudan a romper la 'caja negra' al cuantificar el impacto positivo o negativo de cada feature en la decisi\u00f3n."
+        },
+        {
+          "text": "La probabilidad de que el modelo sufra de sesgo algor\u00edtmico.",
+          "isCorrect": false,
+          "rationale": "Aunque ayudan a detectar sesgos, su funci\u00f3n t\u00e9cnica es medir la contribuci\u00f3n marginal de las variables."
+        },
+        {
+          "text": "El tiempo de ejecuci\u00f3n necesario para procesar un petabyte de datos.",
+          "isCorrect": false,
+          "rationale": "SHAP es una t\u00e9cnica de interpretaci\u00f3n de modelos, no una m\u00e9trica de rendimiento de hardware o infraestructura."
+        },
+        {
+          "text": "Un m\u00e9todo de encriptaci\u00f3n para proteger datos sensibles en modelos estad\u00edsticos.",
+          "isCorrect": false,
+          "rationale": "SHAP no se relaciona con la seguridad o criptograf\u00eda de los datos, sino con su interpretaci\u00f3n anal\u00edtica."
+        }
+      ],
+      "hint": "Relacione el concepto con la transparencia de los modelos complejos."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la principal diferencia entre LDA y QDA (An\u00e1lisis Discriminante Cuadr\u00e1tico)?",
+      "answerOptions": [
+        {
+          "text": "LDA asume una matriz de covarianza com\u00fan para todas las clases, mientras que QDA permite que cada clase tenga su propia matriz.",
+          "isCorrect": true,
+          "rationale": "Esta flexibilidad permite a QDA capturar fronteras no lineales, aunque requiere estimar m\u00e1s par\u00e1metros."
+        },
+        {
+          "text": "LDA es para regresi\u00f3n y QDA es para clasificaci\u00f3n.",
+          "isCorrect": false,
+          "rationale": "Ambos m\u00e9todos son t\u00e9cnicas de clasificaci\u00f3n supervisada."
+        },
+        {
+          "text": "QDA solo puede utilizarse con variables categ\u00f3ricas.",
+          "isCorrect": false,
+          "rationale": "Ambos m\u00e9todos requieren predictores num\u00e9ricos para calcular medias y matrices de covarianza."
+        },
+        {
+          "text": "LDA es siempre m\u00e1s preciso que QDA en datasets peque\u00f1os.",
+          "isCorrect": false,
+          "rationale": "La precisi\u00f3n depende de si los supuestos de covarianza de LDA se cumplen o no en la poblaci\u00f3n."
+        }
+      ],
+      "hint": "Considere la flexibilidad de las fronteras de decisi\u00f3n y el tratamiento de la varianza."
+    },
+    {
+      "question": "Al interpretar una matriz de confusi\u00f3n, \u00bfqu\u00e9 indica la m\u00e9trica 'Precision'?",
+      "answerOptions": [
+        {
+          "text": "La proporci\u00f3n de identificaciones positivas que fueron realmente correctas.",
+          "isCorrect": true,
+          "rationale": "Se calcula como el cociente de verdaderos positivos sobre la suma de verdaderos positivos y falsos positivos."
+        },
+        {
+          "text": "La capacidad del modelo para encontrar todos los casos positivos reales.",
+          "isCorrect": false,
+          "rationale": "Esa definici\u00f3n corresponde al 'Recall' o sensibilidad."
+        },
+        {
+          "text": "El porcentaje total de predicciones correctas (tanto positivas como negativas).",
+          "isCorrect": false,
+          "rationale": "Esa definici\u00f3n corresponde al 'Accuracy'."
+        },
+        {
+          "text": "La diferencia entre el valor predicho y el valor observado en una regresi\u00f3n.",
+          "isCorrect": false,
+          "rationale": "Esa definici\u00f3n corresponde al concepto de 'Residual' o error."
+        }
+      ],
+      "hint": "Piense en la calidad de las predicciones positivas del modelo."
+    }
+  ]
+}

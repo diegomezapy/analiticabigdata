@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.2 Práctica Guiada — Reporte de Análisis — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.2 Práctica Guiada: Crear tu Primer Reporte Ejecutivo en R Markdown</h1>
+<p><strong>Objetivo:</strong> Producir un reporte HTML de 2-3 páginas comunicando resultados de clasificación.</p>
+<div class="ficha">
+<h2>Ficha 1: Crear el archivo base</h2>
+<p>En RStudio: File > New File > R Markdown > HTML. Guarda como <code>reporte_diabetes.Rmd</code>.</p>
+<p>Reemplaza la cabecera YAML con:</p>
+<pre>---
+title: "Predicción de Diabetes — Informe de Resultados"
+author: "Tu nombre"
+date: "`r format(Sys.Date(), '%d de %B de %Y')`"
+output:
+  html_document:
+    theme: flatly
+    toc: true
+    toc_float: true
+    code_folding: hide
+---</pre>
+</div>
+<div class="ficha">
+<h2>Ficha 2: Resumen ejecutivo</h2>
+<p>Escribe en lenguaje no técnico (sin fórmulas ni código visible):</p>
+<pre>## Resumen ejecutivo
+
+Se analizó una muestra de 768 pacientes del Instituto Nacional de Diabetes
+de Pima (EE.UU.) para identificar qué factores predicen mejor el diagnóstico
+de diabetes tipo 2.
+
+**Hallazgo principal:** El nivel de glucosa en sangre, el índice de masa
+corporal y la edad son los predictores más importantes. El modelo de
+regresión logística identifica correctamente al 77% de los casos.
+
+**Recomendación:** Priorizar el control de glucosa y el IMC en el tamizaje
+preventivo de poblaciones de riesgo.</pre>
+</div>
+<div class="ficha">
+<h2>Ficha 3: Chunk de análisis</h2>
+<pre>```{r analisis, cache=TRUE}
+library(caret); library(mlbench); library(vip)
+data(PimaIndiansDiabetes)
+set.seed(42)
+idx <- createDataPartition(PimaIndiansDiabetes$diabetes, p=0.8, list=FALSE)
+train <- PimaIndiansDiabetes[idx,]
+test  <- PimaIndiansDiabetes[-idx,]
+modelo <- train(diabetes~., data=train, method="glm",
+                family="binomial", preProcess=c("center","scale"))
+probs <- predict(modelo, test, type="prob")[,"pos"]
+pred  <- predict(modelo, test)
+cm    <- confusionMatrix(pred, test$diabetes, positive="pos")
+```</pre>
+</div>
+<div class="ficha">
+<h2>Ficha 4: Tabla de resultados formateada</h2>
+<pre>```{r tabla_resultados}
+library(kableExtra)
+metricas <- data.frame(
+  Métrica=c("Accuracy","Sensitivity (Recall)","Specificity","F1-Score"),
+  Valor=round(c(cm$overall["Accuracy"],
+                cm$byClass["Sensitivity"],
+                cm$byClass["Specificity"],
+                cm$byClass["F1"]),3)
+)
+kbl(metricas, caption="Rendimiento del modelo de clasificación") %>%
+  kable_styling("striped", full_width=FALSE)
+```</pre>
+</div>
+<div class="ficha">
+<h2>Ficha 5: Renderizar y revisar</h2>
+<p>Ejecuta: <code>rmarkdown::render("reporte_diabetes.Rmd")</code>. ¿El reporte tiene sentido para alguien sin conocimientos de ML? ¿Los números del resumen ejecutivo coinciden con los de las tablas?</p>
+</div>
+
+</body>
+</html>

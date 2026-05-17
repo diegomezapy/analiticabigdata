@@ -1,0 +1,255 @@
+{
+  "title": "Datos Cuestionario",
+  "questions": [
+    {
+      "question": "Al trabajar con el nivel educativo de un grupo de personas (b\u00e1sico, medio, superior), \u00bfen qu\u00e9 categor\u00eda se clasifica esta variable seg\u00fan el material de lectura?",
+      "answerOptions": [
+        {
+          "text": "Cualitativa Ordinal",
+          "isCorrect": true,
+          "rationale": "Esta categor\u00eda se utiliza para variables cualitativas donde existe un orden l\u00f3gico o jerarqu\u00eda entre las etiquetas."
+        },
+        {
+          "text": "Cualitativa Nominal",
+          "isCorrect": false,
+          "rationale": "Aunque es una categor\u00eda, las variables nominales no poseen un orden intr\u00ednseco, a diferencia de los niveles educativos."
+        },
+        {
+          "text": "Cuantitativa Discreta",
+          "isCorrect": false,
+          "rationale": "Las variables cuantitativas discretas se refieren a conteos num\u00e9ricos enteros, no a categor\u00edas descriptivas."
+        },
+        {
+          "text": "Cuantitativa Continua",
+          "isCorrect": false,
+          "rationale": "Las variables continuas representan medidas en un rango num\u00e9rico infinito, no categor\u00edas de nivel acad\u00e9mico."
+        }
+      ],
+      "hint": "Observa si las categor\u00edas presentan una jerarqu\u00eda o secuencia l\u00f3gica entre ellas."
+    },
+    {
+      "question": "En el contexto de EDA en Python, \u00bfcu\u00e1l es la funci\u00f3n del par\u00e1metro `annot=True` dentro de la funci\u00f3n `sns.heatmap(corr, annot=True, cmap='coolwarm')`?",
+      "answerOptions": [
+        {
+          "text": "Muestra los valores num\u00e9ricos de la correlaci\u00f3n dentro de cada celda del mapa.",
+          "isCorrect": true,
+          "rationale": "El par\u00e1metro de anotaci\u00f3n permite visualizar los coeficientes de correlaci\u00f3n directamente sobre el gr\u00e1fico para facilitar la interpretaci\u00f3n."
+        },
+        {
+          "text": "Define la paleta de colores utilizada para representar la intensidad de la correlaci\u00f3n.",
+          "isCorrect": false,
+          "rationale": "La definici\u00f3n de colores se gestiona a trav\u00e9s del par\u00e1metro `cmap`, no de las anotaciones."
+        },
+        {
+          "text": "Elimina autom\u00e1ticamente las variables que no tienen una correlaci\u00f3n significativa.",
+          "isCorrect": false,
+          "rationale": "La funci\u00f3n visualiza los datos proporcionados pero no realiza filtrado o selecci\u00f3n de variables por s\u00ed misma."
+        },
+        {
+          "text": "Genera una matriz de dispersi\u00f3n en lugar de un mapa de calor.",
+          "isCorrect": false,
+          "rationale": "La funci\u00f3n `heatmap` est\u00e1 dise\u00f1ada espec\u00edficamente para matrices de densidad o correlaci\u00f3n, no para diagramas de dispersi\u00f3n."
+        }
+      ],
+      "hint": "Piensa en c\u00f3mo se facilitar\u00edan los detalles num\u00e9ricos sin tener que mirar una leyenda de colores separada."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la principal desventaja de utilizar la t\u00e9cnica de 'Eliminaci\u00f3n' para tratar valores ausentes en un dataset de Big Data?",
+      "answerOptions": [
+        {
+          "text": "Puede provocar una p\u00e9rdida significativa de informaci\u00f3n si la proporci\u00f3n de datos faltantes es alta.",
+          "isCorrect": true,
+          "rationale": "Eliminar filas completas reduce el tama\u00f1o de la muestra y puede sesgar los resultados si los datos no faltan de forma aleatoria."
+        },
+        {
+          "text": "Es computacionalmente mucho m\u00e1s lenta que los m\u00e9todos de imputaci\u00f3n por media.",
+          "isCorrect": false,
+          "rationale": "En realidad, la eliminaci\u00f3n es una de las t\u00e9cnicas m\u00e1s r\u00e1pidas de implementar ya que solo requiere descartar registros."
+        },
+        {
+          "text": "Introduce un sesgo artificial en la varianza de las variables num\u00e9ricas.",
+          "isCorrect": false,
+          "rationale": "Este problema es m\u00e1s com\u00fan en la imputaci\u00f3n por media o mediana, no en la eliminaci\u00f3n de registros."
+        },
+        {
+          "text": "Requiere obligatoriamente que las variables sean de tipo cualitativo nominal.",
+          "isCorrect": false,
+          "rationale": "La eliminaci\u00f3n se puede aplicar a cualquier tipo de variable, independientemente de su naturaleza cualitativa o cuantitativa."
+        }
+      ],
+      "hint": "Considera qu\u00e9 sucede con el tama\u00f1o del dataset original al descartar filas incompletas."
+    },
+    {
+      "question": "De acuerdo con el material extendido, \u00bfqu\u00e9 t\u00e9cnica de visualizaci\u00f3n es la m\u00e1s adecuada para detectar 'outliers' y observar la dispersi\u00f3n de los datos a trav\u00e9s de cuartiles?",
+      "answerOptions": [
+        {
+          "text": "Boxplots",
+          "isCorrect": true,
+          "rationale": "Los diagramas de caja representan visualmente los cuartiles y utilizan 'bigotes' para identificar valores que se alejan significativamente de la distribuci\u00f3n central."
+        },
+        {
+          "text": "Histogramas",
+          "isCorrect": false,
+          "rationale": "Los histogramas son excelentes para ver la forma de la distribuci\u00f3n, pero no son tan precisos como los boxplots para identificar valores at\u00edpicos espec\u00edficos."
+        },
+        {
+          "text": "Scatter Plots",
+          "isCorrect": false,
+          "rationale": "Los diagramas de dispersi\u00f3n se usan para ver la relaci\u00f3n entre dos variables, no para el an\u00e1lisis univariado de dispersi\u00f3n y cuartiles."
+        },
+        {
+          "text": "Heatmaps",
+          "isCorrect": false,
+          "rationale": "Los mapas de calor se centran en la intensidad de relaciones o frecuencias cruzadas, no en la detecci\u00f3n de valores extremos individuales."
+        }
+      ],
+      "hint": "Busca el gr\u00e1fico que utiliza cajas y bigotes para resumir la estad\u00edstica descriptiva."
+    },
+    {
+      "question": "\u00bfPara qu\u00e9 se utiliza la librer\u00eda `mice` en el lenguaje de programaci\u00f3n R seg\u00fan los ejemplos pr\u00e1cticos de la Unidad 2?",
+      "answerOptions": [
+        {
+          "text": "Para realizar imputaci\u00f3n m\u00faltiple de datos faltantes mediante ecuaciones encadenadas.",
+          "isCorrect": true,
+          "rationale": "La librer\u00eda `mice` permite generar m\u00faltiples imputaciones para manejar la incertidumbre de los valores ausentes de forma avanzada."
+        },
+        {
+          "text": "Para construir gr\u00e1ficos interactivos basados en la gram\u00e1tica de gr\u00e1ficos.",
+          "isCorrect": false,
+          "rationale": "La construcci\u00f3n de gr\u00e1ficos basados en gram\u00e1tica es la funci\u00f3n principal de `ggplot2`, no de `mice`."
+        },
+        {
+          "text": "Para reducir la dimensionalidad de los datos mediante An\u00e1lisis de Componentes Principales (PCA).",
+          "isCorrect": false,
+          "rationale": "Aunque es una t\u00e9cnica de preprocesado, el PCA se asocia con funciones como `prcomp()` o librer\u00edas espec\u00edficas de selecci\u00f3n de features."
+        },
+        {
+          "text": "Para dividir el dataset en conjuntos de entrenamiento y prueba.",
+          "isCorrect": false,
+          "rationale": "Esta tarea suele realizarse con funciones de muestreo o librer\u00edas de modelado, no con herramientas de imputaci\u00f3n."
+        }
+      ],
+      "hint": "Esta herramienta se menciona en la secci\u00f3n de tratamiento de 'missing values' en R."
+    },
+    {
+      "question": "En el preprocesado de datos, \u00bfcu\u00e1l es el objetivo primordial de la 'Binarizaci\u00f3n' de variables cualitativas mencionada en la Actividad 2?",
+      "answerOptions": [
+        {
+          "text": "Convertir categor\u00edas de texto en representaciones num\u00e9ricas binarias ($0$ o $1$) que los algoritmos puedan procesar.",
+          "isCorrect": true,
+          "rationale": "Los modelos matem\u00e1ticos requieren entradas num\u00e9ricas; la binarizaci\u00f3n transforma etiquetas cualitativas en indicadores l\u00f3gicos."
+        },
+        {
+          "text": "Escalar todas las variables num\u00e9ricas a un rango com\u00fan entre $0$ y $1$.",
+          "isCorrect": false,
+          "rationale": "Esta descripci\u00f3n corresponde al escalado Min-Max, no a la binarizaci\u00f3n de variables cualitativas."
+        },
+        {
+          "text": "Eliminar las variables que presentan una alta correlaci\u00f3n entre s\u00ed.",
+          "isCorrect": false,
+          "rationale": "Dicha acci\u00f3n es parte de la selecci\u00f3n de caracter\u00edsticas o reducci\u00f3n de dimensionalidad, no de la transformaci\u00f3n de tipos de datos."
+        },
+        {
+          "text": "Calcular el promedio ponderado de los valores ausentes.",
+          "isCorrect": false,
+          "rationale": "Esto se relaciona con t\u00e9cnicas de imputaci\u00f3n estad\u00edstica, no con la transformaci\u00f3n de variables categ\u00f3ricas."
+        }
+      ],
+      "hint": "Piensa en c\u00f3mo podr\u00edas representar el 'g\u00e9nero' o un 'color' para que una computadora pueda hacer c\u00e1lculos con ello."
+    },
+    {
+      "question": "\u00bfQu\u00e9 ventaja ofrece la imputaci\u00f3n por KNN (K-Nearest Neighbors) frente a la imputaci\u00f3n por la media?",
+      "answerOptions": [
+        {
+          "text": "Considera las similitudes entre los registros para estimar el valor faltante en lugar de usar un valor global.",
+          "isCorrect": true,
+          "rationale": "KNN utiliza la informaci\u00f3n de los vecinos m\u00e1s cercanos en el espacio de caracter\u00edsticas, lo que suele ser m\u00e1s preciso en datasets complejos."
+        },
+        {
+          "text": "Es mucho m\u00e1s r\u00e1pida de ejecutar en grandes vol\u00famenes de Big Data.",
+          "isCorrect": false,
+          "rationale": "Al contrario, KNN es computacionalmente intensivo porque debe calcular distancias entre todos los puntos."
+        },
+        {
+          "text": "No requiere que el dataset est\u00e9 normalizado previamente.",
+          "isCorrect": false,
+          "rationale": "KNN depende de c\u00e1lculos de distancia, por lo que la normalizaci\u00f3n es fundamental para que todas las variables pesen lo mismo."
+        },
+        {
+          "text": "Garantiza que no se introduzca ning\u00fan tipo de sesgo en la varianza.",
+          "isCorrect": false,
+          "rationale": "Aunque es m\u00e1s sofisticado, cualquier m\u00e9todo de imputaci\u00f3n altera en cierta medida la distribuci\u00f3n original de los datos."
+        }
+      ],
+      "hint": "Recuerda que KNN se basa en la idea de que registros similares deber\u00edan tener valores similares."
+    },
+    {
+      "question": "En el c\u00f3digo de R: `ggplot(df, aes(x=edad)) + geom_histogram(binwidth=5)`, \u00bfqu\u00e9 define el argumento `binwidth=5`?",
+      "answerOptions": [
+        {
+          "text": "El ancho de los intervalos o barras del histograma en unidades de la variable 'edad'.",
+          "isCorrect": true,
+          "rationale": "Este par\u00e1metro controla la granularidad de la visualizaci\u00f3n al agrupar los datos en rangos de tama\u00f1o espec\u00edfico."
+        },
+        {
+          "text": "El n\u00famero total de barras que se mostrar\u00e1n en el gr\u00e1fico.",
+          "isCorrect": false,
+          "rationale": "El n\u00famero de barras se define usualmente con el par\u00e1metro `bins`, no con el ancho de cada una (`binwidth`)."
+        },
+        {
+          "text": "La transparencia de las barras para permitir ver datos superpuestos.",
+          "isCorrect": false,
+          "rationale": "La transparencia se ajusta con el par\u00e1metro `alpha`, no con el ancho del bin."
+        },
+        {
+          "text": "El grosor de la l\u00ednea del borde de cada barra del gr\u00e1fico.",
+          "isCorrect": false,
+          "rationale": "El grosor de l\u00ednea se controla con el par\u00e1metro `size` o `lwd` dentro de la geometr\u00eda correspondiente."
+        }
+      ],
+      "hint": "Relaciona el t\u00e9rmino con el tama\u00f1o del 'recipiente' o rango que agrupa a las edades."
+    },
+    {
+      "question": "Eval\u00fae la siguiente afirmaci\u00f3n: El An\u00e1lisis Exploratorio de Datos (EDA) debe realizarse \u00fanicamente despu\u00e9s de haber entrenado el modelo de Big Data.",
+      "answerOptions": [
+        {
+          "text": "Falso",
+          "isCorrect": true,
+          "rationale": "El EDA es un paso fundamental que se realiza ANTES del modelado para entender la estructura, detectar errores y guiar el preprocesado."
+        },
+        {
+          "text": "Verdadero",
+          "isCorrect": false,
+          "rationale": "Realizar el EDA despu\u00e9s del modelado impedir\u00eda corregir sesgos o errores en los datos que afectan directamente la calidad de las predicciones."
+        }
+      ],
+      "hint": "Piensa en el EDA como el diagn\u00f3stico inicial de un paciente antes de recetar un tratamiento (el modelo)."
+    },
+    {
+      "question": "Al realizar la estandarizaci\u00f3n de una variable utilizando `sklearn.StandardScaler` en Python, \u00bfcu\u00e1l es el resultado esperado para los datos transformados?",
+      "answerOptions": [
+        {
+          "text": "La variable tendr\u00e1 una media de $0$ y una desviaci\u00f3n est\u00e1ndar de $1$.",
+          "isCorrect": true,
+          "rationale": "La estandarizaci\u00f3n (o $z$-score normalization) transforma los datos para que sigan una distribuci\u00f3n est\u00e1ndar com\u00fan."
+        },
+        {
+          "text": "Todos los valores de la variable estar\u00e1n estrictamente entre $0$ y $1$.",
+          "isCorrect": false,
+          "rationale": "Este es el resultado del escalado Min-Max (Normalizaci\u00f3n), no de la estandarizaci\u00f3n por desviaci\u00f3n est\u00e1ndar."
+        },
+        {
+          "text": "La variable se transformar\u00e1 en una serie de columnas binarias de tipo 'one-hot'.",
+          "isCorrect": false,
+          "rationale": "Esa descripci\u00f3n corresponde a la codificaci\u00f3n de variables categ\u00f3ricas, no al ajuste de escala de variables num\u00e9ricas."
+        },
+        {
+          "text": "Se eliminar\u00e1n autom\u00e1ticamente los outliers detectados mediante el rango intercuart\u00edlico.",
+          "isCorrect": false,
+          "rationale": "El escalador cambia la magnitud de los valores, pero no elimina registros del dataset."
+        }
+      ],
+      "hint": "Recuerda el concepto estad\u00edstico de centrar los datos en la media y escalarlos por la unidad de dispersi\u00f3n."
+    }
+  ]
+}

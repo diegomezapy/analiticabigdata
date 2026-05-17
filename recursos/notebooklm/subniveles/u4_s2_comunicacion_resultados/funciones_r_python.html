@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.2 Guía de Funciones — R Markdown y Reportes — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.2 Guía de Funciones: Reportes y Visualizaciones para Comunicación</h1>
+<h2>R — R Markdown + knitr + ggplot2</h2>
+<pre><code class="language-r">
+# PLANTILLA R MARKDOWN PARA REPORTE EJECUTIVO
+# Crear archivo: reporte_analisis.Rmd
+
+# Cabecera YAML:
+# ---
+# title: "Análisis de Riesgo Crediticio"
+# subtitle: "Institución Financiera ABC — Informe Mensual"
+# author: "Depto. de Analítica de Datos"
+# date: "`r Sys.Date()`"
+# output:
+#   html_document:
+#     toc: true
+#     toc_float: true
+#     theme: cosmo
+#     code_folding: hide
+#   pdf_document:
+#     toc: true
+# ---
+
+# TABLA FORMATEADA (knitr + kableExtra)
+library(knitr)
+library(kableExtra)
+
+tabla_resumen <- data.frame(
+  Modelo = c("Regresión Logística", "KNN k=7", "Naive Bayes", "LDA"),
+  AUC = c(0.847, 0.821, 0.789, 0.831),
+  F1 = c(0.762, 0.741, 0.708, 0.750),
+  Tiempo_ms = c(12, 580, 8, 15)
+)
+
+tabla_resumen %>%
+  kbl(caption="Comparación de modelos de clasificación",
+      digits=3,
+      col.names=c("Modelo","AUC-ROC","F1-Score","Tiempo (ms)")) %>%
+  kable_styling(bootstrap_options=c("striped","hover","condensed"),
+                full_width=FALSE) %>%
+  row_spec(1, bold=TRUE, background="#EDE7F6") %>%  # resaltar mejor
+  footnote(general="Evaluación con 10-fold CV. Dataset: N=768.")
+
+# GRÁFICO EJECUTIVO
+library(ggplot2)
+library(scales)
+
+# Gráfico de barras con etiquetas de valor
+ggplot(tabla_resumen, aes(x=reorder(Modelo, AUC), y=AUC, fill=Modelo)) +
+  geom_col(alpha=0.85, width=0.7) +
+  geom_text(aes(label=sprintf("%.3f", AUC)), hjust=-0.1, size=4.5) +
+  scale_fill_brewer(palette="Purples") +
+  coord_flip() +
+  scale_y_continuous(limits=c(0, 1), labels=percent) +
+  labs(
+    title="AUC-ROC por modelo (10-fold CV)",
+    subtitle="Mayor AUC = mejor capacidad de discriminación",
+    x=NULL, y="AUC-ROC",
+    caption="Fuente: Analítica de Datos ABC, 2026"
+  ) +
+  theme_minimal(base_size=13) +
+  theme(legend.position="none",
+        plot.title=element_text(face="bold"),
+        plot.subtitle=element_text(color="gray50"))
+
+# FORMATEO DE NÚMEROS PARA NEGOCIO
+scales::dollar(1500000, prefix="Gs.", big.mark=".", decimal.mark=",")
+# → "Gs.1.500.000"
+
+# Renderizar el documento
+rmarkdown::render("reporte_analisis.Rmd",
+                  output_format="html_document",
+                  output_file="reporte_analisis.html")
+</code></pre>
+<h2>Python — Matplotlib + tabulate</h2>
+<pre><code class="language-python">
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import pandas as pd
+import numpy as np
+
+# GRÁFICO EJECUTIVO CON ANOTACIONES
+modelos = ['Regresión
+Logística', 'LDA', 'KNN k=7', 'Naive
+Bayes']
+aucs = [0.847, 0.831, 0.821, 0.789]
+colores = ['#6A1B9A', '#9C27B0', '#CE93D8', '#EDE7F6']
+
+fig, ax = plt.subplots(figsize=(9, 5))
+bars = ax.barh(modelos, aucs, color=colores, height=0.6, edgecolor='white')
+
+# Etiquetas de valor
+for bar, auc in zip(bars, aucs):
+    ax.text(auc + 0.005, bar.get_y() + bar.get_height()/2,
+            f'{auc:.3f}', va='center', ha='left', fontsize=12, fontweight='bold')
+
+# Línea de referencia aleatoria
+ax.axvline(x=0.5, color='red', linestyle='--', alpha=0.5, label='Aleatorio (AUC=0.5)')
+
+ax.set_xlim(0, 1.0)
+ax.set_xlabel('AUC-ROC', fontsize=12)
+ax.set_title('Comparación de Clasificadores
+(Evaluación 10-fold CV)',
+             fontsize=14, fontweight='bold')
+ax.legend(loc='lower right')
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.text(0.98, -0.12, 'Fuente: Analítica de Datos ABC, 2026',
+        transform=ax.transAxes, ha='right', fontsize=9, color='gray')
+plt.tight_layout()
+plt.savefig('comparacion_modelos.png', dpi=150, bbox_inches='tight')
+
+# TABLA FORMATEADA PARA REPORTE
+from tabulate import tabulate
+tabla = pd.DataFrame({
+    'Modelo': modelos,
+    'AUC': aucs,
+    'Detecta 1 de cada N morosidades': [f'1 de {int(1/a*10):.0f}' for a in aucs]
+})
+print(tabulate(tabla, headers='keys', tablefmt='github', showindex=False))
+</code></pre>
+
+</body>
+</html>

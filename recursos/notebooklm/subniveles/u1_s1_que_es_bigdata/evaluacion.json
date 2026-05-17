@@ -1,0 +1,72 @@
+{
+  "subnivel": "1.1 Qué es Big Data y para qué sirve",
+  "preguntas": [
+    {
+      "id": 1,
+      "tipo": "multiple_opcion",
+      "pregunta": "¿Cuál de las siguientes afirmaciones describe mejor el concepto de Big Data?",
+      "opciones": [
+        "A) Cualquier dataset que supere 1 GB de tamaño",
+        "B) Conjuntos de datos cuyo volumen, velocidad y variedad superan la capacidad de herramientas convencionales",
+        "C) Bases de datos relacionales con más de 1 millón de registros",
+        "D) Datos generados exclusivamente por redes sociales"
+      ],
+      "respuesta_correcta": "B",
+      "retroalimentacion": "Big Data no se define por un umbral de tamaño fijo, sino por la incapacidad de las herramientas tradicionales para procesarlo. Las 5V son la caracterización más aceptada."
+    },
+    {
+      "id": 2,
+      "tipo": "verdadero_falso",
+      "pregunta": "Un dataset Excel de 500.000 filas es siempre Big Data porque tiene gran volumen.",
+      "respuesta_correcta": "Falso",
+      "retroalimentacion": "500K filas en Excel son perfectamente manejables con herramientas convencionales. Big Data implica que las herramientas estándar fallan. El tamaño solo es una dimensión (Volumen); sin las otras V relevantes, no alcanza para clasificarlo como Big Data."
+    },
+    {
+      "id": 3,
+      "tipo": "multiple_opcion",
+      "pregunta": "¿Cuál V del Big Data se relaciona directamente con la calidad e integridad de los datos?",
+      "opciones": [
+        "A) Volumen",
+        "B) Velocidad",
+        "C) Veracidad",
+        "D) Variedad"
+      ],
+      "respuesta_correcta": "C",
+      "retroalimentacion": "Veracidad (también llamada Confiabilidad) se refiere a la calidad, consistencia y confianza en los datos. Datos inexactos o inconsistentes producen modelos incorrectos aunque el volumen sea enorme."
+    },
+    {
+      "id": 4,
+      "tipo": "interpretacion",
+      "pregunta": "Un sistema procesa 10M transacciones/minuto con latencia máxima de 50ms. ¿Cuál V describe mejor esta característica? ¿Qué tecnología sería apropiada?",
+      "respuesta_correcta": "Velocidad. Tecnologías apropiadas: Apache Kafka (streaming de eventos) + Apache Flink (procesamiento stateful en tiempo real). La latencia de 50ms exige procesamiento en-memoria sin escribir a disco.",
+      "retroalimentacion": "La Velocidad describe la rapidez de generación y procesamiento. Para <100ms de latencia se requiere streaming en memoria (Flink, Spark Streaming, Kafka Streams), no procesamiento batch."
+    },
+    {
+      "id": 5,
+      "tipo": "multiple_opcion",
+      "pregunta": "¿Cuál es el cambio de paradigma fundamental que introduce Big Data respecto a la estadística clásica?",
+      "opciones": [
+        "A) Reemplaza los p-valores por métricas de machine learning",
+        "B) Pasa del análisis basado en muestras al análisis de poblaciones completas",
+        "C) Elimina la necesidad de hipótesis estadísticas",
+        "D) Permite trabajar sin datos históricos"
+      ],
+      "respuesta_correcta": "B",
+      "retroalimentacion": "La estadística inferencial nació de la necesidad práctica de trabajar con muestras (no toda la población era accesible). Big Data disuelve esa restricción: podemos analizar todos los datos. Esto no elimina la estadística, sino que cambia cuándo se necesita inferencia."
+    },
+    {
+      "id": 6,
+      "tipo": "verdadero_falso",
+      "pregunta": "La V de 'Valor' es la menos importante porque es el resultado de las otras cuatro V.",
+      "respuesta_correcta": "Falso",
+      "retroalimentacion": "El Valor es la V más importante porque es el objetivo final. Tener volumen, velocidad, variedad y veracidad sin generar valor estratégico hace que la inversión en Big Data no tenga sentido de negocio. El valor define el 'para qué'."
+    },
+    {
+      "id": 7,
+      "tipo": "mini_problema",
+      "pregunta": "El Ministerio de Hacienda del Paraguay tiene 3 millones de registros tributarios actualizados mensualmente, en 2 tipos de archivo (CSV y PDF). ¿Cuántas V del Big Data están presentes? Justificá brevemente.",
+      "respuesta_correcta": "Volumen (3M registros - puede justificarse), Variedad (CSV estructurado + PDF no estructurado). Velocidad es baja (mensual). Veracidad es incierta (datos tributarios pueden tener errores). Valor: alto (evasión fiscal, política tributaria). Conclusión: 2-3 V claramente presentes. No es Big Data en sentido estricto por la baja velocidad.",
+      "retroalimentacion": "La clave es analizar CADA V individualmente y concluir con evidencia. Datasets gubernamentales con actualización periódica rara vez califican como Big Data en la dimensión de Velocidad."
+    }
+  ]
+}

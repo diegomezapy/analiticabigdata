@@ -1,0 +1,177 @@
+{
+  "title": "BigData Cuestionario",
+  "questions": [
+    {
+      "question": "\u00bfCu\u00e1l es el cambio de paradigma fundamental que describe el material al pasar de la estad\u00edstica tradicional al Big Data?",
+      "answerOptions": [
+        {
+          "text": "El paso de inferencias basadas en muestras a an\u00e1lisis exhaustivos de datasets completos.",
+          "isCorrect": true,
+          "rationale": "El Big Data permite procesar la totalidad de los datos, lo que habilita descubrimientos no hipot\u00e9ticos y predicciones en tiempo real en lugar de depender de una fracci\u00f3n representativa."
+        },
+        {
+          "text": "La reducci\u00f3n del volumen de datos para mejorar la precisi\u00f3n del muestreo manual.",
+          "isCorrect": false,
+          "rationale": "Esta opci\u00f3n contradice el principio de volumen del Big Data, que busca aprovechar la mayor cantidad de datos disponible."
+        },
+        {
+          "text": "El uso exclusivo de datos estructurados para garantizar la veracidad de los resultados.",
+          "isCorrect": false,
+          "rationale": "El material destaca que el Big Data integra datos heterog\u00e9neos, donde solo el $20\\%$ son estructurados."
+        },
+        {
+          "text": "La eliminaci\u00f3n de la inteligencia artificial para centrarse en el procesamiento distribuido.",
+          "isCorrect": false,
+          "rationale": "El Big Data se describe como el combustible para modelos de IA, no como un reemplazo de estos."
+        }
+      ],
+      "hint": "Piense en la diferencia entre usar una parte del todo frente a usar el todo para detectar patrones de enfermedades raras."
+    },
+    {
+      "question": "En el contexto de la 'Variedad', \u00bfcu\u00e1l es el porcentaje aproximado de datos no estructurados (textos, im\u00e1genes, videos) en el ecosistema global de datos seg\u00fan el documento?",
+      "answerOptions": [
+        {
+          "text": "$20\\%$",
+          "isCorrect": false,
+          "rationale": "Este porcentaje corresponde generalmente a los datos estructurados como SQL o CSV."
+        },
+        {
+          "text": "$30\\%$",
+          "isCorrect": false,
+          "rationale": "Este valor se asocia con los datos semi-estructurados como JSON y archivos XML."
+        },
+        {
+          "text": "$50\\%$",
+          "isCorrect": true,
+          "rationale": "El documento especifica que la mitad de los datos generados son no estructurados, lo que representa uno de los mayores desaf\u00edos de integraci\u00f3n."
+        },
+        {
+          "text": "$80\\%$",
+          "isCorrect": false,
+          "rationale": "Aunque es una percepci\u00f3n com\u00fan, el material de lectura sit\u00faa este valor en un $50\\%$ para los tipos de datos diversos."
+        }
+      ],
+      "hint": "Considere la distribuci\u00f3n de datos heterog\u00e9neos mencionada en el apartado de las 5V."
+    },
+    {
+      "question": "Para una aplicaci\u00f3n de monitoreo IoT que requiere procesar $10M$ de eventos por segundo con latencia m\u00ednima, \u00bfqu\u00e9 tecnolog\u00eda se recomienda espec\u00edficamente por encima de Spark?",
+      "answerOptions": [
+        {
+          "text": "Apache Flink",
+          "isCorrect": true,
+          "rationale": "Apache Flink se destaca por su procesamiento de flujos con estado ($stateful$ $streaming$) y su superioridad en aplicaciones de latencia ultra baja comparado con Spark."
+        },
+        {
+          "text": "Hadoop HDFS",
+          "isCorrect": false,
+          "rationale": "HDFS es un sistema de archivos distribuidos para almacenamiento, no un motor de procesamiento en tiempo real."
+        },
+        {
+          "text": "Apache NiFi",
+          "isCorrect": false,
+          "rationale": "NiFi se utiliza principalmente para la ingesta y flujos de datos visuales, pero no para el procesamiento anal\u00edtico de alta velocidad."
+        },
+        {
+          "text": "Pandas en Python",
+          "isCorrect": false,
+          "rationale": "Pandas es excelente para an\u00e1lisis en memoria, pero no est\u00e1 dise\u00f1ado para el escalamiento distribuido de millones de eventos por segundo."
+        }
+      ],
+      "hint": "Busque la herramienta mencionada en el ejemplo de c\u00f3digo para 'low-latency streaming'."
+    },
+    {
+      "question": "\u00bfQu\u00e9 m\u00e9trica de calidad de la 'Veracidad' asegura que no existan inconsistencias de formato o entre diferentes sistemas ($cross-system$)?",
+      "answerOptions": [
+        {
+          "text": "Consistencia",
+          "isCorrect": true,
+          "rationale": "La consistencia garantiza que el dato mantenga el mismo formato y valor l\u00f3gico sin importar el sistema de origen o destino."
+        },
+        {
+          "text": "Completitud",
+          "isCorrect": false,
+          "rationale": "Esta m\u00e9trica se refiere a la ausencia de valores faltantes ($missing$ $values$) en el dataset."
+        },
+        {
+          "text": "Timeliness",
+          "isCorrect": false,
+          "rationale": "Esta propiedad mide qu\u00e9 tan actualizados est\u00e1n los datos, especialmente cr\u00edtica para an\u00e1lisis en tiempo real."
+        },
+        {
+          "text": "Precisi\u00f3n",
+          "isCorrect": false,
+          "rationale": "La precisi\u00f3n se enfoca en la exactitud del dato respecto a la realidad que intenta representar."
+        }
+      ],
+      "hint": "Relacione el t\u00e9rmino con la uniformidad de los datos a trav\u00e9s de toda la arquitectura."
+    },
+    {
+      "question": "En el ejemplo de c\u00f3digo de Python para an\u00e1lisis m\u00e9dico, \u00bfcu\u00e1l es la raz\u00f3n principal para utilizar archivos en formato `.parquet`?",
+      "answerOptions": [
+        {
+          "text": "Para mejorar la eficiencia y el rendimiento al manejar grandes vol\u00famenes de datos.",
+          "isCorrect": true,
+          "rationale": "Parquet es un formato de almacenamiento en columnas mucho m\u00e1s eficiente que CSV para operaciones anal\u00edticas en datasets de gran escala."
+        },
+        {
+          "text": "Porque permite la edici\u00f3n manual de los datos en cualquier editor de texto.",
+          "isCorrect": false,
+          "rationale": "A diferencia del CSV, Parquet es un formato binario y no es legible directamente por humanos sin herramientas espec\u00edficas."
+        },
+        {
+          "text": "Para garantizar que el archivo sea compatible con versiones antiguas de Excel.",
+          "isCorrect": false,
+          "rationale": "Parquet es un est\u00e1ndar del ecosistema Big Data y no est\u00e1 dise\u00f1ado para la compatibilidad con software de oficina tradicional."
+        },
+        {
+          "text": "Porque es el \u00fanico formato que admite la normalizaci\u00f3n de datos mediante `StandardScaler`.",
+          "isCorrect": false,
+          "rationale": "La normalizaci\u00f3n es una operaci\u00f3n de pre-procesamiento independiente del formato de almacenamiento del archivo."
+        }
+      ],
+      "hint": "Considere la escala de $10M$ de registros mencionada en el comentario del c\u00f3digo."
+    },
+    {
+      "question": "Verdadero o Falso: El cumplimiento de regulaciones de privacidad como GDPR es opcional si una empresa utiliza t\u00e9cnicas de anonimizaci\u00f3n como la privacidad diferencial.",
+      "answerOptions": [
+        {
+          "text": "Falso",
+          "isCorrect": true,
+          "rationale": "El cumplimiento es obligatorio y el uso de t\u00e9cnicas de anonimizaci\u00f3n es una medida para mitigar riesgos, no para eximirse de la ley."
+        },
+        {
+          "text": "Verdadero",
+          "isCorrect": false,
+          "rationale": "Aunque las t\u00e9cnicas de anonimizaci\u00f3n ayudan, las empresas siguen sujetas a auditor\u00edas y posibles multas millonarias por brechas de seguridad."
+        }
+      ],
+      "hint": "Revise el apartado de Aspectos \u00c9ticos y Regulatorios sobre el costo de los incumplimientos."
+    },
+    {
+      "question": "Complete el espacio: En el modelo de predicci\u00f3n de demanda para $supply$ $chain$ utilizando la librer\u00eda Prophet, se a\u00f1aden variables como el clima y las promociones, las cuales se definen t\u00e9cnicamente como ________ externos para mejorar la precisi\u00f3n.",
+      "answerOptions": [
+        {
+          "text": "Regresores",
+          "isCorrect": true,
+          "rationale": "En modelos de series temporales como Prophet, los regresores son variables adicionales que ayudan a explicar la variabilidad de la variable objetivo."
+        },
+        {
+          "text": "Buckets",
+          "isCorrect": false,
+          "rationale": "Los buckets se asocian con el almacenamiento o particionamiento de datos, no con variables predictoras en un modelo lineal."
+        },
+        {
+          "text": "Watermarks",
+          "isCorrect": false,
+          "rationale": "Las marcas de agua ($watermarks$) se utilizan en streaming para manejar el retraso de los eventos, no en forecasting estad\u00edstico."
+        },
+        {
+          "text": "Silos",
+          "isCorrect": false,
+          "rationale": "Un silo de datos es un problema organizacional de aislamiento de informaci\u00f3n, no un componente de un modelo matem\u00e1tico."
+        }
+      ],
+      "hint": "Piense en el comando `m.add_regressor()` utilizado en el script de predicci\u00f3n de ventas."
+    }
+  ]
+}

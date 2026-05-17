@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>2.1 Aplicación — Visualización en Contexto Real — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 10px; }
+  h2 { color: #1976D2; margin-top: 2em; }
+  h3 { color: #0D47A1; }
+  .header-info { background: #E3F2FD; border-left: 4px solid #1565C0; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #0D47A1; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #E8F5E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #1565C0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 2</div>
+
+<h1>2.1 Aplicación: Visualización de Datos de Salud en Paraguay</h1>
+<h2>Contexto</h2>
+<p>El Ministerio de Salud Pública y Bienestar Social de Paraguay publica datos epidemiológicos que pueden analizarse con las técnicas de visualización aprendidas. En este ejercicio, simulamos un dataset realista basado en indicadores de salud.</p>
+<h2>Dataset simulado</h2>
+<pre>set.seed(42)
+n <- 500
+salud_py <- data.frame(
+  departamento = sample(c("Central","Alto Paraná","Itapúa","Caaguazú","Amambay"), n, replace=TRUE),
+  edad = round(rnorm(n, 35, 15)),
+  peso_kg = round(rnorm(n, 70, 12)),
+  talla_cm = round(rnorm(n, 165, 8)),
+  glucosa = round(rnorm(n, 95, 20)),
+  anio = sample(2019:2023, n, replace=TRUE)
+)
+salud_py$imc <- salud_py$peso_kg / (salud_py$talla_cm/100)^2
+salud_py$categoria_imc <- cut(salud_py$imc,
+  breaks = c(0, 18.5, 25, 30, Inf),
+  labels = c("Bajo peso", "Normal", "Sobrepeso", "Obesidad"))</pre>
+<h2>Tareas de visualización</h2>
+<h3>Tarea 1: Distribución del IMC por departamento</h3>
+<pre>ggplot(salud_py, aes(x = departamento, y = imc, fill = departamento)) +
+  geom_violin(trim = FALSE, alpha = 0.7) +
+  geom_boxplot(width = 0.1, fill = "white") +
+  coord_flip() +
+  theme_minimal() + theme(legend.position = "none") +
+  labs(title = "Distribución del IMC por departamento",
+       x = NULL, y = "IMC (kg/m²)")</pre>
+<h3>Tarea 2: Relación edad-glucosa por categoría IMC</h3>
+<pre>ggplot(salud_py, aes(x = edad, y = glucosa, color = categoria_imc)) +
+  geom_point(alpha = 0.5, size = 2) +
+  geom_smooth(method = "loess", se = FALSE) +
+  facet_wrap(~ categoria_imc) +
+  scale_color_brewer(palette = "Set1") +
+  labs(title = "Edad vs Glucosa por categoría de IMC",
+       caption = "Datos: simulación basada en MSPBS Paraguay")</pre>
+<h3>Tarea 3: Evolución temporal</h3>
+<pre>library(dplyr)
+resumen_anual <- salud_py %>%
+  group_by(anio, departamento) %>%
+  summarise(imc_promedio = mean(imc), .groups = "drop")
+
+ggplot(resumen_anual, aes(x = anio, y = imc_promedio,
+                           color = departamento, group = departamento)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  scale_x_continuous(breaks = 2019:2023) +
+  labs(title = "Evolución del IMC promedio por departamento (2019-2023)")</pre>
+<div class="concepto"><strong>Reflexión:</strong> ¿Qué insights obtuvo del análisis visual? ¿Qué recomendaría al Ministerio de Salud basándose en los gráficos generados?</div>
+
+</body>
+</html>

@@ -1,0 +1,297 @@
+{
+  "title": "Clasificaci\u00f3n Cuestionario",
+  "questions": [
+    {
+      "question": "\u00bfCu\u00e1l es la consecuencia principal de elegir un valor de $K$ extremadamente peque\u00f1o en el algoritmo $K$-Nearest Neighbors (KNN)?",
+      "answerOptions": [
+        {
+          "text": "El modelo se vuelve muy sensible al ruido y a los outliers (sobreajuste).",
+          "isCorrect": true,
+          "rationale": "Un valor de $K$ peque\u00f1o captura patrones muy locales que suelen incluir ruido aleatorio en lugar de la tendencia general."
+        },
+        {
+          "text": "El modelo asume una distribuci\u00f3n normal de los datos para compensar la falta de vecinos.",
+          "isCorrect": false,
+          "rationale": "KNN es un algoritmo no param\u00e9trico y no realiza suposiciones sobre la distribuci\u00f3n subyacente de los datos."
+        },
+        {
+          "text": "Se reduce dr\u00e1sticamente el costo computacional durante la fase de predicci\u00f3n.",
+          "isCorrect": false,
+          "rationale": "Aunque se comparan menos vecinos, el costo de calcular las distancias a todos los puntos de entrenamiento sigue siendo elevado."
+        },
+        {
+          "text": "El l\u00edmite de decisi\u00f3n se vuelve excesivamente suave y lineal.",
+          "isCorrect": false,
+          "rationale": "Por el contrario, un $K$ peque\u00f1o genera fronteras de decisi\u00f3n muy complejas e irregulares."
+        }
+      ],
+      "hint": "Considera c\u00f3mo afecta la vecindad inmediata a la estabilidad de la clasificaci\u00f3n."
+    },
+    {
+      "question": "En el contexto de la Regresi\u00f3n Log\u00edstica, \u00bfqu\u00e9 representa matem\u00e1ticamente la funci\u00f3n sigmoide $p = \\frac{1}{1 + e^{-z}}$?",
+      "answerOptions": [
+        {
+          "text": "La probabilidad de que una observaci\u00f3n pertenezca a una categor\u00eda espec\u00edfica.",
+          "isCorrect": true,
+          "rationale": "La funci\u00f3n sigmoide mapea cualquier valor real al intervalo $[0, 1]$, permitiendo interpretar el resultado como una probabilidad."
+        },
+        {
+          "text": "El error cuadr\u00e1tico medio entre la predicci\u00f3n y el valor real.",
+          "isCorrect": false,
+          "rationale": "La funci\u00f3n sigmoide es parte de la estructura del modelo, no una m\u00e9trica de error o funci\u00f3n de p\u00e9rdida directa."
+        },
+        {
+          "text": "La distancia eucl\u00eddea entre el punto de dato y el centroide de la clase.",
+          "isCorrect": false,
+          "rationale": "El c\u00e1lculo de distancias es caracter\u00edstico de modelos basados en instancias como KNN, no de la regresi\u00f3n log\u00edstica."
+        },
+        {
+          "text": "Un factor de correcci\u00f3n para manejar variables altamente correlacionadas.",
+          "isCorrect": false,
+          "rationale": "La regresi\u00f3n log\u00edstica es sensible a la multicolinealidad, pero la funci\u00f3n sigmoide no es el mecanismo para resolverla."
+        }
+      ],
+      "hint": "Piensa en el rango de salida de la funci\u00f3n y su utilidad en problemas de clasificaci\u00f3n binaria."
+    },
+    {
+      "question": "Analice el siguiente fragmento de c\u00f3digo en R: \n`trainIndex <- createDataPartition(iris$Species, p=0.8, list=FALSE)`\n\u00bfCu\u00e1l es el prop\u00f3sito exacto de este comando dentro del paquete `caret`?",
+      "answerOptions": [
+        {
+          "text": "Realizar una partici\u00f3n estratificada de los datos manteniendo la proporci\u00f3n de las clases.",
+          "isCorrect": true,
+          "rationale": "`createDataPartition` asegura que las etiquetas de la variable objetivo se distribuyan proporcionalmente en los conjuntos de entrenamiento y prueba."
+        },
+        {
+          "text": "Entrenar un modelo de clasificaci\u00f3n con el 80% de los datos disponibles.",
+          "isCorrect": false,
+          "rationale": "Este comando solo genera los \u00edndices para la partici\u00f3n; el entrenamiento se realiza posteriormente con funciones como `train`."
+        },
+        {
+          "text": "Normalizar las variables num\u00e9ricas del dataset iris usando una escala de 0 a 0.8.",
+          "isCorrect": false,
+          "rationale": "La normalizaci\u00f3n es un proceso de preprocesamiento distinto que no se realiza mediante la partici\u00f3n de \u00edndices."
+        },
+        {
+          "text": "Eliminar el 20% de los datos que presentan valores at\u00edpicos o ruidosos.",
+          "isCorrect": false,
+          "rationale": "El comando no filtra datos por calidad, sino que los divide aleatoriamente para evaluaci\u00f3n."
+        }
+      ],
+      "hint": "Observa el primer argumento y c\u00f3mo influye en la composici\u00f3n de los subconjuntos resultantes."
+    },
+    {
+      "question": "\u00bfPor qu\u00e9 el algoritmo Naive Bayes es considerado 'ingenuo' (naive) en su planteamiento te\u00f3rico?",
+      "answerOptions": [
+        {
+          "text": "Porque asume que todos los predictores son independientes entre s\u00ed, dada la clase.",
+          "isCorrect": true,
+          "rationale": "El algoritmo simplifica el c\u00e1lculo de probabilidades asumiendo que la presencia de una caracter\u00edstica no afecta a las dem\u00e1s, lo cual rara vez ocurre en la realidad."
+        },
+        {
+          "text": "Porque no requiere de un conjunto de datos de entrenamiento para generar predicciones.",
+          "isCorrect": false,
+          "rationale": "Naive Bayes es un algoritmo de aprendizaje supervisado y requiere datos etiquetados para calcular las probabilidades previas y condicionales."
+        },
+        {
+          "text": "Porque solo puede procesar variables de tipo binario (0 y 1).",
+          "isCorrect": false,
+          "rationale": "Aunque existen variantes Bernoulli, Naive Bayes maneja datos categ\u00f3ricos, discretos y continuos (Gaussian)."
+        },
+        {
+          "text": "Porque selecciona los vecinos m\u00e1s cercanos sin calcular la distancia real.",
+          "isCorrect": false,
+          "rationale": "Esta es una confusi\u00f3n con el funcionamiento de KNN; Naive Bayes se basa enteramente en el Teorema de Bayes."
+        }
+      ],
+      "hint": "Reflexiona sobre la suposici\u00f3n simplificadora que hace sobre la relaci\u00f3n entre las variables de entrada."
+    },
+    {
+      "question": "Verdadero o Falso: El algoritmo KNN es un modelo param\u00e9trico porque requiere definir el valor de $K$ antes del entrenamiento.",
+      "answerOptions": [
+        {
+          "text": "Falso",
+          "isCorrect": true,
+          "rationale": "KNN es no param\u00e9trico porque no asume una forma funcional predefinida para los datos; $K$ es un hiperpar\u00e1metro, no un par\u00e1metro del modelo."
+        },
+        {
+          "text": "Verdadero",
+          "isCorrect": false,
+          "rationale": "Los modelos param\u00e9tricos son aquellos que tienen un n\u00famero fijo de par\u00e1metros (como los coeficientes en una regresi\u00f3n), independientemente del tama\u00f1o del dataset."
+        }
+      ],
+      "hint": "Distingue entre hiperpar\u00e1metros de configuraci\u00f3n y par\u00e1metros aprendidos de una distribuci\u00f3n."
+    },
+    {
+      "question": "Al comparar algoritmos de Machine Learning para Big Data, \u00bfcu\u00e1l es una desventaja cr\u00edtica de KNN frente a Naive Bayes?",
+      "answerOptions": [
+        {
+          "text": "KNN tiene un alto costo computacional en la fase de predicci\u00f3n al buscar en todo el dataset.",
+          "isCorrect": true,
+          "rationale": "En Big Data, comparar un nuevo punto con millones de instancias es ineficiente comparado con el c\u00e1lculo probabil\u00edstico r\u00e1pido de Naive Bayes."
+        },
+        {
+          "text": "KNN no puede manejar problemas de clasificaci\u00f3n multiclase.",
+          "isCorrect": false,
+          "rationale": "KNN es naturalmente flexible y maneja m\u00faltiples clases sin necesidad de modificaciones complejas."
+        },
+        {
+          "text": "KNN asume que las variables siguen una distribuci\u00f3n normal, lo que sesga los resultados.",
+          "isCorrect": false,
+          "rationale": "KNN no hace suposiciones sobre la distribuci\u00f3n; es Naive Bayes (en su versi\u00f3n Gaussiana) el que suele asumir normalidad."
+        },
+        {
+          "text": "Naive Bayes requiere mucho m\u00e1s tiempo de entrenamiento que KNN.",
+          "isCorrect": false,
+          "rationale": "KNN es un 'lazy learner' con entrenamiento casi nulo, pero Naive Bayes tambi\u00e9n es extremadamente r\u00e1pido al calcular frecuencias."
+        }
+      ],
+      "hint": "Considera qu\u00e9 sucede cuando el volumen de datos crece masivamente durante la etapa de uso del modelo."
+    },
+    {
+      "question": "En un problema de detecci\u00f3n de fraude bancario donde los datos est\u00e1n muy desbalanceados, \u00bfcu\u00e1l es una debilidad espec\u00edfica de la Regresi\u00f3n Log\u00edstica mencionada en los materiales?",
+      "answerOptions": [
+        {
+          "text": "Requiere datos balanceados para evitar sesgos en las probabilidades estimadas.",
+          "isCorrect": true,
+          "rationale": "La regresi\u00f3n log\u00edstica puede verse afectada por clases minoritarias, sesgando la frontera de decisi\u00f3n hacia la clase predominante."
+        },
+        {
+          "text": "Es incapaz de generar un output probabil\u00edstico para la toma de decisiones.",
+          "isCorrect": false,
+          "rationale": "Una de sus mayores ventajas es precisamente que entrega probabilidades directas a trav\u00e9s de la funci\u00f3n log\u00edstica."
+        },
+        {
+          "text": "Solo funciona si existe una relaci\u00f3n no lineal compleja entre los predictores.",
+          "isCorrect": false,
+          "rationale": "Al contrario, asume una relaci\u00f3n lineal entre los predictores y el logit (log-odds) de la variable dependiente."
+        },
+        {
+          "text": "No permite interpretar la influencia de cada variable en el resultado final.",
+          "isCorrect": false,
+          "rationale": "Los coeficientes $\\beta$ de la regresi\u00f3n log\u00edstica son altamente interpretables en t\u00e9rminos de riesgo o impacto."
+        }
+      ],
+      "hint": "Revisa los requisitos y limitaciones del modelo para conjuntos de datos con distribuciones de clase desiguales."
+    },
+    {
+      "question": "Si se desea implementar un filtro de Spam para un flujo masivo de correos electr\u00f3nicos en tiempo real, \u00bfqu\u00e9 algoritmo es el m\u00e1s recomendado seg\u00fan su eficiencia y fortalezas?",
+      "answerOptions": [
+        {
+          "text": "Naive Bayes",
+          "isCorrect": true,
+          "rationale": "Su rapidez, capacidad para manejar alta dimensionalidad y buen desempe\u00f1o en texto lo hacen ideal para filtrado de spam y an\u00e1lisis de sentimiento."
+        },
+        {
+          "text": "K-Nearest Neighbors",
+          "isCorrect": false,
+          "rationale": "La alta dimensionalidad del texto y el volumen de datos har\u00edan que la b\u00fasqueda de vecinos fuera prohibitivamente lenta."
+        },
+        {
+          "text": "Regresi\u00f3n Lineal Simple",
+          "isCorrect": false,
+          "rationale": "La regresi\u00f3n lineal se usa para variables continuas, no para clasificaci\u00f3n categ\u00f3rica (Spam vs. No Spam)."
+        },
+        {
+          "text": "Clustering K-means",
+          "isCorrect": false,
+          "rationale": "K-means es un algoritmo no supervisado, y el filtrado de spam requiere aprendizaje supervisado a partir de correos ya etiquetados."
+        }
+      ],
+      "hint": "Busca el algoritmo que mejor gestione datos categ\u00f3ricos y texto con alta velocidad de procesamiento."
+    },
+    {
+      "question": "Para evaluar un modelo de clasificaci\u00f3n en R usando la funci\u00f3n `confusionMatrix` de `caret`, \u00bfqu\u00e9 informaci\u00f3n es indispensable proporcionar adem\u00e1s de las predicciones?",
+      "answerOptions": [
+        {
+          "text": "Los valores observados (reales) del conjunto de prueba convertidos a factores.",
+          "isCorrect": true,
+          "rationale": "La matriz de confusi\u00f3n compara las predicciones contra la 'verdad' (ground truth) para calcular m\u00e9tricas como accuracy y sensibilidad."
+        },
+        {
+          "text": "La f\u00f3rmula matem\u00e1tica de la distancia eucl\u00eddea utilizada.",
+          "isCorrect": false,
+          "rationale": "La m\u00e9trica de evaluaci\u00f3n es independiente del m\u00e9todo de c\u00e1lculo de distancia interno del modelo."
+        },
+        {
+          "text": "La semilla aleatoria (`set.seed`) utilizada en la partici\u00f3n.",
+          "isCorrect": false,
+          "rationale": "La semilla es vital para la reproducibilidad de la partici\u00f3n, pero no es un par\u00e1metro de la funci\u00f3n de evaluaci\u00f3n."
+        },
+        {
+          "text": "El valor \u00f3ptimo de $K$ encontrado durante el entrenamiento.",
+          "isCorrect": false,
+          "rationale": "Aunque es un dato importante del modelo, la matriz de confusi\u00f3n solo requiere los resultados finales (etiquetas)."
+        }
+      ],
+      "hint": "Recuerda que una comparaci\u00f3n requiere dos elementos: lo que el modelo cree y lo que realmente es."
+    },
+    {
+      "question": "Verdadero o Falso: En la implementaci\u00f3n de Regresi\u00f3n Log\u00edstica en R mediante `glm()`, el par\u00e1metro `family = \"binomial\"` es el que indica que se trata de una clasificaci\u00f3n binaria.",
+      "answerOptions": [
+        {
+          "text": "Verdadero",
+          "isCorrect": true,
+          "rationale": "El argumento `family` define la distribuci\u00f3n del error y la funci\u00f3n de enlace; 'binomial' especifica que la respuesta sigue una distribuci\u00f3n de Bernoulli/Binomial."
+        },
+        {
+          "text": "Falso",
+          "isCorrect": false,
+          "rationale": "Sin especificar `family = \"binomial\"`, la funci\u00f3n `glm` por defecto podr\u00eda realizar una regresi\u00f3n lineal (gaussiana) si no se indica lo contrario."
+        }
+      ],
+      "hint": "Este par\u00e1metro es crucial para diferenciar entre modelos lineales generales y modelos de regresi\u00f3n log\u00edstica."
+    },
+    {
+      "question": "\u00bfQu\u00e9 t\u00e9cnica se menciona como necesaria para mejorar el desempe\u00f1o de KNN cuando las variables tienen diferentes escalas (ej. Edad vs. Salario)?",
+      "answerOptions": [
+        {
+          "text": "Normalizaci\u00f3n de los datos (escalado).",
+          "isCorrect": true,
+          "rationale": "Como KNN se basa en distancias, las variables con rangos num\u00e9ricos mayores dominar\u00edan el c\u00e1lculo si no se llevan a una escala com\u00fan (0-1)."
+        },
+        {
+          "text": "Uso de Laplace Smoothing.",
+          "isCorrect": false,
+          "rationale": "El suavizado de Laplace es una t\u00e9cnica para manejar probabilidades de cero en Naive Bayes, no para problemas de escala en KNN."
+        },
+        {
+          "text": "Aumento del n\u00famero de predictores.",
+          "isCorrect": false,
+          "rationale": "Agregar m\u00e1s predictores sin escalar puede exacerbar el problema de las diferencias de magnitud en las distancias."
+        },
+        {
+          "text": "Cambio a una funci\u00f3n sigmoide.",
+          "isCorrect": false,
+          "rationale": "La funci\u00f3n sigmoide es propia de la regresi\u00f3n log\u00edstica y no resuelve el c\u00e1lculo de distancias en modelos basados en instancias."
+        }
+      ],
+      "hint": "Piensa en un proceso que iguale el peso de todas las dimensiones en un espacio multidimensional."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la funci\u00f3n del Teorema de Bayes en el algoritmo Naive Bayes?",
+      "answerOptions": [
+        {
+          "text": "Calcular la probabilidad a posteriori de una clase bas\u00e1ndose en las probabilidades previas y la evidencia.",
+          "isCorrect": true,
+          "rationale": "Permite actualizar la creencia sobre la pertenencia a una clase a medida que se observan nuevas caracter\u00edsticas (evidencia)."
+        },
+        {
+          "text": "Determinar el n\u00famero \u00f3ptimo de vecinos para minimizar el error de clasificaci\u00f3n.",
+          "isCorrect": false,
+          "rationale": "La b\u00fasqueda del n\u00famero de vecinos es un proceso de optimizaci\u00f3n de hiperpar\u00e1metros exclusivo de KNN."
+        },
+        {
+          "text": "Garantizar que los datos de entrenamiento sean linealmente separables.",
+          "isCorrect": false,
+          "rationale": "Naive Bayes no requiere separabilidad lineal, ya que es un modelo probabil\u00edstico, no un separador geom\u00e9trico estricto."
+        },
+        {
+          "text": "Establecer la frontera de decisi\u00f3n mediante la maximizaci\u00f3n del margen entre clases.",
+          "isCorrect": false,
+          "rationale": "Esta descripci\u00f3n corresponde m\u00e1s a otros modelos como SVM; Naive Bayes usa comparaciones de probabilidades relativas."
+        }
+      ],
+      "hint": "Considera la relaci\u00f3n entre $P(C|X)$, $P(X|C)$, $P(C)$ y $P(X)$."
+    }
+  ]
+}

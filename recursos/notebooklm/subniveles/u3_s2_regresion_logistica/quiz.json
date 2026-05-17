@@ -1,0 +1,255 @@
+{
+  "title": "Clasificaci\u00f3n Cuestionario",
+  "questions": [
+    {
+      "question": "\u00bfCu\u00e1l es la funci\u00f3n principal de la funci\u00f3n sigmoide en el modelo de regresi\u00f3n log\u00edstica?",
+      "answerOptions": [
+        {
+          "text": "Transformar una combinaci\u00f3n lineal de variables en un valor de probabilidad entre $0$ y $1$.",
+          "isCorrect": true,
+          "rationale": "La funci\u00f3n log\u00edstica o sigmoide mapea cualquier n\u00famero real a un rango restringido, lo cual es esencial para la interpretaci\u00f3n probabil\u00edstica en clasificaci\u00f3n."
+        },
+        {
+          "text": "Calcular la distancia eucl\u00eddea entre los puntos de datos y el centroide.",
+          "isCorrect": false,
+          "rationale": "El c\u00e1lculo de distancias es una caracter\u00edstica fundamental de algoritmos basados en instancias como KNN, no de la regresi\u00f3n log\u00edstica."
+        },
+        {
+          "text": "Minimizar la varianza de los errores en una regresi\u00f3n puramente lineal.",
+          "isCorrect": false,
+          "rationale": "Aunque se busca optimizar el modelo, la funci\u00f3n sigmoide se utiliza espec\u00edficamente para manejar salidas categ\u00f3ricas, no para la regresi\u00f3n lineal est\u00e1ndar."
+        },
+        {
+          "text": "Eliminar la multicolinealidad entre los predictores del modelo.",
+          "isCorrect": false,
+          "rationale": "La funci\u00f3n sigmoide no aborda la relaci\u00f3n entre variables independientes; de hecho, el modelo log\u00edstico sigue siendo sensible a la multicolinealidad."
+        }
+      ],
+      "hint": "Piense en el rango de valores que se requiere para representar una probabilidad."
+    },
+    {
+      "question": "En el contexto de la regresi\u00f3n log\u00edstica, \u00bfcu\u00e1l es la forma correcta de representar la funci\u00f3n log\u00edstica para calcular la probabilidad $p$?",
+      "answerOptions": [
+        {
+          "text": "$p = \\frac{1}{1 + e^{-(\\beta_0 + \\beta_1 x)}}$",
+          "isCorrect": true,
+          "rationale": "Esta es la estructura matem\u00e1tica est\u00e1ndar de la funci\u00f3n log\u00edstica que permite obtener valores en el intervalo $(0, 1)$."
+        },
+        {
+          "text": "$p = \\sqrt{\\sum (p_i - q_i)^2}$",
+          "isCorrect": false,
+          "rationale": "Esta expresi\u00f3n corresponde a la distancia eucl\u00eddea, utilizada principalmente en algoritmos de vecinos cercanos."
+        },
+        {
+          "text": "$P(C|X) = \\frac{P(X|C) P(C)}{P(X)}$",
+          "isCorrect": false,
+          "rationale": "Esta es la representaci\u00f3n del Teorema de Bayes, que sirve de base para el clasificador Naive Bayes."
+        },
+        {
+          "text": "$p = \\beta_0 + \\beta_1 x + \\epsilon$",
+          "isCorrect": false,
+          "rationale": "Esta ecuaci\u00f3n representa un modelo de regresi\u00f3n lineal simple, que no restringe los resultados al rango de probabilidad."
+        }
+      ],
+      "hint": "Identifique la f\u00f3rmula que utiliza el exponente negativo de Euler para suavizar la salida."
+    },
+    {
+      "question": "Al implementar KNN ($K$-Nearest Neighbors) en entornos de Big Data, \u00bfcu\u00e1l es uno de los principales desaf\u00edos t\u00e9cnicos mencionados en el material?",
+      "answerOptions": [
+        {
+          "text": "El alto costo computacional durante la fase de predicci\u00f3n.",
+          "isCorrect": true,
+          "rationale": "Debido a que KNN es un algoritmo basado en instancias, debe comparar cada nuevo punto con todos los existentes, lo que ralentiza el proceso en grandes vol\u00famenes de datos."
+        },
+        {
+          "text": "La suposici\u00f3n estricta de que los datos siguen una distribuci\u00f3n normal.",
+          "isCorrect": false,
+          "rationale": "KNN es un algoritmo no param\u00e9trico, lo que significa que no asume una distribuci\u00f3n espec\u00edfica para los datos."
+        },
+        {
+          "text": "La imposibilidad de utilizar variables categ\u00f3ricas como etiquetas.",
+          "isCorrect": false,
+          "rationale": "KNN es ampliamente utilizado para tareas de clasificaci\u00f3n multiclase donde las etiquetas son categ\u00f3ricas."
+        },
+        {
+          "text": "Su incapacidad para manejar fronteras de decisi\u00f3n no lineales.",
+          "isCorrect": false,
+          "rationale": "KNN es precisamente valorado por su flexibilidad para adaptarse a datasets con estructuras no lineales."
+        }
+      ],
+      "hint": "Considere qu\u00e9 sucede con el tiempo de procesamiento cuando el n\u00famero de instancias aumenta dr\u00e1sticamente."
+    },
+    {
+      "question": "\u00bfQu\u00e9 suposici\u00f3n fundamental define al algoritmo Naive Bayes como 'ingenuo' (naive)?",
+      "answerOptions": [
+        {
+          "text": "La independencia total entre los predictores o caracter\u00edsticas.",
+          "isCorrect": true,
+          "rationale": "El algoritmo asume que la presencia de una caracter\u00edstica no est\u00e1 relacionada con la presencia de otra, simplificando significativamente el c\u00e1lculo probabil\u00edstico."
+        },
+        {
+          "text": "Que los datos de entrenamiento est\u00e1n libres de cualquier tipo de ruido.",
+          "isCorrect": false,
+          "rationale": "Ning\u00fan algoritmo de ML asume datos perfectos, y Naive Bayes es de hecho bastante robusto ante ciertos niveles de ruido."
+        },
+        {
+          "text": "Que la variable objetivo siempre debe ser de tipo continua.",
+          "isCorrect": false,
+          "rationale": "Naive Bayes es fundamentalmente un clasificador, por lo que su variable objetivo suele ser categ\u00f3rica."
+        },
+        {
+          "text": "La necesidad de una cantidad masiva de par\u00e1metros para ser entrenado.",
+          "isCorrect": false,
+          "rationale": "Naive Bayes destaca por ser eficiente y requerir relativamente pocos par\u00e1metros en comparaci\u00f3n con modelos m\u00e1s complejos."
+        }
+      ],
+      "hint": "Se refiere a la relaci\u00f3n simplificada que el modelo establece entre las variables de entrada."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es el prop\u00f3sito de dividir el conjunto de datos en grupos de entrenamiento (train) y prueba (test)?",
+      "answerOptions": [
+        {
+          "text": "Evaluar la capacidad de generalizaci\u00f3n del modelo con datos no vistos.",
+          "isCorrect": true,
+          "rationale": "Esta pr\u00e1ctica permite verificar si el modelo ha aprendido patrones reales o si simplemente ha memorizado el ruido del conjunto de entrenamiento."
+        },
+        {
+          "text": "Garantizar que el modelo alcance un accuracy del $100\\%$.",
+          "isCorrect": false,
+          "rationale": "La divisi\u00f3n no mejora el desempe\u00f1o directamente, sino que provee una m\u00e9trica honesta de su eficacia real."
+        },
+        {
+          "text": "Aumentar artificialmente el n\u00famero de observaciones disponibles.",
+          "isCorrect": false,
+          "rationale": "La partici\u00f3n reduce la cantidad de datos disponibles para el entrenamiento, no los aumenta."
+        },
+        {
+          "text": "Eliminar autom\u00e1ticamente los outliers de la variable objetivo.",
+          "isCorrect": false,
+          "rationale": "La limpieza de datos y el manejo de outliers es una fase previa e independiente de la partici\u00f3n de datos."
+        }
+      ],
+      "hint": "Piense en c\u00f3mo podemos saber si un modelo funcionar\u00e1 correctamente en el mundo real."
+    },
+    {
+      "question": "\u00bfCu\u00e1l de las siguientes afirmaciones sobre la regresi\u00f3n log\u00edstica es correcta seg\u00fan la comparaci\u00f3n de algoritmos?",
+      "answerOptions": [
+        {
+          "text": "Es altamente interpretable gracias a los coeficientes de sus predictores.",
+          "isCorrect": true,
+          "rationale": "A diferencia de modelos de caja negra, la regresi\u00f3n log\u00edstica permite entender c\u00f3mo influye cada variable en la probabilidad del resultado."
+        },
+        {
+          "text": "Supera a KNN en la clasificaci\u00f3n de datos con fronteras altamente complejas y no lineales.",
+          "isCorrect": false,
+          "rationale": "La regresi\u00f3n log\u00edstica asume una relaci\u00f3n lineal en el logit, por lo que KNN suele ser m\u00e1s flexible en casos no lineales."
+        },
+        {
+          "text": "Es el algoritmo m\u00e1s eficiente para el procesamiento de lenguaje natural y filtrado de spam.",
+          "isCorrect": false,
+          "rationale": "Aunque se puede usar, Naive Bayes suele ser preferido para texto por su rapidez y manejo de alta dimensionalidad."
+        },
+        {
+          "text": "No requiere que los datos est\u00e9n balanceados para producir resultados precisos.",
+          "isCorrect": false,
+          "rationale": "La regresi\u00f3n log\u00edstica es sensible al desbalance de clases, lo que puede sesgar las probabilidades predichas."
+        }
+      ],
+      "hint": "Considere la facilidad con la que un analista puede explicar el impacto de una variable en este modelo."
+    },
+    {
+      "question": "En el algoritmo KNN, si se selecciona un valor de $K$ demasiado peque\u00f1o, \u00bfcu\u00e1l es el riesgo m\u00e1s probable?",
+      "answerOptions": [
+        {
+          "text": "El modelo puede volverse excesivamente sensible al ruido y a los outliers.",
+          "isCorrect": true,
+          "rationale": "Un $K$ bajo hace que la clasificaci\u00f3n dependa de muy pocos vecinos, capturando fluctuaciones aleatorias en lugar de la tendencia general."
+        },
+        {
+          "text": "El modelo ignorar\u00e1 por completo las variaciones locales de los datos.",
+          "isCorrect": false,
+          "rationale": "Ignorar variaciones locales es una consecuencia de tener un $K$ muy grande, que suaviza demasiado la frontera."
+        },
+        {
+          "text": "El costo computacional de la predicci\u00f3n disminuir\u00e1 dr\u00e1sticamente.",
+          "isCorrect": false,
+          "rationale": "Independientemente de $K$, el algoritmo debe calcular la distancia a todos los puntos, por lo que el costo base se mantiene alto."
+        },
+        {
+          "text": "La distancia eucl\u00eddea dejar\u00e1 de ser una m\u00e9trica v\u00e1lida.",
+          "isCorrect": false,
+          "rationale": "La validez de la m\u00e9trica de distancia no depende del valor de $K$ elegido."
+        }
+      ],
+      "hint": "Piense en qu\u00e9 sucede cuando la decisi\u00f3n depende de un solo vecino cercano."
+    },
+    {
+      "question": "Usted necesita clasificar correos electr\u00f3nicos como 'Spam' o 'No Spam' en un flujo de datos masivo. Seg\u00fan el material, \u00bfqu\u00e9 algoritmo es el m\u00e1s adecuado?",
+      "answerOptions": [
+        {
+          "text": "Naive Bayes",
+          "isCorrect": true,
+          "rationale": "Es ideal para clasificaci\u00f3n de texto y streams de Big Data debido a su eficiencia y rapidez en entrenamiento y predicci\u00f3n."
+        },
+        {
+          "text": "KNN (K-Nearest Neighbors)",
+          "isCorrect": false,
+          "rationale": "KNN es computacionalmente costoso para grandes vol\u00famenes de texto y sufre con la alta dimensionalidad de las palabras."
+        },
+        {
+          "text": "Regresi\u00f3n Lineal Simple",
+          "isCorrect": false,
+          "rationale": "La regresi\u00f3n lineal no es adecuada para tareas de clasificaci\u00f3n categ\u00f3rica binaria como la detecci\u00f3n de spam."
+        },
+        {
+          "text": "Clustering K-means",
+          "isCorrect": false,
+          "rationale": "El filtrado de spam es un problema de aprendizaje supervisado (etiquetado), mientras que el clustering es no supervisado."
+        }
+      ],
+      "hint": "Busque el algoritmo mencionado espec\u00edficamente para an\u00e1lisis de texto y alta eficiencia en Big Data."
+    },
+    {
+      "question": "Verdadero o Falso: La regresi\u00f3n log\u00edstica solo puede utilizarse para problemas de clasificaci\u00f3n binaria (dos clases).",
+      "answerOptions": [
+        {
+          "text": "Falso",
+          "isCorrect": true,
+          "rationale": "El material indica que la regresi\u00f3n log\u00edstica puede extenderse a casos multinomiales para manejar m\u00e1s de dos categor\u00edas."
+        },
+        {
+          "text": "Verdadero",
+          "isCorrect": false,
+          "rationale": "Aunque es com\u00fan en clasificaci\u00f3n binaria, existen variantes multinomiales que permiten clasificar m\u00faltiples etiquetas."
+        }
+      ],
+      "hint": "Revise las aplicaciones mencionadas para este algoritmo m\u00e1s all\u00e1 de los casos de \u00e9xito/fracaso."
+    },
+    {
+      "question": "\u00bfQu\u00e9 herramienta de R se menciona como facilitadora para el flujo completo de Machine Learning, incluyendo partici\u00f3n y entrenamiento?",
+      "answerOptions": [
+        {
+          "text": "El paquete 'caret'",
+          "isCorrect": true,
+          "rationale": "Caret integra funciones para preprocesamiento, partici\u00f3n de datos, entrenamiento y evaluaci\u00f3n de diversos modelos de ML."
+        },
+        {
+          "text": "La funci\u00f3n 'plot'",
+          "isCorrect": false,
+          "rationale": "La funci\u00f3n 'plot' es una herramienta de visualizaci\u00f3n b\u00e1sica, no una suite para la gesti\u00f3n de modelos predictivos."
+        },
+        {
+          "text": "El motor de base de datos SQL",
+          "isCorrect": false,
+          "rationale": "SQL se usa para la gesti\u00f3n de datos, pero el flujo de ML en R se apoya en paquetes espec\u00edficos de an\u00e1lisis estad\u00edstico."
+        },
+        {
+          "text": "La librer\u00eda 'ggplot2'",
+          "isCorrect": false,
+          "rationale": "Aunque se menciona en la bibliograf\u00eda para gr\u00e1ficos, no es la encargada de entrenar modelos o particionar datos."
+        }
+      ],
+      "hint": "Es un acr\u00f3nimo relacionado con el entrenamiento de clasificaci\u00f3n y regresi\u00f3n."
+    }
+  ]
+}

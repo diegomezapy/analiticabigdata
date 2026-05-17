@@ -1,0 +1,265 @@
+{
+  "title": "An\u00e1lisis Cuestionario",
+  "questions": [
+    {
+      "question": "De acuerdo con la clasificaci\u00f3n de Tukey (1977), \u00bfc\u00f3mo se categoriza una variable como el 'Nivel educativo' (b\u00e1sico, medio, superior)?",
+      "answerOptions": [
+        {
+          "text": "Cualitativa Ordinal",
+          "isCorrect": true,
+          "rationale": "Las variables ordinales representan categor\u00edas cualitativas que poseen un orden l\u00f3gico o jer\u00e1rquico intr\u00ednseco."
+        },
+        {
+          "text": "Cualitativa Nominal",
+          "isCorrect": false,
+          "rationale": "A diferencia de las ordinales, las variables nominales no poseen un orden o jerarqu\u00eda entre sus categor\u00edas."
+        },
+        {
+          "text": "Cuantitativa Discreta",
+          "isCorrect": false,
+          "rationale": "Esta categor\u00eda se reserva para valores num\u00e9ricos enteros resultantes de un conteo, no para etiquetas categ\u00f3ricas."
+        },
+        {
+          "text": "Cuantitativa Continua",
+          "isCorrect": false,
+          "rationale": "Las variables continuas pueden tomar cualquier valor dentro de un rango real, mientras que el nivel educativo es una categor\u00eda definida."
+        }
+      ],
+      "hint": "Considera si existe una jerarqu\u00eda o progresi\u00f3n l\u00f3gica entre las categor\u00edas mencionadas."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es el prop\u00f3sito principal de utilizar un 'Boxplot' durante la etapa de An\u00e1lisis Exploratorio de Datos (EDA)?",
+      "answerOptions": [
+        {
+          "text": "Detectar outliers y visualizar la dispersi\u00f3n de los datos",
+          "isCorrect": true,
+          "rationale": "El diagrama de caja permite identificar visualmente valores at\u00edpicos (outliers) y observar la distribuci\u00f3n a trav\u00e9s de los cuartiles."
+        },
+        {
+          "text": "Visualizar la correlaci\u00f3n lineal entre dos variables num\u00e9ricas",
+          "isCorrect": false,
+          "rationale": "La correlaci\u00f3n se explora t\u00edpicamente mediante gr\u00e1ficos de dispersi\u00f3n (scatter plots) o mapas de calor (heatmaps)."
+        },
+        {
+          "text": "Mostrar la evoluci\u00f3n de una variable a lo largo del tiempo",
+          "isCorrect": false,
+          "rationale": "Para representar tendencias temporales o evoluci\u00f3n, se suelen utilizar gr\u00e1ficos de l\u00edneas o series de tiempo."
+        },
+        {
+          "text": "Comparar la frecuencia de categor\u00edas en una variable nominal",
+          "isCorrect": false,
+          "rationale": "La comparaci\u00f3n de frecuencias categ\u00f3ricas es una tarea m\u00e1s adecuada para diagramas de barras o histogramas."
+        }
+      ],
+      "hint": "Este gr\u00e1fico se enfoca en resumir la distribuci\u00f3n estad\u00edstica y resaltar los valores que se alejan del comportamiento normal."
+    },
+    {
+      "question": "Al trabajar con variables cuantitativas que presentan una distribuci\u00f3n muy sesgada, \u00bfqu\u00e9 t\u00e9cnica de transformaci\u00f3n se recomienda aplicar para normalizarlas?",
+      "answerOptions": [
+        {
+          "text": "Aplicar $\\log$ o Box-Cox",
+          "isCorrect": true,
+          "rationale": "Estas transformaciones matem\u00e1ticas ayudan a estabilizar la varianza y a aproximar los datos a una distribuci\u00f3n normal."
+        },
+        {
+          "text": "Realizar una imputaci\u00f3n por la moda",
+          "isCorrect": false,
+          "rationale": "La moda es una t\u00e9cnica para manejar valores faltantes en datos categ\u00f3ricos, no para transformar distribuciones num\u00e9ricas."
+        },
+        {
+          "text": "Eliminar todos los outliers detectados",
+          "isCorrect": false,
+          "rationale": "La eliminaci\u00f3n de outliers limpia los datos, pero no cambia la naturaleza de la distribuci\u00f3n de los datos restantes."
+        },
+        {
+          "text": "Binarizar la variable",
+          "isCorrect": false,
+          "rationale": "La binarizaci\u00f3n convierte valores continuos en categor\u00edas binarias, perdiendo la riqueza de la distribuci\u00f3n original."
+        }
+      ],
+      "hint": "Se trata de funciones que comprimen los valores extremos para suavizar el sesgo de la curva."
+    },
+    {
+      "question": "En el contexto de la imputaci\u00f3n de valores ausentes, \u00bfcu\u00e1l es una de las principales desventajas de utilizar KNN o modelos de regresi\u00f3n?",
+      "answerOptions": [
+        {
+          "text": "Es computacionalmente intensivo",
+          "isCorrect": true,
+          "rationale": "A diferencia de la imputaci\u00f3n simple, estos m\u00e9todos requieren c\u00e1lculos complejos que pueden ser lentos en datasets de Big Data."
+        },
+        {
+          "text": "Tiende a sesgar significativamente la varianza",
+          "isCorrect": false,
+          "rationale": "Este problema es m\u00e1s com\u00fan en la imputaci\u00f3n por la media o mediana, no en m\u00e9todos que consideran relaciones entre variables."
+        },
+        {
+          "text": "Ignora las relaciones entre las variables del dataset",
+          "isCorrect": false,
+          "rationale": "Precisamente, la ventaja de KNN es que utiliza la similitud entre registros para estimar los valores faltantes."
+        },
+        {
+          "text": "Solo se puede aplicar a variables cualitativas",
+          "isCorrect": false,
+          "rationale": "Estos modelos son vers\u00e1tiles y se utilizan frecuentemente para predecir valores num\u00e9ricos faltantes."
+        }
+      ],
+      "hint": "Piensa en el costo de procesamiento necesario para comparar un registro con todos los dem\u00e1s en un entorno de grandes datos."
+    },
+    {
+      "question": "Para visualizar una matriz de correlaciones entre m\u00faltiples variables de forma eficiente en Python, \u00bfqu\u00e9 herramienta de Seaborn es la m\u00e1s adecuada?",
+      "answerOptions": [
+        {
+          "text": "Heatmaps",
+          "isCorrect": true,
+          "rationale": "Los mapas de calor permiten representar visualmente la intensidad de las correlaciones mediante una escala de colores."
+        },
+        {
+          "text": "Histogramas",
+          "isCorrect": false,
+          "rationale": "Los histogramas son herramientas univariadas dise\u00f1adas para mostrar la distribuci\u00f3n de una sola variable."
+        },
+        {
+          "text": "Scatter Plots",
+          "isCorrect": false,
+          "rationale": "Aunque muestran relaciones, son dif\u00edciles de interpretar cuando se intentan comparar muchas variables simult\u00e1neamente."
+        },
+        {
+          "text": "Boxplots",
+          "isCorrect": false,
+          "rationale": "Se centran en la estad\u00edstica descriptiva de una variable y no en la relaci\u00f3n de covarianza entre pares."
+        }
+      ],
+      "hint": "Busca un tipo de visualizaci\u00f3n que utilice una cuadr\u00edcula coloreada para mostrar la fuerza de la asociaci\u00f3n."
+    },
+    {
+      "question": "\u00bfQu\u00e9 t\u00e9cnica de preprocesado se utiliza para ajustar variables num\u00e9ricas a una escala com\u00fan, como el uso de `StandardScaler` en la librer\u00eda Scikit-learn?",
+      "answerOptions": [
+        {
+          "text": "Estandarizaci\u00f3n o escalado",
+          "isCorrect": true,
+          "rationale": "Este proceso asegura que las variables con rangos muy distintos no dominen injustamente sobre otras en el modelo."
+        },
+        {
+          "text": "Selecci\u00f3n de features mediante PCA",
+          "isCorrect": false,
+          "rationale": "PCA se utiliza para reducir la dimensionalidad eliminando variables redundantes, no para escalar valores individuales."
+        },
+        {
+          "text": "Limpieza de duplicados",
+          "isCorrect": false,
+          "rationale": "Consiste en eliminar registros id\u00e9nticos para evitar sesgos, pero no altera la escala de los valores num\u00e9ricos."
+        },
+        {
+          "text": "Imputaci\u00f3n m\u00faltiple",
+          "isCorrect": false,
+          "rationale": "La imputaci\u00f3n se enfoca en rellenar datos vac\u00edos, no en transformar los datos existentes hacia una escala uniforme."
+        }
+      ],
+      "hint": "Es un paso cr\u00edtico para algoritmos que dependen de distancias, asegurando que $100$ kg no pese m\u00e1s que $1$ metro por un error de magnitud."
+    },
+    {
+      "question": "Si un analista decide utilizar la imputaci\u00f3n por la 'Moda' para completar datos faltantes, \u00bfqu\u00e9 tipo de variable est\u00e1 manejando probablemente?",
+      "answerOptions": [
+        {
+          "text": "Cualitativa",
+          "isCorrect": true,
+          "rationale": "La moda es el valor m\u00e1s frecuente, lo cual es ideal para categor\u00edas donde no se puede calcular un promedio matem\u00e1tico."
+        },
+        {
+          "text": "Cuantitativa continua",
+          "isCorrect": false,
+          "rationale": "Para variables continuas, la media o mediana suelen ser estad\u00edsticos m\u00e1s representativos que el valor m\u00e1s frecuente."
+        },
+        {
+          "text": "Num\u00e9rica con distribuci\u00f3n normal",
+          "isCorrect": false,
+          "rationale": "Aunque se puede calcular la moda, en distribuciones normales la media es el imputador est\u00e1ndar preferido."
+        },
+        {
+          "text": "Variable dependiente binaria",
+          "isCorrect": false,
+          "rationale": "En variables binarias, aunque se use la frecuencia, la binarizaci\u00f3n suele requerir un tratamiento de balanceo m\u00e1s que solo moda."
+        }
+      ],
+      "hint": "Este estad\u00edstico es el \u00fanico aplicable cuando los datos consisten en etiquetas o nombres sin valor num\u00e9rico."
+    },
+    {
+      "question": "\u00bfQu\u00e9 funci\u00f3n de la librer\u00eda `ggplot2` en R permite generar visualizaciones de distribuci\u00f3n univariada dividiendo los datos en contenedores (bins)?",
+      "answerOptions": [
+        {
+          "text": "`geom_histogram()`",
+          "isCorrect": true,
+          "rationale": "Esta funci\u00f3n agrupa valores continuos en intervalos o 'bins' para mostrar la frecuencia de cada rango."
+        },
+        {
+          "text": "`geom_point()`",
+          "isCorrect": false,
+          "rationale": "Se utiliza para crear gr\u00e1ficos de dispersi\u00f3n que muestran la relaci\u00f3n individual entre puntos de datos."
+        },
+        {
+          "text": "`ggcorr()`",
+          "isCorrect": false,
+          "rationale": "Es una funci\u00f3n especializada para visualizar matrices de correlaci\u00f3n, no distribuciones univariadas."
+        },
+        {
+          "text": "`summary()`",
+          "isCorrect": false,
+          "rationale": "Es una funci\u00f3n de R base para obtener un resumen estad\u00edstico textual, no una funci\u00f3n geom\u00e9trica de ggplot2."
+        }
+      ],
+      "hint": "Busca el componente gr\u00e1fico que representa la densidad o conteo de datos en forma de barras verticales contiguas."
+    },
+    {
+      "question": "Respecto a la eliminaci\u00f3n de valores ausentes (drop), \u00bfcu\u00e1l es el riesgo principal de aplicarla cuando la proporci\u00f3n de datos faltantes es alta?",
+      "answerOptions": [
+        {
+          "text": "P\u00e9rdida significativa de informaci\u00f3n y sesgo en la muestra",
+          "isCorrect": true,
+          "rationale": "Eliminar registros reduce el tama\u00f1o del dataset y puede excluir patrones importantes presentes en los datos incompletos."
+        },
+        {
+          "text": "Aumento excesivo del tiempo de computaci\u00f3n",
+          "isCorrect": false,
+          "rationale": "La eliminaci\u00f3n es la t\u00e9cnica m\u00e1s r\u00e1pida y sencilla computacionalmente; el riesgo es la calidad, no el tiempo."
+        },
+        {
+          "text": "Introducci\u00f3n de valores artificiales en la distribuci\u00f3n",
+          "isCorrect": false,
+          "rationale": "Este riesgo es propio de la imputaci\u00f3n (media, moda), no de la eliminaci\u00f3n de filas."
+        },
+        {
+          "text": "Complejidad en la implementaci\u00f3n del c\u00f3digo",
+          "isCorrect": false,
+          "rationale": "Funciones como `dropna()` en pandas facilitan mucho esta tarea, por lo que la complejidad t\u00e9cnica es m\u00ednima."
+        }
+      ],
+      "hint": "Considera qu\u00e9 sucede con el tama\u00f1o de tu muestra si descartas cada fila que tenga al menos un dato vac\u00edo."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la funci\u00f3n del proceso de 'Binarizaci\u00f3n' mencionado en la ruta de trabajo sugerida de la unidad?",
+      "answerOptions": [
+        {
+          "text": "Convertir variables cualitativas en variables indicadoras de $0$ y $1$",
+          "isCorrect": true,
+          "rationale": "La binarizaci\u00f3n transforma categor\u00edas en un formato num\u00e9rico binario que los algoritmos matem\u00e1ticos pueden procesar."
+        },
+        {
+          "text": "Reducir el n\u00famero de decimales en variables cuantitativas",
+          "isCorrect": false,
+          "rationale": "El redondeo o truncamiento no es binarizaci\u00f3n, ya que esta \u00faltima cambia la estructura de la variable a una base dos."
+        },
+        {
+          "text": "Eliminar outliers mediante un umbral estricto",
+          "isCorrect": false,
+          "rationale": "El filtrado de outliers es un proceso de limpieza, mientras que la binarizaci\u00f3n es una transformaci\u00f3n de formato."
+        },
+        {
+          "text": "Sustituir valores nulos por el valor binario m\u00e1s cercano",
+          "isCorrect": false,
+          "rationale": "La gesti\u00f3n de nulos es imputaci\u00f3n; la binarizaci\u00f3n asume que los datos ya est\u00e1n limpios o listos para ser transformados."
+        }
+      ],
+      "hint": "Este proceso es fundamental para que los modelos puedan entender variables como 'G\u00e9nero' o 'Color'."
+    }
+  ]
+}

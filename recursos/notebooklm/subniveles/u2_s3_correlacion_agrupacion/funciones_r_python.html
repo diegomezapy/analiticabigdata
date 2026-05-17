@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>2.3 Guía de Funciones — Correlación y Agrupación — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 10px; }
+  h2 { color: #1976D2; margin-top: 2em; }
+  h3 { color: #0D47A1; }
+  .header-info { background: #E3F2FD; border-left: 4px solid #1565C0; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #0D47A1; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #E8F5E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #1565C0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 2</div>
+
+<h1>2.3 Guía de Funciones: Correlación y Agrupación</h1>
+<h2>R — cor, dplyr, data.table</h2>
+<pre><code class="language-r">
+library(dplyr)
+library(ggplot2)
+library(data.table)
+
+# CORRELACIÓN
+# ─────────────
+data(mtcars)
+
+# Correlación entre dos variables
+cor(mtcars$mpg, mtcars$wt)
+# → retorna el coeficiente r de Pearson
+
+# Correlación de Spearman (más robusta a outliers)
+cor(mtcars$mpg, mtcars$wt, method = "spearman")
+
+# Matriz de correlación completa
+cor_matrix <- cor(mtcars[, c("mpg","wt","hp","disp")], use = "complete.obs")
+# use="complete.obs": ignora NAs en pares
+
+# Test de significancia
+cor.test(mtcars$mpg, mtcars$wt)
+# → r, t-statistic, p-value, IC 95%
+
+# Visualizar matriz de correlación
+library(corrplot)
+corrplot(cor_matrix, method = "color", type = "upper",
+         addCoef.col = "black", number.cex = 0.9,
+         tl.cex = 0.9, col = colorRampPalette(c("blue","white","red"))(200))
+# method: "circle","square","ellipse","number","shade","color"
+# type: "full","upper","lower"
+# addCoef.col: color de los números de correlación
+
+# AGRUPACIÓN con dplyr
+# ─────────────────────
+mtcars %>%
+  group_by(cyl) %>%
+  summarise(
+    n = n(),
+    mpg_media = mean(mpg),
+    mpg_sd = sd(mpg),
+    hp_media = mean(hp),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(mpg_media))
+# group_by: segmenta por nro de cilindros
+# n(): cuenta filas en cada grupo
+# .groups="drop": elimina agrupación después de summarise
+
+# Agrupación múltiple
+mtcars %>%
+  group_by(cyl, am) %>%  # am: transmisión (0=automática, 1=manual)
+  summarise(mpg_promedio = mean(mpg), .groups = "drop")
+
+# AGRUPACIÓN con data.table (más rápido para big data)
+dt <- as.data.table(mtcars)
+resultado <- dt[, .(
+  n = .N,
+  mpg_media = mean(mpg),
+  hp_media = mean(hp)
+), by = .(cyl, am)]
+# .N: número de filas del grupo
+# by: variables de agrupación
+
+# TABLA DE CONTINGENCIA
+table(mtcars$cyl, mtcars$am)
+# Test chi-cuadrado de independencia
+chisq.test(table(mtcars$cyl, mtcars$am))
+# p < 0.05: hay asociación entre nro cilindros y tipo de transmisión
+</code></pre>
+<h2>Python — pandas + scipy</h2>
+<pre><code class="language-python">
+import pandas as pd
+import numpy as np
+from scipy import stats
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv')
+
+# CORRELACIÓN
+df[['total_bill','tip','size']].corr()            # Pearson
+df[['total_bill','tip','size']].corr(method='spearman')  # Spearman
+
+# Test de significancia
+r, p = stats.pearsonr(df['total_bill'], df['tip'])
+print(f"r = {r:.3f}, p = {p:.4f}")
+
+# Heatmap
+fig, ax = plt.subplots(figsize=(6,5))
+sns.heatmap(df[['total_bill','tip','size']].corr(),
+            annot=True, fmt='.2f', cmap='coolwarm',
+            center=0, vmin=-1, vmax=1, ax=ax)
+plt.title('Matriz de correlación')
+plt.tight_layout()
+
+# AGRUPACIÓN
+# Por un grupo
+df.groupby('day')['total_bill'].agg(['mean','std','count'])
+
+# Por múltiples grupos
+resumen = df.groupby(['day','sex']).agg(
+    promedio_cuenta=('total_bill', 'mean'),
+    propina_media=('tip', 'mean'),
+    n=('total_bill', 'count')
+).reset_index()
+# .agg(): agrega con nombre personalizado
+# reset_index(): convierte índices jerárquicos en columnas
+
+# TABLA DE CONTINGENCIA
+tabla = pd.crosstab(df['day'], df['sex'])
+# Test chi-cuadrado
+chi2, p, dof, expected = stats.chi2_contingency(tabla)
+print(f"chi2={chi2:.2f}, p={p:.4f}, gl={dof}")
+</code></pre>
+
+</body>
+</html>

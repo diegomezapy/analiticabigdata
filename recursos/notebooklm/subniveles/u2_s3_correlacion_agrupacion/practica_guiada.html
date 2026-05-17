@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>2.3 Práctica Guiada — Correlación y Agrupación — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 10px; }
+  h2 { color: #1976D2; margin-top: 2em; }
+  h3 { color: #0D47A1; }
+  .header-info { background: #E3F2FD; border-left: 4px solid #1565C0; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #0D47A1; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #E8F5E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #1565C0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 2</div>
+
+<h1>2.3 Práctica Guiada: Análisis de Correlación en Dataset Económico</h1>
+<p><strong>Duración:</strong> 50 minutos | <strong>Dataset:</strong> World Bank indicators</p>
+<div class="ficha">
+<h2>Ficha 1: Simular datos de indicadores económicos</h2>
+<pre>set.seed(21)
+n <- 50
+economicos <- data.frame(
+  pais = paste0("Pais_", 1:n),
+  region = sample(c("América","Europa","Asia","Africa"), n, replace=TRUE),
+  pib_per_capita = exp(rnorm(n, 8.5, 1.5)),  # log-normal
+  esperanza_vida = rnorm(n, 68, 10),
+  tasa_alfabetizacion = pmin(100, pmax(40, rnorm(n, 80, 15))),
+  co2_per_capita = exp(rnorm(n, 1.5, 1)),
+  gasto_educacion_pct = pmax(0, rnorm(n, 5, 2))
+)
+head(economicos, 3)</pre>
+<p>¿Qué tipo tiene cada variable? ¿Qué rango esperarías para el PIB per cápita?</p>
+</div>
+<div class="ficha">
+<h2>Ficha 2: Matriz de correlación</h2>
+<pre>library(corrplot)
+vars_num <- economicos[, c("pib_per_capita","esperanza_vida",
+                            "tasa_alfabetizacion","co2_per_capita","gasto_educacion_pct")]
+cor_mat <- cor(vars_num)
+corrplot(cor_mat, method = "color", addCoef.col = "black",
+         tl.cex = 0.7, number.cex = 0.7)</pre>
+<p>¿Qué par de variables tiene la correlación más alta? ¿Qué par tiene correlación negativa?</p>
+</div>
+<div class="ficha">
+<h2>Ficha 3: Agrupación por región</h2>
+<pre>library(dplyr)
+economicos %>%
+  group_by(region) %>%
+  summarise(
+    n_paises = n(),
+    pib_mediana = median(pib_per_capita),
+    vida_media = mean(esperanza_vida),
+    alfabetizacion = mean(tasa_alfabetizacion)
+  ) %>%
+  arrange(desc(pib_mediana))</pre>
+<p>¿Qué región tiene mayor PIB mediano? ¿Coincide con mayor esperanza de vida?</p>
+</div>
+<div class="ficha">
+<h2>Ficha 4: Gráfico de burbuja</h2>
+<pre>library(ggplot2)
+ggplot(economicos, aes(x = pib_per_capita, y = esperanza_vida,
+                        size = tasa_alfabetizacion, color = region)) +
+  geom_point(alpha = 0.7) +
+  scale_x_log10(labels = scales::dollar) +
+  scale_size_continuous(range = c(3, 12), name = "Alfabetización %") +
+  labs(title = "PIB vs Esperanza de vida",
+       x = "PIB per cápita (escala log)", y = "Esperanza de vida (años)") +
+  theme_minimal()</pre>
+<p>¿Qué patrón observas? ¿La relación es lineal o curvilínea en escala original?</p>
+</div>
+
+</body>
+</html>

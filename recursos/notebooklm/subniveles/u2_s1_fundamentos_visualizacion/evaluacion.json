@@ -1,0 +1,66 @@
+{
+  "subnivel": "2.1",
+  "titulo": "Evaluación: Fundamentos de Visualización de Datos",
+  "preguntas": [
+    {
+      "num": 1,
+      "tipo": "opcion_multiple",
+      "pregunta": "Según la jerarquía de Cleveland y McGill, ¿qué codificación visual es más precisa para comparar cantidades?",
+      "opciones": [
+        "A) Área",
+        "B) Color",
+        "C) Posición en escala común",
+        "D) Ángulo"
+      ],
+      "respuesta": "C",
+      "retroalimentacion": "La posición en escala común (como en gráficos de barras o dispersión) es la más precisa porque el ojo humano puede comparar posiciones con mayor exactitud que áreas o ángulos."
+    },
+    {
+      "num": 2,
+      "tipo": "verdadero_falso",
+      "pregunta": "El cuarteto de Anscombe demuestra que datasets con estadísticas descriptivas idénticas siempre tienen distribuciones similares.",
+      "respuesta": "Falso",
+      "retroalimentacion": "Precisamente lo contrario: Anscombe construyó cuatro datasets con medias, varianzas y correlaciones idénticas pero distribuciones completamente distintas, demostrando que los estadísticos resumen no son suficientes."
+    },
+    {
+      "num": 3,
+      "tipo": "completar",
+      "pregunta": "En ggplot2, la función ________ agrega una línea de tendencia suavizada al gráfico de dispersión.",
+      "respuesta": "geom_smooth()",
+      "retroalimentacion": "geom_smooth() agrega una capa de suavizado. Con method='lm' produce una regresión lineal; con method='loess' produce suavizado local no paramétrico."
+    },
+    {
+      "num": 4,
+      "tipo": "opcion_multiple",
+      "pregunta": "Para visualizar la distribución de una variable cuantitativa continua, ¿qué gráfico NO es apropiado?",
+      "opciones": [
+        "A) Histograma",
+        "B) Densidad kernel",
+        "C) Gráfico de torta",
+        "D) Boxplot"
+      ],
+      "respuesta": "C",
+      "retroalimentacion": "El gráfico de torta sirve para composición/proporciones en categorías, no para distribuciones continuas. Los otros tres son apropiados para mostrar cómo se distribuye una variable numérica."
+    },
+    {
+      "num": 5,
+      "tipo": "opcion_multiple",
+      "pregunta": "¿Qué función de ggplot2 permite crear subgráficos para cada nivel de una variable categórica?",
+      "opciones": [
+        "A) geom_facet()",
+        "B) facet_wrap()",
+        "C) split_plot()",
+        "D) aes_facet()"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "facet_wrap(~ variable) crea subgráficos (facetas) uno para cada nivel de la variable. facet_grid() permite facetas en 2 dimensiones (filas y columnas)."
+    },
+    {
+      "num": 6,
+      "tipo": "abierta",
+      "pregunta": "Explique en qué consiste el EDA (Análisis Exploratorio de Datos) y por qué es necesario realizarlo antes de aplicar modelos de Machine Learning.",
+      "respuesta": "El EDA es el proceso de examinar los datos usando estadísticas descriptivas y visualizaciones para descubrir patrones, detectar anomalías, verificar supuestos y formular hipótesis, sin confirmación de hipótesis previas. Es necesario antes de ML porque permite: identificar y tratar valores faltantes/outliers que afectarían el modelo; entender la distribución de las variables; detectar correlaciones que sugieren features relevantes; evitar el 'garbage in, garbage out'.",
+      "retroalimentacion": "El EDA es una fase exploratoria sin hipótesis previas. Sus hallazgos informan el preprocesamiento y la selección de features para modelos predictivos."
+    }
+  ]
+}

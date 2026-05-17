@@ -1,0 +1,570 @@
+{
+  "generatedAt": "2026-05-17T01:40:10.087Z",
+  "sourceRoot": "C:\\Users\\Diego\\ABD_Recursos",
+  "basePath": "recursos/notebooklm",
+  "version": 1,
+  "subniveles": [
+    {
+      "unit": 1,
+      "sublevel": 1,
+      "code": "1.1",
+      "slug": "u1_s1_que_es_bigdata",
+      "title": "Que es Big Data",
+      "topic": "definicion de Big Data, las 5V, datos estructurados y no estructurados, ecosistema Hadoop Spark",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/quiz.json",
+        "flashcards": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": true,
+        "preguntasEvaluacion": 7,
+        "preguntasQuiz": 10,
+        "flashcards": 50,
+        "faltantes": []
+      }
+    },
+    {
+      "unit": 1,
+      "sublevel": 2,
+      "code": "1.2",
+      "slug": "u1_s2_entorno_trabajo",
+      "title": "Entorno R y RStudio",
+      "topic": "instalacion de R y RStudio, tipos de datos en R, paquetes, primeros pasos en Python y Jupyter",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/quiz.json",
+        "flashcards": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": true,
+        "preguntasEvaluacion": 5,
+        "preguntasQuiz": 10,
+        "flashcards": 50,
+        "faltantes": []
+      }
+    },
+    {
+      "unit": 1,
+      "sublevel": 3,
+      "code": "1.3",
+      "slug": "u1_s3_operaciones_basicas",
+      "title": "Operaciones basicas y graficos",
+      "topic": "data.table, lectura CSV y Parquet, graficos basicos con ggplot2, pandas y polars",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/quiz.json",
+        "flashcards": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": true,
+        "preguntasEvaluacion": 5,
+        "preguntasQuiz": 7,
+        "flashcards": 60,
+        "faltantes": []
+      }
+    },
+    {
+      "unit": 2,
+      "sublevel": 1,
+      "code": "2.1",
+      "slug": "u2_s1_fundamentos_visualizacion",
+      "title": "Fundamentos de Visualizacion",
+      "topic": "gramatica de graficos, variables visuales, jerarquia perceptual, tipos de graficos",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/quiz.json",
+        "flashcards": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": true,
+        "preguntasEvaluacion": 6,
+        "preguntasQuiz": 10,
+        "flashcards": 50,
+        "faltantes": []
+      }
+    },
+    {
+      "unit": 2,
+      "sublevel": 2,
+      "code": "2.2",
+      "slug": "u2_s2_estadisticos_descriptivos",
+      "title": "Estadisticos Descriptivos y Limpieza",
+      "topic": "media, mediana, varianza, outliers, valores faltantes, imputacion y normalizacion",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/quiz.json",
+        "flashcards": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": true,
+        "preguntasEvaluacion": 5,
+        "preguntasQuiz": 10,
+        "flashcards": 50,
+        "faltantes": []
+      }
+    },
+    {
+      "unit": 2,
+      "sublevel": 3,
+      "code": "2.3",
+      "slug": "u2_s3_correlacion_agrupacion",
+      "title": "Correlacion y Agrupacion",
+      "topic": "correlacion Pearson y Spearman, matrices de correlacion, groupby, chi-cuadrado",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/quiz.json",
+        "flashcards": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": true,
+        "preguntasEvaluacion": 5,
+        "preguntasQuiz": 7,
+        "flashcards": 65,
+        "faltantes": []
+      }
+    },
+    {
+      "unit": 3,
+      "sublevel": 1,
+      "code": "3.1",
+      "slug": "u3_s1_knn_naive_bayes",
+      "title": "KNN y Naive Bayes",
+      "topic": "KNN, distancia euclidiana, eleccion de K, normalizacion, Naive Bayes y matriz de confusion",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/quiz.json",
+        "flashcards": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": true,
+        "preguntasEvaluacion": 5,
+        "preguntasQuiz": 7,
+        "flashcards": 55,
+        "faltantes": []
+      }
+    },
+    {
+      "unit": 3,
+      "sublevel": 2,
+      "code": "3.2",
+      "slug": "u3_s2_regresion_logistica",
+      "title": "Regresion Logistica",
+      "topic": "sigmoide, log-odds, odds ratios, regularizacion, curva ROC y AUC",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/quiz.json",
+        "flashcards": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": true,
+        "preguntasEvaluacion": 5,
+        "preguntasQuiz": 10,
+        "flashcards": 55,
+        "faltantes": []
+      }
+    },
+    {
+      "unit": 3,
+      "sublevel": 3,
+      "code": "3.3",
+      "slug": "u3_s3_lda_evaluacion",
+      "title": "LDA y Evaluacion de Modelos",
+      "topic": "LDA, QDA, validacion cruzada, data leakage, comparacion de modelos",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/quiz.json",
+        "flashcards": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": true,
+        "preguntasEvaluacion": 5,
+        "preguntasQuiz": 8,
+        "flashcards": 50,
+        "faltantes": []
+      }
+    },
+    {
+      "unit": 4,
+      "sublevel": 1,
+      "code": "4.1",
+      "slug": "u4_s1_importancia_variables",
+      "title": "Importancia de Variables",
+      "topic": "coeficientes, permutation importance, SHAP, RFE, multicolinealidad y VIF",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/quiz.json",
+        "flashcards": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": true,
+        "preguntasEvaluacion": 5,
+        "preguntasQuiz": 10,
+        "flashcards": 60,
+        "faltantes": []
+      }
+    },
+    {
+      "unit": 4,
+      "sublevel": 2,
+      "code": "4.2",
+      "slug": "u4_s2_comunicacion_resultados",
+      "title": "Comunicacion y Reportes",
+      "topic": "reportes, lenguaje de negocio, R Markdown, Quarto, tablas y dashboards",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/evaluacion.json",
+        "flashcards": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": false,
+        "preguntasEvaluacion": 5,
+        "preguntasQuiz": 0,
+        "flashcards": 55,
+        "faltantes": []
+      }
+    },
+    {
+      "unit": 4,
+      "sublevel": 3,
+      "code": "4.3",
+      "slug": "u4_s3_etica_ia_bigdata",
+      "title": "Etica en IA y Big Data",
+      "topic": "sesgo algoritmico, fairness, privacidad diferencial y responsabilidad profesional",
+      "archivos": {
+        "resumen": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/resumen.html",
+        "microlectura": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/microlectura.html",
+        "funciones": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/funciones_r_python.html",
+        "procedimiento": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/procedimiento.html",
+        "practica": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/practica_guiada.html",
+        "aplicacion": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/aplicacion.html",
+        "evaluacion": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/evaluacion.json",
+        "flashcards": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/flashcards.json",
+        "mapaMental": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/mapa_mental_nlm.json",
+        "mapaMentalBase": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/mapa_mental.json",
+        "storyboard": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/storyboard_video.md",
+        "audioMicroclaseUrl": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/audio_microclase_url.txt",
+        "audioRepasoUrl": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/audio_repaso_url.txt",
+        "videoOverviewUrl": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/video_overview_url.txt"
+      },
+      "estado": {
+        "completoEscrito": true,
+        "quizNotebookLm": false,
+        "preguntasEvaluacion": 5,
+        "preguntasQuiz": 0,
+        "flashcards": 50,
+        "faltantes": []
+      }
+    }
+  ],
+  "unidades": [
+    {
+      "unit": 1,
+      "slug": "u1_revolucion_bigdata",
+      "source": "U1_RevolucionBigData",
+      "title": "Revolucion del Big Data",
+      "archivos": {
+        "flashcards_1": "recursos/notebooklm/unidades/u1_revolucion_bigdata/flashcards_1.json",
+        "flashcards_2": "recursos/notebooklm/unidades/u1_revolucion_bigdata/flashcards_2.json",
+        "google_docs_links": "recursos/notebooklm/unidades/u1_revolucion_bigdata/google_docs_links.json",
+        "mapa_mental_1": "recursos/notebooklm/unidades/u1_revolucion_bigdata/mapa_mental_1.json",
+        "quiz_1": "recursos/notebooklm/unidades/u1_revolucion_bigdata/quiz_1.json",
+        "quiz_2": "recursos/notebooklm/unidades/u1_revolucion_bigdata/quiz_2.json"
+      },
+      "mediaPendiente": [
+        {
+          "archivo": "podcast_1.wav",
+          "tipo": "wav",
+          "bytes": 34279841,
+          "recomendado": "convertir a mp3/ogg antes de publicar"
+        },
+        {
+          "archivo": "podcast_2.wav",
+          "tipo": "wav",
+          "bytes": 47700778,
+          "recomendado": "convertir a mp3/ogg antes de publicar"
+        },
+        {
+          "archivo": "presentacion_1.pptx",
+          "tipo": "pptx",
+          "bytes": 10025077,
+          "recomendado": "publicar en carga diferida"
+        },
+        {
+          "archivo": "presentacion_2.pptx",
+          "tipo": "pptx",
+          "bytes": 10628396,
+          "recomendado": "publicar en carga diferida"
+        }
+      ]
+    },
+    {
+      "unit": 2,
+      "slug": "u2_visualizacion_eda",
+      "source": "U2_VisualizacionEDA",
+      "title": "Visualizacion y EDA",
+      "archivos": {
+        "flashcards_1": "recursos/notebooklm/unidades/u2_visualizacion_eda/flashcards_1.json",
+        "flashcards_2": "recursos/notebooklm/unidades/u2_visualizacion_eda/flashcards_2.json",
+        "google_docs_links": "recursos/notebooklm/unidades/u2_visualizacion_eda/google_docs_links.json",
+        "mapa_mental_1": "recursos/notebooklm/unidades/u2_visualizacion_eda/mapa_mental_1.json",
+        "quiz_1": "recursos/notebooklm/unidades/u2_visualizacion_eda/quiz_1.json",
+        "quiz_2": "recursos/notebooklm/unidades/u2_visualizacion_eda/quiz_2.json"
+      },
+      "mediaPendiente": [
+        {
+          "archivo": "podcast_1.wav",
+          "tipo": "wav",
+          "bytes": 28055553,
+          "recomendado": "convertir a mp3/ogg antes de publicar"
+        },
+        {
+          "archivo": "podcast_2.wav",
+          "tipo": "wav",
+          "bytes": 54241179,
+          "recomendado": "convertir a mp3/ogg antes de publicar"
+        },
+        {
+          "archivo": "podcast_3.wav",
+          "tipo": "wav",
+          "bytes": 13759532,
+          "recomendado": "convertir a mp3/ogg antes de publicar"
+        },
+        {
+          "archivo": "presentacion_1.pptx",
+          "tipo": "pptx",
+          "bytes": 8945561,
+          "recomendado": "publicar en carga diferida"
+        },
+        {
+          "archivo": "presentacion_2.pptx",
+          "tipo": "pptx",
+          "bytes": 10582271,
+          "recomendado": "publicar en carga diferida"
+        }
+      ]
+    },
+    {
+      "unit": 3,
+      "slug": "u3_machine_learning",
+      "source": "U3_MachineLearning",
+      "title": "Machine Learning",
+      "archivos": {
+        "flashcards_1": "recursos/notebooklm/unidades/u3_machine_learning/flashcards_1.json",
+        "flashcards_2": "recursos/notebooklm/unidades/u3_machine_learning/flashcards_2.json",
+        "google_docs_links": "recursos/notebooklm/unidades/u3_machine_learning/google_docs_links.json",
+        "mapa_mental_1": "recursos/notebooklm/unidades/u3_machine_learning/mapa_mental_1.json",
+        "quiz_1": "recursos/notebooklm/unidades/u3_machine_learning/quiz_1.json",
+        "quiz_2": "recursos/notebooklm/unidades/u3_machine_learning/quiz_2.json"
+      },
+      "mediaPendiente": [
+        {
+          "archivo": "podcast_1.wav",
+          "tipo": "wav",
+          "bytes": 44810189,
+          "recomendado": "convertir a mp3/ogg antes de publicar"
+        },
+        {
+          "archivo": "presentacion_1.pptx",
+          "tipo": "pptx",
+          "bytes": 9574857,
+          "recomendado": "publicar en carga diferida"
+        },
+        {
+          "archivo": "presentacion_2.pptx",
+          "tipo": "pptx",
+          "bytes": 9771020,
+          "recomendado": "publicar en carga diferida"
+        },
+        {
+          "archivo": "video_1.mp4",
+          "tipo": "mp4",
+          "bytes": 41279075,
+          "recomendado": "publicar en carga diferida"
+        }
+      ]
+    },
+    {
+      "unit": 4,
+      "slug": "u4_interpretacion_modelos",
+      "source": "U4_InterpretacionModelos",
+      "title": "Interpretacion de Modelos",
+      "archivos": {
+        "flashcards_1": "recursos/notebooklm/unidades/u4_interpretacion_modelos/flashcards_1.json",
+        "flashcards_2": "recursos/notebooklm/unidades/u4_interpretacion_modelos/flashcards_2.json",
+        "google_docs_links": "recursos/notebooklm/unidades/u4_interpretacion_modelos/google_docs_links.json",
+        "mapa_mental_1": "recursos/notebooklm/unidades/u4_interpretacion_modelos/mapa_mental_1.json",
+        "quiz_1": "recursos/notebooklm/unidades/u4_interpretacion_modelos/quiz_1.json",
+        "quiz_2": "recursos/notebooklm/unidades/u4_interpretacion_modelos/quiz_2.json"
+      },
+      "mediaPendiente": [
+        {
+          "archivo": "podcast_1.wav",
+          "tipo": "wav",
+          "bytes": 45250311,
+          "recomendado": "convertir a mp3/ogg antes de publicar"
+        },
+        {
+          "archivo": "presentacion_1.pptx",
+          "tipo": "pptx",
+          "bytes": 9295270,
+          "recomendado": "publicar en carga diferida"
+        },
+        {
+          "archivo": "presentacion_2.pptx",
+          "tipo": "pptx",
+          "bytes": 6444974,
+          "recomendado": "publicar en carga diferida"
+        },
+        {
+          "archivo": "video_1.mp4",
+          "tipo": "mp4",
+          "bytes": 13993159,
+          "recomendado": "publicar en carga diferida"
+        }
+      ]
+    }
+  ]
+}

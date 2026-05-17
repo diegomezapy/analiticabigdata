@@ -1,0 +1,205 @@
+{
+  "title": "Big Data Tarjetas",
+  "cards": [
+    {
+      "front": "\u00bfEn qu\u00e9 d\u00e9cada surgieron los primeros sistemas de manejo de datos masivos en defensa y ciencia?",
+      "back": "En la d\u00e9cada de 1960."
+    },
+    {
+      "front": "\u00bfQu\u00e9 instituci\u00f3n acu\u00f1\u00f3 el t\u00e9rmino 'Big Data' en la d\u00e9cada de 1990 en relaci\u00f3n con la visualizaci\u00f3n de datos cient\u00edficos?",
+      "back": "La NASA."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tecnolog\u00eda lanzada por Google en 2004 sent\u00f3 las bases para el procesamiento distribuido escalable?",
+      "back": "MapReduce."
+    },
+    {
+      "front": "\u00bfEn qu\u00e9 a\u00f1o se lanz\u00f3 Hadoop para democratizar el Big Data de c\u00f3digo abierto?",
+      "back": "2006."
+    },
+    {
+      "front": "\u00bfQu\u00e9 sistema de procesamiento en memoria revolucion\u00f3 la velocidad del Big Data en 2011?",
+      "back": "Apache Spark."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el cambio fundamental de paradigma que propone el Big Data respecto al an\u00e1lisis estad\u00edstico tradicional?",
+      "back": "Pasar del muestreo de datos al an\u00e1lisis integral de datasets completos."
+    },
+    {
+      "front": "En el an\u00e1lisis de salud p\u00fablica, \u00bfqu\u00e9 beneficio ofrece el Big Data frente al muestreo tradicional?",
+      "back": "Habilita descubrimientos no hipot\u00e9ticos y predicciones en tiempo real mediante el an\u00e1lisis exhaustivo."
+    },
+    {
+      "front": "\u00bfQu\u00e9 volumen de datos se estima que se genera anualmente a nivel mundial para el a\u00f1o 2025?",
+      "back": "$181$ ZB."
+    },
+    {
+      "front": "\u00bfCu\u00e1ntos petabytes ($PB$) de datos nuevos maneja Meta Platforms diariamente?",
+      "back": "$4$ PB."
+    },
+    {
+      "front": "En el contexto de las 5V, \u00bfa qu\u00e9 se refiere la 'Velocidad'?",
+      "back": "Al procesamiento de datos en tiempo real y streaming, como en la detecci\u00f3n de fraude o monitoreo IoT."
+    },
+    {
+      "front": "\u00bfQu\u00e9 latencia se requiere t\u00edpicamente para la ejecuci\u00f3n de \u00f3rdenes en el Trading Algor\u00edtmico?",
+      "back": "$< 10 \\mu s$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de los datos en Big Data se considera 'Estructurado'?",
+      "back": "$20\\%$."
+    },
+    {
+      "front": "Los archivos JSON, XML y los logs son ejemplos de datos de tipo _____.",
+      "back": "Semi-estructurados"
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de datos constituye el $50\\%$ de la variedad en Big Data, incluyendo im\u00e1genes y videos?",
+      "back": "Datos no estructurados."
+    },
+    {
+      "front": "En la 'Veracidad', \u00bfqu\u00e9 m\u00e9trica asegura que los datasets curados tengan menos del $20\\%$ de valores faltantes?",
+      "back": "Completitud."
+    },
+    {
+      "front": "\u00bfQu\u00e9 m\u00e9trica de calidad de datos exige que la informaci\u00f3n est\u00e9 actualizada en menos de una hora para sistemas en tiempo real?",
+      "back": "Timeliness (Oportunidad)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el objetivo final de la 'V' de Valor en Big Data?",
+      "back": "Generar un retorno de inversi\u00f3n (ROI) medible mediante decisiones basadas en datos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta se recomienda para flujos de datos visuales (Ingesta & ETL)?",
+      "back": "Apache NiFi."
+    },
+    {
+      "front": "\u00bfQu\u00e9 motor de procesamiento es preferido para el streaming de estado (stateful streaming) con baja latencia?",
+      "back": "Apache Flink."
+    },
+    {
+      "front": "Concepto: Delta Lake",
+      "back": "Es una capa de almacenamiento que ofrece transacciones ACID sobre lagos de datos (data lakes)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de gobernanza de datos se utiliza para la gesti\u00f3n de metadatos (metadata management)?",
+      "back": "Apache Atlas."
+    },
+    {
+      "front": "\u00bfCu\u00e1nto ahorro anual estima Netflix gracias a su sistema de recomendaciones para reducir el churn?",
+      "back": "M\u00e1s de $1.5$ mil millones de d\u00f3lares ($1.5B+ $)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de las visualizaciones en Netflix son impulsadas por sus algoritmos de personalizaci\u00f3n?",
+      "back": "M\u00e1s del $75\\%$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica utiliza Uber para ajustar los precios en segundos bas\u00e1ndose en la oferta y demanda?",
+      "back": "Algoritmos de surge pricing (precios din\u00e1micos)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 soluci\u00f3n t\u00e9cnica permite manejar silos de datos sin realizar movimientos f\u00edsicos de la informaci\u00f3n?",
+      "back": "Data Fabric."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la sanci\u00f3n promedio por incumplimiento de normativas de privacidad como el GDPR ante un breach de datos?",
+      "back": "$1$ mill\u00f3n de d\u00f3lares."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de modelos de IA se estima que contienen sesgos (bias) inherentes?",
+      "back": "M\u00e1s del $50\\%$."
+    },
+    {
+      "front": "Tendencia 2025-2030: El paradigma que propone dominios aut\u00f3nomos con gobernanza de IA integrada se llama _____.",
+      "back": "Data Mesh 2.0"
+    },
+    {
+      "front": "\u00bfQu\u00e9 innovaci\u00f3n busca optimizar el consumo energ\u00e9tico de los centros de datos en un $30\\%$?",
+      "back": "Sustainable Data Ops (operaciones de datos sostenibles)."
+    },
+    {
+      "front": "Concepto: Federated Learning",
+      "back": "Entrenamiento distribuido de modelos sin necesidad de compartir datos sensibles."
+    },
+    {
+      "front": "\u00bfQu\u00e9 modelo de aprendizaje profundo se utiliza frecuentemente para la detecci\u00f3n de anomal\u00edas en transacciones financieras?",
+      "back": "Autoencoder (enfoque no supervisado)."
+    },
+    {
+      "front": "En la detecci\u00f3n de anomal\u00edas, \u00bfqu\u00e9 m\u00e9trica define la capacidad de detectar m\u00e1s del $98\\%$ de los fraudes?",
+      "back": "Recall (sensibilidad)."
+    },
+    {
+      "front": "La librer\u00eda de Facebook utilizada para el pron\u00f3stico de demanda en cadenas de suministro se llama _____.",
+      "back": "Prophet"
+    },
+    {
+      "front": "Definici\u00f3n: Batch Processing",
+      "back": "Procesamiento de grandes vol\u00famenes de datos en lotes para tareas que no requieren respuesta inmediata."
+    },
+    {
+      "front": "\u00bfC\u00f3mo se llama el fen\u00f3meno donde el cambio en la distribuci\u00f3n de los datos afecta el rendimiento de un modelo de ML?",
+      "back": "Data Drift."
+    },
+    {
+      "front": "Concepto: Explainable AI (XAI)",
+      "back": "T\u00e9cnicas dise\u00f1adas para hacer que los modelos de Machine Learning sean interpretables y auditables por humanos."
+    },
+    {
+      "front": "Definici\u00f3n: MLOps",
+      "back": "Pr\u00e1cticas de DevOps aplicadas al Machine Learning para automatizar el entrenamiento, despliegue y monitoreo."
+    },
+    {
+      "front": "\u00bfQu\u00e9 modelo de seguridad establece que cada acceso a los datos debe ser verificado din\u00e1micamente?",
+      "back": "Zero-Trust Data Access."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la ruta de trabajo sugerida para iniciar en la Anal\u00edtica de Big Data con R/RStudio?",
+      "back": "Configurar el entorno, ejecutar operaciones b\u00e1sicas con datos tabulares y realizar lectura exploratoria."
+    },
+    {
+      "front": "En el entorno R/RStudio, \u00bfcu\u00e1l es el producto esperado de una lectura exploratoria inicial?",
+      "back": "Tablas, res\u00famenes estad\u00edsticos y gr\u00e1ficos simples."
+    },
+    {
+      "front": "Para el an\u00e1lisis de datos masivos en R, \u00bfqu\u00e9 tipo de evidencia de aprendizaje se debe registrar en la bit\u00e1cora?",
+      "back": "Comandos utilizados, capturas de salida y una reflexi\u00f3n sobre la calidad de los datos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 lenguaje de programaci\u00f3n utiliza la librer\u00eda Pandas para el an\u00e1lisis de correlaciones en datasets de gran escala?",
+      "back": "Python."
+    },
+    {
+      "front": "\u00bfQu\u00e9 formato de archivo se recomienda para el almacenamiento eficiente de millones de registros debido a su optimizaci\u00f3n?",
+      "back": "Parquet."
+    },
+    {
+      "front": "Dentro de las arquitecturas modernas, \u00bfcu\u00e1l es la funci\u00f3n de Amazon S3?",
+      "back": "Almacenamiento de objetos (Object storage) en la nube."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta se utiliza para la transformaci\u00f3n de datos (data build tool) en flujos de anal\u00edtica moderna?",
+      "back": "dbt."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la principal diferencia entre Apache Spark y Apache Flink en t\u00e9rminos de latencia?",
+      "back": "Flink est\u00e1 optimizado para streaming de baja latencia en comparaci\u00f3n con el enfoque de micro-batches de Spark."
+    },
+    {
+      "front": "En el caso de Uber, \u00bfqu\u00e9 porcentaje de reducci\u00f3n en los tiempos estimados de llegada (ETA) se logr\u00f3 mediante anal\u00edtica predictiva?",
+      "back": "$20\\%$."
+    },
+    {
+      "front": "\u00bfA qu\u00e9 se refiere el concepto de 'Data Sovereignty'?",
+      "back": "A los requisitos legales que obligan a almacenar los datos dentro de jurisdicciones geogr\u00e1ficas espec\u00edficas."
+    },
+    {
+      "front": "Concepto: Federated Query",
+      "back": "Capacidad de realizar consultas distribuidas a trav\u00e9s de m\u00faltiples fuentes de datos sin centralizarlos f\u00edsicamente."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el prop\u00f3sito de una 'Actividad de Fijaci\u00f3n' (AF) en el modelo pedag\u00f3gico de la FACEN?",
+      "back": "Asegurar la lectura activa del material y la preparaci\u00f3n conceptual antes de las tareas aplicadas."
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "mind_map": {
+    "name": "Visualización y Exploración de Datos en Big Data",
+    "children": [
+      {
+        "name": "Análisis Exploratorio de Datos (EDA)",
+        "children": [
+          {
+            "name": "Tipos de Variables",
+            "children": [
+              {
+                "name": "Cuantitativas (Discretas/Continuas)"
+              },
+              {
+                "name": "Cualitativas (Nominales/Ordinales)"
+              }
+            ]
+          },
+          {
+            "name": "Técnicas y Herramientas",
+            "children": [
+              {
+                "name": "Estadísticas Descriptivas (Pandas/R summary)"
+              },
+              {
+                "name": "Visualización Univariada (Histogramas)"
+              },
+              {
+                "name": "Detección de Outliers (Boxplots)"
+              },
+              {
+                "name": "Relaciones y Correlaciones (Scatter plots/Heatmaps)"
+              }
+            ]
+          },
+          {
+            "name": "Librerías Principales",
+            "children": [
+              {
+                "name": "Python (Seaborn/Matplotlib)"
+              },
+              {
+                "name": "R (ggplot2/GGally)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Preprocesado de Datos",
+        "children": [
+          {
+            "name": "Limpieza (Duplicados y Outliers)"
+          },
+          {
+            "name": "Transformación (Normalización y Escalado)"
+          },
+          {
+            "name": "Selección (Reducción de Dimensionalidad/PCA)"
+          }
+        ]
+      },
+      {
+        "name": "Manejo de Valores Ausentes",
+        "children": [
+          {
+            "name": "Estrategias de Imputación",
+            "children": [
+              {
+                "name": "Eliminación (Proporción baja)"
+              },
+              {
+                "name": "Estadística (Media/Mediana/Moda)"
+              },
+              {
+                "name": "Modelada (KNN/Regresión)"
+              }
+            ]
+          },
+          {
+            "name": "Herramientas (Scikit-learn/mice)"
+          }
+        ]
+      },
+      {
+        "name": "Actividades de la Unidad",
+        "children": [
+          {
+            "name": "1. Estudio de materiales (AF)",
+            "children": [
+              {
+                "name": "Lectura y Videos Tutoriales"
+              }
+            ]
+          },
+          {
+            "name": "2. Foro de Discusión (AI)",
+            "children": [
+              {
+                "name": "Binarización y División de datos"
+              }
+            ]
+          },
+          {
+            "name": "3. Cuestionario en Línea (AA)",
+            "children": [
+              {
+                "name": "Imputación, Estandarización y Escalado"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "note_id": "0b8bec7f-af4a-455c-90b9-ff8b290a0a86"
+}

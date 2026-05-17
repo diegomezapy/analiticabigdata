@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>2.1 Guía de Funciones R y Python — Visualización — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 10px; }
+  h2 { color: #1976D2; margin-top: 2em; }
+  h3 { color: #0D47A1; }
+  .header-info { background: #E3F2FD; border-left: 4px solid #1565C0; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #0D47A1; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #E8F5E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #1565C0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 2</div>
+
+<h1>2.1 Guía de Funciones: Visualización con ggplot2 y seaborn</h1>
+<h2>R — ggplot2</h2>
+<pre><code class="language-r">
+library(ggplot2)
+library(dplyr)
+
+# ESTRUCTURA BASE
+# ggplot(datos, aes(x=var_x, y=var_y)) + geom_*()
+
+# 1. Histograma de distribución
+ggplot(iris, aes(x = Sepal.Length)) +
+  geom_histogram(bins = 20, fill = "#1565C0", color = "white", alpha = 0.8) +
+  labs(title = "Distribución del largo del sépalo",
+       x = "Largo del sépalo (cm)", y = "Frecuencia") +
+  theme_minimal()
+# bins: número de barras
+# fill: color de relleno, color: borde, alpha: transparencia
+
+# 2. Boxplot por grupo
+ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
+  geom_boxplot(outlier.color = "red", outlier.shape = 16) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(title = "Largo del sépalo por especie") +
+  theme_classic()
+# outlier.color/shape: personaliza puntos atípicos
+# scale_fill_brewer: paleta de ColorBrewer
+
+# 3. Gráfico de dispersión con regresión
+ggplot(iris, aes(x = Sepal.Length, y = Petal.Length, color = Species)) +
+  geom_point(alpha = 0.7, size = 3) +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(title = "Relación sépalo vs pétalo por especie") +
+  theme_light()
+# geom_smooth: agrega línea de tendencia
+# method="lm": regresión lineal, se=TRUE: intervalo de confianza
+
+# 4. Facetas
+ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
+  geom_point(aes(color = Species)) +
+  facet_wrap(~ Species, ncol = 3) +
+  theme_bw()
+# facet_wrap: subgráficos por variable
+
+# 5. Heatmap de correlación
+library(reshape2)
+corr_mat <- cor(iris[,1:4])
+melted <- melt(corr_mat)
+ggplot(melted, aes(x = Var1, y = Var2, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+  geom_text(aes(label = round(value, 2)), size = 4) +
+  labs(title = "Mapa de correlación") +
+  theme_minimal()
+# geom_tile: rectángulos coloreados
+# scale_fill_gradient2: escala divergente
+
+# 6. Guardar gráfico
+ggsave("mi_grafico.png", width = 8, height = 6, dpi = 300)
+# width/height en pulgadas, dpi=300 para calidad impresión
+</code></pre>
+<h2>Python — seaborn + matplotlib</h2>
+<pre><code class="language-python">
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.datasets import load_iris
+
+iris_df = pd.DataFrame(load_iris().data, columns=load_iris().feature_names)
+iris_df['species'] = load_iris().target_names[load_iris().target]
+
+# Tema global
+sns.set_theme(style="whitegrid", palette="muted")
+
+# 1. Histograma con curva de densidad
+fig, ax = plt.subplots(figsize=(8, 5))
+sns.histplot(iris_df, x='sepal length (cm)', hue='species',
+             kde=True, element='bars', alpha=0.6, ax=ax)
+ax.set_title('Distribución del largo del sépalo')
+plt.tight_layout()
+plt.savefig('histograma.png', dpi=150)
+# kde=True: agrega curva de densidad kernel
+# hue: colorea por categoría
+
+# 2. Boxplot
+fig, ax = plt.subplots(figsize=(8, 5))
+sns.boxplot(data=iris_df, x='species', y='sepal length (cm)',
+            palette='Set2', linewidth=1.5, ax=ax)
+ax.set_title('Largo del sépalo por especie')
+plt.tight_layout()
+
+# 3. Dispersión con regresión
+sns.lmplot(data=iris_df, x='sepal length (cm)', y='petal length (cm)',
+           hue='species', height=5, aspect=1.4,
+           scatter_kws={'alpha': 0.7}, line_kws={'lw': 2})
+plt.title('Relación sépalo vs pétalo')
+plt.tight_layout()
+# lmplot: combina dispersión + regresión lineal por grupo
+
+# 4. Pairplot (matriz de dispersión)
+sns.pairplot(iris_df, hue='species', diag_kind='kde',
+             plot_kws={'alpha': 0.6})
+plt.suptitle('Matriz de dispersión — iris', y=1.02)
+plt.tight_layout()
+
+# 5. Heatmap de correlación
+fig, ax = plt.subplots(figsize=(7, 6))
+corr = iris_df.drop('species', axis=1).corr()
+sns.heatmap(corr, annot=True, fmt='.2f', cmap='coolwarm',
+            center=0, vmin=-1, vmax=1,
+            linewidths=0.5, ax=ax)
+ax.set_title('Mapa de correlación')
+plt.tight_layout()
+# annot=True: muestra valores, fmt='.2f': 2 decimales
+# cmap: paleta de colores divergente
+</code></pre>
+
+</body>
+</html>

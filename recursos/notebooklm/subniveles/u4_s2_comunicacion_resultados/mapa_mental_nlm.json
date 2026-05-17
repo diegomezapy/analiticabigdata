@@ -1,0 +1,121 @@
+{
+  "mind_map": {
+    "name": "Unidad 4: Interpretación de resultados y modelos estadísticos",
+    "children": [
+      {
+        "name": "Objetivo Principal",
+        "children": [
+          {
+            "name": "Interpretar modelos estadísticos"
+          },
+          {
+            "name": "Comunicar hallazgos"
+          },
+          {
+            "name": "Toma de decisiones"
+          }
+        ]
+      },
+      {
+        "name": "Análisis Discriminante Lineal (LDA)",
+        "children": [
+          {
+            "name": "Clasificación y reducción dimensional"
+          },
+          {
+            "name": "Maximiza separación entre clases"
+          },
+          {
+            "name": "Asume normalidad y homocedasticidad"
+          },
+          {
+            "name": "Implementación en R (MASS/caret)"
+          }
+        ]
+      },
+      {
+        "name": "Métricas de Evaluación",
+        "children": [
+          {
+            "name": "Accuracy"
+          },
+          {
+            "name": "Precision / Recall"
+          },
+          {
+            "name": "AUC-ROC"
+          },
+          {
+            "name": "R-squared"
+          },
+          {
+            "name": "Feature Importance"
+          }
+        ]
+      },
+      {
+        "name": "Selección de Modelos",
+        "children": [
+          {
+            "name": "Cross-Validation"
+          },
+          {
+            "name": "Criterios AIC/BIC"
+          },
+          {
+            "name": "Ensemble Voting"
+          },
+          {
+            "name": "Valores SHAP (Explicabilidad)"
+          }
+        ]
+      },
+      {
+        "name": "Generación de Información",
+        "children": [
+          {
+            "name": "Dashboards interactivos (Shiny)"
+          },
+          {
+            "name": "Reportes reproducibles (R Markdown)"
+          },
+          {
+            "name": "Narrativas de datos"
+          }
+        ]
+      },
+      {
+        "name": "Actividades de Aprendizaje",
+        "children": [
+          {
+            "name": "Estudio de materiales y videos"
+          },
+          {
+            "name": "Foro de discusión: Casos LDA"
+          },
+          {
+            "name": "Cuestionario en línea"
+          },
+          {
+            "name": "Informe final de investigación"
+          }
+        ]
+      },
+      {
+        "name": "Aplicaciones Reales",
+        "children": [
+          {
+            "name": "Reconocimiento facial"
+          },
+          {
+            "name": "Riesgo financiero"
+          },
+          {
+            "name": "Bioinformática y Genómica"
+          }
+        ]
+      }
+    ]
+  },
+  "note_id": "c314b575-9fb4-4217-a539-bc550e40dd1d"
+}

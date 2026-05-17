@@ -1,0 +1,225 @@
+{
+  "title": "Big Data Tarjetas",
+  "cards": [
+    {
+      "front": "\u00bfEn qu\u00e9 d\u00e9cada se originaron los primeros sistemas de manejo de datos masivos en defensa y ciencia?",
+      "back": "En la d\u00e9cada de 1960."
+    },
+    {
+      "front": "\u00bfQu\u00e9 instituci\u00f3n utiliz\u00f3 por primera vez el t\u00e9rmino 'Big Data' en la d\u00e9cada de 1990 para referirse a la visualizaci\u00f3n de datos cient\u00edficos?",
+      "back": "La NASA."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tecnolog\u00eda lanzada por Google en 2004 sent\u00f3 las bases para el procesamiento distribuido escalable?",
+      "back": "Google MapReduce."
+    },
+    {
+      "front": "\u00bfQu\u00e9 hito tecnol\u00f3gico de 2006 permiti\u00f3 la democratizaci\u00f3n del Big Data mediante el c\u00f3digo abierto?",
+      "back": "El lanzamiento de Hadoop."
+    },
+    {
+      "front": "\u00bfQu\u00e9 motor de procesamiento revolucion\u00f3 la velocidad del Big Data en 2011 al introducir el procesamiento en memoria?",
+      "back": "Apache Spark."
+    },
+    {
+      "front": "Entre 2015 y 2020, el auge de la computaci\u00f3n en la nube impuls\u00f3 la adopci\u00f3n masiva de los llamados _____.",
+      "back": "Data Lakes."
+    },
+    {
+      "front": "El cambio de paradigma del Big Data consiste en pasar del muestreo estad\u00edstico al an\u00e1lisis _____.",
+      "back": "Integral de datasets completos."
+    },
+    {
+      "front": "Seg\u00fan las estad\u00edsticas de 2025, \u00bfcu\u00e1ntos Zettabytes (ZB) de datos se generan anualmente a nivel mundial?",
+      "back": "$181$ ZB."
+    },
+    {
+      "front": "En la dimensi\u00f3n de 'Volumen', \u00bfcu\u00e1ntos datos nuevos maneja Meta Platforms diariamente?",
+      "back": "$4$ PB."
+    },
+    {
+      "front": "En el trading algor\u00edtmico, \u00bfcu\u00e1l es el tiempo t\u00edpico de ejecuci\u00f3n de \u00f3rdenes para cumplir con la dimensi\u00f3n de 'Velocidad'?",
+      "back": "Menos de $10\\ \\mu s$."
+    },
+    {
+      "front": "Para el monitoreo de redes 5G mediante IoT, \u00bfqu\u00e9 capacidad de procesamiento de eventos por segundo se requiere?",
+      "back": "$10$ millones de eventos por segundo."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tecnolog\u00eda de procesamiento es preferible sobre Spark cuando se requiere una latencia extremadamente baja (low-latency) en streaming?",
+      "back": "Apache Flink."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de los datos globales en Big Data se clasifica como 'No estructurados'?",
+      "back": "$50\\%$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de datos representan el $20\\%$ del ecosistema, incluyendo formatos como SQL, CSV y Excel?",
+      "back": "Datos estructurados."
+    },
+    {
+      "front": "Los formatos JSON, XML y los Logs se categorizan como datos _____.",
+      "back": "Semi-estructurados."
+    },
+    {
+      "front": "En la dimensi\u00f3n de 'Veracidad', \u00bfqu\u00e9 m\u00e9trica se considera \u00f3ptima si hay menos del $20\\%$ de valores faltantes?",
+      "back": "Completitud."
+    },
+    {
+      "front": "\u00bfQu\u00e9 m\u00e9trica de calidad de datos exige un $0\\%$ de inconsistencias de formato entre diferentes sistemas?",
+      "back": "Consistencia."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el umbral de precisi\u00f3n esperado para considerar que un dato est\u00e1 validado en un entorno de Big Data?",
+      "back": "Mayor al $95\\%$."
+    },
+    {
+      "front": "En t\u00e9rminos de 'Valor', \u00bfen qu\u00e9 rango porcentual se estima el incremento de ingresos mediante decisiones basadas en datos?",
+      "back": "Entre $15\\%$ y $25\\%$."
+    },
+    {
+      "front": "Menciona una herramienta l\u00edder para la ingesta de datos de flujo continuo (high-throughput streaming).",
+      "back": "Apache Kafka."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta se utiliza espec\u00edficamente para flujos de datos visuales en la etapa de ingesta?",
+      "back": "Apache NiFi."
+    },
+    {
+      "front": "\u00bfQu\u00e9 componente de almacenamiento proporciona transacciones ACID sobre los Data Lakes?",
+      "back": "Delta Lake."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de gobernanza se utiliza para la gesti\u00f3n de metadatos (metadata management)?",
+      "back": "Apache Atlas."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el prop\u00f3sito de la herramienta 'dbt' en las arquitecturas modernas?",
+      "back": "Funcionar como una herramienta de construcci\u00f3n de datos (data build tool) para anal\u00edtica."
+    },
+    {
+      "front": "\u00bfCu\u00e1nto ahorra Netflix anualmente gracias a la reducci\u00f3n de 'churn' mediante su sistema de recomendaciones?",
+      "back": "M\u00e1s de $\\$1.5$ mil millones."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de las visualizaciones en Netflix son impulsadas por sus algoritmos de personalizaci\u00f3n?",
+      "back": "M\u00e1s del $75\\%$."
+    },
+    {
+      "front": "\u00bfCu\u00e1ntos eventos diarios de usuario procesa Netflix para alimentar sus modelos?",
+      "back": "M\u00e1s de $1$ mil millones de eventos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 volumen de datos procesa Uber diariamente en tiempo real para su log\u00edstica urbana?",
+      "back": "$500$ TB."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica anal\u00edtica permite a Uber reducir los tiempos estimados de llegada (ETAs) en un $20\\%$?",
+      "back": "Anal\u00edtica predictiva."
+    },
+    {
+      "front": "Concepto: Data Fabric",
+      "back": "Arquitectura virtual que integra datos entre silos sin necesidad de movimiento f\u00edsico."
+    },
+    {
+      "front": "\u00bfQu\u00e9 soluci\u00f3n t\u00e9cnica se propone para resolver los silos de datos que afectan al $70\\%$ de las organizaciones?",
+      "back": "Data Fabric."
+    },
+    {
+      "front": "\u00bfA cu\u00e1nto ascienden las multas promedio por incumplimiento de normativas de privacidad como GDPR?",
+      "back": "Aproximadamente $\\$1$ mill\u00f3n por infracci\u00f3n."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de los modelos de IA se estima que contienen sesgos (bias) inherentes?",
+      "back": "M\u00e1s del $50\\%$."
+    },
+    {
+      "front": "La tendencia futura que propone dominios aut\u00f3nomos con gobernanza de IA integrada se llama _____.",
+      "back": "Data Mesh 2.0."
+    },
+    {
+      "front": "\u00bfQu\u00e9 paradigma busca reducir en un $30\\%$ el consumo energ\u00e9tico de los centros de datos?",
+      "back": "Sustainable Data Ops (Optimizaci\u00f3n verde)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tecnolog\u00eda emergente permitir\u00e1 procesar datasets masivos para optimizaciones complejas utilizando qubits?",
+      "back": "Anal\u00edtica potenciada por computaci\u00f3n cu\u00e1ntica (Quantum-Enhanced Analytics)."
+    },
+    {
+      "front": "El entrenamiento de modelos distribuidos sin compartir datos sensibles se conoce como _____.",
+      "back": "Aprendizaje Federado (Federated Learning)."
+    },
+    {
+      "front": "En la detecci\u00f3n de anomal\u00edas para FinTech, \u00bfqu\u00e9 tipo de red neuronal de TensorFlow se utiliza t\u00edpicamente para el aprendizaje no supervisado?",
+      "back": "Autoencoder."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el objetivo de latencia por transacci\u00f3n en un sistema de detecci\u00f3n de fraude bancario de alto rendimiento?",
+      "back": "Menos de $100$ ms."
+    },
+    {
+      "front": "\u00bfQu\u00e9 librer\u00eda de Facebook se recomienda para realizar pron\u00f3sticos (forecasting) en la cadena de suministro?",
+      "back": "Prophet."
+    },
+    {
+      "front": "Concepto: Batch Processing",
+      "back": "Procesamiento de datos en lotes para tareas de alto volumen que no son urgentes."
+    },
+    {
+      "front": "\u00bfC\u00f3mo se denomina al cambio gradual en la distribuci\u00f3n de los datos que degrada el rendimiento de los modelos de ML?",
+      "back": "Data Drift."
+    },
+    {
+      "front": "Concepto: Data Lakehouse",
+      "back": "H\u00edbrido que combina la flexibilidad del data lake con las transacciones ACID y la gobernanza del data warehouse."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9rmino describe el conjunto de t\u00e9cnicas para hacer que los modelos de Machine Learning sean interpretables y auditables?",
+      "back": "Explainable AI (XAI)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 metodolog\u00eda aplica las pr\u00e1cticas de DevOps al ciclo de vida del Machine Learning?",
+      "back": "MLOps."
+    },
+    {
+      "front": "El an\u00e1lisis continuo de datos en movimiento para obtener informaci\u00f3n en tiempo real se denomina _____.",
+      "back": "Stream Processing."
+    },
+    {
+      "front": "En el contexto de seguridad, \u00bfqu\u00e9 modelo exige que cada acceso a los datos sea verificado din\u00e1micamente?",
+      "back": "Zero-Trust Data Access."
+    },
+    {
+      "front": "\u00bfQu\u00e9 autor escribi\u00f3 el libro fundamental 'Designing Data-Intensive Applications'?",
+      "back": "Martin Kleppmann."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el nombre del sistema de archivos distribuido fundamental en el ecosistema Hadoop?",
+      "back": "HDFS (Hadoop Distributed File System)."
+    },
+    {
+      "front": "En el an\u00e1lisis de salud masivo, \u00bfqu\u00e9 reducci\u00f3n porcentual de diagn\u00f3sticos err\u00f3neos se logra al analizar $10$ millones de historiales en lugar de muestras?",
+      "back": "$35\\%$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 formato de archivo se prefiere para el manejo eficiente de grandes vol\u00famenes de datos tabulares (como en el ejemplo de 10M de registros m\u00e9dicos)?",
+      "back": "Parquet."
+    },
+    {
+      "front": "\u00bfQu\u00e9 m\u00e9trica de la 'Veracidad' se refiere a que los datos est\u00e9n actualizados en menos de una hora para sistemas de tiempo real?",
+      "back": "Timeliness (Oportunidad)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la funci\u00f3n del 'Bottleneck' (cuello de botella) en un modelo de Autoencoder para detecci\u00f3n de anomal\u00edas?",
+      "back": "Comprimir los datos a una representaci\u00f3n esencial para luego intentar reconstruirlos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 componente de gobernanza act\u00faa como un cat\u00e1logo de datos para la organizaci\u00f3n?",
+      "back": "Collibra."
+    },
+    {
+      "front": "En el modelo de Surge Pricing de Uber, \u00bfqu\u00e9 tipo de regresi\u00f3n se utiliza com\u00fanmente para predecir el multiplicador de precio?",
+      "back": "Regresi\u00f3n Lineal (Linear Regression)."
+    }
+  ]
+}

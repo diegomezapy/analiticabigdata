@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>2.3 Procedimiento — Análisis de Correlación Completo — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 10px; }
+  h2 { color: #1976D2; margin-top: 2em; }
+  h3 { color: #0D47A1; }
+  .header-info { background: #E3F2FD; border-left: 4px solid #1565C0; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #0D47A1; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #E8F5E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #1565C0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 2</div>
+
+<h1>2.3 Procedimiento: Análisis de Correlación y Agrupación</h1>
+<h2>Objetivo</h2>
+<p>Identificar relaciones entre variables mediante correlación y resumir patrones por grupos en un dataset multivariado.</p>
+<h2>Pasos</h2>
+<h3>Paso 1: Cargar datos y seleccionar variables</h3>
+<pre>library(dplyr); library(ggplot2); library(corrplot)
+data("diamonds", package = "ggplot2")
+# Solo variables numéricas
+num_vars <- diamonds %>% select(carat, depth, table, price, x, y, z)
+summary(num_vars)</pre>
+<h3>Paso 2: Calcular matriz de correlación</h3>
+<pre>cor_mat <- cor(num_vars, use = "complete.obs")
+print(round(cor_mat, 3))
+# ¿Qué variable correlaciona más con price?</pre>
+<h3>Paso 3: Visualizar</h3>
+<pre>corrplot(cor_mat,
+  method = "color",
+  type = "upper",
+  addCoef.col = "black",
+  number.cex = 0.75,
+  tl.cex = 0.8,
+  col = colorRampPalette(c("#053061","white","#67001F"))(200),
+  title = "Correlaciones — diamonds",
+  mar = c(0,0,1,0))</pre>
+<h3>Paso 4: Scatterplot de la correlación más alta</h3>
+<pre>ggplot(diamonds, aes(x = carat, y = price, color = cut)) +
+  geom_point(alpha = 0.2, size = 1) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_color_brewer(palette = "Spectral") +
+  labs(title = sprintf("carat vs price (r = %.3f)",
+                       cor(diamonds$carat, diamonds$price)),
+       x = "Quilates", y = "Precio (USD)") +
+  theme_minimal()</pre>
+<h3>Paso 5: Análisis de agrupación</h3>
+<pre>diamonds %>%
+  group_by(cut, color) %>%
+  summarise(
+    n = n(),
+    precio_medio = mean(price),
+    precio_mediana = median(price),
+    carat_medio = mean(carat),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(precio_medio)) %>%
+  head(10)</pre>
+<h3>Paso 6: Visualizar grupos</h3>
+<pre>ggplot(diamonds, aes(x = cut, y = price, fill = cut)) +
+  geom_violin(trim = FALSE) +
+  geom_boxplot(width = 0.1, fill = "white", outlier.size = 0.5) +
+  scale_y_log10(labels = scales::dollar) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(title = "Distribución de precios por calidad de corte") +
+  theme_minimal() + theme(legend.position = "none")</pre>
+
+</body>
+</html>

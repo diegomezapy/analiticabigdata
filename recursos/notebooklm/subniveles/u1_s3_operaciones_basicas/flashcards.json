@@ -1,0 +1,245 @@
+{
+  "title": "BigData Tarjetas",
+  "cards": [
+    {
+      "front": "\u00bfEn qu\u00e9 d\u00e9cada se sit\u00faan los primeros sistemas de manejo de datos masivos en defensa y ciencia?",
+      "back": "En la d\u00e9cada de 1960 (precursores de ARPANET)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 hito tecnol\u00f3gico de Google en 2004 sent\u00f3 las bases para el procesamiento distribuido escalable?",
+      "back": "Google MapReduce."
+    },
+    {
+      "front": "En el contexto de Big Data, \u00bfqu\u00e9 herramienta lanzada en 2006 democratiz\u00f3 el an\u00e1lisis de datos masivos mediante c\u00f3digo abierto?",
+      "back": "Hadoop."
+    },
+    {
+      "front": "\u00bfQu\u00e9 ventaja principal introdujo Apache Spark en 2011 frente a modelos de procesamiento anteriores?",
+      "back": "El procesamiento de datos en memoria para aumentar la velocidad."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el cambio de paradigma fundamental al pasar de la estad\u00edstica tradicional al Big Data?",
+      "back": "Pasar del an\u00e1lisis de muestras (inferencia) al an\u00e1lisis de datasets completos (an\u00e1lisis integral)."
+    },
+    {
+      "front": "Seg\u00fan las proyecciones de IDC para 2025, \u00bfcu\u00e1l es el volumen anual de datos generados mundialmente?",
+      "back": "$181$ Zettabytes (ZB)."
+    },
+    {
+      "front": "En la caracter\u00edstica de 'Velocidad', \u00bfcu\u00e1l es el tiempo de ejecuci\u00f3n de \u00f3rdenes en el Trading Algor\u00edtmico?",
+      "back": "Menos de $10$ $\\mu$s."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje aproximado de los datos generados globalmente son 'No estructurados'?",
+      "back": "El $50\\%$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de datos representan el $20\\%$ del total e incluyen formatos como SQL, CSV y Excel?",
+      "back": "Datos estructurados."
+    },
+    {
+      "front": "M\u00e9trica de Veracidad: \u00bfCu\u00e1l es el l\u00edmite t\u00edpico de valores faltantes (missing values) para considerar un dataset curado como completo?",
+      "back": "Menos del $20\\%$."
+    },
+    {
+      "front": "\u00bfC\u00f3mo se define la 'Veracidad' en el marco de las 5V del Big Data?",
+      "back": "Es el aseguramiento de la calidad, precisi\u00f3n y consistencia de los datos analizados."
+    },
+    {
+      "front": "En t\u00e9rminos de 'Valor', \u00bfqu\u00e9 incremento porcentual en ingresos se estima mediante decisiones basadas en datos?",
+      "back": "Entre el $15\\%$ y el $25\\%$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de ingesta se recomienda para el manejo de flujos de datos visuales (data flows)?",
+      "back": "Apache NiFi."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la funci\u00f3n principal de Apache Kafka en una arquitectura de Big Data?",
+      "back": "La ingesta y el transporte de datos mediante streaming de alto rendimiento (high-throughput)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tecnolog\u00eda permite aplicar propiedades ACID sobre arquitecturas de Data Lake?",
+      "back": "Delta Lake."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de la arquitectura moderna se utiliza para la gobernanza y gesti\u00f3n de metadatos (metadata management)?",
+      "back": "Apache Atlas."
+    },
+    {
+      "front": "\u00bfCu\u00e1nto dinero ahorra anualmente Netflix gracias a su sistema de recomendaciones para reducir el churn?",
+      "back": "M\u00e1s de $1.5$ mil millones de d\u00f3lares ($1.5$B)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de las visualizaciones en Netflix son impulsadas por sus algoritmos de recomendaci\u00f3n?",
+      "back": "M\u00e1s del $75\\%$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 volumen de datos procesa Uber diariamente en tiempo real?",
+      "back": "$500$ Terabytes (TB) por d\u00eda."
+    },
+    {
+      "front": "En el contexto de Uber, \u00bfcu\u00e1l es el prop\u00f3sito de los algoritmos de 'surge pricing'?",
+      "back": "Ajustar din\u00e1micamente los precios en segundos bas\u00e1ndose en la oferta y demanda actual."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica se utiliza para mitigar los riesgos de privacidad cumpliendo con normativas como GDPR?",
+      "back": "T\u00e9cnicas de anonimizaci\u00f3n, como la privacidad diferencial (differential privacy)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de los modelos de IA se estima que poseen sesgos (bias) inherentes?",
+      "back": "M\u00e1s del $50\\%$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tendencia futura propone dominios de datos aut\u00f3nomos con gobernanza de IA integrada?",
+      "back": "Data Mesh 2.0."
+    },
+    {
+      "front": "Concepto: Federated Learning",
+      "back": "Definici\u00f3n: Entrenamiento de modelos de forma distribuida sin compartir datos sensibles entre nodos."
+    },
+    {
+      "front": "Concepto: Data Drift",
+      "back": "Definici\u00f3n: Cambio gradual en la distribuci\u00f3n de los datos de entrada que degrada el rendimiento de los modelos."
+    },
+    {
+      "front": "Concepto: Data Lakehouse",
+      "back": "Definici\u00f3n: Arquitectura h\u00edbrida que combina la flexibilidad del data lake con la gesti\u00f3n y transacciones del data warehouse."
+    },
+    {
+      "front": "\u00bfQu\u00e9 librer\u00eda de Python es \u00f3ptima para leer archivos Parquet de forma eficiente en an\u00e1lisis de Big Data?",
+      "back": "Pandas (usando el motor `pyarrow` o `fastparquet`)."
+    },
+    {
+      "front": "En Apache Flink, \u00bfqu\u00e9 estructura se utiliza para definir una ventana de tiempo de procesamiento de 1 minuto?",
+      "back": "La funci\u00f3n `TUMBLE(timestamp, INTERVAL '1' MINUTE)`."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de visualizaci\u00f3n y an\u00e1lisis exploratorio se utiliza para generar tablas y gr\u00e1ficos simples en el entorno R/RStudio?",
+      "back": "ggplot2 (para gr\u00e1ficos) y funciones de resumen tabular."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el prop\u00f3sito de usar un 'Watermark' en el procesamiento de streams con Apache Flink?",
+      "back": "Manejar datos que llegan con retraso permitiendo un margen de espera temporal."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de arquitectura de red neuronal se utiliza para la detecci\u00f3n no supervisada de anomal\u00edas en transacciones financieras?",
+      "back": "Autoencoders (basados en el error de reconstrucci\u00f3n)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 librer\u00eda desarrollada por Facebook se especializa en la predicci\u00f3n de series temporales (forecasting) con estacionalidad?",
+      "back": "Prophet."
+    },
+    {
+      "front": "En un modelo de Surge Pricing, \u00bfpor qu\u00e9 es necesario el uso de un `StandardScaler`?",
+      "back": "Para normalizar las caracter\u00edsticas (features) y que tengan la misma escala antes del entrenamiento."
+    },
+    {
+      "front": "\u00bfQu\u00e9 m\u00e9trica de evaluaci\u00f3n es cr\u00edtica en la detecci\u00f3n de fraude para asegurar que se capture la mayor cantidad de casos positivos?",
+      "back": "El Recall (sensibilidad), que debe ser superior al $98\\%$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 formato de archivo es preferible a CSV para manejar grandes vol\u00famenes de datos debido a su almacenamiento columnar y compresi\u00f3n?",
+      "back": "Parquet."
+    },
+    {
+      "front": "Concepto: Explainable AI (XAI)",
+      "back": "Definici\u00f3n: T\u00e9cnicas dise\u00f1adas para hacer que los resultados de los modelos de Machine Learning sean interpretables por humanos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 enfoque de infraestructura permite el procesamiento h\u00edbrido para lograr latencias sub-milisegundo en dispositivos IoT?",
+      "back": "Edge-to-Cloud Continuum."
+    },
+    {
+      "front": "En el an\u00e1lisis de correlaciones, \u00bfcu\u00e1l es la ventaja de usar datasets completos frente a muestras de $1,000$ registros?",
+      "back": "Permite revelar correlaciones significativas y patrones de enfermedades raras que no aparecen en muestras peque\u00f1as."
+    },
+    {
+      "front": "El marco de trabajo que combina pr\u00e1cticas de DevOps con Machine Learning se denomina _____.",
+      "back": "MLOps."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tecnolog\u00eda permite realizar consultas distribuidas a trav\u00e9s de m\u00faltiples fuentes de datos sin centralizarlos f\u00edsicamente?",
+      "back": "Federated Query."
+    },
+    {
+      "front": "\u00bfQu\u00e9 caracter\u00edstica de Big Data se refiere a la integraci\u00f3n de datos heterog\u00e9neos como JSON, XML y Logs?",
+      "back": "Variedad."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la reducci\u00f3n estimada en ETAs (tiempos estimados de llegada) que Uber logra mediante anal\u00edtica predictiva?",
+      "back": "Un $20\\%$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 meta t\u00e9cnica tiene un sistema de detecci\u00f3n de anomal\u00edas en FinTech respecto al throughput?",
+      "back": "Soportar hasta $10,000$ transacciones por segundo (TPS)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 librer\u00eda de Spark se especializa en algoritmos de aprendizaje autom\u00e1tico distribuidos?",
+      "back": "Spark MLlib."
+    },
+    {
+      "front": "En el modelo Prophet, \u00bfpara qu\u00e9 sirve la funci\u00f3n `add_regressor`?",
+      "back": "Para incluir variables externas (como clima o promociones) que influyen en la predicci\u00f3n de la demanda."
+    },
+    {
+      "front": "\u00bfQu\u00e9 principio de seguridad establece que cada acceso a los datos debe ser verificado din\u00e1micamente?",
+      "back": "Zero-Trust Data Access."
+    },
+    {
+      "front": "\u00bfQu\u00e9 componente de la arquitectura Big Data se encarga de los flujos de trabajo ETL en entornos enterprise?",
+      "back": "Talend."
+    },
+    {
+      "front": "\u00bfC\u00f3mo impact\u00f3 el uso de Big Data en el diagn\u00f3stico m\u00e9dico seg\u00fan el caso pr\u00e1ctico de salud?",
+      "back": "Redujo los diagn\u00f3sticos err\u00f3neos en un $35\\%$."
+    },
+    {
+      "front": "El volumen de datos generado por el CERN LHC durante sus experimentos es de _____ por segundo.",
+      "back": "$15$ Petabytes (PB)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 significa que el Big Data habilite descubrimientos 'no hipot\u00e9ticos'?",
+      "back": "Que se exploran patrones directamente en los datos sin necesidad de una hip\u00f3tesis previa basada en muestras."
+    },
+    {
+      "front": "\u00bfQu\u00e9 entorno de trabajo se utiliza para garantizar la reproducibilidad en el an\u00e1lisis de datos con R?",
+      "back": "RStudio."
+    },
+    {
+      "front": "En la visualizaci\u00f3n con Python, \u00bfqu\u00e9 par\u00e1metro de `sample()` asegura que la muestra sea reproducible?",
+      "back": "`random_state`."
+    },
+    {
+      "front": "\u00bfQu\u00e9 lenguaje de consulta se utiliza dentro de Apache Flink para procesar flujos de datos en tiempo real?",
+      "back": "SQL (a trav\u00e9s de `StreamTableEnvironment`)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el prop\u00f3sito del 'Bottleneck' en una arquitectura de red neuronal tipo Autoencoder?",
+      "back": "Comprimir la informaci\u00f3n para aprender las caracter\u00edsticas m\u00e1s esenciales de los datos normales."
+    },
+    {
+      "front": "\u00bfQu\u00e9 organizaci\u00f3n o fuente adapta las estad\u00edsticas globales sobre el volumen de datos (IDC y Statista)?",
+      "back": "IDC (International Data Corporation)."
+    },
+    {
+      "front": "\u00bfA qu\u00e9 se refiere el t\u00e9rmino 'Sostenibilidad' en las tendencias 2025-2030 del Big Data?",
+      "back": "A la reducci\u00f3n del consumo energ\u00e9tico de los centros de datos (Green Data Ops)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 ventaja operativa ofrece Amazon S3 en una arquitectura Big Data?",
+      "back": "Almacenamiento de objetos escalable en la nube."
+    },
+    {
+      "front": "En el an\u00e1lisis de Supply Chain, \u00bfqu\u00e9 factor de riesgo se suma al forecast para optimizar el inventario?",
+      "back": "El factor de seguridad (safety factor) y la tolerancia al riesgo."
+    },
+    {
+      "front": "\u00bfQu\u00e9 caracter\u00edstica de los datos estructurados los diferencia de los no estructurados?",
+      "back": "Poseen un esquema r\u00edgido y predefinido (tablas con filas y columnas)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 hito en 2023 marc\u00f3 la integraci\u00f3n del Big Data con modelos de lenguaje masivos?",
+      "back": "El uso de Big Data como combustible para modelos de IA generativa (GenAI) como GPT."
+    }
+  ]
+}

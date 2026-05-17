@@ -1,0 +1,255 @@
+{
+  "title": "Big Data Cuestionario",
+  "questions": [
+    {
+      "question": "\u00bfCu\u00e1l es el cambio de paradigma fundamental que introduce el Big Data en comparaci\u00f3n con el an\u00e1lisis estad\u00edstico tradicional?",
+      "answerOptions": [
+        {
+          "text": "El paso del an\u00e1lisis basado en muestras al an\u00e1lisis exhaustivo de datasets completos.",
+          "isCorrect": true,
+          "rationale": "El Big Data permite procesar la totalidad de los datos disponibles en lugar de depender de inferencias estad\u00edsticas derivadas de muestras peque\u00f1as."
+        },
+        {
+          "text": "La sustituci\u00f3n completa de los modelos predictivos por an\u00e1lisis descriptivos manuales.",
+          "isCorrect": false,
+          "rationale": "El Big Data potencia los modelos predictivos mediante el uso de inteligencia artificial en lugar de eliminarlos."
+        },
+        {
+          "text": "El uso exclusivo de datos estructurados para garantizar la precisi\u00f3n matem\u00e1tica.",
+          "isCorrect": false,
+          "rationale": "Una de las caracter\u00edsticas del Big Data es precisamente la integraci\u00f3n de datos heterog\u00e9neos y no estructurados."
+        },
+        {
+          "text": "La reducci\u00f3n del volumen de datos para acelerar los tiempos de procesamiento en servidores locales.",
+          "isCorrect": false,
+          "rationale": "El Big Data busca escalar el volumen y utilizar computaci\u00f3n distribuida, no reducir el tama\u00f1o de la informaci\u00f3n."
+        }
+      ],
+      "hint": "Considere la diferencia entre estudiar una parte de la poblaci\u00f3n y estudiar a todos los individuos."
+    },
+    {
+      "question": "En el marco de las 5V, \u00bfqu\u00e9 concepto se refiere a la capacidad de procesar datos en movimiento para obtener insights en tiempo real, como en el trading algor\u00edtmico?",
+      "answerOptions": [
+        {
+          "text": "Velocidad",
+          "isCorrect": true,
+          "rationale": "La velocidad implica el procesamiento de flujos de datos continuos (streaming) con latencias m\u00ednimas, a menudo en milisegundos."
+        },
+        {
+          "text": "Variedad",
+          "isCorrect": false,
+          "rationale": "La variedad se refiere a la diversidad de formatos de los datos (JSON, video, SQL) y no a la rapidez del flujo."
+        },
+        {
+          "text": "Veracidad",
+          "isCorrect": false,
+          "rationale": "La veracidad se centra en la calidad, limpieza y confiabilidad de los datos recolectados."
+        },
+        {
+          "text": "Valor",
+          "isCorrect": false,
+          "rationale": "El valor es el resultado estrat\u00e9gico o econ\u00f3mico obtenido, independientemente de la rapidez t\u00e9cnica del proceso."
+        }
+      ],
+      "hint": "Piense en la dimensi\u00f3n temporal y la inmediatez de la respuesta del sistema."
+    },
+    {
+      "question": "\u00bfQu\u00e9 porcentaje aproximado de los datos generados actualmente se clasifica como 'no estructurado' (im\u00e1genes, videos, audios)?",
+      "answerOptions": [
+        {
+          "text": "$50\\%$",
+          "isCorrect": true,
+          "rationale": "Seg\u00fan el material, la mitad de los datos globales son no estructurados, lo que representa el mayor desaf\u00edo de integraci\u00f3n."
+        },
+        {
+          "text": "$20\\%$",
+          "isCorrect": false,
+          "rationale": "Este porcentaje corresponde usualmente a los datos estructurados que se encuentran en bases de datos relacionales tradicionales."
+        },
+        {
+          "text": "$30\\%$",
+          "isCorrect": false,
+          "rationale": "El $30\\%$ se asocia t\u00edpicamente a los datos semi-estructurados como archivos JSON, XML o logs de servidores."
+        },
+        {
+          "text": "$95\\%$",
+          "isCorrect": false,
+          "rationale": "Aunque es un volumen alto, el material especifica una distribuci\u00f3n donde el $50\\%$ es no estructurado."
+        }
+      ],
+      "hint": "Es la categor\u00eda que domina el tr\u00e1fico en plataformas como YouTube o redes sociales."
+    },
+    {
+      "question": "\u00bfQu\u00e9 hito tecnol\u00f3gico ocurrido en 2011 permiti\u00f3 revolucionar la velocidad del Big Data mediante el procesamiento en memoria?",
+      "answerOptions": [
+        {
+          "text": "Lanzamiento de Apache Spark",
+          "isCorrect": true,
+          "rationale": "Apache Spark introdujo el procesamiento en memoria, superando las limitaciones de lectura/escritura en disco de modelos anteriores."
+        },
+        {
+          "text": "Creaci\u00f3n de Google MapReduce",
+          "isCorrect": false,
+          "rationale": "MapReduce fue la base del procesamiento distribuido en 2004, pero depend\u00eda fuertemente del almacenamiento en disco."
+        },
+        {
+          "text": "Lanzamiento de Hadoop",
+          "isCorrect": false,
+          "rationale": "Hadoop democratiz\u00f3 el c\u00f3digo abierto en 2006, pero su componente MapReduce era m\u00e1s lento que el procesamiento en memoria."
+        },
+        {
+          "text": "Aparici\u00f3n de las redes 5G",
+          "isCorrect": false,
+          "rationale": "Aunque el 5G impulsa la velocidad de transmisi\u00f3n, Spark es una tecnolog\u00eda de procesamiento de datos."
+        }
+      ],
+      "hint": "Busque la herramienta que optimiz\u00f3 el rendimiento eliminando la dependencia constante del almacenamiento f\u00edsico durante el c\u00e1lculo."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es un beneficio cuantificable del uso de Big Data en el sector de la salud mencionado en el material?",
+      "answerOptions": [
+        {
+          "text": "Reducci\u00f3n de diagn\u00f3sticos err\u00f3neos en un $35\\%$ mediante el an\u00e1lisis de millones de registros.",
+          "isCorrect": true,
+          "rationale": "El an\u00e1lisis de datasets masivos permite detectar patrones en enfermedades raras que el muestreo tradicional pasar\u00eda por alto."
+        },
+        {
+          "text": "Eliminaci\u00f3n total de la necesidad de m\u00e9dicos especialistas.",
+          "isCorrect": false,
+          "rationale": "El Big Data act\u00faa como soporte de decisi\u00f3n, no como sustituto del criterio cl\u00ednico humano."
+        },
+        {
+          "text": "Garant\u00eda de privacidad absoluta sin necesidad de t\u00e9cnicas de anonimizaci\u00f3n.",
+          "isCorrect": false,
+          "rationale": "La privacidad es un desaf\u00edo \u00e9tico cr\u00edtico que requiere t\u00e9cnicas adicionales como la privacidad diferencial."
+        },
+        {
+          "text": "Incremento de los costos operativos en un $20\\%$ por almacenamiento.",
+          "isCorrect": false,
+          "rationale": "El objetivo del Big Data es optimizar procesos para reducir costos, no incrementarlos de forma ineficiente."
+        }
+      ],
+      "hint": "Relacione el volumen de historiales m\u00e9dicos con la precisi\u00f3n en la identificaci\u00f3n de patrones de salud."
+    },
+    {
+      "question": "Verdadero o Falso: El concepto de 'Big Data' se refiere \u00fanicamente al almacenamiento masivo de datos en discos duros de alta capacidad.",
+      "answerOptions": [
+        {
+          "text": "Falso",
+          "isCorrect": true,
+          "rationale": "El Big Data es un paradigma integral que incluye procesamiento, anal\u00edtica, inteligencia artificial y velocidad, no solo almacenamiento."
+        },
+        {
+          "text": "Verdadero",
+          "isCorrect": false,
+          "rationale": "Esta afirmaci\u00f3n ignora las dimensiones de velocidad, variedad y la capacidad de generar valor estrat\u00e9gico."
+        }
+      ],
+      "hint": "Recuerde las 5V; el volumen es solo uno de los pilares del concepto."
+    },
+    {
+      "question": "El t\u00e9rmino 'Big Data' fue acu\u00f1ado originalmente en la d\u00e9cada de 1990 en trabajos de investigaci\u00f3n de la:",
+      "answerOptions": [
+        {
+          "text": "NASA",
+          "isCorrect": true,
+          "rationale": "Los primeros usos del t\u00e9rmino surgieron en papers de la NASA relacionados con la visualizaci\u00f3n de grandes conjuntos de datos cient\u00edficos."
+        },
+        {
+          "text": "CERN",
+          "isCorrect": false,
+          "rationale": "Aunque el CERN genera vol\u00famenes masivos de datos hoy, el t\u00e9rmino se origin\u00f3 en el contexto de la NASA."
+        },
+        {
+          "text": "Google",
+          "isCorrect": false,
+          "rationale": "Google fue fundamental para la escalabilidad en la d\u00e9cada de 2000, pero el t\u00e9rmino es anterior a sus hitos principales."
+        },
+        {
+          "text": "Amazon",
+          "isCorrect": false,
+          "rationale": "Amazon lider\u00f3 en computaci\u00f3n en la nube (AWS), pero el origen del t\u00e9rmino es acad\u00e9mico y cient\u00edfico."
+        }
+      ],
+      "hint": "Piense en la agencia responsable de la exploraci\u00f3n espacial y la aeron\u00e1utica."
+    },
+    {
+      "question": "Dentro de la arquitectura de referencia, \u00bfqu\u00e9 tecnolog\u00eda se recomienda para el manejo de flujos de datos en streaming de alto rendimiento (ingesta)?",
+      "answerOptions": [
+        {
+          "text": "Apache Kafka",
+          "isCorrect": true,
+          "rationale": "Kafka es el est\u00e1ndar para mensajer\u00eda distribuida y streaming de datos con alto rendimiento."
+        },
+        {
+          "text": "Apache Atlas",
+          "isCorrect": false,
+          "rationale": "Apache Atlas se utiliza para la gobernanza y gesti\u00f3n de metadatos, no para la ingesta de streaming."
+        },
+        {
+          "text": "Excel",
+          "isCorrect": false,
+          "rationale": "Excel es una herramienta de escritorio limitada para datos estructurados de bajo volumen."
+        },
+        {
+          "text": "TensorFlow",
+          "isCorrect": false,
+          "rationale": "TensorFlow es una biblioteca para aprendizaje profundo, no una plataforma de ingesta de datos."
+        }
+      ],
+      "hint": "Es una plataforma que permite 'publicar y suscribirse' a flujos de registros en tiempo real."
+    },
+    {
+      "question": "En el caso de Uber, \u00bfcu\u00e1l es el objetivo primordial de procesar $500\\ \\text{TB}$ diarios de datos geoespaciales en tiempo real?",
+      "answerOptions": [
+        {
+          "text": "Ajustar algoritmos de 'surge pricing' y optimizar rutas de conductores.",
+          "isCorrect": true,
+          "rationale": "La anal\u00edtica en tiempo real permite equilibrar la oferta y la demanda mediante precios din\u00e1micos."
+        },
+        {
+          "text": "Almacenar fotos de perfil de los usuarios para fines de marketing.",
+          "isCorrect": false,
+          "rationale": "Aunque se almacenan datos, el impacto operativo principal reside en la log\u00edstica y la tarificaci\u00f3n."
+        },
+        {
+          "text": "Eliminar la competencia de transporte p\u00fablico mediante el uso de bots.",
+          "isCorrect": false,
+          "rationale": "El uso de Big Data en Uber se enfoca en la eficiencia operativa interna y la experiencia del usuario."
+        },
+        {
+          "text": "Reducir la velocidad de los veh\u00edculos para ahorrar combustible.",
+          "isCorrect": false,
+          "rationale": "El enfoque est\u00e1 en optimizar el tiempo de llegada (ETA) y la log\u00edstica, no en limitar la velocidad del conductor."
+        }
+      ],
+      "hint": "Piense en c\u00f3mo cambian los precios de la aplicaci\u00f3n seg\u00fan la demanda en zonas espec\u00edficas."
+    },
+    {
+      "question": "\u00bfQu\u00e9 m\u00e9trica de la 'Veracidad' asegura que los datos est\u00e9n actualizados y disponibles en el momento exacto en que se necesitan para la toma de decisiones?",
+      "answerOptions": [
+        {
+          "text": "Timeliness",
+          "isCorrect": true,
+          "rationale": "La oportunidad (timeliness) garantiza que el dato no est\u00e9 obsoleto al momento de realizar el an\u00e1lisis."
+        },
+        {
+          "text": "Completitud",
+          "isCorrect": false,
+          "rationale": "La completitud se refiere a que no falten valores o registros esenciales en el dataset."
+        },
+        {
+          "text": "Consistencia",
+          "isCorrect": false,
+          "rationale": "La consistencia asegura que el dato mantenga el mismo formato o valor a trav\u00e9s de diferentes sistemas."
+        },
+        {
+          "text": "Precisi\u00f3n",
+          "isCorrect": false,
+          "rationale": "La precisi\u00f3n se refiere a la exactitud del dato respecto a la realidad que intenta medir."
+        }
+      ],
+      "hint": "Se relaciona con la puntualidad o la vigencia temporal de la informaci\u00f3n."
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "name": "Visualización y Exploración de Datos en Big Data",
+  "children": [
+    {
+      "name": "Análisis Exploratorio (EDA)",
+      "children": [
+        {
+          "name": "Tipos de Variables",
+          "children": [
+            {
+              "name": "Cuantitativas",
+              "children": [
+                {
+                  "name": "Discretas"
+                },
+                {
+                  "name": "Continuas"
+                }
+              ]
+            },
+            {
+              "name": "Cualitativas",
+              "children": [
+                {
+                  "name": "Nominales"
+                },
+                {
+                  "name": "Ordinales"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Técnicas y Herramientas",
+          "children": [
+            {
+              "name": "Estadística Descriptiva"
+            },
+            {
+              "name": "Histogramas (Distribución)"
+            },
+            {
+              "name": "Boxplots (Outliers)"
+            },
+            {
+              "name": "Scatter Plots (Relaciones)"
+            },
+            {
+              "name": "Heatmaps (Correlación)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Preprocesado de Datos",
+      "children": [
+        {
+          "name": "Etapas Clave",
+          "children": [
+            {
+              "name": "Limpieza (Duplicados)"
+            },
+            {
+              "name": "Transformación (Escalado)"
+            },
+            {
+              "name": "Selección (PCA)"
+            }
+          ]
+        },
+        {
+          "name": "Imputación de Faltantes",
+          "children": [
+            {
+              "name": "Eliminación"
+            },
+            {
+              "name": "Media/Mediana/Moda"
+            },
+            {
+              "name": "Algoritmos (KNN/Mice)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tecnologías",
+      "children": [
+        {
+          "name": "Lenguaje Python",
+          "children": [
+            {
+              "name": "Pandas"
+            },
+            {
+              "name": "Seaborn"
+            },
+            {
+              "name": "Matplotlib"
+            },
+            {
+              "name": "Scikit-learn"
+            }
+          ]
+        },
+        {
+          "name": "Lenguaje R",
+          "children": [
+            {
+              "name": "ggplot2"
+            },
+            {
+              "name": "GGally"
+            },
+            {
+              "name": "mice"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Actividades Académicas",
+      "children": [
+        {
+          "name": "1. Estudio de materiales (AF)"
+        },
+        {
+          "name": "2. Foro de discusión (AI)"
+        },
+        {
+          "name": "3. Cuestionario en línea (AA)"
+        }
+      ]
+    }
+  ]
+}

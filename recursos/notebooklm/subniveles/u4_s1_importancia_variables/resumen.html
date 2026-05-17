@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.1 Importancia de Variables — Resumen — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.1 Importancia de Variables y Feature Selection — Resumen</h1>
+<p>La importancia de variables cuantifica cuánto contribuye cada feature a las predicciones del modelo. La selección de features (feature selection) identifica el subconjunto óptimo para mejorar rendimiento, reducir overfitting y aumentar interpretabilidad.</p>
+<h2>Métodos de importancia de variables</h2>
+<table>
+<tr><th>Método</th><th>Descripción</th><th>Modelos aplicables</th></tr>
+<tr><td>Coeficientes absolutos</td><td>|β| en regresión logística/lineal</td><td>Modelos lineales</td></tr>
+<tr><td>Impurity-based</td><td>Reducción de Gini/entropía en árboles</td><td>Árboles, Random Forest</td></tr>
+<tr><td>Permutation importance</td><td>Caída de rendimiento al permutar la variable</td><td>Cualquier modelo</td></tr>
+<tr><td>SHAP values</td><td>Contribución individual por observación</td><td>Cualquier modelo</td></tr>
+<tr><td>VIF</td><td>Factor de inflación de varianza (multicolinealidad)</td><td>Regresión</td></tr>
+</table>
+<h2>Feature Selection</h2>
+<ul>
+<li><strong>Filter methods:</strong> seleccionan features por estadísticos (correlación, chi-cuadrado, ANOVA) independiente del modelo.</li>
+<li><strong>Wrapper methods:</strong> RFE (Recursive Feature Elimination) — entrena el modelo, elimina la feature menos importante, repite.</li>
+<li><strong>Embedded methods:</strong> regularización L1/Lasso — elimina features durante el entrenamiento.</li>
+</ul>
+<h2>Regla general</h2>
+<p>Más features no siempre = mejor modelo. La maldición de la dimensionalidad: en espacios de alta dimensión, los datos se vuelven dispersos y los algoritmos basados en distancia (KNN) se degradan. Generalmente, un modelo con 10 features bien seleccionadas supera a uno con 50 features sin selección.</p>
+
+</body>
+</html>

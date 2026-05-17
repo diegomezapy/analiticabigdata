@@ -1,0 +1,265 @@
+{
+  "title": "Cuestionario Clasificaci\u00f3n",
+  "questions": [
+    {
+      "question": "\u00bfCu\u00e1l es el objetivo principal del An\u00e1lisis Discriminante Lineal (LDA) al tratar con m\u00faltiples clases?",
+      "answerOptions": [
+        {
+          "text": "Maximizar la separaci\u00f3n entre las clases minimizando la varianza intra-clase.",
+          "isCorrect": true,
+          "rationale": "LDA busca proyectar los datos de manera que los centros de las clases est\u00e9n lo m\u00e1s alejados posible mientras los datos dentro de cada clase se mantienen compactos."
+        },
+        {
+          "text": "Minimizar la distancia entre los centroides de cada grupo para agrupar variables.",
+          "isCorrect": false,
+          "rationale": "Este enfoque es opuesto al objetivo de clasificaci\u00f3n, ya que dificultar\u00eda la distinci\u00f3n entre las categor\u00edas al solaparlas."
+        },
+        {
+          "text": "Maximizar la varianza total del conjunto de datos sin considerar etiquetas de clase.",
+          "isCorrect": false,
+          "rationale": "Este es el objetivo del An\u00e1lisis de Componentes Principales (PCA), que es una t\u00e9cnica no supervisada, a diferencia de LDA."
+        },
+        {
+          "text": "Eliminar la multicolinealidad mediante la inversi\u00f3n de la matriz de covarianza.",
+          "isCorrect": false,
+          "rationale": "Aunque LDA utiliza la matriz de covarianza, su prop\u00f3sito no es corregir la colinealidad, sino utilizar la estructura de los datos para clasificar."
+        }
+      ],
+      "hint": "Recuerda que LDA es un m\u00e9todo supervisado que busca la mejor discriminaci\u00f3n posible entre grupos."
+    },
+    {
+      "question": "Al interpretar un modelo de clasificaci\u00f3n, \u00bfen qu\u00e9 escenario es preferible priorizar la m\u00e9trica Precision/Recall sobre el Accuracy?",
+      "answerOptions": [
+        {
+          "text": "Cuando el conjunto de datos presenta clases balanceadas con igual n\u00famero de muestras.",
+          "isCorrect": false,
+          "rationale": "En clases balanceadas, el Accuracy suele ser una representaci\u00f3n fiel del desempe\u00f1o general del modelo."
+        },
+        {
+          "text": "Cuando se trabaja exclusivamente con modelos de regresi\u00f3n lineal simple.",
+          "isCorrect": false,
+          "rationale": "Estas m\u00e9tricas son espec\u00edficas para problemas de clasificaci\u00f3n, no para evaluar la varianza explicada en regresiones."
+        },
+        {
+          "text": "Cuando existe un desbalance significativo entre las clases del dataset.",
+          "isCorrect": true,
+          "rationale": "En datasets imbalanced, el Accuracy puede ser enga\u00f1osamente alto si el modelo solo predice la clase mayoritaria; Precision/Recall revelan el desempe\u00f1o en la clase minoritaria."
+        },
+        {
+          "text": "Cuando el modelo es de tipo 'caja negra' y no permite ver los coeficientes.",
+          "isCorrect": false,
+          "rationale": "La elecci\u00f3n de la m\u00e9trica depende de la distribuci\u00f3n de los datos y el costo de los errores, no necesariamente de la transparencia del algoritmo."
+        }
+      ],
+      "hint": "Considera qu\u00e9 sucede con la m\u00e9trica de \u00e9xito si el $99\\%$ de tus datos pertenecen a una sola categor\u00eda."
+    },
+    {
+      "question": "En la funci\u00f3n discriminante del LDA, $\\delta_k(x) = x^T \\Sigma^{-1} \\mu_k - \\frac{1}{2} \\mu_k^T \\Sigma^{-1} \\mu_k + \\log \\pi_k$, \u00bfqu\u00e9 representa el t\u00e9rmino $\\Sigma$?",
+      "answerOptions": [
+        {
+          "text": "La matriz de covarianza compartida entre todas las clases.",
+          "isCorrect": true,
+          "rationale": "LDA asume homocedasticidad, lo que significa que todas las clases comparten la misma matriz de covarianza."
+        },
+        {
+          "text": "La media vectorial de la clase espec\u00edfica $k$.",
+          "isCorrect": false,
+          "rationale": "La media de la clase espec\u00edfica est\u00e1 representada por el s\u00edmbolo $\\mu_k$, no por $\\Sigma$."
+        },
+        {
+          "text": "La probabilidad a priori de que una observaci\u00f3n pertenezca a la clase $k$.",
+          "isCorrect": false,
+          "rationale": "Esa probabilidad est\u00e1 representada por el t\u00e9rmino $\\pi_k$ dentro del logaritmo."
+        },
+        {
+          "text": "El error residual del modelo tras la reducci\u00f3n dimensional.",
+          "isCorrect": false,
+          "rationale": "$\\Sigma$ define la estructura de dispersi\u00f3n de los datos, no es una medida directa del error de predicci\u00f3n."
+        }
+      ],
+      "hint": "Este t\u00e9rmino se relaciona con el supuesto de que la dispersi\u00f3n de los datos es constante en todos los grupos."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es una de las principales desventajas del An\u00e1lisis Discriminante Lineal (LDA) frente a modelos m\u00e1s flexibles?",
+      "answerOptions": [
+        {
+          "text": "Es computacionalmente muy pesado para datasets medianos.",
+          "isCorrect": false,
+          "rationale": "El material indica que LDA es eficiente, r\u00e1pido y computacionalmente ligero."
+        },
+        {
+          "text": "No puede realizar reducci\u00f3n de dimensionalidad.",
+          "isCorrect": false,
+          "rationale": "LDA es ampliamente utilizado precisamente por su capacidad para proyectar datos en espacios de baja dimensi\u00f3n."
+        },
+        {
+          "text": "Es altamente sensible a la presencia de valores at\u00edpicos (outliers).",
+          "isCorrect": true,
+          "rationale": "Dado que depende de medias y matrices de covarianza, los outliers pueden distorsionar significativamente los par\u00e1metros estimados."
+        },
+        {
+          "text": "Requiere obligatoriamente que las clases tengan covarianzas diferentes.",
+          "isCorrect": false,
+          "rationale": "Al contrario, el LDA asume que las covarianzas son iguales; si son diferentes, se suele optar por QDA."
+        }
+      ],
+      "hint": "Piensa en c\u00f3mo se ven afectadas la media y la varianza cuando se introducen datos extremos en un c\u00e1lculo estad\u00edstico."
+    },
+    {
+      "question": "De acuerdo con los criterios de selecci\u00f3n de modelos, \u00bfqu\u00e9 mide el Criterio de Informaci\u00f3n de Akaike (AIC)?",
+      "answerOptions": [
+        {
+          "text": "La importancia relativa de cada variable mediante permutaciones.",
+          "isCorrect": false,
+          "rationale": "Esa es la funci\u00f3n de t\u00e9cnicas como Feature Importance o SHAP values, no del AIC."
+        },
+        {
+          "text": "El balance entre el ajuste del modelo y su complejidad (n\u00famero de par\u00e1metros).",
+          "isCorrect": true,
+          "rationale": "AIC penaliza la inclusi\u00f3n de demasiados par\u00e1metros para evitar el sobreajuste, buscando un modelo parsimonioso."
+        },
+        {
+          "text": "La capacidad del modelo para paralelizarse en entornos de Big Data.",
+          "isCorrect": false,
+          "rationale": "El AIC es un criterio estad\u00edstico de selecci\u00f3n, no una m\u00e9trica de rendimiento computacional o escalabilidad."
+        },
+        {
+          "text": "El \u00e1rea bajo la curva de caracter\u00edsticas operativas del receptor.",
+          "isCorrect": false,
+          "rationale": "Esa descripci\u00f3n corresponde al AUC-ROC, que mide la capacidad de discriminaci\u00f3n entre clases."
+        }
+      ],
+      "hint": "Este criterio ayuda a decidir si a\u00f1adir una variable m\u00e1s realmente vale la pena estad\u00edsticamente."
+    },
+    {
+      "question": "En el contexto de Big Data, \u00bfcu\u00e1l es la utilidad de herramientas como SHAP Values mencionadas en el material?",
+      "answerOptions": [
+        {
+          "text": "Acelerar el entrenamiento de modelos SVM mediante kernels aproximados.",
+          "isCorrect": false,
+          "rationale": "SHAP se centra en la explicabilidad, no en la optimizaci\u00f3n del tiempo de ejecuci\u00f3n de algoritmos espec\u00edficos."
+        },
+        {
+          "text": "Proporcionar explicabilidad local y global sobre c\u00f3mo las variables afectan las predicciones.",
+          "isCorrect": true,
+          "rationale": "SHAP ayuda a evitar el problema de la 'caja negra', permitiendo entender la contribuci\u00f3n de cada feature al resultado."
+        },
+        {
+          "text": "Sustituir la validaci\u00f3n cruzada (Cross-Validation) en datasets masivos.",
+          "isCorrect": false,
+          "rationale": "SHAP y la validaci\u00f3n cruzada cumplen funciones distintas: uno explica el modelo y el otro eval\u00faa su capacidad de generalizaci\u00f3n."
+        },
+        {
+          "text": "Garantizar que la matriz de covarianza sea siempre invertible.",
+          "isCorrect": false,
+          "rationale": "La invertibilidad de la matriz es un requisito t\u00e9cnico del LDA, no una funci\u00f3n de las t\u00e9cnicas de interpretaci\u00f3n como SHAP."
+        }
+      ],
+      "hint": "Busca un concepto relacionado con la transparencia y la toma de decisiones \u00e9tica en modelos complejos."
+    },
+    {
+      "question": "Al comparar modelos de clasificaci\u00f3n para Big Data, \u00bfpor qu\u00e9 la Regresi\u00f3n Log\u00edstica suele tener una alta escalabilidad?",
+      "answerOptions": [
+        {
+          "text": "Porque no requiere ninguna asunci\u00f3n sobre la linealidad de los datos.",
+          "isCorrect": false,
+          "rationale": "La regresi\u00f3n log\u00edstica asume linealidad en el logit de las probabilidades, lo cual es una limitaci\u00f3n."
+        },
+        {
+          "text": "Debido a su facilidad de implementaci\u00f3n en marcos de computaci\u00f3n distribuida como Spark ML.",
+          "isCorrect": true,
+          "rationale": "Su estructura matem\u00e1tica permite procesar grandes vol\u00famenes de datos de forma paralela eficientemente."
+        },
+        {
+          "text": "Porque autom\u00e1ticamente maneja relaciones no lineales complejas sin intervenci\u00f3n.",
+          "isCorrect": false,
+          "rationale": "Para capturar no linealidades, la regresi\u00f3n log\u00edstica requiere transformaciones manuales de las variables."
+        },
+        {
+          "text": "Debido a que es inmune al problema de la multicolinealidad.",
+          "isCorrect": false,
+          "rationale": "Al igual que otros modelos lineales, la regresi\u00f3n log\u00edstica se ve afectada negativamente por variables altamente correlacionadas."
+        }
+      ],
+      "hint": "La respuesta se encuentra en la Tabla 4, espec\u00edficamente en la columna de escalabilidad."
+    },
+    {
+      "question": "Si un modelo de regresi\u00f3n devuelve un $R^2$ (R-squared) muy cercano a $1$, \u00bfqu\u00e9 se puede interpretar?",
+      "answerOptions": [
+        {
+          "text": "Que el modelo ha explicado la mayor parte de la varianza de la variable dependiente.",
+          "isCorrect": true,
+          "rationale": "El $R^2$ mide la proporci\u00f3n de la varianza de la respuesta que es explicada por las variables predictoras del modelo."
+        },
+        {
+          "text": "Que el modelo tiene una alta precisi\u00f3n en la clasificaci\u00f3n de clases minoritarias.",
+          "isCorrect": false,
+          "rationale": "El $R^2$ es una m\u00e9trica de regresi\u00f3n, no de clasificaci\u00f3n."
+        },
+        {
+          "text": "Que existe una alta probabilidad de que los residuos sigan una distribuci\u00f3n de Poisson.",
+          "isCorrect": false,
+          "rationale": "El valor de $R^2$ no informa sobre la distribuci\u00f3n de los residuos, solo sobre la bondad de ajuste."
+        },
+        {
+          "text": "Que el modelo es demasiado simple y requiere a\u00f1adir m\u00e1s variables interactivas.",
+          "isCorrect": false,
+          "rationale": "Un $R^2$ alto indica un ajuste fuerte; la necesidad de m\u00e1s variables suele surgir cuando el $R^2$ es bajo o hay sesgo."
+        }
+      ],
+      "hint": "Relaciona esta m\u00e9trica con la varianza explicada en el contexto de modelos continuos."
+    },
+    {
+      "question": "\u00bfQu\u00e9 funci\u00f3n de R se utiliza en el material para visualizar las proyecciones de un modelo LDA entrenado con el paquete MASS?",
+      "answerOptions": [
+        {
+          "text": "confusionMatrix()",
+          "isCorrect": false,
+          "rationale": "Esta funci\u00f3n, generalmente del paquete caret, se usa para evaluar el desempe\u00f1o, no para visualizar proyecciones."
+        },
+        {
+          "text": "plot()",
+          "isCorrect": true,
+          "rationale": "Al aplicar plot() sobre un objeto de clase lda, R genera autom\u00e1ticamente gr\u00e1ficos de las separaciones de las clases."
+        },
+        {
+          "text": "varImp()",
+          "isCorrect": false,
+          "rationale": "Esta funci\u00f3n se utiliza para calcular y listar la importancia de las variables, no para graficar proyecciones espaciales."
+        },
+        {
+          "text": "render()",
+          "isCorrect": false,
+          "rationale": "La funci\u00f3n render() pertenece a rmarkdown y se usa para generar informes finales, no visualizaciones de modelos."
+        }
+      ],
+      "hint": "Se trata de una funci\u00f3n gen\u00e9rica de R que cambia su comportamiento seg\u00fan el tipo de objeto que recibe."
+    },
+    {
+      "question": "\u00bfCu\u00e1l es la principal diferencia asumida entre el An\u00e1lisis Discriminante Lineal (LDA) y el An\u00e1lisis Discriminante Cuadr\u00e1tico (QDA)?",
+      "answerOptions": [
+        {
+          "text": "LDA permite variables categ\u00f3ricas como predictores y QDA solo num\u00e9ricas.",
+          "isCorrect": false,
+          "rationale": "Ambos m\u00e9todos suelen trabajar con predictores num\u00e9ricos para calcular medias y covarianzas."
+        },
+        {
+          "text": "QDA asume que cada clase tiene su propia matriz de covarialza, mientras que LDA asume una com\u00fan.",
+          "isCorrect": true,
+          "rationale": "Esta flexibilidad permite a QDA capturar fronteras de decisi\u00f3n no lineales, pero requiere estimar m\u00e1s par\u00e1metros."
+        },
+        {
+          "text": "LDA es un m\u00e9todo no supervisado y QDA es supervisado.",
+          "isCorrect": false,
+          "rationale": "Ambos son m\u00e9todos de aprendizaje supervisado, ya que requieren etiquetas de clase para entrenar."
+        },
+        {
+          "text": "QDA es m\u00e1s eficiente en Big Data porque requiere menos c\u00e1lculos matriciales.",
+          "isCorrect": false,
+          "rationale": "QDA suele ser m\u00e1s exigente computacionalmente porque debe invertir una matriz de covarianza por cada clase."
+        }
+      ],
+      "hint": "Revisa la Tabla 4 sobre asunciones de modelos para encontrar la distinci\u00f3n en la covarianza."
+    }
+  ]
+}

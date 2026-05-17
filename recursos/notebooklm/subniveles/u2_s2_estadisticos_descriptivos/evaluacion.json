@@ -1,0 +1,53 @@
+{
+  "subnivel": "2.2",
+  "titulo": "Evaluación: Estadísticos Descriptivos y Limpieza de Datos",
+  "preguntas": [
+    {
+      "num": 1,
+      "tipo": "opcion_multiple",
+      "pregunta": "En una distribución con sesgo positivo (cola a la derecha), ¿cuál es la relación esperada entre media y mediana?",
+      "opciones": [
+        "A) Media < Mediana",
+        "B) Media = Mediana",
+        "C) Media > Mediana",
+        "D) No hay relación predecible"
+      ],
+      "respuesta": "C",
+      "retroalimentacion": "En distribuciones con sesgo positivo (como ingresos), los valores extremamente altos 'jalan' la media hacia la derecha, resultando en Media > Mediana. La mediana es más robusta y representativa del centro en estos casos."
+    },
+    {
+      "num": 2,
+      "tipo": "verdadero_falso",
+      "pregunta": "La estandarización Z-score transforma los datos al rango [0, 1].",
+      "respuesta": "Falso",
+      "retroalimentacion": "La estandarización Z-score transforma a media=0, desviación estándar=1, pero los valores pueden ser negativos e ir más allá de [0,1]. La transformación al rango [0,1] se llama normalización Min-Max."
+    },
+    {
+      "num": 3,
+      "tipo": "completar",
+      "pregunta": "Según la regla de Tukey, un valor es outlier si cae fuera del rango [Q1 − ___ × IQR, Q3 + ___ × IQR].",
+      "respuesta": "1.5",
+      "retroalimentacion": "La regla de Tukey usa el factor 1.5. Los bigotes del boxplot se extienden hasta Q1 - 1.5×IQR y Q3 + 1.5×IQR; puntos fuera de ese rango son outliers."
+    },
+    {
+      "num": 4,
+      "tipo": "opcion_multiple",
+      "pregunta": "¿Cuál es el código correcto en R para imputar valores NA de la columna 'precio' con la mediana por grupo 'categoria'?",
+      "opciones": [
+        "A) df %>% mutate(precio = replace_na(precio, median(precio)))",
+        "B) df %>% group_by(categoria) %>% mutate(precio = ifelse(is.na(precio), median(precio, na.rm=TRUE), precio))",
+        "C) df$precio[is.na(df$precio)] <- mean(df$precio)",
+        "D) df %>% fill(precio)"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "La opción B agrupa por categoría y luego imputa con la mediana del grupo correspondiente. Las otras opciones usan la mediana global (no por grupo), la media en lugar de mediana, o simplemente propagan el valor anterior."
+    },
+    {
+      "num": 5,
+      "tipo": "abierta",
+      "pregunta": "¿Cuál es la diferencia entre MCAR, MAR y MNAR? Dé un ejemplo de cada tipo en el contexto de datos estudiantiles.",
+      "respuesta": "MCAR (Missing Completely At Random): la falta de datos no depende de ninguna variable. Ej: un estudiante no entrega una tarea porque se le olvidó, sin relación con su rendimiento. MAR (Missing At Random): la falta depende de otras variables observadas, no de la variable en sí. Ej: estudiantes de zonas rurales tienen más probabilidad de no tener internet registrado, pero esto se puede predecir por 'zona'. MNAR (Missing Not At Random): la falta depende del propio valor faltante. Ej: estudiantes con calificaciones muy bajas no reportan su nota porque les da vergüenza.",
+      "retroalimentacion": "El tipo de missingness determina la estrategia de imputación. Solo MCAR permite imputación simple sin sesgo; MAR requiere imputación condicional; MNAR requiere modelos sofisticados o recolección adicional de datos."
+    }
+  ]
+}

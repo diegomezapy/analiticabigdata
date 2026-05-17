@@ -1,0 +1,325 @@
+{
+  "title": "Bigdata Tarjetas",
+  "cards": [
+    {
+      "front": "\u00bfEn qu\u00e9 d\u00e9cada surgieron los primeros sistemas de manejo de datos masivos en defensa y ciencia?",
+      "back": "En la d\u00e9cada de 1960."
+    },
+    {
+      "front": "Contexto hist\u00f3rico: En los a\u00f1os 1990, el t\u00e9rmino 'Big Data' naci\u00f3 en investigaciones de la _____ sobre visualizaci\u00f3n de datos cient\u00edficos.",
+      "back": "NASA"
+    },
+    {
+      "front": "\u00bfQu\u00e9 hito tecnol\u00f3gico de 2004 sent\u00f3 las bases para el procesamiento distribuido escalable?",
+      "back": "Google MapReduce."
+    },
+    {
+      "front": "El lanzamiento de _____, en 2006, permiti\u00f3 la democratizaci\u00f3n del Big Data mediante software de c\u00f3digo abierto.",
+      "back": "Hadoop"
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta revolucion\u00f3 la velocidad del Big Data en 2011 mediante el procesamiento en memoria?",
+      "back": "Apache Spark."
+    },
+    {
+      "front": "Durante el periodo 2015-2020, el auge del _____ y los Data Lakes transform\u00f3 el almacenamiento masivo.",
+      "back": "Cloud Computing"
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el combustible principal para los modelos de GenAI (como GPT) a partir de 2023?",
+      "back": "El Big Data."
+    },
+    {
+      "front": "El cambio de paradigma del Big Data consiste en pasar del muestreo estad\u00edstico al _____.",
+      "back": "An\u00e1lisis integral de datasets completos."
+    },
+    {
+      "front": "En el sector salud, el an\u00e1lisis de grandes vol\u00famenes de datos permite reducir diagn\u00f3sticos err\u00f3neos en un _____.",
+      "back": "$35\\%$."
+    },
+    {
+      "front": "Seg\u00fan IDC, \u00bfqu\u00e9 volumen de datos se estima que se generar\u00e1 anualmente para el a\u00f1o 2025?",
+      "back": "181 ZB (Zettabytes)."
+    },
+    {
+      "front": "M\u00e9trica de escala: \u00bfCu\u00e1ntas horas de video se suben diariamente a YouTube?",
+      "back": "720,000 horas."
+    },
+    {
+      "front": "La caracter\u00edstica 'Velocidad' se refiere al procesamiento en _____ y streaming.",
+      "back": "Tiempo real"
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el tiempo de ejecuci\u00f3n promedio de las \u00f3rdenes en el Trading Algor\u00edtmico?",
+      "back": "$< 10 \\mu s$."
+    },
+    {
+      "front": "En la detecci\u00f3n de fraude, el an\u00e1lisis debe realizarse en menos de _____ para un mill\u00f3n de transacciones por minuto.",
+      "back": "50 ms."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de los datos globales actuales se consideran 'No estructurados'?",
+      "back": "$50\\%$."
+    },
+    {
+      "front": "Los datos semi-estructurados, como JSON y XML, representan el _____ de la variedad de datos.",
+      "back": "$30\\%$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de los datos generados son de tipo 'Estructurado' (SQL, CSV)?",
+      "back": "$20\\%$."
+    },
+    {
+      "front": "En el marco de las 5V, la _____ se encarga del aseguramiento de la calidad y la confianza de los datos.",
+      "back": "Veracidad"
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el umbral de 'Completitud' esperado para considerar que un dataset est\u00e1 curado?",
+      "back": "$< 20\\%$ de valores faltantes (missing values)."
+    },
+    {
+      "front": "La caracter\u00edstica 'Valor' se materializa mediante el _____ medible en la organizaci\u00f3n.",
+      "back": "ROI (Retorno de Inversi\u00f3n)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta se recomienda para el flujo de datos visuales en la etapa de ingesta?",
+      "back": "Apache NiFi."
+    },
+    {
+      "front": "Para el procesamiento de streaming con baj\u00edsima latencia, _____ es superior a Spark.",
+      "back": "Apache Flink"
+    },
+    {
+      "front": "\u00bfQu\u00e9 sistema de archivos distribuido es el est\u00e1ndar para almacenamiento en arquitecturas locales (on-premise)?",
+      "back": "Apache HDFS."
+    },
+    {
+      "front": "La herramienta _____ permite aplicar transacciones ACID sobre Data Lakes.",
+      "back": "Delta Lake"
+    },
+    {
+      "front": "\u00bfQu\u00e9 plataforma gestionada integra Spark y Machine Learning de forma optimizada?",
+      "back": "Databricks."
+    },
+    {
+      "front": "En gobernanza de datos, _____ se utiliza para la gesti\u00f3n de metadatos.",
+      "back": "Apache Atlas"
+    },
+    {
+      "front": "\u00bfCu\u00e1nto ahorro anual estima Netflix gracias a su sistema de recomendaciones para reducir el churn?",
+      "back": "$1.5B+ (mil quinientos millones de d\u00f3lares)."
+    },
+    {
+      "front": "En Netflix, m\u00e1s del _____ de las visualizaciones son impulsadas por sus algoritmos.",
+      "back": "$75\\%$."
+    },
+    {
+      "front": "\u00bfCu\u00e1ntos eventos de usuario procesa Netflix diariamente?",
+      "back": "M\u00e1s de $1,000$ millones (1B+)."
+    },
+    {
+      "front": "Uber procesa diariamente _____ de datos en tiempo real para sus operaciones.",
+      "back": "500 TB."
+    },
+    {
+      "front": "\u00bfQu\u00e9 reducci\u00f3n porcentual en los tiempos estimados de llegada (ETAs) ha logrado Uber mediante anal\u00edtica predictiva?",
+      "back": "$20\\%$."
+    },
+    {
+      "front": "El desaf\u00edo t\u00e9cnico de los _____ de datos afecta al $70\\%$ de las organizaciones.",
+      "back": "Silos"
+    },
+    {
+      "front": "\u00bfQu\u00e9 arquitectura virtual integra datos entre silos sin necesidad de movimiento f\u00edsico?",
+      "back": "Data Fabric."
+    },
+    {
+      "front": "Para cumplir con normativas de privacidad como GDPR, se utilizan t\u00e9cnicas de anonimizaci\u00f3n como la _____.",
+      "back": "Privacidad Diferencial (differential privacy)."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramientas se utilizan para mitigar los sesgos inherentes en los modelos de IA?",
+      "back": "Herramientas de FairML (Fair Machine Learning)."
+    },
+    {
+      "front": "La tendencia futura _____ propone dominios aut\u00f3nomos con gobernanza de IA integrada.",
+      "back": "Data Mesh 2.0"
+    },
+    {
+      "front": "\u00bfQu\u00e9 objetivo busca la tendencia 'Sustainable Data Ops'?",
+      "back": "Reducir el consumo energ\u00e9tico de los centros de datos en un $30\\%$."
+    },
+    {
+      "front": "El _____ permite el entrenamiento de modelos distribuidos sin necesidad de compartir datos sensibles.",
+      "back": "Aprendizaje Federado (Federated Learning)"
+    },
+    {
+      "front": "Concepto: Batch Processing",
+      "back": "Definici\u00f3n: Procesamiento de datos en lotes para tareas de alto volumen que no son urgentes."
+    },
+    {
+      "front": "\u00bfC\u00f3mo se define el fen\u00f3meno 'Data Drift'?",
+      "back": "El cambio gradual en la distribuci\u00f3n de los datos que degrada el rendimiento de los modelos."
+    },
+    {
+      "front": "Concepto: Data Lakehouse",
+      "back": "Definici\u00f3n: Arquitectura h\u00edbrida que combina el almacenamiento de un data lake con las transacciones ACID del data warehouse."
+    },
+    {
+      "front": "La capacidad de hacer que los modelos de Machine Learning sean interpretables y auditables se denomina _____.",
+      "back": "XAI (Explainable AI)"
+    },
+    {
+      "front": "\u00bfQu\u00e9 conjunto de pr\u00e1cticas une el desarrollo de software (DevOps) con el Machine Learning?",
+      "back": "MLOps."
+    },
+    {
+      "front": "El modelo de seguridad _____ verifica din\u00e1micamente cada acceso a los datos.",
+      "back": "Zero-Trust"
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la latencia m\u00e1xima permitida en un sistema moderno de detecci\u00f3n de anomal\u00edas en FinTech?",
+      "back": "$< 100 ms$ por transacci\u00f3n."
+    },
+    {
+      "front": "En un sistema de detecci\u00f3n de anomal\u00edas, un 'Recall' superior al _____ es cr\u00edtico para identificar fraudes.",
+      "back": "$98\\%$."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de red neuronal se utiliza com\u00fanmente para la detecci\u00f3n no supervisada de anomal\u00edas?",
+      "back": "Autoencoders."
+    },
+    {
+      "front": "Para la predicci\u00f3n de demanda en la cadena de suministro, la librer\u00eda _____ de Facebook es una herramienta est\u00e1ndar.",
+      "back": "Prophet"
+    },
+    {
+      "front": "En el an\u00e1lisis de series temporales para retail, los factores externos como el clima se denominan _____.",
+      "back": "Regresores (Regressors)."
+    },
+    {
+      "front": "El almacenamiento de objetos escalable en la nube de Amazon se conoce como _____.",
+      "back": "Amazon S3"
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de c\u00f3digo abierto se destaca para el descubrimiento de datos y cat\u00e1logos?",
+      "back": "Amundsen."
+    },
+    {
+      "front": "La integraci\u00f3n de Big Data con GenAI permite el an\u00e1lisis _____ y la auto-generaci\u00f3n de insights.",
+      "back": "Conversacional"
+    },
+    {
+      "front": "\u00bfQu\u00e9 tecnolog\u00eda busca procesar datasets masivos para optimizaciones complejas usando qubits?",
+      "back": "Computaci\u00f3n Cu\u00e1ntica (Quantum-Enhanced Analytics)."
+    },
+    {
+      "front": "El procesamiento h\u00edbrido 'Edge-to-Cloud' busca reducir la latencia a niveles _____ en aplicaciones IoT.",
+      "back": "Sub-milisegundos ($< 1 ms$)"
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la tasa de fraude promedio en el escenario de FinTech presentado?",
+      "back": "$0.05\\%$."
+    },
+    {
+      "front": "En el modelo Prophet, el par\u00e1metro 'yhat' representa la _____ de la variable objetivo.",
+      "back": "Predicci\u00f3n (o valor pronosticado)"
+    },
+    {
+      "front": "\u00bfQu\u00e9 m\u00e9trica de veracidad garantiza que no existan inconsistencias de formato entre sistemas?",
+      "back": "Consistencia."
+    },
+    {
+      "front": "La ingesta de datos con alta capacidad de transferencia (high-throughput) es liderada por la herramienta _____.",
+      "back": "Apache Kafka"
+    },
+    {
+      "front": "\u00bfQu\u00e9 autor escribi\u00f3 el libro fundamental 'Designing Data-Intensive Applications'?",
+      "back": "M. Kleppmann."
+    },
+    {
+      "front": "En Big Data, el t\u00e9rmino 'Timeliness' se refiere a que los datos est\u00e9n actualizados, por ejemplo, en menos de _____ para tiempo real.",
+      "back": "1 hora."
+    },
+    {
+      "front": "\u00bfQu\u00e9 componente de una arquitectura Big Data se encarga de las consultas distribuidas sin centralizaci\u00f3n?",
+      "back": "Federated Query."
+    },
+    {
+      "front": "Las multas promedio por incumplimiento de normativas como GDPR pueden ascender a _____ por brecha.",
+      "back": "$1M$."
+    },
+    {
+      "front": "\u00bfCu\u00e1ntos registros de ventas hist\u00f3ricas se integran en el caso de Supply Chain Inteligente?",
+      "back": "100 millones."
+    },
+    {
+      "front": "La arquitectura 'Data Mesh' promueve la propiedad de los datos por _____ en lugar de un equipo centralizado.",
+      "back": "Dominios"
+    },
+    {
+      "front": "\u00bfQu\u00e9 m\u00e9trica operativa de Uber ajusta los precios en cuesti\u00f3n de segundos?",
+      "back": "Algoritmos de Surge Pricing."
+    },
+    {
+      "front": "El procesamiento distribuido en memoria de Spark se introdujo para superar las limitaciones de _____ de MapReduce.",
+      "back": "Lectura/Escritura en disco"
+    },
+    {
+      "front": "Concepto: Data Sovereignty",
+      "back": "Definici\u00f3n: Requisitos legales que exigen el almacenamiento de datos dentro de jurisdicciones espec\u00edficas."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tecnolog\u00eda permite la automatizaci\u00f3n de pipelines y el despliegue continuo en Big Data?",
+      "back": "CI/CD."
+    },
+    {
+      "front": "En el an\u00e1lisis de correlaciones, Big Data permite identificar descubrimientos _____ en lugar de basarse solo en hip\u00f3tesis.",
+      "back": "No hipot\u00e9ticos"
+    },
+    {
+      "front": "\u00bfQu\u00e9 formato de archivo es preferido para la eficiencia en el manejo de 10M de registros en Python?",
+      "back": "Parquet."
+    },
+    {
+      "front": "El procesamiento de 15 PB de datos por segundo ocurre en los experimentos del _____.",
+      "back": "CERN LHC"
+    },
+    {
+      "front": "\u00bfQu\u00e9 porcentaje de modelos de IA se estima que presentan sesgos (bias) inherentes?",
+      "back": "M\u00e1s del $50\\%$."
+    },
+    {
+      "front": "La librer\u00eda 'dbt' es una herramienta enfocada en el proceso de _____ para anal\u00edtica.",
+      "back": "Transformaci\u00f3n (data build tool)"
+    },
+    {
+      "front": "\u00bfQu\u00e9 instituci\u00f3n public\u00f3 el reporte 'The Data-Driven Enterprise of 2025'?",
+      "back": "McKinsey."
+    },
+    {
+      "front": "En una arquitectura Cloud-Native, el almacenamiento suele basarse en _____ en lugar de discos locales.",
+      "back": "Object Storage (Almacenamiento de Objetos)"
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la funci\u00f3n del 'Watermark' en el procesamiento de streams con Apache Flink?",
+      "back": "Manejar el retraso de los eventos y definir l\u00edmites de tiempo para ventanas de procesamiento."
+    },
+    {
+      "front": "En el caso de FinTech, el 'Throughput' objetivo es de _____ transacciones por segundo (TPS).",
+      "back": "10,000."
+    },
+    {
+      "front": "\u00bfQu\u00e9 lenguaje de programaci\u00f3n se utiliza en los ejemplos de Flink y Prophet del material?",
+      "back": "Python."
+    },
+    {
+      "front": "La capacidad de escalar recursos computacionales autom\u00e1ticamente en la nube se denomina _____.",
+      "back": "Auto-scaling"
+    },
+    {
+      "front": "Seg\u00fan el glosario, \u00bfqu\u00e9 t\u00e9rmino describe el an\u00e1lisis continuo de datos en movimiento?",
+      "back": "Stream Processing."
+    }
+  ]
+}

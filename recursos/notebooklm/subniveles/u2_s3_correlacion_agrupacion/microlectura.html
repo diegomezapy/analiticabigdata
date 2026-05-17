@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>2.3 Correlación y Agrupación — Microlectura — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #1565C0; border-bottom: 3px solid #1565C0; padding-bottom: 10px; }
+  h2 { color: #1976D2; margin-top: 2em; }
+  h3 { color: #0D47A1; }
+  .header-info { background: #E3F2FD; border-left: 4px solid #1565C0; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #0D47A1; }
+  pre { background: #F5F5F5; border-left: 4px solid #1976D2; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #E8F5E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #1565C0; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #1565C0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 2</div>
+
+<h1>2.3 Correlación y Análisis de Agrupación</h1>
+<h2>1. El coeficiente de correlación de Pearson</h2>
+<p>El coeficiente r de Pearson cuantifica la fuerza y dirección de la <em>relación lineal</em> entre dos variables cuantitativas. Se calcula como la covarianza estandarizada:</p>
+<p style="text-align:center">r = Σ[(xᵢ − x̄)(yᵢ − ȳ)] / √[Σ(xᵢ − x̄)² × Σ(yᵢ − ȳ)²]</p>
+<p>Valores de r van de −1 a +1. Un r de 0.85 indica una correlación positiva fuerte; −0.60 indica correlación negativa moderada.</p>
+<h2>2. La trampa de la correlación</h2>
+<p>Existen "correlaciones espurias" históricamente documentadas: el consumo de queso per cápita en EE.UU. correlaciona r=0.95 con muertes por enredarse en sábanas. Claramente no hay causalidad: ambas crecen con el tiempo (variable confusora: año).</p>
+<p>La regla: correlación es necesaria pero no suficiente para causalidad. Para establecer causalidad se necesitan experimentos controlados o métodos de inferencia causal (diferencias en diferencias, variables instrumentales).</p>
+<h2>3. Cuando Pearson falla</h2>
+<p>Pearson asume que la relación es lineal. Si la relación es curvilínea (ej: rendimiento académico vs nivel de estrés en forma de U invertida), Pearson puede dar r≈0 aunque la relación sea fuerte.</p>
+<p>Alternativas: Spearman (rangos, robusta a no-linealidad monótona), Kendall (concordancia de pares), o simplemente graficar el scatterplot antes de reportar r.</p>
+<h2>4. Matrices de correlación</h2>
+<p>Con múltiples variables, se calcula la correlación entre todos los pares y se organiza en una matriz simétrica. El heatmap de correlación visualiza esta matriz usando color. Util para:</p>
+<ul>
+<li>Detectar variables altamente correlacionadas (multicolinealidad)</li>
+<li>Seleccionar features para modelos</li>
+<li>Descubrir grupos de variables que se mueven juntas</li>
+</ul>
+<h2>5. Análisis de agrupación (GroupBy)</h2>
+<p>El análisis por grupos permite responder preguntas como "¿cuál es el ingreso promedio por departamento?" o "¿cuántas ventas se hacen por producto por mes?". El flujo:</p>
+<ol>
+<li><strong>group_by(variable):</strong> segmenta el dataset por categorías.</li>
+<li><strong>summarise(...):</strong> calcula estadísticos dentro de cada grupo.</li>
+<li><strong>arrange(desc(métrica)):</strong> ordena por la métrica calculada.</li>
+</ol>
+<p>En datos grandes con data.table: <code>dt[, .(media = mean(valor)), by = grupo]</code> es mucho más rápido que el equivalente en dplyr.</p>
+<h2>6. Tablas de contingencia y chi-cuadrado</h2>
+<p>Para variables categóricas, la tabla de contingencia cuenta las combinaciones. El test chi-cuadrado prueba si las dos variables son independientes. Un p-valor &lt; 0.05 sugiere que hay asociación estadística entre las variables.</p>
+
+</body>
+</html>

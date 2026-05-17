@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>3.1 Aplicación — Clasificación en Contexto Bancario — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #2E7D32; border-bottom: 3px solid #2E7D32; padding-bottom: 10px; }
+  h2 { color: #388E3C; margin-top: 2em; }
+  h3 { color: #1B5E20; }
+  .header-info { background: #E8F5E9; border-left: 4px solid #2E7D32; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #1B5E20; }
+  pre { background: #F5F5F5; border-left: 4px solid #4CAF50; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F1F8E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #2E7D32; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #2E7D32; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 3</div>
+
+<h1>3.1 Aplicación: Detección de Clientes en Riesgo de Mora</h1>
+<h2>Contexto</h2>
+<p>Un banco en Paraguay quiere predecir qué clientes podrían caer en mora antes de los 90 días. Se dispone de datos históricos de clientes con sus características y el resultado final (mora: sí/no).</p>
+<h2>Simulación del dataset</h2>
+<pre>set.seed(99)
+n <- 1000
+clientes <- data.frame(
+  edad = round(rnorm(n, 38, 10)),
+  ingresos_millones = round(rexp(n, 0.5) + 1, 2),
+  deuda_actual = round(runif(n, 0, 5000000)),
+  antiguedad_anos = round(rexp(n, 0.3)),
+  num_prestamos = rpois(n, 1.5),
+  mora = factor(sample(c("Si","No"), n, replace=TRUE, prob=c(0.25, 0.75)))
+)
+table(clientes$mora)  # Dataset desbalanceado</pre>
+<h2>Pipeline KNN con manejo de desbalance</h2>
+<pre>library(caret); library(class)
+set.seed(42)
+idx <- createDataPartition(clientes$mora, p=0.8, list=FALSE)
+train <- clientes[idx,]; test <- clientes[-idx,]
+
+# Normalizar
+pp <- preProcess(train[,1:5], method=c("center","scale"))
+train_n <- predict(pp, train[,1:5])
+test_n  <- predict(pp, test[,1:5])
+
+# Evaluar con varias métricas
+pred <- knn(train_n, test_n, train$mora, k=9)
+cm <- confusionMatrix(pred, test$mora, positive="Si")
+print(cm)
+
+# Métricas clave para desbalance:
+cat("Sensitivity (Recall):", cm$byClass["Sensitivity"], "
+")
+cat("Precision:", cm$byClass["Precision"], "
+")
+cat("F1-Score:", cm$byClass["F1"], "
+")</pre>
+<div class="importante"><strong>Nota real:</strong> En problemas de detección de mora/fraude, la clase minoritaria (mora=Sí) es la más importante. La accuracy puede ser 75% prediciendo siempre "No". Usar Recall o F1 como métrica objetivo.</div>
+<h2>Estrategia de umbral variable</h2>
+<pre>nb <- naiveBayes(mora ~ ., data=train)
+probs <- predict(nb, test, type="raw")[,"Si"]
+# Probar distintos umbrales
+for (umbral in c(0.3, 0.4, 0.5, 0.6)) {
+  pred_umbral <- factor(ifelse(probs >= umbral, "Si", "No"), levels=c("No","Si"))
+  cm_u <- confusionMatrix(pred_umbral, test$mora, positive="Si")
+  cat(sprintf("Umbral %.1f: Recall=%.3f, Precision=%.3f
+",
+              umbral, cm_u$byClass["Sensitivity"], cm_u$byClass["Precision"]))
+}</pre>
+
+</body>
+</html>

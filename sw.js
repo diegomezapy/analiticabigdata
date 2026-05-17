@@ -1,4 +1,4 @@
-const CACHE_NAME = 'analitica-bigdata-v14';
+const CACHE_NAME = 'analitica-bigdata-v15';
 
 const APP_SHELL = [
   './',
@@ -16,6 +16,7 @@ const APP_SHELL = [
   'data/datasets/clientes_compras.csv',
   'data/datasets/estudiantes_ead.csv',
   'data/datasets/modelos_credito.csv',
+  'recursos/notebooklm/indice.json',
   'guia_didactica/index.html',
   'practicas/index.html',
   'laboratorio/index.html',
@@ -40,6 +41,13 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+  const isSameOrigin = url.origin === self.location.origin;
+  const isHeavyAsset = /\.(wav|mp4|pptx|pdf)$/i.test(url.pathname);
+  if (!isSameOrigin || isHeavyAsset) {
+    event.respondWith(fetch(event.request).catch(() => caches.match('index.html')));
+    return;
+  }
   event.respondWith(
     caches.match(event.request).then(cached =>
       cached || fetch(event.request).then(response => {

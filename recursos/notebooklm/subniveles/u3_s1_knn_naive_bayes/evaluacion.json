@@ -1,0 +1,53 @@
+{
+  "subnivel": "3.1",
+  "titulo": "Evaluación: KNN y Naive Bayes",
+  "preguntas": [
+    {
+      "num": 1,
+      "tipo": "opcion_multiple",
+      "pregunta": "¿Por qué KNN se denomina 'lazy learner'?",
+      "opciones": [
+        "A) Porque usa pocos datos de entrenamiento",
+        "B) Porque no construye un modelo durante el entrenamiento — toda la computación ocurre al predecir",
+        "C) Porque es lento en el entrenamiento",
+        "D) Porque solo funciona bien con pocos features"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "KNN es 'lazy' porque memoriza el dataset de entrenamiento sin construir un modelo explícito. Al predecir, debe calcular distancias a todos los puntos de entrenamiento, lo cual puede ser computacionalmente costoso para datasets grandes."
+    },
+    {
+      "num": 2,
+      "tipo": "verdadero_falso",
+      "pregunta": "La normalización de features es opcional en KNN ya que el algoritmo es robusto a diferencias de escala.",
+      "respuesta": "Falso",
+      "retroalimentacion": "La normalización es OBLIGATORIA en KNN. Sin ella, variables con mayor magnitud (como salario vs edad) dominarán el cálculo de distancia euclidiana, ignorando efectivamente las variables de menor escala."
+    },
+    {
+      "num": 3,
+      "tipo": "completar",
+      "pregunta": "En Naive Bayes, el supuesto fundamental es que los features son ________ entre sí dado el valor de la clase.",
+      "respuesta": "condicionalmente independientes",
+      "retroalimentacion": "La independencia condicional simplifica el cálculo de P(features|clase) como producto de probabilidades individuales. Aunque raramente se cumple en la práctica, el algoritmo funciona sorprendentemente bien."
+    },
+    {
+      "num": 4,
+      "tipo": "opcion_multiple",
+      "pregunta": "En un problema de clasificación binaria desbalanceado (95% clase A, 5% clase B), un modelo que siempre predice clase A tendrá:",
+      "opciones": [
+        "A) Accuracy=95%, Recall(B)=100%",
+        "B) Accuracy=95%, Recall(B)=0%",
+        "C) Accuracy=5%, Recall(B)=100%",
+        "D) Accuracy=50%, Recall(B)=50%"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "Siempre predecir clase A da accuracy=95% (correcto para el 95% mayoritario) pero Recall de clase B = 0% (nunca detecta la clase minoritaria). Esto ilustra por qué accuracy es una métrica engañosa en datasets desbalanceados."
+    },
+    {
+      "num": 5,
+      "tipo": "abierta",
+      "pregunta": "Un estudiante propone usar K=1 en KNN para el dataset de entrenamiento porque obtiene 100% de accuracy. ¿Cuál es el problema con esta afirmación?",
+      "respuesta": "El problema es el sobreajuste (overfitting). Con K=1, cada punto de entrenamiento es su propio vecino más cercano, por lo que el modelo memoriza perfectamente los datos de entrenamiento y obtiene 100% de accuracy en ese conjunto. Sin embargo, al evaluar en datos nuevos (test set), el rendimiento cae drásticamente porque el modelo aprendió ruido y peculiaridades del entrenamiento en lugar de patrones generalizables. La evaluación correcta siempre debe hacerse en un conjunto de test separado, no visto durante el entrenamiento.",
+      "retroalimentacion": "Evaluar un modelo en los mismos datos de entrenamiento viola el principio fundamental de generalización en ML. El K óptimo debe elegirse mediante validación cruzada en datos de entrenamiento, y el rendimiento final reportarse sobre el test set."
+    }
+  ]
+}

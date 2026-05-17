@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.2 Comunicación de Resultados — Resumen — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.2 Comunicación de Resultados y Reportes — Resumen</h1>
+<p>Un análisis técnico perfecto pierde valor si no se comunica de manera efectiva. La habilidad de traducir hallazgos técnicos al lenguaje del negocio es diferenciadora del científico de datos.</p>
+<h2>Principios de comunicación de datos</h2>
+<ul>
+<li><strong>Audiencia primero:</strong> técnica (p-valores, AUC) vs. no técnica (eficiencia, ahorro, riesgo).</li>
+<li><strong>Pirámide invertida:</strong> conclusión primero, luego evidencia, luego detalles técnicos.</li>
+<li><strong>Una sola historia:</strong> cada gráfico y tabla debe apoyar un único mensaje central.</li>
+<li><strong>Accionabilidad:</strong> todo reporte debe responder "¿y entonces qué hacemos?"</li>
+</ul>
+<h2>R Markdown / Quarto</h2>
+<p>Documentos reproducibles que combinan código R/Python, texto narrativo y resultados (gráficos, tablas). Un solo archivo fuente genera HTML, PDF o Word.</p>
+<pre>---
+title: "Análisis de Mora Bancaria"
+output: html_document
+---
+`r ''```{r, echo=FALSE}
+# Código R que genera gráficos y tablas
+summary(modelo_final)
+```</pre>
+<h2>Estructura de un reporte ejecutivo</h2>
+<ol>
+<li>Resumen ejecutivo (1 página, no técnico)</li>
+<li>Pregunta de negocio</li>
+<li>Datos y metodología (1-2 págs.)</li>
+<li>Hallazgos principales con gráficos</li>
+<li>Recomendaciones accionables</li>
+<li>Apéndice técnico (para analistas)</li>
+</ol>
+
+</body>
+</html>

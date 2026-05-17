@@ -1,0 +1,53 @@
+{
+  "subnivel": "4.3",
+  "titulo": "Evaluación: Ética en IA y Big Data",
+  "preguntas": [
+    {
+      "num": 1,
+      "tipo": "opcion_multiple",
+      "pregunta": "El caso COMPAS demostró que un algoritmo puede ser discriminatorio:",
+      "opciones": [
+        "A) Solo si usa explícitamente variables demográficas como raza o sexo",
+        "B) Incluso sin usar explícitamente variables demográficas, si usa variables proxy correlacionadas con ellas",
+        "C) Únicamente cuando fue diseñado intencionalmente para discriminar",
+        "D) Solo en el sistema de justicia penal, no en otros sectores"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "COMPAS no usaba la raza directamente, pero variables como código postal, historial laboral y antecedentes familiares correlacionan con la raza en datos históricos discriminatorios. Esto produjo tasas de falsos positivos significativamente más altas para afroamericanos."
+    },
+    {
+      "num": 2,
+      "tipo": "verdadero_falso",
+      "pregunta": "Eliminar la variable 'sexo' de un modelo predictivo de contratación garantiza que el modelo no discriminará por sexo.",
+      "respuesta": "Falso",
+      "retroalimentacion": "Si otras variables del modelo (código postal, tipo de empleo anterior, gaps en el historial) correlacionan con el sexo en los datos históricos, el modelo puede reproducir el sesgo incluso sin usar 'sexo' directamente. Esto se llama discriminación por variable proxy."
+    },
+    {
+      "num": 3,
+      "tipo": "opcion_multiple",
+      "pregunta": "El Disparate Impact Ratio (DIR) es una señal de alerta de posible discriminación cuando su valor es:",
+      "opciones": [
+        "A) Mayor a 1.0",
+        "B) Igual a 1.0",
+        "C) Menor a 0.8",
+        "D) Mayor a 0.5"
+      ],
+      "respuesta": "C",
+      "retroalimentacion": "La regla del 80% (EEOC de EE.UU.) establece que DIR < 0.8 indica posible discriminación. DIR = tasa_grupo_minoritario / tasa_grupo_mayoritario. DIR = 1 indica equidad perfecta en tasa de aprobación. DIR = 0.8 significa que el grupo minoritario tiene al menos el 80% de la tasa del grupo de referencia."
+    },
+    {
+      "num": 4,
+      "tipo": "completar",
+      "pregunta": "La ________ diferencial es una técnica matemática que garantiza que la inclusión de un individuo en el dataset de entrenamiento no cambia significativamente la salida del modelo.",
+      "respuesta": "privacidad",
+      "retroalimentacion": "La privacidad diferencial agrega ruido calibrado matemáticamente a los datos o al proceso de aprendizaje para garantizar que las estadísticas publicadas no puedan usarse para identificar a individuos específicos, incluso ante un atacante con información auxiliar."
+    },
+    {
+      "num": 5,
+      "tipo": "abierta",
+      "pregunta": "Un gobierno propone implementar un sistema de IA que analice publicaciones de redes sociales de funcionarios públicos para predecir el riesgo de corrupción. Desde el punto de vista ético, ¿qué preguntas críticas deberían responderse antes de implementarlo?",
+      "respuesta": "Preguntas críticas: (1) Legitimidad y legalidad: ¿Existe base legal para monitorear expresiones en redes sociales? ¿Viola la privacidad o la libertad de expresión? (2) Equidad: ¿El modelo funcionará igual para todos los grupos políticos, étnicos o de género? ¿Podría usarse para perseguir opositores políticos? (3) Evidencia: ¿Existe evidencia de que las publicaciones en redes predicen corrupción? La correlación espuria podría penalizar conductas inocentes. (4) Explicabilidad: ¿Cómo se justifica una alerta ante el funcionario acusado? ¿Tiene derecho a conocer y cuestionar los factores que lo marcaron? (5) Proporcionalidad: ¿Es el nivel de vigilancia proporcional al riesgo que mitiga? (6) Gobernanza: ¿Quién supervisa el sistema para evitar abusos? (7) Consecuencias: ¿Las alertas generan consecuencias automáticas o son insumos para investigación humana? La conclusión es que este sistema presenta riesgos éticos muy serios que podrían superar sus beneficios.",
+      "retroalimentacion": "Los sistemas de vigilancia predictiva son de los más polémicos en ética de IA. El marco ético requiere no solo evaluar la eficacia técnica sino las implicancias para los derechos fundamentales, el potencial de abuso, y la existencia de mecanismos de control y rendición de cuentas."
+    }
+  ]
+}

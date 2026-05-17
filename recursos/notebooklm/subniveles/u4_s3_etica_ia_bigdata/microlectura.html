@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.3 Ética en IA y Big Data — Microlectura — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.3 Ética en IA y Big Data</h1>
+<h2>1. El caso COMPAS: una advertencia histórica</h2>
+<p>COMPAS fue un algoritmo usado en EE.UU. para predecir la reincidencia criminal y orientar decisiones judiciales de libertad condicional. En 2016, ProPublica reveló que el algoritmo clasificaba incorrectamente a afroamericanos como "alto riesgo" a tasas significativamente mayores que a personas blancas con historiales similares.</p>
+<p>El caso generó un debate global: ¿Puede un algoritmo ser discriminatorio incluso si no usa explícitamente la raza como variable? La respuesta es sí — variables proxy como código postal, nivel de empleo o antecedentes familiares pueden correlacionar fuertemente con la raza en datos históricos discriminatorios.</p>
+<h2>2. Tipos de sesgo en modelos de ML</h2>
+<p><strong>Sesgo en los datos:</strong> si los datos de entrenamiento reflejan discriminación histórica, el modelo aprende a discriminar. Un sistema de contratación entrenado con 30 años de contrataciones masculinas aprenderá que "hombre" predice "contratado".</p>
+<p><strong>Sesgo de selección:</strong> si ciertos grupos están subrepresentados en los datos de entrenamiento, el modelo funcionará peor para esos grupos. Los modelos de reconocimiento facial fallan más en personas de piel oscura porque fueron entrenados mayormente con personas de piel clara.</p>
+<p><strong>Sesgo de medición:</strong> cuando las variables proxy no capturan el mismo concepto para todos los grupos. "Antecedentes penales" puede medir tanto comportamiento criminal real como desigualdad en la aplicación de la ley.</p>
+<h2>3. Fairness: múltiples definiciones incompatibles</h2>
+<p>Una de las revelaciones más sorprendentes de la investigación en ética de IA: no existe una definición única de "equidad algorítmica" y muchas definiciones son matemáticamente incompatibles entre sí.</p>
+<ul>
+<li><strong>Paridad demográfica:</strong> la tasa de predicciones positivas debe ser igual en todos los grupos.</li>
+<li><strong>Igualdad de oportunidad:</strong> el Recall debe ser igual en todos los grupos.</li>
+<li><strong>Exactitud calibrada:</strong> las probabilidades predichas deben ser igualmente precisas en todos los grupos.</li>
+</ul>
+<p>Chouldechova (2017) demostró que si las tasas de prevalencia difieren entre grupos (como en reincidencia entre grupos demográficos), es matemáticamente imposible satisfacer paridad demográfica e igualdad de oportunidad simultáneamente.</p>
+<h2>4. Privacidad diferencial</h2>
+<p>La privacidad diferencial es una técnica matemática que garantiza que la inclusión o exclusión de cualquier individuo específico en el dataset de entrenamiento no cambia significativamente la salida del modelo. Esto permite entrenar modelos con datos sensibles sin comprometer la privacidad individual. Apple y Google la usan para aprender de datos de usuarios sin exponer esos datos.</p>
+<h2>5. IA en Paraguay: oportunidades y riesgos</h2>
+<p>Paraguay tiene oportunidades únicas: datos de salud pública, agronomía y tributación que podrían mejorar políticas públicas. Pero también riesgos: falta de capacidad técnica para auditar modelos, ausencia de regulación específica, y riesgo de importar herramientas diseñadas para otros contextos sin adaptación local.</p>
+<p>La IA responsable en Paraguay requiere: transparencia en qué modelos se usan y para qué, participación de comunidades afectadas en el diseño, y formación de capacidades locales para auditar sistemas externos.</p>
+<h2>6. El rol del científico de datos</h2>
+<p>El científico de datos no es solo un técnico — es un actor con poder y responsabilidad. Las decisiones sobre qué datos recolectar, qué variable optimizar, qué umbrales usar, y qué resultados reportar tienen consecuencias reales para personas reales. La pregunta "¿puedo construir esto?" siempre debe ir acompañada de "¿debería construir esto?" y "¿quién se beneficia y quién se ve perjudicado?"</p>
+
+</body>
+</html>

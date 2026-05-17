@@ -1,0 +1,53 @@
+{
+  "subnivel": "3.2",
+  "titulo": "Evaluación: Regresión Logística",
+  "preguntas": [
+    {
+      "num": 1,
+      "tipo": "opcion_multiple",
+      "pregunta": "La función sigmoide σ(z) = 1/(1+e^{-z}) tiene la propiedad de que su imagen siempre está en el rango:",
+      "opciones": [
+        "A) (−∞, +∞)",
+        "B) [0, 1]",
+        "C) (0, 1)",
+        "D) [−1, 1]"
+      ],
+      "respuesta": "C",
+      "retroalimentacion": "La sigmoide produce valores en el intervalo abierto (0,1) — nunca exactamente 0 ni exactamente 1. Esto la hace ideal para representar probabilidades y distingue la regresión logística de la lineal que puede dar cualquier valor real."
+    },
+    {
+      "num": 2,
+      "tipo": "verdadero_falso",
+      "pregunta": "En regresión logística, si el coeficiente β de la variable 'años_experiencia' es 0.15, entonces el odds de la clase positiva aumenta un 15% por cada año de experiencia adicional.",
+      "respuesta": "Falso",
+      "retroalimentacion": "El coeficiente β=0.15 en escala log-odds no se interpreta directamente como porcentaje. El odds ratio es exp(0.15) ≈ 1.162, lo que significa que el odds aumenta aproximadamente un 16.2% por cada unidad de aumento en la variable."
+    },
+    {
+      "num": 3,
+      "tipo": "opcion_multiple",
+      "pregunta": "¿Cuál es la diferencia entre regularización L1 y L2 en regresión logística?",
+      "opciones": [
+        "A) L1 penaliza cuadrados de coeficientes; L2 penaliza valores absolutos",
+        "B) L1 puede producir coeficientes exactamente cero (selección de variables); L2 reduce todos los coeficientes pero raramente los lleva a cero",
+        "C) L1 es para clasificación binaria; L2 para multiclase",
+        "D) No hay diferencia práctica entre L1 y L2"
+      ],
+      "respuesta": "B",
+      "retroalimentacion": "L1 (Lasso) penaliza |β| y produce sparse solutions — algunos coeficientes exactamente 0, equivalente a selección automática de variables. L2 (Ridge) penaliza β² y reduce todos los coeficientes hacia 0 pero raramente exactamente a 0."
+    },
+    {
+      "num": 4,
+      "tipo": "completar",
+      "pregunta": "El AUC-ROC de 0.5 corresponde a un clasificador ________, mientras que AUC=1.0 indica clasificación perfecta.",
+      "respuesta": "aleatorio (sin capacidad predictiva)",
+      "retroalimentacion": "AUC=0.5 equivale a adivinar al azar (la curva ROC es la diagonal). AUC>0.7 es aceptable, >0.8 es bueno, >0.9 es excelente para la mayoría de aplicaciones."
+    },
+    {
+      "num": 5,
+      "tipo": "abierta",
+      "pregunta": "Un banco quiere implementar un modelo de regresión logística para aprobar préstamos. El modelo tiene AUC=0.82 y accuracy=78%. ¿Cómo explicaría el significado del AUC al director del banco que no tiene conocimientos de estadística?",
+      "respuesta": "El AUC-ROC de 0.82 significa que si tomamos al azar un cliente que pagó su préstamo y otro que no pagó, el modelo ordena correctamente al buen pagador con mayor score que al moroso en el 82% de las veces. En términos prácticos: si el banco tiene 1000 solicitudes mixtas de buenos y malos pagadores, el modelo puede ordenarlas por riesgo de manera que el 82% de las veces un buen pagador tendrá mayor score que un mal pagador. Es decir, el modelo tiene buena capacidad discriminante — es considerablemente mejor que seleccionar al azar (50%).",
+      "retroalimentacion": "Traducir métricas técnicas a lenguaje de negocio es una habilidad clave en Analítica de Datos. El AUC es una medida de capacidad discriminante independiente del umbral de decisión — especialmente útil cuando el umbral puede ajustarse."
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>4.2 Procedimiento — Crear Reporte Ejecutivo — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #6A1B9A; border-bottom: 3px solid #6A1B9A; padding-bottom: 10px; }
+  h2 { color: #7B1FA2; margin-top: 2em; }
+  h3 { color: #4A148C; }
+  .header-info { background: #F3E5F5; border-left: 4px solid #6A1B9A; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #4A148C; }
+  pre { background: #F5F5F5; border-left: 4px solid #9C27B0; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F3E5F5; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #EDE7F6; border-left: 4px solid #7B1FA2; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #6A1B9A; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #6A1B9A; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 4</div>
+
+<h1>4.2 Procedimiento: Crear un Reporte Ejecutivo con R Markdown</h1>
+<h2>Pasos</h2>
+<h3>Paso 1: Instalar y configurar</h3>
+<pre>install.packages(c("rmarkdown","knitr","kableExtra","ggplot2","scales"))
+# En RStudio: File > New File > R Markdown
+# O crear archivo .Rmd manualmente</pre>
+<h3>Paso 2: Estructura del archivo Rmd</h3>
+<pre># --- [YAML cabecera] ---
+# title: "Reporte de Análisis Predictivo"
+# date: "`r Sys.Date()`"
+# output: html_document
+
+# ## Resumen ejecutivo
+# [Texto narrativo con los hallazgos principales en lenguaje no técnico]
+
+# ```{r setup, include=FALSE}
+# knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+# library(ggplot2); library(kableExtra)
+# ```
+
+# ## Hallazgo 1: Variables de mayor impacto
+# [Texto explicativo]
+
+# ```{r importancia_plot, fig.height=4, fig.width=7}
+# # Gráfico de importancia aquí
+# ```</pre>
+<h3>Paso 3: Componentes del reporte</h3>
+<pre># TABLA EJECUTIVA
+kbl(tabla_resultados,
+    caption="Rendimiento de modelos candidatos",
+    digits=3) %>%
+  kable_styling("striped", full_width=FALSE) %>%
+  column_spec(2, bold=TRUE, color="#6A1B9A")</pre>
+<h3>Paso 4: Renderizar</h3>
+<pre>rmarkdown::render("mi_reporte.Rmd")
+# Abre el HTML en el navegador automáticamente</pre>
+<h3>Paso 5: Verificar accesibilidad</h3>
+<pre># Checklist:
+# [ ] Título descriptivo y fecha
+# [ ] Resumen ejecutivo de 1 párrafo en la primera página
+# [ ] Todos los gráficos tienen título, ejes y fuente
+# [ ] Los números de negocio tienen formato (miles con puntos, etc.)
+# [ ] El apéndice técnico está separado del cuerpo principal
+# [ ] El archivo se puede reproducir ejecutando solo rmarkdown::render()</pre>
+
+</body>
+</html>

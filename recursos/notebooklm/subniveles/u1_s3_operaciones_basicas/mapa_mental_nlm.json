@@ -1,0 +1,210 @@
+{
+  "mind_map": {
+    "name": "Unidad 1: Introducción al manejo de datos en Big Data",
+    "children": [
+      {
+        "name": "Fundamentos y Marco Conceptual",
+        "children": [
+          {
+            "name": "Las 5V",
+            "children": [
+              {
+                "name": "Volumen (Escala exponencial)"
+              },
+              {
+                "name": "Velocidad (Tiempo real/Streaming)"
+              },
+              {
+                "name": "Variedad (Datos heterogéneos)"
+              },
+              {
+                "name": "Veracidad (Calidad y confianza)"
+              },
+              {
+                "name": "Valor (Insights estratégicos)"
+              }
+            ]
+          },
+          {
+            "name": "Evolución Histórica",
+            "children": [
+              {
+                "name": "1990s: Término Big Data (NASA)"
+              },
+              {
+                "name": "2004: MapReduce (Google)"
+              },
+              {
+                "name": "2006: Hadoop (Open-source)"
+              },
+              {
+                "name": "2011: Apache Spark"
+              },
+              {
+                "name": "2023+: Integración con GenAI"
+              }
+            ]
+          },
+          {
+            "name": "Cambio de Paradigma",
+            "children": [
+              {
+                "name": "Del muestreo al análisis integral"
+              },
+              {
+                "name": "Descubrimientos no hipotéticos"
+              },
+              {
+                "name": "Predicciones en tiempo real"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ecosistema Tecnológico",
+        "children": [
+          {
+            "name": "Ingesta y Procesamiento",
+            "children": [
+              {
+                "name": "Kafka (Streaming)"
+              },
+              {
+                "name": "Spark (Batch/Stream)"
+              },
+              {
+                "name": "Flink (Baja latencia)"
+              }
+            ]
+          },
+          {
+            "name": "Almacenamiento",
+            "children": [
+              {
+                "name": "HDFS (Distribuido)"
+              },
+              {
+                "name": "Amazon S3 (Objetos)"
+              },
+              {
+                "name": "Delta Lake (ACID)"
+              }
+            ]
+          },
+          {
+            "name": "Entorno de Trabajo",
+            "children": [
+              {
+                "name": "R / RStudio"
+              },
+              {
+                "name": "Cloud Computing (AWS/Azure/GCP)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Actividades y Evaluación",
+        "children": [
+          {
+            "name": "Actividad 1: Formativa",
+            "children": [
+              {
+                "name": "Estudio de materiales y videos"
+              },
+              {
+                "name": "Producto: Notas y registro de dudas"
+              }
+            ]
+          },
+          {
+            "name": "Actividad 2: Interactiva",
+            "children": [
+              {
+                "name": "Foro de discusión"
+              },
+              {
+                "name": "Problemas de aplicación en R"
+              }
+            ]
+          },
+          {
+            "name": "Actividad 3: Autónoma",
+            "children": [
+              {
+                "name": "Cuestionario en línea"
+              },
+              {
+                "name": "Operaciones básicas y gráficos"
+              }
+            ]
+          },
+          {
+            "name": "Evidencia Final",
+            "children": [
+              {
+                "name": "Bitácora de comandos"
+              },
+              {
+                "name": "Capturas de salida"
+              },
+              {
+                "name": "Reflexión sobre calidad de datos"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Casos de Éxito y Desafíos",
+        "children": [
+          {
+            "name": "Casos Prácticos",
+            "children": [
+              {
+                "name": "Netflix: Hiper-personalización"
+              },
+              {
+                "name": "Uber: Logística dinámica"
+              },
+              {
+                "name": "FinTech: Detección de fraude"
+              }
+            ]
+          },
+          {
+            "name": "Desafíos y Ética",
+            "children": [
+              {
+                "name": "Escalabilidad y latencia"
+              },
+              {
+                "name": "Privacidad y GDPR"
+              },
+              {
+                "name": "Mitigación de sesgos en AI"
+              }
+            ]
+          },
+          {
+            "name": "Tendencias Futuras",
+            "children": [
+              {
+                "name": "Data Mesh 2.0"
+              },
+              {
+                "name": "Computación Cuántica"
+              },
+              {
+                "name": "Sustainable Data Ops"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "note_id": "a7e06685-8724-4829-bb9a-bbb0e264fc9d"
+}

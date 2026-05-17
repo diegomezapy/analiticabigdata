@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>3.2 Procedimiento — Regresión Logística Completa — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #2E7D32; border-bottom: 3px solid #2E7D32; padding-bottom: 10px; }
+  h2 { color: #388E3C; margin-top: 2em; }
+  h3 { color: #1B5E20; }
+  .header-info { background: #E8F5E9; border-left: 4px solid #2E7D32; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #1B5E20; }
+  pre { background: #F5F5F5; border-left: 4px solid #4CAF50; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F1F8E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #2E7D32; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #2E7D32; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 3</div>
+
+<h1>3.2 Procedimiento: Regresión Logística Paso a Paso</h1>
+<h2>Pasos</h2>
+<h3>Paso 1: Preparar y explorar</h3>
+<pre>library(mlbench); library(caret); library(pROC)
+data(PimaIndiansDiabetes)
+str(PimaIndiansDiabetes)
+table(PimaIndiansDiabetes$diabetes)  # distribución de clases</pre>
+<h3>Paso 2: División y preprocesamiento</h3>
+<pre>set.seed(42)
+idx <- createDataPartition(PimaIndiansDiabetes$diabetes, p=0.8, list=FALSE)
+train <- PimaIndiansDiabetes[idx,]
+test  <- PimaIndiansDiabetes[-idx,]</pre>
+<h3>Paso 3: Modelo base</h3>
+<pre>m1 <- glm(diabetes ~ ., data=train, family=binomial)
+summary(m1)
+# Identificar variables significativas (p < 0.05)</pre>
+<h3>Paso 4: Modelo reducido con variables significativas</h3>
+<pre>m2 <- glm(diabetes ~ glucose + mass + age + pregnant,
+          data=train, family=binomial)
+# Comparar modelos con AIC (menor es mejor)
+cat("AIC m1:", AIC(m1), "| AIC m2:", AIC(m2), "
+")
+# Odds Ratios del modelo reducido
+round(exp(cbind(OR=coef(m2), confint(m2))), 3)</pre>
+<h3>Paso 5: Predicción y evaluación</h3>
+<pre>probs <- predict(m2, test, type="response")
+pred <- factor(ifelse(probs>=0.5,"pos","neg"), levels=c("neg","pos"))
+cm <- confusionMatrix(pred, test$diabetes, positive="pos")
+print(cm)</pre>
+<h3>Paso 6: Curva ROC y AUC</h3>
+<pre>roc_obj <- roc(test$diabetes, probs)
+cat("AUC:", round(auc(roc_obj),3), "
+")
+plot(roc_obj, col="#2E7D32", lwd=2)
+# AUC > 0.8: bueno; > 0.9: excelente; 0.5: aleatorio</pre>
+<h3>Paso 7: Ajustar umbral</h3>
+<pre>for (u in c(0.3, 0.4, 0.5, 0.6)) {
+  p <- factor(ifelse(probs>=u,"pos","neg"), levels=c("neg","pos"))
+  cm_u <- confusionMatrix(p, test$diabetes, positive="pos")
+  cat(sprintf("Umbral %.1f: Sens=%.3f, Spec=%.3f, Acc=%.3f
+",
+    u, cm_u$byClass["Sensitivity"], cm_u$byClass["Specificity"],
+    cm_u$overall["Accuracy"]))
+}</pre>
+
+</body>
+</html>

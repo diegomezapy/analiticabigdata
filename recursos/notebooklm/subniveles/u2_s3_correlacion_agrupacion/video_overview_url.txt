@@ -1,0 +1,2 @@
+# URL del video overview de 2.3 Correlación y Análisis de Agrupación
+# Usar NotebookLM o Loom

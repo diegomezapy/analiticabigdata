@@ -1,0 +1,245 @@
+{
+  "title": "An\u00e1lisis Tarjetas",
+  "cards": [
+    {
+      "front": "\u00bfQu\u00e9 tipo de variable cuantitativa se caracteriza por tener valores contables enteros, como el n\u00famero de clientes?",
+      "back": "Variable cuantitativa discreta."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de variable cuantitativa puede tomar cualquier valor dentro de un rango continuo, como el peso o el tiempo?",
+      "back": "Variable cuantitativa continua."
+    },
+    {
+      "front": "Concepto: Variable Cualitativa Nominal",
+      "back": "Definition: Categor\u00edas que no poseen un orden intr\u00ednseco. Ejemplo: Color o g\u00e9nero."
+    },
+    {
+      "front": "Concepto: Variable Cualitativa Ordinal",
+      "back": "Definition: Categor\u00edas que siguen un orden l\u00f3gico o jer\u00e1rquico. Ejemplo: Nivel educativo."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica de EDA se utiliza para resumir datos mediante medidas como la media y la mediana?",
+      "back": "Estad\u00edsticas descriptivas."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el prop\u00f3sito principal de utilizar histogramas en el an\u00e1lisis exploratorio de datos?",
+      "back": "Visualizar la distribuci\u00f3n univariada de los datos."
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de visualizaci\u00f3n es ideal para detectar outliers y observar la dispersi\u00f3n de una variable?",
+      "back": "El Boxplot."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de gr\u00e1fico se utiliza para explorar las relaciones bivariadas entre dos variables num\u00e9ricas?",
+      "back": "Scatter Plots (Gr\u00e1ficos de dispersi\u00f3n)."
+    },
+    {
+      "front": "En el contexto de EDA, \u00bfcu\u00e1l es la funci\u00f3n de los Heatmaps?",
+      "back": "Visualizar matrices de correlaci\u00f3n entre variables."
+    },
+    {
+      "front": "En Python, \u00bfqu\u00e9 m\u00e9todo de la librer\u00eda Pandas se utiliza para obtener r\u00e1pidamente estad\u00edsticas descriptivas de un DataFrame?",
+      "back": "El m\u00e9todo `.describe()`."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 funci\u00f3n b\u00e1sica proporciona un resumen estad\u00edstico de las variables de un dataset?",
+      "back": "La funci\u00f3n `summary()`."
+    },
+    {
+      "front": "\u00bfQu\u00e9 librer\u00eda de Python es com\u00fanmente utilizada junto con Matplotlib para crear gr\u00e1ficos estad\u00edsticos como `histplot`?",
+      "back": "Seaborn."
+    },
+    {
+      "front": "\u00bfQu\u00e9 funci\u00f3n de la librer\u00eda Seaborn se utiliza para generar un mapa de calor de correlaciones?",
+      "back": "La funci\u00f3n `sns.heatmap()`."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 paquete es el est\u00e1ndar para crear gr\u00e1ficos basados en la gram\u00e1tica de gr\u00e1ficos, como `geom_histogram`?",
+      "back": "ggplot2."
+    },
+    {
+      "front": "\u00bfQu\u00e9 funci\u00f3n del paquete GGally en R se utiliza para visualizar r\u00e1pidamente una matriz de correlaciones con etiquetas?",
+      "back": "La funci\u00f3n `ggcorr()`."
+    },
+    {
+      "front": "La etapa de _____ en el preprocesado consiste en eliminar registros duplicados o tratar valores at\u00edpicos.",
+      "back": "Limpieza"
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el objetivo de la etapa de Transformaci\u00f3n en el preprocesado de datos?",
+      "back": "Normalizar o escalar las variables para prepararlas para el modelado."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica de preprocesado busca reducir la dimensionalidad de los datos, como el uso de PCA?",
+      "back": "Selecci\u00f3n de features."
+    },
+    {
+      "front": "En Scikit-learn (Python), \u00bfqu\u00e9 herramienta se utiliza espec\u00edficamente para el escalado est\u00e1ndar de variables?",
+      "back": "`StandardScaler`."
+    },
+    {
+      "front": "\u00bfPor qu\u00e9 es cr\u00edtico manejar adecuadamente los valores ausentes (missing values) en un dataset?",
+      "back": "Para evitar sesgos en el an\u00e1lisis y errores en los modelos de aprendizaje."
+    },
+    {
+      "front": "\u00bfBajo qu\u00e9 condici\u00f3n es aceptable utilizar la 'Eliminaci\u00f3n' como estrategia para valores ausentes?",
+      "back": "Cuando existe una baja proporci\u00f3n de datos faltantes."
+    },
+    {
+      "front": "\u00bfQu\u00e9 ventaja ofrece la imputaci\u00f3n por Media o Mediana frente a m\u00e9todos m\u00e1s complejos?",
+      "back": "Es un proceso r\u00e1pido que mantiene la distribuci\u00f3n general de la variable."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la estrategia de imputaci\u00f3n estad\u00edstica recomendada para variables cualitativas?",
+      "back": "La imputaci\u00f3n por la Moda."
+    },
+    {
+      "front": "\u00bfQu\u00e9 desventaja presenta la imputaci\u00f3n mediante KNN o Regresi\u00f3n en datasets muy grandes?",
+      "back": "Es una t\u00e9cnica computacionalmente intensiva."
+    },
+    {
+      "front": "En Pandas, \u00bfqu\u00e9 funci\u00f3n se utiliza para eliminar filas que contienen valores nulos?",
+      "back": "La funci\u00f3n `.dropna()`."
+    },
+    {
+      "front": "En R, \u00bfqu\u00e9 funci\u00f3n b\u00e1sica se utiliza para omitir las observaciones con valores faltantes en un objeto?",
+      "back": "La funci\u00f3n `na.omit()`."
+    },
+    {
+      "front": "En Python, \u00bfqu\u00e9 clase de `sklearn.impute` permite completar valores faltantes bas\u00e1ndose en la similitud con otros registros?",
+      "back": "`KNNImputer`."
+    },
+    {
+      "front": "\u00bfQu\u00e9 paquete de R se especializa en la imputaci\u00f3n m\u00faltiple de datos faltantes mediante ecuaciones encadenadas?",
+      "back": "El paquete `mice`."
+    },
+    {
+      "front": "Las transformaciones matem\u00e1ticas como _____ o Box-Cox se utilizan cuando los datos presentan distribuciones sesgadas.",
+      "back": "log"
+    },
+    {
+      "front": "\u00bfQui\u00e9n es el autor cl\u00e1sico que sent\u00f3 las bases del An\u00e1lisis Exploratorio de Datos (EDA) en 1977?",
+      "back": "John W. Tukey."
+    },
+    {
+      "front": "En una visualizaci\u00f3n de Boxplot, \u00bfqu\u00e9 representan los puntos que se encuentran fuera de los 'bigotes'?",
+      "back": "Outliers o valores at\u00edpicos."
+    },
+    {
+      "front": "En ggplot2, \u00bfqu\u00e9 argumento de la funci\u00f3n `aes()` se utiliza para definir la variable del eje horizontal?",
+      "back": "El argumento `x`."
+    },
+    {
+      "front": "En Seaborn, \u00bfqu\u00e9 par\u00e1metro de `histplot` se debe establecer en `True` para visualizar la estimaci\u00f3n de densidad del n\u00facleo?",
+      "back": "El par\u00e1metro `kde`."
+    },
+    {
+      "front": "La binarizaci\u00f3n de variables cualitativas es una t\u00e9cnica necesaria para convertir categor\u00edas en formatos _____ procesables por algoritmos.",
+      "back": "Num\u00e9ricos"
+    },
+    {
+      "front": "En el preprocesado, \u00bfqu\u00e9 t\u00e9cnica en R se utiliza frecuentemente para reducir dimensionalidad mediante `prcomp()`?",
+      "back": "An\u00e1lisis de Componentes Principales (PCA)."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la funci\u00f3n de Pandas para cargar un archivo de datos en formato CSV?",
+      "back": "`read_csv()`."
+    },
+    {
+      "front": "En R, \u00bfc\u00f3mo se accede a las primeras seis filas de un DataFrame por defecto?",
+      "back": "Usando la funci\u00f3n `head()`."
+    },
+    {
+      "front": "Para imputar la media en una columna espec\u00edfica de R llamada `col`, \u00bfqu\u00e9 funci\u00f3n de agregaci\u00f3n se usa dentro de los corchetes?",
+      "back": "`mean(df$col, na.rm = TRUE)`."
+    },
+    {
+      "front": "La t\u00e9cnica de imputaci\u00f3n que considera las similitudes entre registros se conoce como _____.",
+      "back": "KNN (K-Nearest Neighbors)"
+    },
+    {
+      "front": "\u00bfQu\u00e9 herramienta de Python permite verificar la suma de valores nulos por columna en un DataFrame?",
+      "back": "El m\u00e9todo `.isna().sum()`."
+    },
+    {
+      "front": "\u00bfQu\u00e9 ventaja tiene el uso de `StandardScaler` en modelos de aprendizaje autom\u00e1tico?",
+      "back": "Asegura que todas las variables tengan media cero y desviaci\u00f3n est\u00e1ndar uno."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tipo de gr\u00e1fico de Seaborn permite ver la relaci\u00f3n lineal y la distribuci\u00f3n marginal simult\u00e1neamente?",
+      "back": "`jointplot` (impl\u00edcito en las t\u00e9cnicas de EDA bivariado)."
+    },
+    {
+      "front": "Concepto: Limpieza de datos",
+      "back": "Definition: Proceso de identificar y corregir errores, duplicados o inconsistencias en los datos brutos."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es el prop\u00f3sito del par\u00e1metro `annot=True` en la funci\u00f3n `sns.heatmap()`?",
+      "back": "Mostrar los valores num\u00e9ricos de la correlaci\u00f3n dentro de cada celda."
+    },
+    {
+      "front": "En ggplot2, \u00bfqu\u00e9 funci\u00f3n se a\u00f1ade con un `+` para cambiar las etiquetas de los ejes y el t\u00edtulo?",
+      "back": "La funci\u00f3n `labs()`."
+    },
+    {
+      "front": "\u00bfQu\u00e9 t\u00e9cnica se utiliza para transformar una variable cualitativa nominal en m\u00faltiples columnas de ceros y unos?",
+      "back": "One-Hot Encoding o Binarizaci\u00f3n."
+    },
+    {
+      "front": "En la imputaci\u00f3n con el paquete `mice` de R, \u00bfqu\u00e9 significa el par\u00e1metro `m=5`?",
+      "back": "Indica el n\u00famero de imputaciones m\u00faltiples a generar."
+    },
+    {
+      "front": "\u00bfQu\u00e9 autor es reconocido por el desarrollo del paquete ggplot2 y el libro 'Elegant Graphics for Data Analysis'?",
+      "back": "Hadley Wickham."
+    },
+    {
+      "front": "En un an\u00e1lisis de correlaci\u00f3n, \u00bfqu\u00e9 indica un valor cercano a $+1$ entre dos variables?",
+      "back": "Una fuerte relaci\u00f3n lineal positiva."
+    },
+    {
+      "front": "En un an\u00e1lisis de correlaci\u00f3n, \u00bfqu\u00e9 indica un valor cercano a $0$?",
+      "back": "La ausencia de una relaci\u00f3n lineal entre las variables."
+    },
+    {
+      "front": "\u00bfCu\u00e1l es la principal diferencia entre normalizaci\u00f3n y estandarizaci\u00f3n?",
+      "back": "La normalizaci\u00f3n escala a un rango fijo (como $[0, 1]$), mientras que la estandarizaci\u00f3n se basa en la media y desviaci\u00f3n est\u00e1ndar."
+    },
+    {
+      "front": "La biblioteca de Python dise\u00f1ada para el an\u00e1lisis y manipulaci\u00f3n de estructuras de datos tabulares es _____.",
+      "back": "Pandas"
+    },
+    {
+      "front": "\u00bfQu\u00e9 comando de R se utiliza para cargar una librer\u00eda instalada previamente?",
+      "back": "`library()`."
+    },
+    {
+      "front": "\u00bfQu\u00e9 visualizaci\u00f3n es la m\u00e1s adecuada para observar la evoluci\u00f3n de una variable continua a trav\u00e9s del tiempo?",
+      "back": "Gr\u00e1fico de l\u00edneas (Line Plot)."
+    },
+    {
+      "front": "En preprocesado, el proceso de 'escalar' es vital cuando los algoritmos son sensibles a la _____ de las variables.",
+      "back": "Magnitud (o escala)"
+    },
+    {
+      "front": "\u00bfQu\u00e9 m\u00e9todo de imputaci\u00f3n es preferible si los datos faltantes no son aleatorios y dependen de otras variables?",
+      "back": "Imputaci\u00f3n modelada (KNN o Regresi\u00f3n)."
+    },
+    {
+      "front": "La funci\u00f3n `complete()` del paquete `mice` en R sirve para extraer un dataset _____ tras el proceso de imputaci\u00f3n.",
+      "back": "Completado"
+    },
+    {
+      "front": "\u00bfQu\u00e9 autor escribi\u00f3 'Python for Data Analysis', texto fundamental para el uso de Pandas?",
+      "back": "Wes McKinney."
+    },
+    {
+      "front": "\u00bfQu\u00e9 tendencia futura se menciona para el An\u00e1lisis Exploratorio de Datos?",
+      "back": "EDA automatizada mediante Inteligencia Artificial."
+    },
+    {
+      "front": "En Python, \u00bfc\u00f3mo se calcula la matriz de correlaci\u00f3n de un DataFrame `df`?",
+      "back": "Usando `df.corr()`."
+    }
+  ]
+}

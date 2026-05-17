@@ -1,0 +1,193 @@
+{
+  "name": "Introducción al Manejo de Datos en Big Data",
+  "children": [
+    {
+      "name": "Fundamentos y Conceptos",
+      "children": [
+        {
+          "name": "Las 5V del Big Data",
+          "children": [
+            {
+              "name": "Volumen: Escala exponencial"
+            },
+            {
+              "name": "Velocidad: Tiempo real y streaming"
+            },
+            {
+              "name": "Variedad: Datos heterogéneos"
+            },
+            {
+              "name": "Veracidad: Calidad y confianza"
+            },
+            {
+              "name": "Valor: Insights estratégicos"
+            }
+          ]
+        },
+        {
+          "name": "Evolución Histórica",
+          "children": [
+            {
+              "name": "1960s: Primeros sistemas"
+            },
+            {
+              "name": "2004: Google MapReduce"
+            },
+            {
+              "name": "2006: Hadoop"
+            },
+            {
+              "name": "2011: Apache Spark"
+            },
+            {
+              "name": "2023+: Integración con GenAI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Arquitectura y Tecnología",
+      "children": [
+        {
+          "name": "Ingesta y Procesamiento",
+          "children": [
+            {
+              "name": "Apache Kafka"
+            },
+            {
+              "name": "Apache Spark"
+            },
+            {
+              "name": "Apache Flink"
+            }
+          ]
+        },
+        {
+          "name": "Almacenamiento",
+          "children": [
+            {
+              "name": "HDFS"
+            },
+            {
+              "name": "Amazon S3"
+            },
+            {
+              "name": "Delta Lake"
+            }
+          ]
+        },
+        {
+          "name": "Gobernanza y ML",
+          "children": [
+            {
+              "name": "Apache Atlas"
+            },
+            {
+              "name": "TensorFlow"
+            },
+            {
+              "name": "MLOps"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Actividades Académicas",
+      "children": [
+        {
+          "name": "Actividad 1: Estudio de Materiales",
+          "children": [
+            {
+              "name": "Lectura conceptual"
+            },
+            {
+              "name": "Videos tutoriales"
+            }
+          ]
+        },
+        {
+          "name": "Actividad 2: Foro de Discusión",
+          "children": [
+            {
+              "name": "Instalación R/RStudio"
+            },
+            {
+              "name": "Problemas de aplicación"
+            }
+          ]
+        },
+        {
+          "name": "Actividad 3: Evaluación",
+          "children": [
+            {
+              "name": "Cuestionario en línea"
+            },
+            {
+              "name": "Operaciones básicas y gráficos"
+            }
+          ]
+        },
+        {
+          "name": "Evidencia General",
+          "children": [
+            {
+              "name": "Bitácora de comandos"
+            },
+            {
+              "name": "Capturas de salida"
+            },
+            {
+              "name": "Reflexión sobre calidad"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Casos de Aplicación y Ética",
+      "children": [
+        {
+          "name": "Casos de Éxito",
+          "children": [
+            {
+              "name": "Netflix: Recomendaciones"
+            },
+            {
+              "name": "Uber: Pricing dinámico"
+            }
+          ]
+        },
+        {
+          "name": "Desafíos y Ética",
+          "children": [
+            {
+              "name": "Privacidad GDPR/CCPA"
+            },
+            {
+              "name": "Mitigación de sesgos"
+            },
+            {
+              "name": "Silos de datos"
+            }
+          ]
+        },
+        {
+          "name": "Tendencias Futuras",
+          "children": [
+            {
+              "name": "Data Mesh 2.0"
+            },
+            {
+              "name": "Quantum Analytics"
+            },
+            {
+              "name": "Sustainable Data Ops"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

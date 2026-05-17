@@ -1,0 +1,177 @@
+{
+  "title": "Clasificaci\u00f3n Cuestionario",
+  "questions": [
+    {
+      "question": "En el algoritmo K-Nearest Neighbors (KNN), la similitud entre observaciones se determina com\u00fanmente mediante una medida de distancia. \u00bfCu\u00e1l es la representaci\u00f3n matem\u00e1tica de la distancia Eucl\u00eddea para dos puntos $p$ y $q$?",
+      "answerOptions": [
+        {
+          "text": "$d(p, q) = \\sqrt{\\sum (p_i - q_i)^2}$",
+          "isCorrect": true,
+          "rationale": "Esta f\u00f3rmula calcula la ra\u00edz cuadrada de la suma de las diferencias al cuadrado entre las coordenadas correspondientes de los puntos, que es el est\u00e1ndar en KNN."
+        },
+        {
+          "text": "$d(p, q) = \\sum |p_i - q_i|$",
+          "isCorrect": false,
+          "rationale": "Esta es la definici\u00f3n de la distancia de Manhattan, no la Eucl\u00eddea, y se utiliza cuando los desplazamientos son estrictamente ortogonales."
+        },
+        {
+          "text": "$d(p, q) = \\max(|p_i - q_i|)$",
+          "isCorrect": false,
+          "rationale": "Esta expresi\u00f3n corresponde a la distancia de Chebyshev, que mide la diferencia m\u00e1xima en una sola dimensi\u00f3n."
+        },
+        {
+          "text": "$d(p, q) = \\frac{\\sum (p_i \\cdot q_i)}{\\sqrt{\\sum p_i^2} \\cdot \\sqrt{\\sum q_i^2}}$",
+          "isCorrect": false,
+          "rationale": "Esta f\u00f3rmula representa la similitud de coseno, utilizada frecuentemente en miner\u00eda de texto pero distinta al concepto de distancia espacial Eucl\u00eddea."
+        }
+      ],
+      "hint": "Recuerda el teorema de Pit\u00e1goras aplicado a m\u00faltiples dimensiones."
+    },
+    {
+      "question": "\u00bfPor qu\u00e9 es estrictamente obligatorio realizar una normalizaci\u00f3n de los datos antes de aplicar el algoritmo KNN?",
+      "answerOptions": [
+        {
+          "text": "Para evitar que variables con escalas num\u00e9ricas mayores dominen el c\u00e1lculo de la distancia sobre variables con escalas peque\u00f1as.",
+          "isCorrect": true,
+          "rationale": "KNN es sensible a la magnitud; si una variable est\u00e1 en miles y otra en decimales, la de mayor escala sesgar\u00e1 totalmente la clasificaci\u00f3n."
+        },
+        {
+          "text": "Para transformar todas las variables en distribuciones normales Gaussianas requeridas por el modelo.",
+          "isCorrect": false,
+          "rationale": "KNN es un algoritmo no param\u00e9trico que no asume ninguna distribuci\u00f3n espec\u00edfica de los datos, a diferencia de otros modelos estad\u00edsticos."
+        },
+        {
+          "text": "Para reducir la dimensionalidad del dataset y mejorar el tiempo de entrenamiento del modelo 'lazy'.",
+          "isCorrect": false,
+          "rationale": "La normalizaci\u00f3n escala los valores existentes pero no reduce el n\u00famero de dimensiones o variables del conjunto de datos."
+        },
+        {
+          "text": "Para eliminar autom\u00e1ticamente los valores at\u00edpicos (outliers) que podr\u00edan afectar a los vecinos m\u00e1s cercanos.",
+          "isCorrect": false,
+          "rationale": "Aunque el escalado puede mitigar el impacto de los valores extremos, no los elimina; de hecho, KNN sigue siendo sensible al ruido incluso tras normalizar."
+        }
+      ],
+      "hint": "Considera c\u00f3mo afectar\u00eda comparar una variable como 'Ingresos anuales' con 'Edad' en una misma m\u00e9trica de distancia."
+    },
+    {
+      "question": "Al configurar un modelo KNN, la elecci\u00f3n de un valor de $K$ extremadamente peque\u00f1o (por ejemplo, $K=1$) suele conllevar un riesgo espec\u00edfico. \u00bfCu\u00e1l es?",
+      "answerOptions": [
+        {
+          "text": "Un alto riesgo de sobreajuste (overfitting) debido a la sensibilidad al ruido y a los outliers en los datos de entrenamiento.",
+          "isCorrect": true,
+          "rationale": "Con $K=1$, el modelo captura variaciones aleatorias y ruido del dataset en lugar de la tendencia general, resultando en fronteras de decisi\u00f3n muy irregulares."
+        },
+        {
+          "text": "Un sesgo (bias) excesivo que impide al modelo capturar patrones complejos en los datos.",
+          "isCorrect": false,
+          "rationale": "Un $K$ peque\u00f1o reduce el sesgo pero aumenta la varianza; es el $K$ grande el que tiende a simplificar demasiado el modelo aumentando el sesgo."
+        },
+        {
+          "text": "Un incremento masivo en el costo computacional durante la fase de entrenamiento del modelo.",
+          "isCorrect": false,
+          "rationale": "KNN no tiene una fase de entrenamiento real (es lazy), y buscar un solo vecino es computacionalmente m\u00e1s r\u00e1pido que buscar muchos."
+        },
+        {
+          "text": "La imposibilidad de realizar clasificaciones multiclase, limitando el modelo a problemas binarios.",
+          "isCorrect": false,
+          "rationale": "KNN funciona para cualquier n\u00famero de clases independientemente del valor de $K$, siempre que se manejen los empates en la votaci\u00f3n."
+        }
+      ],
+      "hint": "Piensa en qu\u00e9 sucede con la frontera de decisi\u00f3n cuando el modelo responde ante cada punto individual de ruido."
+    },
+    {
+      "question": "El clasificador Naive Bayes se denomina 'ingenuo' (naive) debido a un supuesto fundamental sobre la relaci\u00f3n entre los predictores. \u00bfEn qu\u00e9 consiste este supuesto?",
+      "answerOptions": [
+        {
+          "text": "Asume que todas las variables predictoras son estad\u00edsticamente independientes entre s\u00ed, condicionadas a la clase.",
+          "isCorrect": true,
+          "rationale": "Este supuesto simplifica el c\u00e1lculo de la probabilidad conjunta como el producto de probabilidades individuales, aunque rara vez se cumple en la realidad."
+        },
+        {
+          "text": "Asume que los datos siempre siguen una distribuci\u00f3n de probabilidad Gaussiana perfecta en todas sus dimensiones.",
+          "isCorrect": false,
+          "rationale": "Aunque existe el Gaussian Naive Bayes, el algoritmo en s\u00ed puede usar otras distribuciones como la Multinomial o Bernoulli seg\u00fan el tipo de datos."
+        },
+        {
+          "text": "Asume que la variable objetivo siempre tiene una probabilidad a priori id\u00e9ntica para todas las categor\u00edas disponibles.",
+          "isCorrect": false,
+          "rationale": "El Teorema de Bayes utiliza expl\u00edcitamente las probabilidades a priori ($P(C)$), las cuales pueden ser muy diferentes entre clases."
+        },
+        {
+          "text": "Asume que no existen valores perdidos ni ruido en el conjunto de datos de entrenamiento.",
+          "isCorrect": false,
+          "rationale": "Naive Bayes es notablemente robusto ante datos perdidos; simplemente ignora la variable afectada durante el c\u00e1lculo probabil\u00edstico para esa observaci\u00f3n."
+        }
+      ],
+      "hint": "Se refiere a la interacci\u00f3n (o falta de ella) entre las caracter\u00edsticas de los datos."
+    },
+    {
+      "question": "De acuerdo con el Teorema de Bayes aplicado a la clasificaci\u00f3n, \u00bfcu\u00e1l es la f\u00f3rmula correcta para calcular la probabilidad a posteriori $P(C|X)$?",
+      "answerOptions": [
+        {
+          "text": "$P(C|X) = \\frac{P(X|C) P(C)}{P(X)}$",
+          "isCorrect": true,
+          "rationale": "Esta es la formulaci\u00f3n est\u00e1ndar que permite actualizar la creencia previa sobre una clase bas\u00e1ndose en la evidencia observada en los datos."
+        },
+        {
+          "text": "$P(C|X) = P(X|C) P(X) + P(C)$",
+          "isCorrect": false,
+          "rationale": "La relaci\u00f3n en el Teorema de Bayes es multiplicativa y proporcional, no aditiva."
+        },
+        {
+          "text": "$P(C|X) = \\frac{P(X) P(C)}{P(X|C)}$",
+          "isCorrect": false,
+          "rationale": "La verosimilitud ($P(X|C)$) debe estar en el numerador para indicar c\u00f3mo la clase explica los datos observados."
+        },
+        {
+          "text": "$P(C|X) = \\sqrt{P(X|C)^2 + P(C)^2}$",
+          "isCorrect": false,
+          "rationale": "El c\u00e1lculo de probabilidades no utiliza la norma Eucl\u00eddea de los componentes individuales."
+        }
+      ],
+      "hint": "Identifica los elementos: verosimilitud, probabilidad a priori y evidencia."
+    },
+    {
+      "question": "En el contexto de la evaluaci\u00f3n de modelos mediante una matriz de confusi\u00f3n, \u00bfes correcto afirmar que la m\u00e9trica de 'Exactitud' (Accuracy) es siempre el mejor criterio para juzgar el desempe\u00f1o del modelo?",
+      "answerOptions": [
+        {
+          "text": "Falso",
+          "isCorrect": true,
+          "rationale": "La exactitud puede ser enga\u00f1osa en conjuntos de datos desbalanceados, donde predecir siempre la clase mayoritaria dar\u00eda un valor alto sin ser un modelo \u00fatil."
+        },
+        {
+          "text": "Verdadero",
+          "isCorrect": false,
+          "rationale": "Aunque es intuitiva, la exactitud no diferencia entre tipos de error (falsos positivos vs. falsos negativos), lo cual es cr\u00edtico en medicina o finanzas."
+        }
+      ],
+      "hint": "Piensa en un dataset donde el $99\\%$ de los casos son negativos y el modelo predice 'negativo' para todos."
+    },
+    {
+      "question": "El algoritmo KNN es clasificado frecuentemente como un 'lazy learner' (aprendiz perezoso). \u00bfA qu\u00e9 se debe esta denominaci\u00f3n dentro del Machine Learning?",
+      "answerOptions": [
+        {
+          "text": "A que no genera un modelo discriminante expl\u00edcito durante la fase de entrenamiento, sino que almacena los datos y posterga el c\u00e1lculo hasta la predicci\u00f3n.",
+          "isCorrect": true,
+          "rationale": "A diferencia de la regresi\u00f3n log\u00edstica que estima coeficientes fijos, KNN realiza todo el esfuerzo computacional al momento de clasificar un nuevo punto."
+        },
+        {
+          "text": "A que requiere muy poca memoria para funcionar, ya que descarta los datos de entrenamiento una vez que se han definido los l\u00edmites de decisi\u00f3n.",
+          "isCorrect": false,
+          "rationale": "Es lo contrario; KNN necesita mantener todos los datos en memoria para poder comparar las distancias con las nuevas observaciones."
+        },
+        {
+          "text": "A que es un algoritmo que siempre elige la soluci\u00f3n m\u00e1s simple posible para evitar el c\u00f3mputo de gradientes complejos.",
+          "isCorrect": false,
+          "rationale": "El t\u00e9rmino 'lazy' no se refiere a la simplicidad de la l\u00f3gica, sino al momento cronol\u00f3gico en el que se ejecuta el aprendizaje real."
+        },
+        {
+          "text": "A que solo funciona con datasets de Big Data donde el tiempo de respuesta no es una prioridad para el analista.",
+          "isCorrect": false,
+          "rationale": "De hecho, su naturaleza 'lazy' lo hace menos eficiente para Big Data masivo debido al alto costo de b\u00fasqueda de vecinos en tiempo real."
+        }
+      ],
+      "hint": "Considera cu\u00e1ndo ocurre el 'esfuerzo' principal del algoritmo: \u00bfal ver los datos hist\u00f3ricos o al recibir un dato nuevo?"
+    }
+  ]
+}

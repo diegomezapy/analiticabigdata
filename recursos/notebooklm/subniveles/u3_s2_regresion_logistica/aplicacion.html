@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>3.2 Aplicación — Scoring de Crédito — ABD FACEN-UNA 2026</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.7; color: #212121; }
+  h1 { color: #2E7D32; border-bottom: 3px solid #2E7D32; padding-bottom: 10px; }
+  h2 { color: #388E3C; margin-top: 2em; }
+  h3 { color: #1B5E20; }
+  .header-info { background: #E8F5E9; border-left: 4px solid #2E7D32; padding: 10px 16px; margin-bottom: 24px; font-size: 0.9em; color: #1B5E20; }
+  pre { background: #F5F5F5; border-left: 4px solid #4CAF50; padding: 14px; overflow-x: auto; font-size: 0.92em; border-radius: 4px; }
+  code { background: #F1F8E9; padding: 2px 6px; border-radius: 3px; font-size: 0.92em; }
+  .concepto { background: #FFF8E1; border: 1px solid #FFD54F; padding: 12px 16px; margin: 16px 0; border-radius: 6px; }
+  .importante { background: #FCE4EC; border-left: 4px solid #E91E63; padding: 12px 16px; margin: 16px 0; }
+  .ejemplo { background: #E8F5E9; border-left: 4px solid #4CAF50; padding: 12px 16px; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+  th { background: #2E7D32; color: white; padding: 10px; text-align: left; }
+  td { border: 1px solid #ddd; padding: 8px 10px; }
+  tr:nth-child(even) { background: #F5F5F5; }
+  .ficha { border: 2px solid #2E7D32; border-radius: 8px; padding: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="header-info">Analítica de Big Data | FACEN-UNA | 2026 | Unidad 3</div>
+
+<h1>3.2 Aplicación: Modelo de Scoring de Crédito</h1>
+<h2>Contexto</h2>
+<p>El scoring de crédito es una de las aplicaciones más clásicas de la regresión logística en la industria financiera. Instituciones como Bancos y Cooperativas en Paraguay usan estos modelos para decidir si otorgar préstamos.</p>
+<h2>Implementación completa</h2>
+<pre>library(glmnet); library(pROC); library(caret)
+set.seed(77)
+n <- 2000
+creditos <- data.frame(
+  edad = round(rnorm(n, 35, 10)),
+  ingreso_log = log(rexp(n, 0.0000001) + 1000000),
+  deuda_ratio = pmin(1, pmax(0, rnorm(n, 0.35, 0.2))),
+  antiguedad_trabajo = round(rexp(n, 0.25)),
+  num_creditos_previos = rpois(n, 2),
+  tiene_garantia = sample(c(0,1), n, replace=TRUE, prob=c(0.4,0.6))
+)
+lp <- -4 + 0.03*creditos$edad + 0.5*creditos$ingreso_log -
+      2.5*creditos$deuda_ratio + 0.1*creditos$antiguedad_trabajo +
+      0.2*creditos$num_creditos_previos + 0.8*creditos$tiene_garantia
+creditos$buen_pagador <- factor(rbinom(n,1,1/(1+exp(-lp))), labels=c("No","Si"))
+
+# Pipeline
+idx <- createDataPartition(creditos$buen_pagador, p=0.8, list=FALSE)
+train <- creditos[idx,]; test <- creditos[-idx,]
+
+# Modelo con Lasso (selección automática de variables)
+X_train <- model.matrix(buen_pagador~., train)[,-1]
+y_train <- as.numeric(train$buen_pagador=="Si")
+X_test  <- model.matrix(buen_pagador~., test)[,-1]
+
+lasso_cv <- cv.glmnet(X_train, y_train, family="binomial", alpha=1, nfolds=10)
+cat("Lambda óptimo:", lasso_cv$lambda.min, "
+")
+coef(lasso_cv, s="lambda.min")  # Variables seleccionadas
+
+# Score crediticio (probabilidad de buen pagador)
+scores <- predict(lasso_cv, X_test, s="lambda.min", type="response")
+roc_res <- roc(test$buen_pagador, as.vector(scores))
+cat("AUC:", round(auc(roc_res),3), "
+")
+plot(roc_res, main="Curva ROC — Scoring de Crédito")</pre>
+<div class="concepto"><strong>Regulación:</strong> En muchos países, los modelos de crédito deben ser "explicables" (no cajas negras). La regresión logística cumple con este requisito ya que sus coeficientes/odds ratios son interpretables.</div>
+
+</body>
+</html>
