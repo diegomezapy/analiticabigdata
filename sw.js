@@ -1,4 +1,4 @@
-const CACHE_NAME = 'analitica-bigdata-v15';
+const CACHE_NAME = 'analitica-bigdata-v16';
 
 const APP_SHELL = [
   './',
@@ -43,7 +43,7 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
   const isSameOrigin = url.origin === self.location.origin;
-  const isHeavyAsset = /\.(wav|mp4|pptx|pdf)$/i.test(url.pathname);
+  const isHeavyAsset = /\.(wav|mp3|mp4|pptx|pdf)$/i.test(url.pathname);
   if (!isSameOrigin || isHeavyAsset) {
     event.respondWith(fetch(event.request).catch(() => caches.match('index.html')));
     return;

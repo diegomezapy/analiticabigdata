@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { spawnSync } = require('child_process');
 
 const SOURCE_ROOT = 'C:\\Users\\Diego\\ABD_Recursos';
 const DEST_ROOT = path.resolve(__dirname, '..', 'recursos', 'notebooklm');
@@ -174,6 +175,41 @@ function countCards(filePath) {
   return 0;
 }
 
+function runFfmpeg(args) {
+  const result = spawnSync('ffmpeg', args, { encoding: 'utf8' });
+  return {
+    ok: result.status === 0,
+    stderr: result.stderr || '',
+    stdout: result.stdout || ''
+  };
+}
+
+function convertWavToMp3(source, dest) {
+  ensureDir(path.dirname(dest));
+  if (exists(dest) && fs.statSync(dest).mtimeMs >= fs.statSync(source).mtimeMs) return true;
+  const result = runFfmpeg([
+    '-y',
+    '-i', source,
+    '-vn',
+    '-acodec', 'libmp3lame',
+    '-b:a', '64k',
+    '-ac', '1',
+    dest
+  ]);
+  if (!result.ok) {
+    console.warn(`No se pudo convertir ${source}: ${result.stderr.slice(0, 240)}`);
+  }
+  return result.ok;
+}
+
+function mediaTypeFor(filename) {
+  const ext = path.extname(filename).toLowerCase();
+  if (ext === '.mp3') return 'audio';
+  if (ext === '.mp4') return 'video';
+  if (ext === '.pptx') return 'presentacion';
+  return ext.slice(1) || 'archivo';
+}
+
 function importSublevels(index) {
   let copied = 0;
   const destBase = path.join(DEST_ROOT, 'subniveles');
@@ -218,6 +254,7 @@ function importUnits(index) {
     const sourceDir = path.join(SOURCE_ROOT, unit.source);
     const destDir = path.join(destBase, unit.slug);
     const archivos = {};
+    const media = [];
     const mediaPendiente = [];
 
     if (fs.existsSync(sourceDir)) {
@@ -231,12 +268,37 @@ function importUnits(index) {
           const key = path.basename(dirent.name, ext);
           archivos[key] = relFor('recursos', 'notebooklm', 'unidades', unit.slug, dirent.name);
         } else if (UNIT_MEDIA_EXTENSIONS.has(ext)) {
-          mediaPendiente.push({
-            archivo: dirent.name,
-            tipo: ext.slice(1),
-            bytes: fs.statSync(source).size,
-            recomendado: ext === '.wav' ? 'convertir a mp3/ogg antes de publicar' : 'publicar en carga diferida'
-          });
+          if (ext === '.wav') {
+            const mp3Name = dirent.name.replace(/\.wav$/i, '.mp3');
+            const dest = path.join(destDir, mp3Name);
+            if (convertWavToMp3(source, dest)) {
+              copied += 1;
+              media.push({
+                tipo: 'audio',
+                titulo: path.basename(mp3Name, '.mp3').replaceAll('_', ' '),
+                archivo: relFor('recursos', 'notebooklm', 'unidades', unit.slug, mp3Name),
+                fuente: dirent.name,
+                bytes: fs.statSync(dest).size
+              });
+            } else {
+              mediaPendiente.push({
+                archivo: dirent.name,
+                tipo: 'wav',
+                bytes: fs.statSync(source).size,
+                recomendado: 'convertir a mp3/ogg antes de publicar'
+              });
+            }
+          } else {
+            const dest = path.join(destDir, dirent.name);
+            copyFile(source, dest);
+            copied += 1;
+            media.push({
+              tipo: mediaTypeFor(dirent.name),
+              titulo: path.basename(dirent.name, ext).replaceAll('_', ' '),
+              archivo: relFor('recursos', 'notebooklm', 'unidades', unit.slug, dirent.name),
+              bytes: fs.statSync(dest).size
+            });
+          }
         }
       }
     }
@@ -247,6 +309,7 @@ function importUnits(index) {
       source: unit.source,
       title: unit.title,
       archivos,
+      media,
       mediaPendiente
     });
   }

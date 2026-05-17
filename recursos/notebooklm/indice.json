@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-17T01:40:10.087Z",
+  "generatedAt": "2026-05-17T01:49:46.714Z",
   "sourceRoot": "C:\\Users\\Diego\\ABD_Recursos",
   "basePath": "recursos/notebooklm",
   "version": 1,
@@ -413,32 +413,35 @@
         "quiz_1": "recursos/notebooklm/unidades/u1_revolucion_bigdata/quiz_1.json",
         "quiz_2": "recursos/notebooklm/unidades/u1_revolucion_bigdata/quiz_2.json"
       },
-      "mediaPendiente": [
+      "media": [
         {
-          "archivo": "podcast_1.wav",
-          "tipo": "wav",
-          "bytes": 34279841,
-          "recomendado": "convertir a mp3/ogg antes de publicar"
+          "tipo": "audio",
+          "titulo": "podcast 1",
+          "archivo": "recursos/notebooklm/unidades/u1_revolucion_bigdata/podcast_1.mp3",
+          "fuente": "podcast_1.wav",
+          "bytes": 8521487
         },
         {
-          "archivo": "podcast_2.wav",
-          "tipo": "wav",
-          "bytes": 47700778,
-          "recomendado": "convertir a mp3/ogg antes de publicar"
+          "tipo": "audio",
+          "titulo": "podcast 2",
+          "archivo": "recursos/notebooklm/unidades/u1_revolucion_bigdata/podcast_2.mp3",
+          "fuente": "podcast_2.wav",
+          "bytes": 11857429
         },
         {
-          "archivo": "presentacion_1.pptx",
-          "tipo": "pptx",
-          "bytes": 10025077,
-          "recomendado": "publicar en carga diferida"
+          "tipo": "presentacion",
+          "titulo": "presentacion 1",
+          "archivo": "recursos/notebooklm/unidades/u1_revolucion_bigdata/presentacion_1.pptx",
+          "bytes": 10025077
         },
         {
-          "archivo": "presentacion_2.pptx",
-          "tipo": "pptx",
-          "bytes": 10628396,
-          "recomendado": "publicar en carga diferida"
+          "tipo": "presentacion",
+          "titulo": "presentacion 2",
+          "archivo": "recursos/notebooklm/unidades/u1_revolucion_bigdata/presentacion_2.pptx",
+          "bytes": 10628396
         }
-      ]
+      ],
+      "mediaPendiente": []
     },
     {
       "unit": 2,
@@ -453,38 +456,42 @@
         "quiz_1": "recursos/notebooklm/unidades/u2_visualizacion_eda/quiz_1.json",
         "quiz_2": "recursos/notebooklm/unidades/u2_visualizacion_eda/quiz_2.json"
       },
-      "mediaPendiente": [
+      "media": [
         {
-          "archivo": "podcast_1.wav",
-          "tipo": "wav",
-          "bytes": 28055553,
-          "recomendado": "convertir a mp3/ogg antes de publicar"
+          "tipo": "audio",
+          "titulo": "podcast 1",
+          "archivo": "recursos/notebooklm/unidades/u2_visualizacion_eda/podcast_1.mp3",
+          "fuente": "podcast_1.wav",
+          "bytes": 6974202
         },
         {
-          "archivo": "podcast_2.wav",
-          "tipo": "wav",
-          "bytes": 54241179,
-          "recomendado": "convertir a mp3/ogg antes de publicar"
+          "tipo": "audio",
+          "titulo": "podcast 2",
+          "archivo": "recursos/notebooklm/unidades/u2_visualizacion_eda/podcast_2.mp3",
+          "fuente": "podcast_2.wav",
+          "bytes": 13483290
         },
         {
-          "archivo": "podcast_3.wav",
-          "tipo": "wav",
-          "bytes": 13759532,
-          "recomendado": "convertir a mp3/ogg antes de publicar"
+          "tipo": "audio",
+          "titulo": "podcast 3",
+          "archivo": "recursos/notebooklm/unidades/u2_visualizacion_eda/podcast_3.mp3",
+          "fuente": "podcast_3.wav",
+          "bytes": 3420713
         },
         {
-          "archivo": "presentacion_1.pptx",
-          "tipo": "pptx",
-          "bytes": 8945561,
-          "recomendado": "publicar en carga diferida"
+          "tipo": "presentacion",
+          "titulo": "presentacion 1",
+          "archivo": "recursos/notebooklm/unidades/u2_visualizacion_eda/presentacion_1.pptx",
+          "bytes": 8945561
         },
         {
-          "archivo": "presentacion_2.pptx",
-          "tipo": "pptx",
-          "bytes": 10582271,
-          "recomendado": "publicar en carga diferida"
+          "tipo": "presentacion",
+          "titulo": "presentacion 2",
+          "archivo": "recursos/notebooklm/unidades/u2_visualizacion_eda/presentacion_2.pptx",
+          "bytes": 10582271
         }
-      ]
+      ],
+      "mediaPendiente": []
     },
     {
       "unit": 3,
@@ -499,32 +506,34 @@
         "quiz_1": "recursos/notebooklm/unidades/u3_machine_learning/quiz_1.json",
         "quiz_2": "recursos/notebooklm/unidades/u3_machine_learning/quiz_2.json"
       },
-      "mediaPendiente": [
+      "media": [
         {
-          "archivo": "podcast_1.wav",
-          "tipo": "wav",
-          "bytes": 44810189,
-          "recomendado": "convertir a mp3/ogg antes de publicar"
+          "tipo": "audio",
+          "titulo": "podcast 1",
+          "archivo": "recursos/notebooklm/unidades/u3_machine_learning/podcast_1.mp3",
+          "fuente": "podcast_1.wav",
+          "bytes": 11138957
         },
         {
-          "archivo": "presentacion_1.pptx",
-          "tipo": "pptx",
-          "bytes": 9574857,
-          "recomendado": "publicar en carga diferida"
+          "tipo": "presentacion",
+          "titulo": "presentacion 1",
+          "archivo": "recursos/notebooklm/unidades/u3_machine_learning/presentacion_1.pptx",
+          "bytes": 9574857
         },
         {
-          "archivo": "presentacion_2.pptx",
-          "tipo": "pptx",
-          "bytes": 9771020,
-          "recomendado": "publicar en carga diferida"
+          "tipo": "presentacion",
+          "titulo": "presentacion 2",
+          "archivo": "recursos/notebooklm/unidades/u3_machine_learning/presentacion_2.pptx",
+          "bytes": 9771020
         },
         {
-          "archivo": "video_1.mp4",
-          "tipo": "mp4",
-          "bytes": 41279075,
-          "recomendado": "publicar en carga diferida"
+          "tipo": "video",
+          "titulo": "video 1",
+          "archivo": "recursos/notebooklm/unidades/u3_machine_learning/video_1.mp4",
+          "bytes": 41279075
         }
-      ]
+      ],
+      "mediaPendiente": []
     },
     {
       "unit": 4,
@@ -539,32 +548,34 @@
         "quiz_1": "recursos/notebooklm/unidades/u4_interpretacion_modelos/quiz_1.json",
         "quiz_2": "recursos/notebooklm/unidades/u4_interpretacion_modelos/quiz_2.json"
       },
-      "mediaPendiente": [
+      "media": [
         {
-          "archivo": "podcast_1.wav",
-          "tipo": "wav",
-          "bytes": 45250311,
-          "recomendado": "convertir a mp3/ogg antes de publicar"
+          "tipo": "audio",
+          "titulo": "podcast 1",
+          "archivo": "recursos/notebooklm/unidades/u4_interpretacion_modelos/podcast_1.mp3",
+          "fuente": "podcast_1.wav",
+          "bytes": 11248462
         },
         {
-          "archivo": "presentacion_1.pptx",
-          "tipo": "pptx",
-          "bytes": 9295270,
-          "recomendado": "publicar en carga diferida"
+          "tipo": "presentacion",
+          "titulo": "presentacion 1",
+          "archivo": "recursos/notebooklm/unidades/u4_interpretacion_modelos/presentacion_1.pptx",
+          "bytes": 9295270
         },
         {
-          "archivo": "presentacion_2.pptx",
-          "tipo": "pptx",
-          "bytes": 6444974,
-          "recomendado": "publicar en carga diferida"
+          "tipo": "presentacion",
+          "titulo": "presentacion 2",
+          "archivo": "recursos/notebooklm/unidades/u4_interpretacion_modelos/presentacion_2.pptx",
+          "bytes": 6444974
         },
         {
-          "archivo": "video_1.mp4",
-          "tipo": "mp4",
-          "bytes": 13993159,
-          "recomendado": "publicar en carga diferida"
+          "tipo": "video",
+          "titulo": "video 1",
+          "archivo": "recursos/notebooklm/unidades/u4_interpretacion_modelos/video_1.mp4",
+          "bytes": 13993159
         }
-      ]
+      ],
+      "mediaPendiente": []
     }
   ]
 }

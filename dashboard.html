@@ -604,6 +604,13 @@
             return JSON.stringify(value ?? '').replace(/</g, '\\u003c');
         }
 
+        function formatFileSize(bytes) {
+            const value = Number(bytes || 0);
+            if (!value) return '';
+            if (value < 1048576) return `${Math.round(value / 1024)} KB`;
+            return `${(value / 1048576).toFixed(value >= 10485760 ? 0 : 1)} MB`;
+        }
+
         async function loadNotebookLmIndex() {
             try {
                 const resp = await fetch(NOTEBOOKLM_INDEX_URL, { cache: 'reload' });
@@ -2545,31 +2552,71 @@
             const unitResources = getNotebookUnit(unitNum);
             if (!unitResources) return '';
             const files = Object.entries(unitResources.archivos || {});
-            const media = unitResources.mediaPendiente || [];
+            const media = unitResources.media || [];
             return `
       <div class="card notebook-unit-card">
         <h3>Recursos NotebookLM de sintesis</h3>
-        <p>Materiales de nivel unidad ya indexados para repaso global y uso embebible.</p>
-        <div class="materials-list" style="margin-top:1rem">
-          ${files.map(([key, file]) => `
-            <a class="material-item" href="${escapeHtml(file)}" target="_blank" rel="noopener">
-              <span class="material-icon">📚</span>
-              <div class="material-info">
-                <h4>${escapeHtml(key.replaceAll('_', ' '))}</h4>
-                <p>${escapeHtml(file)}</p>
-              </div>
-              <span class="material-badge badge-pdf">JSON</span>
-            </a>
-          `).join('')}
-        </div>
+        <p>Materiales de nivel unidad ya indexados para repaso global, descarga y uso embebible.</p>
         ${media.length ? `
+          <div class="notebook-media-grid">
+            ${media.map(item => renderNotebookMediaItem(item)).join('')}
+          </div>` : ''}
+        ${files.length ? `
+          <div class="materials-list" style="margin-top:1rem">
+            ${files.map(([key, file]) => `
+              <a class="material-item" href="${escapeHtml(file)}" target="_blank" rel="noopener">
+                <span class="material-icon">📚</span>
+                <div class="material-info">
+                  <h4>${escapeHtml(key.replaceAll('_', ' '))}</h4>
+                  <p>${escapeHtml(file)}</p>
+                </div>
+                <span class="material-badge badge-pdf">JSON</span>
+              </a>
+            `).join('')}
+          </div>` : ''}
+        ${unitResources.mediaPendiente?.length ? `
           <div class="notebook-media-pending">
             <h4>Medios pendientes de publicacion diferida</h4>
-            ${media.map(item => `
+            ${unitResources.mediaPendiente.map(item => `
               <span>${escapeHtml(item.archivo)} · ${Math.round((item.bytes || 0) / 1048576)} MB · ${escapeHtml(item.recomendado)}</span>
             `).join('')}
           </div>` : ''}
       </div>`;
+        }
+
+        function renderNotebookMediaItem(item) {
+            const title = item.titulo || item.archivo?.split('/').pop() || 'Recurso';
+            const size = formatFileSize(item.bytes);
+            if (item.tipo === 'audio') {
+                return `
+          <section class="notebook-media-item">
+            <div>
+              <span class="material-badge badge-act">Audio</span>
+              <h4>${escapeHtml(title)}</h4>
+              <p>${size ? `${size} · ` : ''}Podcast de sintesis de la unidad.</p>
+            </div>
+            <audio controls preload="metadata" src="${escapeHtml(item.archivo)}"></audio>
+            <a class="btn-secondary as-link" href="${escapeHtml(item.archivo)}" download>Descargar audio</a>
+          </section>`;
+            }
+            if (item.tipo === 'video') {
+                return `
+          <section class="notebook-media-item wide">
+            <div>
+              <span class="material-badge badge-quiz">Video</span>
+              <h4>${escapeHtml(title)}</h4>
+              <p>${size ? `${size} · ` : ''}Video NotebookLM de vision macro.</p>
+            </div>
+            <video controls preload="metadata" src="${escapeHtml(item.archivo)}"></video>
+            <a class="btn-secondary as-link" href="${escapeHtml(item.archivo)}" download>Descargar video</a>
+          </section>`;
+            }
+            return `
+          <a class="notebook-media-item download" href="${escapeHtml(item.archivo)}" download>
+            <span class="material-badge badge-pdf">PPTX</span>
+            <h4>${escapeHtml(title)}</h4>
+            <p>${size ? `${size} · ` : ''}Presentacion descargable de la unidad.</p>
+          </a>`;
         }
 
         function renderUnitDetail(n, activeTab = 'ruta') {

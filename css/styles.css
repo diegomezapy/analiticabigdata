@@ -1434,6 +1434,56 @@ a:hover { text-decoration: underline; }
   font-size: 0.88rem;
 }
 
+.notebook-media-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  margin-top: 1rem;
+}
+
+.notebook-media-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.notebook-media-item.wide {
+  grid-column: span 2;
+}
+
+.notebook-media-item h4 {
+  font-size: 0.95rem;
+  margin: 0.55rem 0 0.25rem;
+}
+
+.notebook-media-item p {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.notebook-media-item audio,
+.notebook-media-item video {
+  max-width: 100%;
+  width: 100%;
+}
+
+.notebook-media-item video {
+  background: #111827;
+  border-radius: var(--radius-sm);
+  max-height: 420px;
+}
+
+.notebook-media-item.download:hover {
+  border-color: var(--primary-light);
+}
+
 .notebook-media-pending {
   background: var(--bg-surface);
   border: 1px solid var(--glass-border);
@@ -2939,6 +2989,10 @@ a:hover { text-decoration: underline; }
   .learning-assessment-card,
   .sublevel-eval-options.two {
     grid-template-columns: 1fr;
+  }
+
+  .notebook-media-item.wide {
+    grid-column: span 1;
   }
 
   .learning-notebook-toolbar,

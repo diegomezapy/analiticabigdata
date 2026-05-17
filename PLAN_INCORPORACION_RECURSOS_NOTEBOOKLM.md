@@ -18,7 +18,8 @@ Implementado en esta primera incorporacion:
 - La ruta secuencial de `dashboard.html` carga los 7 pasos de cada subnivel desde NotebookLM cuando el indice esta disponible.
 - El panel "Necesito mas explicacion" carga mapa mental, flashcards y storyboard del subnivel.
 - La evaluacion formal por subnivel se responde dentro del aula y se registra en Google Sheets.
-- Los WAV, MP4 y PPTX quedan marcados como medios pendientes para carga diferida o conversion.
+- Los WAV se convierten a MP3 livianos y se publican junto con los MP4/PPTX de unidad en carga diferida.
+- El service worker excluye MP3/MP4/PPTX/PDF del cache automatico para proteger la instalacion movil.
 
 ## 1. Diagnostico del material disponible
 
