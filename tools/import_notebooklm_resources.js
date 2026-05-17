@@ -175,6 +175,16 @@ function countCards(filePath) {
   return 0;
 }
 
+function jsonField(filePath, field) {
+  if (!exists(filePath)) return '';
+  try {
+    const json = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    return json?.[field] || '';
+  } catch (error) {
+    return '';
+  }
+}
+
 function runFfmpeg(args) {
   const result = spawnSync('ffmpeg', args, { encoding: 'utf8' });
   return {
@@ -230,15 +240,21 @@ function importSublevels(index) {
       archivos[key] = relFor('recursos', 'notebooklm', 'subniveles', item.slug, filename);
     }
 
+    const quizPath = path.join(destDir, 'quiz.json');
+    const quizSource = jsonField(quizPath, 'source');
+    const quizIsFallback = String(quizSource).includes('fallback_local');
+
     index.subniveles.push({
       ...item,
       archivos,
       estado: {
         completoEscrito: ['resumen', 'microlectura', 'funciones', 'procedimiento', 'practica', 'aplicacion', 'evaluacion']
           .every(key => Boolean(archivos[key])),
-        quizNotebookLm: Boolean(archivos.quiz),
+        quizNotebookLm: Boolean(archivos.quiz && !quizIsFallback),
+        quizRepasoLocal: Boolean(archivos.quiz && quizIsFallback),
+        quizSource: quizSource || (archivos.quiz ? 'notebooklm' : ''),
         preguntasEvaluacion: countQuestions(path.join(destDir, 'evaluacion.json')),
-        preguntasQuiz: countQuestions(path.join(destDir, 'quiz.json')),
+        preguntasQuiz: countQuestions(quizPath),
         flashcards: countCards(path.join(destDir, 'flashcards.json')),
         faltantes: missing
       }

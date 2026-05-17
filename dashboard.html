@@ -1783,7 +1783,9 @@
                         bullets: isAssessment
                             ? [
                                 `${sublevel.estado?.preguntasEvaluacion || 0} preguntas de evaluacion formal.`,
-                                sublevel.estado?.quizNotebookLm ? `${sublevel.estado?.preguntasQuiz || 0} preguntas adicionales de repaso NotebookLM.` : 'Quiz NotebookLM adicional pendiente para este subnivel.',
+                                sublevel.archivos?.quiz
+                                    ? `${sublevel.estado?.preguntasQuiz || 0} preguntas adicionales de repaso ${sublevel.estado?.quizNotebookLm ? 'NotebookLM' : 'local'}.`
+                                    : 'Quiz adicional pendiente para este subnivel.',
                                 'La retroalimentacion se muestra despues de enviar.'
                             ]
                             : [
@@ -2107,6 +2109,7 @@
             const done = isUnitPathSlideComplete(unitNum, slide, slideIndex);
             const questionCount = slide.notebookMeta?.preguntasEvaluacion || 0;
             const quizCount = slide.notebookMeta?.preguntasQuiz || 0;
+            const quizLabel = slide.notebookMeta?.quizNotebookLm ? 'repaso NotebookLM' : (slide.quizFile ? 'repaso local' : 'repaso pendiente');
             return `
       <div class="learning-assessment-card ${done ? 'completed' : ''}">
         <div>
@@ -2115,7 +2118,7 @@
           <p>${escapeHtml(slide.lead)}</p>
           <div class="learning-assessment-stats">
             <span><strong>${questionCount || '--'}</strong> preguntas formales</span>
-            <span><strong>${quizCount || 0}</strong> repaso NotebookLM</span>
+            <span><strong>${quizCount || 0}</strong> ${escapeHtml(quizLabel)}</span>
           </div>
         </div>
         <div class="practice-actions">

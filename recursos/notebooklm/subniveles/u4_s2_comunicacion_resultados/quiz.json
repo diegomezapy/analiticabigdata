@@ -1,0 +1,171 @@
+{
+  "title": "Quiz de repaso: Comunicacion de Resultados y Reportes",
+  "source": "fallback_local_rate_limit_notebooklm",
+  "questions": [
+    {
+      "question": "En un reporte ejecutivo de analitica, cual es la funcion principal del resumen ejecutivo?",
+      "answerOptions": [
+        {
+          "text": "Presentar el codigo completo para que el lector pueda reproducir todo el analisis.",
+          "isCorrect": false,
+          "rationale": "El codigo completo pertenece al apendice tecnico o al repositorio reproducible, no al resumen ejecutivo."
+        },
+        {
+          "text": "Comunicar conclusion, evidencia esencial y recomendacion en lenguaje no tecnico.",
+          "isCorrect": true,
+          "rationale": "El resumen ejecutivo debe permitir que un decisor entienda rapidamente que se encontro, por que importa y que decision se recomienda."
+        },
+        {
+          "text": "Reemplazar la metodologia para que el documento sea mas breve.",
+          "isCorrect": false,
+          "rationale": "La metodologia no se elimina; se resume y se deja el detalle tecnico para secciones posteriores."
+        },
+        {
+          "text": "Mostrar todas las tablas generadas durante el analisis exploratorio.",
+          "isCorrect": false,
+          "rationale": "Un reporte ejecutivo selecciona la evidencia relevante; no convierte el documento en una bitacora completa."
+        }
+      ]
+    },
+    {
+      "question": "Que significa que un reporte sea reproducible con R Markdown o Quarto?",
+      "answerOptions": [
+        {
+          "text": "Que el documento combina texto, codigo y resultados generados desde una fuente controlada.",
+          "isCorrect": true,
+          "rationale": "La reproducibilidad aparece cuando los resultados del informe se generan desde el mismo codigo y datos documentados."
+        },
+        {
+          "text": "Que el reporte se puede copiar y pegar en cualquier procesador de texto.",
+          "isCorrect": false,
+          "rationale": "Copiar texto no garantiza que los calculos, graficos y tablas se puedan reconstruir."
+        },
+        {
+          "text": "Que solo se utiliza salida PDF y se evita HTML.",
+          "isCorrect": false,
+          "rationale": "R Markdown y Quarto pueden generar HTML, PDF, Word y presentaciones; el formato no define por si solo la reproducibilidad."
+        },
+        {
+          "text": "Que se ocultan todas las decisiones metodologicas para simplificar.",
+          "isCorrect": false,
+          "rationale": "Un reporte reproducible debe documentar las decisiones metodologicas relevantes."
+        }
+      ]
+    },
+    {
+      "question": "Si un modelo tiene AUC = 0.84, cual es una traduccion ejecutiva razonable?",
+      "answerOptions": [
+        {
+          "text": "El modelo acierta exactamente el 84% de todos los casos.",
+          "isCorrect": false,
+          "rationale": "AUC no es accuracy; mide capacidad de ordenar positivos por encima de negativos en distintos umbrales."
+        },
+        {
+          "text": "El modelo distingue bastante bien entre casos de mayor y menor riesgo, aunque debe elegirse un umbral operativo.",
+          "isCorrect": true,
+          "rationale": "Esta explicacion conserva la interpretacion tecnica y la conecta con una decision practica."
+        },
+        {
+          "text": "El modelo no necesita validacion adicional.",
+          "isCorrect": false,
+          "rationale": "Un AUC alto no elimina la necesidad de validar datos, sesgos, estabilidad y costos de error."
+        },
+        {
+          "text": "El modelo tiene 84 variables explicativas relevantes.",
+          "isCorrect": false,
+          "rationale": "AUC es una metrica de desempeno, no un conteo de variables."
+        }
+      ]
+    },
+    {
+      "question": "Cuando conviene mostrar codigo en un reporte y no ocultarlo con echo=FALSE?",
+      "answerOptions": [
+        {
+          "text": "Cuando el objetivo es didactico o tecnico y el lector necesita aprender o auditar el procedimiento.",
+          "isCorrect": true,
+          "rationale": "En tutoriales, auditorias tecnicas o entregas academicas puede ser importante mostrar el codigo."
+        },
+        {
+          "text": "Siempre, incluso en un resumen ejecutivo para autoridades no tecnicas.",
+          "isCorrect": false,
+          "rationale": "En un resumen ejecutivo el codigo suele distraer; se priorizan resultados, evidencia y recomendacion."
+        },
+        {
+          "text": "Nunca, porque el codigo no forma parte del analisis.",
+          "isCorrect": false,
+          "rationale": "El codigo es parte central de la reproducibilidad; se decide donde mostrarlo segun audiencia."
+        },
+        {
+          "text": "Solo cuando el modelo tiene baja precision.",
+          "isCorrect": false,
+          "rationale": "La decision de mostrar codigo depende de audiencia y proposito, no solo de la metrica."
+        }
+      ]
+    },
+    {
+      "question": "Cual de estas opciones convierte mejor una metrica tecnica en una recomendacion accionable?",
+      "answerOptions": [
+        {
+          "text": "Precision = 0.91.",
+          "isCorrect": false,
+          "rationale": "La metrica aislada no dice que hacer ni con que consecuencias."
+        },
+        {
+          "text": "El algoritmo Random Forest obtuvo mejor desempeno que KNN.",
+          "isCorrect": false,
+          "rationale": "Compara modelos, pero todavia no traduce el hallazgo a decision."
+        },
+        {
+          "text": "Usar el modelo para priorizar revision humana de los 20 casos con mayor riesgo cada semana.",
+          "isCorrect": true,
+          "rationale": "Esta formulacion conecta resultado, proceso operativo y decision concreta."
+        },
+        {
+          "text": "El p-valor fue menor que 0.05 en tres variables.",
+          "isCorrect": false,
+          "rationale": "El p-valor puede ser evidencia, pero no es una recomendacion de accion por si solo."
+        }
+      ]
+    },
+    {
+      "question": "Verdadero o falso: Un buen grafico en un reporte debe intentar mostrar todos los hallazgos del analisis al mismo tiempo.",
+      "answerOptions": [
+        {
+          "text": "Verdadero",
+          "isCorrect": false,
+          "rationale": "Sobrecargar un grafico reduce claridad. Cada visual debe apoyar un mensaje central."
+        },
+        {
+          "text": "Falso",
+          "isCorrect": true,
+          "rationale": "La comunicacion efectiva selecciona, jerarquiza y explica la evidencia que responde la pregunta principal."
+        }
+      ]
+    },
+    {
+      "question": "Complete la idea: en la piramide invertida, primero se presenta la ________, luego la evidencia y finalmente los detalles tecnicos.",
+      "answerOptions": [
+        {
+          "text": "conclusion",
+          "isCorrect": true,
+          "rationale": "El principio consiste en poner al inicio el mensaje mas importante: conclusion y recomendacion."
+        },
+        {
+          "text": "base de datos completa",
+          "isCorrect": false,
+          "rationale": "Los datos completos no van al inicio de un reporte ejecutivo."
+        },
+        {
+          "text": "bibliografia",
+          "isCorrect": false,
+          "rationale": "La bibliografia puede incluirse, pero no organiza la piramide invertida."
+        },
+        {
+          "text": "configuracion de paquetes",
+          "isCorrect": false,
+          "rationale": "La configuracion tecnica pertenece al material reproducible o al apendice."
+        }
+      ]
+    }
+  ]
+}

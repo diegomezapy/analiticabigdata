@@ -20,6 +20,7 @@ Implementado en esta primera incorporacion:
 - La evaluacion formal por subnivel se responde dentro del aula y se registra en Google Sheets.
 - Los WAV se convierten a MP3 livianos y se publican junto con los MP4/PPTX de unidad en carga diferida.
 - El service worker excluye MP3/MP4/PPTX/PDF del cache automatico para proteger la instalacion movil.
+- U4.2 y U4.3 tienen quiz de repaso local marcado como `fallback_local_rate_limit_notebooklm` porque NotebookLM aun devuelve limite de cuota para esos dos artefactos.
 
 ## 1. Diagnostico del material disponible
 

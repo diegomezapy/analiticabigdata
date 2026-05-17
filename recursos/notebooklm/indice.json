@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-17T01:49:46.714Z",
+  "generatedAt": "2026-05-17T09:11:15.256Z",
   "sourceRoot": "C:\\Users\\Diego\\ABD_Recursos",
   "basePath": "recursos/notebooklm",
   "version": 1,
@@ -31,6 +31,8 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": true,
+        "quizRepasoLocal": false,
+        "quizSource": "notebooklm",
         "preguntasEvaluacion": 7,
         "preguntasQuiz": 10,
         "flashcards": 50,
@@ -64,6 +66,8 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": true,
+        "quizRepasoLocal": false,
+        "quizSource": "notebooklm",
         "preguntasEvaluacion": 5,
         "preguntasQuiz": 10,
         "flashcards": 50,
@@ -97,6 +101,8 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": true,
+        "quizRepasoLocal": false,
+        "quizSource": "notebooklm",
         "preguntasEvaluacion": 5,
         "preguntasQuiz": 7,
         "flashcards": 60,
@@ -130,6 +136,8 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": true,
+        "quizRepasoLocal": false,
+        "quizSource": "notebooklm",
         "preguntasEvaluacion": 6,
         "preguntasQuiz": 10,
         "flashcards": 50,
@@ -163,6 +171,8 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": true,
+        "quizRepasoLocal": false,
+        "quizSource": "notebooklm",
         "preguntasEvaluacion": 5,
         "preguntasQuiz": 10,
         "flashcards": 50,
@@ -196,6 +206,8 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": true,
+        "quizRepasoLocal": false,
+        "quizSource": "notebooklm",
         "preguntasEvaluacion": 5,
         "preguntasQuiz": 7,
         "flashcards": 65,
@@ -229,6 +241,8 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": true,
+        "quizRepasoLocal": false,
+        "quizSource": "notebooklm",
         "preguntasEvaluacion": 5,
         "preguntasQuiz": 7,
         "flashcards": 55,
@@ -262,6 +276,8 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": true,
+        "quizRepasoLocal": false,
+        "quizSource": "notebooklm",
         "preguntasEvaluacion": 5,
         "preguntasQuiz": 10,
         "flashcards": 55,
@@ -295,6 +311,8 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": true,
+        "quizRepasoLocal": false,
+        "quizSource": "notebooklm",
         "preguntasEvaluacion": 5,
         "preguntasQuiz": 8,
         "flashcards": 50,
@@ -328,6 +346,8 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": true,
+        "quizRepasoLocal": false,
+        "quizSource": "notebooklm",
         "preguntasEvaluacion": 5,
         "preguntasQuiz": 10,
         "flashcards": 60,
@@ -349,6 +369,7 @@
         "practica": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/practica_guiada.html",
         "aplicacion": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/aplicacion.html",
         "evaluacion": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/quiz.json",
         "flashcards": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/flashcards.json",
         "mapaMental": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/mapa_mental_nlm.json",
         "mapaMentalBase": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/mapa_mental.json",
@@ -360,8 +381,10 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": false,
+        "quizRepasoLocal": true,
+        "quizSource": "fallback_local_rate_limit_notebooklm",
         "preguntasEvaluacion": 5,
-        "preguntasQuiz": 0,
+        "preguntasQuiz": 7,
         "flashcards": 55,
         "faltantes": []
       }
@@ -381,6 +404,7 @@
         "practica": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/practica_guiada.html",
         "aplicacion": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/aplicacion.html",
         "evaluacion": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/evaluacion.json",
+        "quiz": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/quiz.json",
         "flashcards": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/flashcards.json",
         "mapaMental": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/mapa_mental_nlm.json",
         "mapaMentalBase": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/mapa_mental.json",
@@ -392,8 +416,10 @@
       "estado": {
         "completoEscrito": true,
         "quizNotebookLm": false,
+        "quizRepasoLocal": true,
+        "quizSource": "fallback_local_rate_limit_notebooklm",
         "preguntasEvaluacion": 5,
-        "preguntasQuiz": 0,
+        "preguntasQuiz": 7,
         "flashcards": 50,
         "faltantes": []
       }

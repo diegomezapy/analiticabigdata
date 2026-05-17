@@ -1,0 +1,171 @@
+{
+  "title": "Quiz de repaso: Etica en IA y Big Data",
+  "source": "fallback_local_rate_limit_notebooklm",
+  "questions": [
+    {
+      "question": "Por que eliminar una variable sensible no garantiza automaticamente un modelo justo?",
+      "answerOptions": [
+        {
+          "text": "Porque otras variables pueden actuar como proxies de la variable sensible.",
+          "isCorrect": true,
+          "rationale": "Codigo postal, historial laboral o nivel educativo pueden estar correlacionados con genero, etnia o nivel socioeconomico y reproducir sesgos."
+        },
+        {
+          "text": "Porque los modelos solo discriminan cuando usan la variable sensible directamente.",
+          "isCorrect": false,
+          "rationale": "La discriminacion indirecta por proxies es una fuente frecuente de sesgo algoritimico."
+        },
+        {
+          "text": "Porque todos los modelos de IA son necesariamente ilegales.",
+          "isCorrect": false,
+          "rationale": "La legalidad depende del contexto, datos, uso, regulacion y salvaguardas."
+        },
+        {
+          "text": "Porque la precision siempre baja a cero al quitar variables.",
+          "isCorrect": false,
+          "rationale": "Quitar variables puede afectar desempeno, pero no implica precision cero."
+        }
+      ]
+    },
+    {
+      "question": "Que mide el Disparate Impact Ratio (DIR) en una auditoria de fairness?",
+      "answerOptions": [
+        {
+          "text": "La tasa de aprobacion de un grupo protegido respecto a un grupo de referencia.",
+          "isCorrect": true,
+          "rationale": "DIR compara tasas de resultados favorables entre grupos; valores menores a 0.8 suelen activar una alerta."
+        },
+        {
+          "text": "La cantidad total de variables dentro del modelo.",
+          "isCorrect": false,
+          "rationale": "DIR no cuenta variables; compara resultados entre grupos."
+        },
+        {
+          "text": "La velocidad de entrenamiento del algoritmo.",
+          "isCorrect": false,
+          "rationale": "La velocidad computacional no es una metrica de impacto dispar."
+        },
+        {
+          "text": "El porcentaje de datos faltantes en el dataset.",
+          "isCorrect": false,
+          "rationale": "Los faltantes pueden afectar fairness, pero DIR no los mide directamente."
+        }
+      ]
+    },
+    {
+      "question": "En el caso COMPAS, cual fue una preocupacion etica central?",
+      "answerOptions": [
+        {
+          "text": "Que el sistema podia producir tasas de error desiguales entre grupos raciales.",
+          "isCorrect": true,
+          "rationale": "El debate publico senalo diferencias en falsos positivos y falsos negativos entre grupos, con consecuencias graves en justicia penal."
+        },
+        {
+          "text": "Que el algoritmo solo funcionaba para datos financieros.",
+          "isCorrect": false,
+          "rationale": "COMPAS se usaba en contexto de justicia penal, no como modelo financiero."
+        },
+        {
+          "text": "Que todos los jueces dejaron de participar en el proceso.",
+          "isCorrect": false,
+          "rationale": "El problema no era ausencia total de jueces, sino uso de una herramienta con posibles sesgos y baja transparencia."
+        },
+        {
+          "text": "Que no existian datos historicos.",
+          "isCorrect": false,
+          "rationale": "Justamente los datos historicos pueden contener patrones discriminatorios."
+        }
+      ]
+    },
+    {
+      "question": "Cual es el objetivo de la privacidad diferencial?",
+      "answerOptions": [
+        {
+          "text": "Agregar una garantia matematica para que la presencia de una persona no cambie significativamente una salida estadistica.",
+          "isCorrect": true,
+          "rationale": "La privacidad diferencial agrega ruido calibrado y limita cuanto puede inferirse sobre un individuo."
+        },
+        {
+          "text": "Eliminar todos los datos antes de entrenar cualquier modelo.",
+          "isCorrect": false,
+          "rationale": "La tecnica permite analisis con protecciones, no equivale a borrar todo dato."
+        },
+        {
+          "text": "Aumentar la exactitud del modelo sin revisar sesgos.",
+          "isCorrect": false,
+          "rationale": "Su objetivo principal es privacidad, no necesariamente accuracy."
+        },
+        {
+          "text": "Hacer que todas las decisiones sean automaticas.",
+          "isCorrect": false,
+          "rationale": "La privacidad diferencial no decide el grado de automatizacion."
+        }
+      ]
+    },
+    {
+      "question": "Que pregunta pertenece a una evaluacion etica antes de implementar IA en el sector publico?",
+      "answerOptions": [
+        {
+          "text": "Quien supervisa el sistema y como puede apelar una persona afectada?",
+          "isCorrect": true,
+          "rationale": "La gobernanza, rendicion de cuentas y mecanismos de apelacion son parte central de una implementacion responsable."
+        },
+        {
+          "text": "Como ocultar la metodologia para evitar reclamos?",
+          "isCorrect": false,
+          "rationale": "La opacidad aumenta riesgos y debilita la rendicion de cuentas."
+        },
+        {
+          "text": "Como eliminar toda intervencion humana aunque haya consecuencias graves?",
+          "isCorrect": false,
+          "rationale": "En decisiones de alto impacto suele requerirse supervision humana significativa."
+        },
+        {
+          "text": "Como maximizar solo la velocidad de prediccion?",
+          "isCorrect": false,
+          "rationale": "La velocidad no puede ser el unico criterio en sistemas con impacto social."
+        }
+      ]
+    },
+    {
+      "question": "Verdadero o falso: Un modelo explicable puede facilitar auditorias eticas, pero no elimina por si solo el riesgo de sesgo.",
+      "answerOptions": [
+        {
+          "text": "Verdadero",
+          "isCorrect": true,
+          "rationale": "La explicabilidad ayuda a revisar decisiones, variables y patrones, pero el sesgo tambien depende de datos, objetivos y uso institucional."
+        },
+        {
+          "text": "Falso",
+          "isCorrect": false,
+          "rationale": "Un modelo interpretable puede seguir siendo injusto si fue entrenado con datos sesgados o se usa de manera discriminatoria."
+        }
+      ]
+    },
+    {
+      "question": "Complete la idea: una variable proxy es una variable aparentemente neutral que esta ________ con una caracteristica sensible.",
+      "answerOptions": [
+        {
+          "text": "correlacionada",
+          "isCorrect": true,
+          "rationale": "El riesgo aparece cuando una variable neutral reproduce informacion de una caracteristica protegida."
+        },
+        {
+          "text": "encriptada",
+          "isCorrect": false,
+          "rationale": "La encriptacion no define una variable proxy."
+        },
+        {
+          "text": "duplicada",
+          "isCorrect": false,
+          "rationale": "Una variable puede ser proxy sin estar duplicada literalmente."
+        },
+        {
+          "text": "eliminada",
+          "isCorrect": false,
+          "rationale": "Una variable eliminada no opera dentro del modelo."
+        }
+      ]
+    }
+  ]
+}
