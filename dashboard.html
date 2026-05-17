@@ -225,7 +225,7 @@
         };
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
-        const APP_VERSION = 'v25';
+        const APP_VERSION = 'v26';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -2232,16 +2232,17 @@
                 showToast('Puedes revisar este bloque, pero para completarlo debes cerrar primero los bloques anteriores.', 'info');
                 return;
             }
+            if (slide.kind === 'assessment' && !isLearningInlineEvalComplete(unitNum, slideIndex)) {
+                showToast('Resuelve la evaluacion interactiva de esta ficha antes de registrar el avance.', 'info');
+                document.getElementById(learningInlineEvalId(unitNum, slideIndex))?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
             if (slide.kind === 'quiz' && !STATE.quizResults[`u${unitNum}`]) {
                 startQuiz(unitNum);
                 return;
             }
             if (slide.kind === 'practice' && slide.practiceId && !isUnitPathSlideComplete(unitNum, slide, slideIndex)) {
                 openPractice(slide.practiceId, slide.practiceStepIndex || 0);
-                return;
-            }
-            if (slide.kind === 'assessment' && slide.evaluationFile && !isUnitPathSlideComplete(unitNum, slide, slideIndex)) {
-                startSublevelEvaluation(unitNum, slideIndex, 'formal');
                 return;
             }
             const key = unitPathSlideKey(unitNum, slideIndex);
@@ -2839,6 +2840,203 @@
       </div>`;
         }
 
+        function learningInlineEvalKey(unitNum, slideIndex) {
+            return `u${unitNum}_inline_eval_${slideIndex}`;
+        }
+
+        function learningInlineEvalId(unitNum, slideIndex) {
+            return `learningInlineEval_${unitNum}_${slideIndex}`;
+        }
+
+        function isLearningInlineEvalComplete(unitNum, slideIndex) {
+            return Boolean(STATE.completedActivities[learningInlineEvalKey(unitNum, slideIndex)]);
+        }
+
+        function pairLabelFromText(text, index) {
+            const clean = String(text || '').replace(/\s+/g, ' ').trim();
+            const beforeColon = clean.split(':')[0];
+            const source = beforeColon.length >= 4 && beforeColon.length <= 34 ? beforeColon : clean;
+            return source.split(' ').slice(0, 4).join(' ') || `Concepto ${index + 1}`;
+        }
+
+        function buildLearningEvalPairs(slide) {
+            const fromFormulas = (slide.formulas || []).map(item => ({
+                term: item.label,
+                definition: item.note || item.value
+            }));
+            const fromBullets = (slide.bullets || []).map((item, index) => ({
+                term: pairLabelFromText(item, index),
+                definition: item
+            }));
+            const base = (fromFormulas.length ? fromFormulas : fromBullets)
+                .filter(item => item.term && item.definition)
+                .slice(0, 3);
+            if (base.length >= 2) return base.map((item, index) => ({ ...item, id: `p${index}` }));
+            return [
+                { id: 'p0', term: 'Concepto', definition: slide.title || 'Idea central de la ficha' },
+                { id: 'p1', term: 'Ejemplo', definition: slide.lead || 'Situacion usada para comprender el concepto' },
+                { id: 'p2', term: 'Comando', definition: 'Instruccion ejecutable que permite comprobar la idea' }
+            ];
+        }
+
+        function buildLearningEvalOrder(slide) {
+            if (slide.kind === 'function') return ['Cargar datos', 'Inspeccionar estructura', 'Ejecutar comando', 'Leer salida'];
+            if (slide.kind === 'formula') return ['Identificar simbolos', 'Sustituir valores', 'Calcular resultado', 'Interpretar resultado'];
+            if (slide.kind === 'practice') return ['Leer consigna', 'Ejecutar codigo', 'Comparar salida', 'Marcar evidencia'];
+            if (slide.kind === 'activity') return ['Plantear caso', 'Elegir dato', 'Aplicar criterio', 'Redactar conclusion'];
+            if (slide.kind === 'assessment') return ['Recordar concepto', 'Conectar formula o comando', 'Resolver actividad', 'Explicar evidencia'];
+            return ['Leer idea', 'Reconocer ejemplo', 'Ejecutar comando', 'Explicar con palabras'];
+        }
+
+        function shuffledCopy(items) {
+            return items.map((value, index) => ({ value, sort: ((index * 37) + 17) % 101 }))
+                .sort((a, b) => a.sort - b.sort)
+                .map(item => item.value);
+        }
+
+        function renderLearningInlineEvaluation(unitNum, slide, slideIndex) {
+            const summative = slide.kind === 'assessment' || slide.kind === 'quiz';
+            const done = isLearningInlineEvalComplete(unitNum, slideIndex);
+            const pairs = buildLearningEvalPairs(slide);
+            const definitions = shuffledCopy(pairs);
+            const order = buildLearningEvalOrder(slide);
+            return `
+      <section class="learning-eval-widget ${summative ? 'summative' : 'formative'} ${done ? 'completed' : ''}" id="${learningInlineEvalId(unitNum, slideIndex)}">
+        <div class="learning-eval-head">
+          <div>
+            <span>${summative ? 'Evaluacion sumativa' : 'Evaluacion formativa'}</span>
+            <strong>${summative ? 'Demuestra que puedes cerrar este subnivel' : 'Comprueba la idea antes de avanzar'}</strong>
+          </div>
+          <em>${done ? 'Completada' : (summative ? 'Necesaria para completar' : 'Practica breve')}</em>
+        </div>
+        <div class="learning-eval-grid">
+          <div class="learning-eval-panel">
+            <h4>Unir conceptos</h4>
+            <p>Elige la definicion correcta para cada elemento.</p>
+            ${pairs.map(pair => `
+              <label class="learning-match-row">
+                <span>${escapeHtml(pair.term)}</span>
+                <select data-eval-match="${escapeHtml(pair.id)}">
+                  <option value="">Elegir definicion</option>
+                  ${definitions.map(def => `<option value="${escapeHtml(def.id)}">${escapeHtml(compactLearningText(def.definition, 86))}</option>`).join('')}
+                </select>
+              </label>
+            `).join('')}
+          </div>
+          <div class="learning-eval-panel">
+            <h4>Ordenar procedimiento</h4>
+            <p>Selecciona el paso que corresponde a cada posicion.</p>
+            ${order.map((_, index) => `
+              <label class="learning-order-row">
+                <span>${index + 1}</span>
+                <select data-eval-order="${index}">
+                  <option value="">Seleccionar paso</option>
+                  ${shuffledCopy(order).map(step => `<option value="${escapeHtml(step)}">${escapeHtml(step)}</option>`).join('')}
+                </select>
+              </label>
+            `).join('')}
+          </div>
+          <div class="learning-eval-panel reflection">
+            <h4>Micro evidencia</h4>
+            <p>Escribe que viste en la ficha o que significaria la salida del comando.</p>
+            <textarea data-eval-reflection rows="5" placeholder="Ejemplo: el comando agrupa los casos y permite comparar..."></textarea>
+          </div>
+        </div>
+        <div class="learning-eval-actions">
+          <button class="btn-secondary" onclick="resetLearningInlineEval(${unitNum}, ${slideIndex})">Reiniciar</button>
+          <button class="btn-primary" onclick="checkLearningInlineEval(${unitNum}, ${slideIndex})">${done ? 'Revisar de nuevo' : 'Comprobar actividad'}</button>
+        </div>
+        <div class="learning-eval-result" id="learningEvalResult_${unitNum}_${slideIndex}"></div>
+      </section>`;
+        }
+
+        function resetLearningInlineEval(unitNum, slideIndex) {
+            const root = document.getElementById(learningInlineEvalId(unitNum, slideIndex));
+            if (!root) return;
+            root.querySelectorAll('select').forEach(select => { select.value = ''; select.classList.remove('correct', 'wrong'); });
+            root.querySelectorAll('textarea').forEach(textarea => { textarea.value = ''; textarea.classList.remove('correct', 'wrong'); });
+            const result = document.getElementById(`learningEvalResult_${unitNum}_${slideIndex}`);
+            if (result) result.innerHTML = '';
+        }
+
+        function checkLearningInlineEval(unitNum, slideIndex) {
+            const slides = getUnitLearningPath(unitNum);
+            const slide = slides[slideIndex];
+            const root = document.getElementById(learningInlineEvalId(unitNum, slideIndex));
+            if (!slide || !root) return;
+            const pairs = buildLearningEvalPairs(slide);
+            const order = buildLearningEvalOrder(slide);
+            let correct = 0;
+            let total = 0;
+            pairs.forEach(pair => {
+                total++;
+                const select = root.querySelector(`[data-eval-match="${pair.id}"]`);
+                const ok = select?.value === pair.id;
+                if (ok) correct++;
+                select?.classList.toggle('correct', ok);
+                select?.classList.toggle('wrong', Boolean(select?.value) && !ok);
+            });
+            order.forEach((step, index) => {
+                total++;
+                const select = root.querySelector(`[data-eval-order="${index}"]`);
+                const ok = select?.value === step;
+                if (ok) correct++;
+                select?.classList.toggle('correct', ok);
+                select?.classList.toggle('wrong', Boolean(select?.value) && !ok);
+            });
+            total++;
+            const reflection = root.querySelector('[data-eval-reflection]');
+            const text = reflection?.value.trim() || '';
+            const reflectionOk = text.length >= 24;
+            if (reflectionOk) correct++;
+            reflection?.classList.toggle('correct', reflectionOk);
+            reflection?.classList.toggle('wrong', Boolean(text) && !reflectionOk);
+            const pct = Math.round((correct / total) * 100);
+            const summative = slide.kind === 'assessment' || slide.kind === 'quiz';
+            const passed = summative ? pct >= 70 : pct >= 55;
+            const result = document.getElementById(`learningEvalResult_${unitNum}_${slideIndex}`);
+            if (result) {
+                result.innerHTML = `
+          <div class="${passed ? 'ok' : 'retry'}">
+            <strong>${passed ? 'Actividad lograda' : 'Ajusta y vuelve a intentar'}</strong>
+            <span>${correct}/${total} criterios correctos (${pct}%). ${passed ? 'Ya puedes usar esta evidencia para avanzar.' : 'Revisa los pares, el orden y la micro evidencia.'}</span>
+          </div>`;
+            }
+            if (!passed) return;
+            const key = learningInlineEvalKey(unitNum, slideIndex);
+            const wasNew = !STATE.completedActivities[key];
+            STATE.completedActivities[key] = true;
+            root.classList.add('completed');
+            if (wasNew) addXP(summative ? 15 : 5, summative ? 'Evaluacion interactiva completada' : 'Actividad formativa completada');
+            else saveProgress();
+            if (summative && wasNew) {
+                sendToSheets({
+                    kind: 'calificacion',
+                    timestamp: new Date().toISOString(),
+                    usuario: STATE.user.username,
+                    nombre: STATE.user.nombre,
+                    unidad: unitNum,
+                    actividad: slide.title,
+                    tipo: 'evaluacion_interactiva_subnivel',
+                    puntaje: pct,
+                    porcentaje: pct,
+                    correctas: correct,
+                    total,
+                    xp: 15,
+                    detalle: {
+                        subnivel: slide.sublevelIndex || '',
+                        etapa: slide.stage,
+                        evidencia: text
+                    }
+                });
+            }
+            trackEvent('evaluacion_interactiva', {
+                unidad: unitNum,
+                recurso: key,
+                detalle: `${slide.title}: ${pct}%`
+            });
+        }
+
         function learningCardType(slide) {
             const labels = {
                 intro: 'Concepto inicial',
@@ -2975,6 +3173,7 @@
               </div>
               ${renderLearningCardBullets(slide)}
               ${renderLearningPathFormulas(slide)}
+              ${renderLearningInlineEvaluation(unitNum, slide, slideIndex)}
               ${slide.kind === 'assessment' ? renderLearningPathAssessment(unitNum, slide, slideIndex) : ''}
               ${slide.kind === 'quiz' ? renderLearningPathQuiz(unitNum) : ''}
               ${renderLearningPathPractice(slide, completionAllowed)}
