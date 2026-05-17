@@ -20,9 +20,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--bg-dark);
+      background:
+        linear-gradient(135deg, rgba(232,241,248,0.95), rgba(249,252,249,0.96) 48%, rgba(255,246,233,0.95)),
+        var(--bg-dark);
       overflow: hidden;
       position: relative;
+    }
+
+    body.login-page::after {
+      content: '';
+      position: fixed;
+      inset: 7%;
+      border: 1px solid rgba(38,88,130,0.12);
+      clip-path: polygon(0 0, 84% 0, 100% 18%, 100% 100%, 14% 100%, 0 84%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* Animated particles canvas */
@@ -86,11 +98,23 @@
     }
 
     .login-card {
-      background: #ffffff;
-      border: 1px solid var(--glass-border);
-      border-radius: 10px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.78);
+      border-radius: 18px;
       padding: 2.5rem;
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--tertiary));
     }
 
     .login-logo {
@@ -103,7 +127,7 @@
       border-radius: 14px;
       display: block;
       margin: 0 auto 1rem;
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-glow);
     }
 
     @keyframes pulse-glow {
@@ -156,8 +180,8 @@
     .login-form input {
       width: 100%;
       padding: 0.9rem 1rem 0.9rem 3rem;
-      background: rgba(255,255,255,0.05);
-      border: 1.5px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.78);
+      border: 1.5px solid rgba(38,88,130,0.14);
       border-radius: 12px;
       color: var(--text-primary);
       font-family: 'Inter', sans-serif;

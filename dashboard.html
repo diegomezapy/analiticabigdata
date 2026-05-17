@@ -225,7 +225,7 @@
         };
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
-        const APP_VERSION = 'v22';
+        const APP_VERSION = 'v23';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -1202,6 +1202,9 @@
             const upcoming = getUpcomingEvents(3);
             const practiceProgress = getPracticeProgress();
             const completedLabs = PRACTICES.filter(lab => (practiceProgress[lab.id] || []).length >= lab.steps.length).length;
+            const nextUnit = UNITS.find(unit => !STATE.quizResults[`u${unit.id}`]) || UNITS[0];
+            const completedUnits = UNITS.filter(unit => STATE.quizResults[`u${unit.id}`]).length;
+            const coursePct = Math.round((completedUnits / TOTAL_UNITS) * 100);
             const passwordPrompt = STATE.user.passwordChanged === false ? `
               <div class="smart-card warning">
                 <div>
@@ -1213,10 +1216,15 @@
 
             const content = document.getElementById('pageContent');
             content.innerHTML = `
-    <div class="hero-section">
+    <div class="hero-section hero-premium">
       <div class="hero-content">
-        <h1 class="text-gradient">¡Hola, ${STATE.user.nombre || STATE.user.username}! 👋</h1>
-        <p>Bienvenido/a a la plataforma de <strong>Analítica de Big Data</strong>. Explora materiales, practica con datos y completa los cuestionarios de cada unidad.</p>
+        <h1 class="text-gradient">Hola, ${STATE.user.nombre || STATE.user.username}</h1>
+        <p>Un recorrido guiado para aprender <strong>Analitica de Big Data</strong> con lecturas embebidas, practicas reproducibles, comunidad, calendario y evaluaciones paso a paso.</p>
+        <span class="hero-kicker">Aula virtual FACEN 2026</span>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="showUnit(${nextUnit.id})">Continuar Unidad ${nextUnit.id}</button>
+          <button class="btn-secondary" onclick="showPage('calendar')">Ver proximas fechas</button>
+        </div>
         <div class="progress-grid">
           <div class="progress-stat">
             <div class="stat-value text-gradient">${STATE.xp}</div>
@@ -1236,6 +1244,19 @@
           </div>
         </div>
       </div>
+      <aside class="hero-visual-panel unit-theme-u${nextUnit.id}">
+        <div class="hero-logo-frame">
+          <img src="icons/logo-abd.svg" alt="Analitica de Big Data">
+        </div>
+        <div class="hero-ring" style="--pct:${coursePct}">
+          <span>${coursePct}%</span>
+        </div>
+        <div class="hero-next-card">
+          <span>Siguiente ruta</span>
+          <strong>Unidad ${nextUnit.id}: ${nextUnit.title}</strong>
+          <small>${nextUnit.subtitle}</small>
+        </div>
+      </aside>
     </div>
 
     <div class="smart-grid">
@@ -1256,7 +1277,12 @@
       </div>
     </div>
 
-    <h2 style="margin-bottom:1rem;">📚 Unidades del Curso</h2>
+    <div class="course-section-title">
+      <div>
+        <span>Plan de estudio</span>
+        <h2>Unidades del curso</h2>
+      </div>
+    </div>
     <div class="units-grid">
       ${UNITS.map(u => {
                 const done = STATE.quizResults[`u${u.id}`];
