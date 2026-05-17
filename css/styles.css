@@ -1173,10 +1173,12 @@ a:hover { text-decoration: underline; }
 
 .learning-stepper {
   border-bottom: 1px solid var(--glass-border);
-  display: grid;
+  display: flex;
   gap: 0.5rem;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  overflow-x: auto;
   padding: 1rem 1.25rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
 }
 
 .learning-step {
@@ -1187,9 +1189,11 @@ a:hover { text-decoration: underline; }
   color: var(--text-muted);
   cursor: pointer;
   display: flex;
+  flex: 0 0 142px;
   gap: 0.45rem;
   min-height: 48px;
   padding: 0.45rem 0.55rem;
+  scroll-snap-align: start;
   text-align: left;
   transition: var(--transition-fast);
 }
@@ -1524,6 +1528,25 @@ a:hover { text-decoration: underline; }
   padding: 1rem;
 }
 
+.learning-focus-card {
+  display: grid;
+  gap: 0.9rem;
+  min-height: min(68vh, 760px);
+}
+
+.learning-card-canvas.micro-definition .learning-focus-card,
+.learning-card-canvas.micro-example .learning-focus-card,
+.learning-card-canvas.micro-summary .learning-focus-card {
+  align-content: start;
+}
+
+.learning-card-canvas.micro-execution .learning-focus-card,
+.learning-card-canvas.micro-resource .learning-focus-card,
+.learning-card-canvas.micro-formative .learning-focus-card,
+.learning-card-canvas.micro-summative .learning-focus-card {
+  min-height: min(74vh, 860px);
+}
+
 .learning-card-eyebrow,
 .learning-card-definition span,
 .learning-card-example span,
@@ -1558,6 +1581,10 @@ a:hover { text-decoration: underline; }
   gap: 0.35rem;
   margin-top: 0.75rem;
   padding: 0.75rem 0.85rem;
+}
+
+.learning-feature-block {
+  margin-top: 0;
 }
 
 .learning-card-definition {
@@ -1676,6 +1703,11 @@ a:hover { text-decoration: underline; }
   overflow: hidden;
 }
 
+.learning-inline-resource.is-expanded {
+  display: grid;
+  margin-top: 0;
+}
+
 .learning-inline-resource summary {
   align-items: center;
   cursor: pointer;
@@ -1701,12 +1733,21 @@ a:hover { text-decoration: underline; }
   margin-top: 0.15rem;
 }
 
+.learning-inline-resource.is-expanded summary {
+  background: linear-gradient(90deg, var(--sublevel-soft), rgba(255,255,255,0.96));
+  border-bottom: 1px solid var(--sublevel-border);
+}
+
 .learning-inline-resource iframe {
   background: #fff;
   border: 0;
   display: block;
   height: 560px;
   width: 100%;
+}
+
+.learning-inline-resource.is-expanded iframe {
+  height: min(70vh, 760px);
 }
 
 .learning-inline-resource .as-link {
@@ -1899,6 +1940,14 @@ a:hover { text-decoration: underline; }
   display: block;
   height: 760px;
   width: 100%;
+}
+
+.learning-card-canvas.micro-execution .learning-inline-lab {
+  margin: 0;
+}
+
+.learning-card-canvas.micro-execution .learning-inline-lab-frame {
+  height: min(72vh, 820px);
 }
 
 .learning-inline-lab-placeholder {
@@ -4644,7 +4693,7 @@ a:hover { text-decoration: underline; }
 
   .learning-card-controls {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     width: 100%;
   }
 
@@ -4654,13 +4703,27 @@ a:hover { text-decoration: underline; }
     white-space: normal;
   }
 
+  .learning-card-controls .btn-primary {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+
   .learning-card-copy,
   .learning-card-execution {
     padding: 0.85rem;
   }
 
+  .learning-focus-card {
+    min-height: calc(100dvh - 250px);
+  }
+
   .learning-inline-resource iframe {
     height: 360px;
+  }
+
+  .learning-inline-resource.is-expanded iframe {
+    height: calc(100dvh - 260px);
+    min-height: 420px;
   }
 
   .learning-eval-head {
@@ -4735,6 +4798,11 @@ a:hover { text-decoration: underline; }
   .learning-inline-lab-frame {
     height: calc(100dvh - 150px);
     min-height: 620px;
+  }
+
+  .learning-card-canvas.micro-execution .learning-inline-lab-frame {
+    height: calc(100dvh - 260px);
+    min-height: 520px;
   }
 
   .learning-card-execution .learning-inline-lab-frame {
