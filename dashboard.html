@@ -54,6 +54,10 @@
                     <span class="nav-item-icon">📅</span>
                     <span>Calendario</span>
                 </div>
+                <div class="nav-item" onclick="showPage('community')" id="nav-community">
+                    <span class="nav-item-icon">💬</span>
+                    <span>Comunidad</span>
+                </div>
 
                 <span class="nav-section-label">Unidades</span>
                 <div class="nav-item" onclick="showUnit(1)" id="nav-u1">
@@ -165,13 +169,16 @@
             calendarSelectedDate: localStorage.getItem('abd_calendar_selected_date') || '',
             notebookLmIndex: null,
             sublevelEvaluation: null,
+            socialTab: 'foro',
+            socialMessages: [],
+            socialDraft: null,
         };
 
         const COURSE_CONFIG = {
             name: 'Analítica de Big Data',
             spreadsheetId: '1eU6Fh073qLIOQaPonRim5d0e6IuGE0Bq8hDZHmlHKzI',
             publicBaseUrl: 'https://diegomezapy.github.io/analiticabigdata/',
-            sheetsWebAppUrl: 'https://script.google.com/macros/s/AKfycbzr2gQky-zzvBBZFNDeUCsJ2uGJ6gF04QyNXyoh_WzAD_wQW5dv2-b6ZUtPOO4aEgGg/exec'
+            sheetsWebAppUrl: 'https://script.google.com/macros/s/AKfycbwb5nz0SvccSfbz8QbfT299YsG10nyLRzfs5d0vcL-LmdTCZvy3H-o2-zGfhZvUr8B3/exec'
         };
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
@@ -466,7 +473,7 @@
             await loadNotebookLmIndex();
 
             const route = (window.location.hash || '').replace('#', '');
-            if (['calendar', 'practices', 'lab', 'account', 'admin'].includes(route)) showPage(route);
+            if (['calendar', 'community', 'practices', 'lab', 'account', 'admin'].includes(route)) showPage(route);
             else if (/^u[1-4]$/.test(route)) showUnit(Number(route.slice(1)));
             else showPage('home');
             checkReminders();
@@ -551,7 +558,7 @@
 
             const titles = {
                 home: 'Inicio', progress: 'Mi Progreso', badges: 'Mis Logros',
-                calendar: 'Calendario', practices: 'Prácticas guiadas',
+                calendar: 'Calendario', community: 'Comunidad', practices: 'Prácticas guiadas',
                 lab: 'Laboratorio R/Python',
                 flashcards: 'Flashcards', matching: 'Emparejar Conceptos', guia: 'Guía Didáctica',
                 account: 'Cuenta', admin: 'Administración'
@@ -562,6 +569,7 @@
             else if (page === 'progress') renderProgress();
             else if (page === 'badges') renderBadges();
             else if (page === 'calendar') renderCalendar();
+            else if (page === 'community') renderCommunity();
             else if (page === 'practices') renderPractices();
             else if (page === 'lab') renderLab();
             else if (page === 'flashcards') renderFlashcards();
@@ -656,14 +664,67 @@
             })).filter(item => item.front && item.back);
         }
 
-        function renderMindMapNode(node, depth = 0, limit = 32) {
-            if (!node || limit <= 0) return '';
-            const children = Array.isArray(node.children) ? node.children.slice(0, Math.max(0, limit - 1)) : [];
+        function getMindMapNodeName(node) {
+            if (typeof node === 'string') return node;
+            return node?.name || node?.label || node?.title || node?.topic || 'Nodo';
+        }
+
+        function getMindMapChildren(node) {
+            if (!node || typeof node === 'string') return [];
+            if (Array.isArray(node.children)) return node.children;
+            if (Array.isArray(node.nodes)) return node.nodes;
+            if (Array.isArray(node.subtopics)) return node.subtopics;
+            if (Array.isArray(node.items)) return node.items;
+            return [];
+        }
+
+        function renderMindMapSubpoints(node, depth = 0, maxDepth = 2) {
+            const children = getMindMapChildren(node).slice(0, 6);
+            if (!children.length || depth >= maxDepth) return '';
             return `
-      <li style="--mind-depth:${depth}">
-        <span>${escapeHtml(node.name || node.label || node.title || 'Nodo')}</span>
-        ${children.length ? `<ul>${children.map(child => renderMindMapNode(child, depth + 1, Math.floor(limit / Math.max(children.length, 1)))).join('')}</ul>` : ''}
-      </li>`;
+        <ul class="mind-map-subpoints">
+          ${children.map(child => `
+            <li>
+              <span>${escapeHtml(getMindMapNodeName(child))}</span>
+              ${renderMindMapSubpoints(child, depth + 1, maxDepth)}
+            </li>
+          `).join('')}
+        </ul>`;
+        }
+
+        function renderMindMapChild(node) {
+            return `
+        <article class="mind-map-child">
+          <strong>${escapeHtml(getMindMapNodeName(node))}</strong>
+          ${renderMindMapSubpoints(node)}
+        </article>`;
+        }
+
+        function renderMindMapBranch(node, index = 0) {
+            const children = getMindMapChildren(node).slice(0, 8);
+            return `
+        <section class="mind-map-branch" style="--branch-index:${index}">
+          <h5>${escapeHtml(getMindMapNodeName(node))}</h5>
+          ${children.length ? `
+            <div class="mind-map-child-list">
+              ${children.map(child => renderMindMapChild(child)).join('')}
+            </div>` : '<p>Sin subramas registradas.</p>'}
+        </section>`;
+        }
+
+        function renderMindMapBoard(root) {
+            if (!root) return '<p>Mapa mental no disponible.</p>';
+            const children = getMindMapChildren(root).slice(0, 8);
+            return `
+      <div class="mind-map-board" aria-label="Mapa mental NotebookLM">
+        <div class="mind-map-center">
+          <span>Mapa mental</span>
+          <strong>${escapeHtml(getMindMapNodeName(root))}</strong>
+        </div>
+        <div class="mind-map-branches">
+          ${children.length ? children.map((child, index) => renderMindMapBranch(child, index)).join('') : renderMindMapChild(root)}
+        </div>
+      </div>`;
         }
 
         function normalizeEvaluationData(data, titleFallback = 'Evaluacion parcial') {
@@ -783,6 +844,7 @@
               <h3 id="embeddedResourceTitle">${escapeHtml(first.name)}</h3>
             </div>
             <div class="resource-reader-actions">
+              <button class="btn-secondary" onclick="askCurrentEmbeddedResource()">Consultar</button>
               <a id="embeddedResourceOpen" class="btn-secondary as-link" href="${first.file}" target="_blank">Abrir aparte</a>
               <a id="embeddedResourceDownload" class="btn-secondary as-link ${first.download ? '' : 'is-hidden'}" href="${first.download || '#'}" download>PDF</a>
             </div>
@@ -832,6 +894,17 @@
             const name = iframe.dataset.name || 'Recurso embebido';
             if (kind === 'read' && unit) markRead(unit, file);
             else trackResourceOpen(unit, file, name);
+        }
+
+        function askCurrentEmbeddedResource() {
+            const iframe = document.getElementById('embeddedResourceFrame');
+            if (!iframe) return;
+            openContextMessage('consulta', {
+                unidad: iframe.dataset.unit || '',
+                recurso: iframe.dataset.file || '',
+                titulo_recurso: iframe.dataset.name || 'Recurso embebido',
+                canal: iframe.dataset.kind || 'recurso'
+            });
         }
 
         function openResourceInAula(resource, unit = '') {
@@ -2289,9 +2362,9 @@
                 container.dataset.loaded = 'true';
                 container.innerHTML = `
           <div class="notebook-support-grid">
-            <div class="notebook-support-panel">
+            <div class="notebook-support-panel mind-map-panel">
               <h4>Mapa mental NotebookLM</h4>
-              ${mindRoot ? `<ul class="mind-map-tree">${renderMindMapNode(mindRoot, 0, 36)}</ul>` : '<p>Mapa mental no disponible.</p>'}
+              ${renderMindMapBoard(mindRoot)}
             </div>
             <div class="notebook-support-panel">
               <h4>Flashcards de repaso</h4>
@@ -2403,6 +2476,7 @@
         </div>
         <div class="practice-actions">
           <button class="btn-primary" onclick="openPractice('${lab.id}', ${targetStep})">Abrir ficha practica</button>
+          <button class="btn-secondary" onclick="openContextMessage('consulta', { unidad: ${lab.unit}, recurso: ${jsArg(lab.id)}, titulo_recurso: ${jsArg(step?.title || lab.title)}, canal: 'practica' })">Consultar</button>
           <a class="btn-secondary as-link" href="${lab.dataset}" download>Descargar datos</a>
           <a class="btn-secondary as-link" href="laboratorio/index.html" target="_blank">Laboratorio R/Python</a>
         </div>
@@ -2455,6 +2529,7 @@
           </div>
           <div class="learning-slide-controls">
             <button class="btn-secondary" id="learningSupportButton_${unitNum}_${slideIndex}" onclick="toggleLearningSupport(${unitNum}, ${slideIndex})" aria-expanded="false">Necesito mas explicacion</button>
+            <button class="btn-secondary" onclick="openContextMessage('consulta', { unidad: ${unitNum}, recurso: ${jsArg(`u${unitNum}_bloque_${slideIndex + 1}`)}, titulo_recurso: ${jsArg(slide.title)}, canal: ${jsArg(slide.kind || 'ruta')} })">Consultar</button>
             <button class="btn-primary" onclick="completeUnitPathSlide(${unitNum}, ${slideIndex})">${primaryLabel}</button>
           </div>
         </header>
@@ -2561,10 +2636,19 @@
             if (!unitResources) return '';
             const files = Object.entries(unitResources.archivos || {});
             const media = unitResources.media || [];
+            const presentations = media.filter(item => item.tipo === 'presentacion').length;
+            const audios = media.filter(item => item.tipo === 'audio').length;
+            const videos = media.filter(item => item.tipo === 'video').length;
             return `
       <div class="card notebook-unit-card">
         <h3>Recursos NotebookLM de sintesis</h3>
-        <p>Materiales de nivel unidad ya indexados para repaso global, descarga y uso embebible.</p>
+        <p>Presentaciones PowerPoint, podcasts, videos y artefactos JSON de la unidad, listos para descargar o enlazar desde otros entornos.</p>
+        <div class="notebook-resource-summary">
+          <span><strong>${presentations}</strong> PPTX NotebookLM</span>
+          <span><strong>${audios}</strong> podcasts</span>
+          <span><strong>${videos}</strong> videos</span>
+          <span><strong>${files.length}</strong> recursos JSON</span>
+        </div>
         ${media.length ? `
           <div class="notebook-media-grid">
             ${media.map(item => renderNotebookMediaItem(item)).join('')}
@@ -2578,7 +2662,7 @@
                   <h4>${escapeHtml(key.replaceAll('_', ' '))}</h4>
                   <p>${escapeHtml(file)}</p>
                 </div>
-                <span class="material-badge badge-pdf">JSON</span>
+                <span class="material-badge badge-json">JSON</span>
               </a>
             `).join('')}
           </div>` : ''}
@@ -2619,6 +2703,14 @@
             <a class="btn-secondary as-link" href="${escapeHtml(item.archivo)}" download>Descargar video</a>
           </section>`;
             }
+            if (item.tipo === 'presentacion') {
+                return `
+          <a class="notebook-media-item notebook-presentation download" href="${escapeHtml(item.archivo)}" download>
+            <span class="material-badge badge-pptx">PowerPoint / PPTX</span>
+            <h4>${escapeHtml(title)}</h4>
+            <p>${size ? `${size} · ` : ''}Presentacion NotebookLM descargable para clase, repaso o exposicion.</p>
+          </a>`;
+            }
             return `
           <a class="notebook-media-item download" href="${escapeHtml(item.archivo)}" download>
             <span class="material-badge badge-pdf">PPTX</span>
@@ -2649,6 +2741,7 @@
       <button class="unit-tab ${activeTab === 'actividades' ? 'active' : ''}" onclick="renderUnitDetail(${n},'actividades')">🎯 Actividades</button>
       <button class="unit-tab ${activeTab === 'practica' ? 'active' : ''}" onclick="renderUnitDetail(${n},'practica')">💻 Práctica</button>
       <button class="unit-tab ${activeTab === 'quiz' ? 'active' : ''}" onclick="renderUnitDetail(${n},'quiz')">🧠 Cuestionario</button>
+      <button class="unit-tab ${activeTab === 'recursos' ? 'active' : ''}" onclick="renderUnitDetail(${n},'recursos')">Recursos NLM</button>
       <button class="unit-tab ${activeTab === 'info' ? 'active' : ''}" onclick="renderUnitDetail(${n},'info')">ℹ️ Información</button>
     </div>
 
@@ -2724,6 +2817,11 @@
         ${labs.map(lab => practiceCardHTML(lab)).join('')}
       </div>
     `;
+            } else if (activeTab === 'recursos') {
+                tabContent.innerHTML = renderNotebookUnitResources(n) || `
+      <div class="card" style="text-align:center;padding:2rem">
+        <p>Los recursos NotebookLM de esta unidad aun no estan indexados.</p>
+      </div>`;
             } else if (activeTab === 'info') {
                 tabContent.innerHTML = `
       <div class="card">
@@ -2734,8 +2832,10 @@
           <span class="material-badge badge-act">Cuestionario 10 preguntas</span>
           <span class="material-badge badge-quiz">100 XP disponibles</span>
         </div>
+        <div style="margin-top:1rem">
+          <button class="btn-secondary" onclick="renderUnitDetail(${n}, 'recursos')">Ver presentaciones y recursos NotebookLM</button>
+        </div>
       </div>
-      ${renderNotebookUnitResources(n)}
     `;
             }
         }
@@ -3494,6 +3594,7 @@
           <pre class="code-block"><code id="practiceCode">${escapeHtml(step.code)}</code></pre>
           <div class="practice-actions">
             <button class="btn-secondary" onclick="copyPracticeCode()">Copiar código</button>
+            <button class="btn-secondary" onclick="openContextMessage('consulta', { unidad: ${lab.unit}, recurso: ${jsArg(`${lab.id}_ficha_${STATE.currentPracticeStep + 1}`)}, titulo_recurso: ${jsArg(step.title)}, canal: 'practica' })">Consultar esta ficha</button>
             <a class="btn-secondary as-link" href="${lab.dataset}" download>Descargar datos</a>
             <a class="btn-primary as-link" href="laboratorio/index.html" target="_blank">Ejecutar en laboratorio</a>
             <a class="btn-secondary as-link" href="${lab.embed}" target="_blank">URL de esta práctica</a>
@@ -3858,6 +3959,296 @@
                 trackEvent('recordatorio_emitido', { recurso: event.id, detalle: `${title}: ${body}` });
             });
             localStorage.setItem('abd_reminders_sent', JSON.stringify(already));
+        }
+
+        // ================================================================
+        // COMMUNITY PAGE
+        // ================================================================
+        function socialTabs() {
+            return [
+                { id: 'foro', label: 'Foro del curso', kind: 'foro' },
+                { id: 'consultas', label: 'Consultas al profesor', kind: 'consulta' },
+                { id: 'anuncios', label: 'Anuncios docentes', kind: 'anuncio' }
+            ];
+        }
+
+        function socialKindForTab(tab) {
+            return socialTabs().find(item => item.id === tab)?.kind || 'foro';
+        }
+
+        function socialTabForKind(kind) {
+            return socialTabs().find(item => item.kind === kind)?.id || 'foro';
+        }
+
+        function socialStorageKey() {
+            return 'abd_social_messages';
+        }
+
+        function localSocialMessages() {
+            try {
+                return JSON.parse(localStorage.getItem(socialStorageKey()) || '[]').map(normalizeSocialMessage);
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function saveLocalSocialMessages(messages) {
+            localStorage.setItem(socialStorageKey(), JSON.stringify(messages.slice(0, 300)));
+        }
+
+        function socialMessageId() {
+            return `abd_msg_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+        }
+
+        function normalizeSocialMessage(item = {}) {
+            const tipo = item.tipo || item.interaccion_tipo || item.kind || 'foro';
+            return {
+                id: item.id || item.message_id || socialMessageId(),
+                timestamp: item.timestamp || item.fecha || new Date().toISOString(),
+                tipo,
+                canal: item.canal || '',
+                usuario: item.usuario || '',
+                nombre: item.nombre || item.usuario || 'Participante',
+                rol: item.rol || 'estudiante',
+                unidad: item.unidad || '',
+                recurso: item.recurso || '',
+                titulo_recurso: item.titulo_recurso || item.titulo || '',
+                mensaje: item.mensaje || item.detalle || '',
+                parent_id: item.parent_id || '',
+                estado: item.estado || (tipo === 'consulta' ? 'abierta' : 'publicado')
+            };
+        }
+
+        function mergeSocialMessages(...groups) {
+            const byId = new Map();
+            groups.flat().filter(Boolean).map(normalizeSocialMessage).forEach(item => {
+                const prev = byId.get(item.id);
+                if (!prev || new Date(item.timestamp) >= new Date(prev.timestamp)) byId.set(item.id, item);
+            });
+            return Array.from(byId.values()).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        }
+
+        function jsonp(url, timeoutMs = 8000) {
+            return new Promise(resolve => {
+                const callbackName = `abd_jsonp_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+                const script = document.createElement('script');
+                const sep = url.includes('?') ? '&' : '?';
+                const timer = setTimeout(() => cleanup(null), timeoutMs);
+                function cleanup(value) {
+                    clearTimeout(timer);
+                    delete window[callbackName];
+                    script.remove();
+                    resolve(value);
+                }
+                window[callbackName] = data => cleanup(data);
+                script.onerror = () => cleanup(null);
+                script.src = `${url}${sep}callback=${callbackName}`;
+                document.body.appendChild(script);
+            });
+        }
+
+        async function loadSocialMessagesRemote() {
+            const url = sheetsUrl();
+            if (!url || url.includes('TU_APPS_SCRIPT')) return;
+            const params = new URLSearchParams({ action: 'interacciones', limit: '200' });
+            const result = await jsonp(`${url}?${params.toString()}`);
+            if (!result || result.status !== 'ok' || !Array.isArray(result.items)) return;
+            STATE.socialMessages = mergeSocialMessages(STATE.socialMessages, result.items);
+            renderSocialMessagesList();
+        }
+
+        function visibleSocialMessages(tab = STATE.socialTab) {
+            const kind = socialKindForTab(tab);
+            let items = mergeSocialMessages(STATE.socialMessages, localSocialMessages())
+                .filter(item => item.tipo === kind);
+            if (kind === 'consulta' && STATE.user?.rol !== 'profesor') {
+                const mine = new Set(items.filter(item => item.usuario === STATE.user?.username).map(item => item.id));
+                items = items.filter(item => item.usuario === STATE.user?.username || mine.has(item.parent_id));
+            }
+            return items;
+        }
+
+        function socialUnitOptions(selected = '') {
+            return ['<option value="">Curso completo</option>']
+                .concat(UNITS.map(unit => `<option value="${unit.id}" ${String(selected) === String(unit.id) ? 'selected' : ''}>Unidad ${unit.id}: ${escapeHtml(unit.title)}</option>`))
+                .join('');
+        }
+
+        function renderCommunity(tab = STATE.socialTab || 'foro') {
+            if (STATE.socialDraft?.tipo) tab = socialTabForKind(STATE.socialDraft.tipo);
+            STATE.socialTab = tab;
+            STATE.socialMessages = mergeSocialMessages(STATE.socialMessages, localSocialMessages());
+            const draft = STATE.socialDraft || {};
+            const isTeacher = STATE.user?.rol === 'profesor';
+            const activeKind = socialKindForTab(tab);
+            const canCompose = tab !== 'anuncios' || isTeacher;
+            const composerTitle = activeKind === 'anuncio'
+                ? 'Nuevo anuncio para el curso'
+                : (activeKind === 'consulta' ? 'Enviar consulta al profesor' : 'Publicar en el foro');
+            document.getElementById('pageContent').innerHTML = `
+      <div class="page-heading">
+        <div>
+          <h1>Comunidad del aula</h1>
+          <p>Foros, consultas vinculadas a recursos y mensajes docentes en un solo espacio.</p>
+        </div>
+      </div>
+      <div class="social-shell">
+        <div class="social-tabs" role="tablist">
+          ${socialTabs().map(item => `
+            <button class="${item.id === tab ? 'active' : ''}" onclick="renderCommunity('${item.id}')">${item.label}</button>
+          `).join('')}
+        </div>
+        ${canCompose ? `
+          <form class="social-composer" onsubmit="submitSocialMessage(event)">
+            <input type="hidden" id="socialParentId" value="${escapeHtml(draft.parent_id || '')}">
+            <h3>${composerTitle}</h3>
+            <div class="social-form-grid">
+              <label>Unidad
+                <select id="socialUnit">${socialUnitOptions(draft.unidad || '')}</select>
+              </label>
+              <label>Recurso o practica vinculada
+                <input id="socialResourceTitle" value="${escapeHtml(draft.titulo_recurso || '')}" placeholder="Opcional: nombre del recurso">
+              </label>
+            </div>
+            <label>Ruta del recurso
+              <input id="socialResource" value="${escapeHtml(draft.recurso || '')}" placeholder="Opcional: archivo, ficha o bloque">
+            </label>
+            <textarea id="socialMessage" rows="4" placeholder="Escribe un aporte, pregunta o respuesta clara.">${escapeHtml(draft.mensaje || '')}</textarea>
+            <div class="social-composer-actions">
+              ${draft.parent_id ? '<span class="social-context-pill">Respuesta vinculada</span>' : ''}
+              <button class="btn-primary" type="submit">${activeKind === 'consulta' ? 'Enviar consulta' : (activeKind === 'anuncio' ? 'Publicar anuncio' : 'Publicar aporte')}</button>
+            </div>
+          </form>` : `
+          <div class="social-composer readonly">
+            <h3>Anuncios docentes</h3>
+            <p>Este espacio lo utiliza el profesor para dejar avisos generales, cambios de fecha y orientaciones del semestre.</p>
+          </div>`}
+        <div id="socialMessagesList" class="social-message-list"></div>
+      </div>`;
+            STATE.socialDraft = null;
+            renderSocialMessagesList();
+            loadSocialMessagesRemote();
+        }
+
+        function renderSocialMessagesList(tab = STATE.socialTab) {
+            const container = document.getElementById('socialMessagesList');
+            if (!container) return;
+            const items = visibleSocialMessages(tab);
+            if (!items.length) {
+                container.innerHTML = `
+          <div class="card social-empty">
+            <h3>Aun no hay mensajes</h3>
+            <p>${tab === 'consultas' ? 'Las consultas vinculadas a recursos apareceran aqui.' : 'Se el primero en abrir la conversacion de esta seccion.'}</p>
+          </div>`;
+                return;
+            }
+            container.innerHTML = items.map(item => renderSocialMessage(item)).join('');
+        }
+
+        function renderSocialMessage(item) {
+            const date = new Date(item.timestamp).toLocaleString('es-PY');
+            const isTeacher = item.rol === 'profesor';
+            const canReply = item.tipo !== 'anuncio' || STATE.user?.rol === 'profesor';
+            const canResolve = STATE.user?.rol === 'profesor' && item.tipo === 'consulta' && item.estado !== 'atendida';
+            const context = [item.unidad ? `Unidad ${item.unidad}` : '', item.titulo_recurso || item.recurso || '']
+                .filter(Boolean).join(' · ');
+            return `
+        <article class="social-message ${isTeacher ? 'teacher' : ''}">
+          <header>
+            <div>
+              <strong>${escapeHtml(item.nombre)}</strong>
+              <span>${escapeHtml(isTeacher ? 'Profesor' : 'Estudiante')} · ${escapeHtml(date)}</span>
+            </div>
+            <span class="social-status ${escapeHtml(item.estado)}">${escapeHtml(item.estado)}</span>
+          </header>
+          ${context ? `<div class="social-context">${escapeHtml(context)}</div>` : ''}
+          <p>${escapeHtml(item.mensaje)}</p>
+          <footer>
+            ${item.recurso ? `<button class="btn-secondary" onclick="openResourceInAula(${jsArg(item.recurso)}, ${jsArg(item.unidad)})">Abrir recurso</button>` : ''}
+            ${canReply ? `<button class="btn-secondary" onclick="prepareSocialReply(${jsArg(item.id)})">Responder</button>` : ''}
+            ${canResolve ? `<button class="btn-secondary" onclick="resolveSocialMessage(${jsArg(item.id)})">Marcar atendida</button>` : ''}
+          </footer>
+        </article>`;
+        }
+
+        function submitSocialMessage(event) {
+            event.preventDefault();
+            const kind = socialKindForTab(STATE.socialTab);
+            if (kind === 'anuncio' && STATE.user?.rol !== 'profesor') {
+                showToast('Solo el profesor puede publicar anuncios.', 'error');
+                return;
+            }
+            const message = document.getElementById('socialMessage')?.value.trim() || '';
+            if (message.length < 3) {
+                showToast('Escribe un mensaje antes de publicar.', 'error');
+                return;
+            }
+            const item = normalizeSocialMessage({
+                id: socialMessageId(),
+                timestamp: new Date().toISOString(),
+                tipo: kind,
+                canal: STATE.socialTab,
+                usuario: STATE.user?.username || '',
+                nombre: STATE.user?.nombre || STATE.user?.username || '',
+                rol: STATE.user?.rol || 'estudiante',
+                unidad: document.getElementById('socialUnit')?.value || '',
+                recurso: document.getElementById('socialResource')?.value.trim() || '',
+                titulo_recurso: document.getElementById('socialResourceTitle')?.value.trim() || '',
+                mensaje: message,
+                parent_id: document.getElementById('socialParentId')?.value || '',
+                estado: kind === 'consulta'
+                    ? (STATE.user?.rol === 'profesor' ? 'atendida' : 'abierta')
+                    : 'publicado'
+            });
+            const messages = mergeSocialMessages(localSocialMessages(), [item]);
+            saveLocalSocialMessages(messages);
+            STATE.socialMessages = mergeSocialMessages(STATE.socialMessages, [item]);
+            sendToSheets({ kind: 'interaccion', ...item });
+            showToast(kind === 'consulta' ? 'Consulta enviada al profesor.' : 'Mensaje publicado.', 'success');
+            renderCommunity(STATE.socialTab);
+        }
+
+        function openContextMessage(kind, context = {}) {
+            STATE.socialDraft = {
+                tipo: kind || 'consulta',
+                unidad: context.unidad || '',
+                recurso: context.recurso || '',
+                titulo_recurso: context.titulo_recurso || context.titulo || '',
+                canal: context.canal || '',
+                parent_id: context.parent_id || '',
+                mensaje: context.mensaje || ''
+            };
+            showPage('community');
+            setTimeout(() => document.getElementById('socialMessage')?.focus(), 0);
+        }
+
+        function prepareSocialReply(id) {
+            const item = mergeSocialMessages(STATE.socialMessages, localSocialMessages()).find(msg => msg.id === id);
+            if (!item) return;
+            openContextMessage(item.tipo, {
+                unidad: item.unidad,
+                recurso: item.recurso,
+                titulo_recurso: item.titulo_recurso || item.recurso || `Mensaje de ${item.nombre}`,
+                parent_id: item.id,
+                mensaje: `@${item.nombre} `
+            });
+        }
+
+        function resolveSocialMessage(id) {
+            if (STATE.user?.rol !== 'profesor') return;
+            const item = mergeSocialMessages(STATE.socialMessages, localSocialMessages()).find(msg => msg.id === id);
+            if (!item) return;
+            const updated = normalizeSocialMessage({
+                ...item,
+                timestamp: new Date().toISOString(),
+                estado: 'atendida'
+            });
+            const messages = mergeSocialMessages(localSocialMessages(), [updated]);
+            saveLocalSocialMessages(messages);
+            STATE.socialMessages = mergeSocialMessages(STATE.socialMessages, [updated]);
+            sendToSheets({ kind: 'interaccion', ...updated });
+            showToast('Consulta marcada como atendida.', 'success');
+            renderSocialMessagesList();
         }
 
         // ================================================================

@@ -23,7 +23,7 @@ https://script.google.com/d/1cZXfAId4sBXwIsPUaWgbPviQ13yUQTodyW8plm8I5y32a0llEJ5
 URL de recepción configurada en `dashboard.html`:
 
 ```text
-https://script.google.com/macros/s/AKfycbzr2gQky-zzvBBZFNDeUCsJ2uGJ6gF04QyNXyoh_WzAD_wQW5dv2-b6ZUtPOO4aEgGg/exec
+https://script.google.com/macros/s/AKfycbwb5nz0SvccSfbz8QbfT299YsG10nyLRzfs5d0vcL-LmdTCZvy3H-o2-zGfhZvUr8B3/exec
 ```
 
 Si Google solicita autorización en el primer uso, abrir esa URL con la cuenta `dmeza.py@gmail.com` y aceptar los permisos del script antes de distribuir el enlace a estudiantes. La app conserva una copia local de los envíos en `localStorage` (`abd_sync_history`) y reintenta los pendientes cuando la URL está configurada.
@@ -39,6 +39,7 @@ El libro fue preparado con estas pestañas:
 | `Progreso` | Snapshot de XP, quizzes, badges y materiales vistos |
 | `Estudiantes` | Altas/bajas registradas desde Administración |
 | `Config` | Parámetros del curso, calendario y despliegue |
+| `Interacciones` | Foro, consultas vinculadas a recursos y anuncios docentes |
 
 ## Datos enviados
 
@@ -51,6 +52,7 @@ La plataforma registra:
 - Login, badges, cambios de contraseña, recordatorios y snapshots de progreso.
 - Estudiantes registrados/removidos y configuración de fechas por semestre.
 - Autenticación de estudiantes autorizados por el profesor: si una cédula no existe en `Estudiantes` o fue removida, el login no permite automatrícula.
+- Mensajes de comunidad: aportes de foro, consultas al profesor marcadas por unidad/recurso/práctica y anuncios docentes.
 
 ## Recordatorios por correo
 

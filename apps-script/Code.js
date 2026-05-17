@@ -22,6 +22,11 @@ const HEADERS = {
   Config: [
     'timestamp', 'usuario', 'nombre', 'config_key', 'config_value', 'detalle',
     'session_id'
+  ],
+  Interacciones: [
+    'timestamp', 'id', 'tipo', 'canal', 'usuario', 'nombre', 'rol', 'unidad',
+    'recurso', 'titulo_recurso', 'mensaje', 'parent_id', 'estado',
+    'origen_url', 'user_agent', 'session_id'
   ]
 };
 
@@ -29,6 +34,10 @@ function doGet(e) {
   const params = e && e.parameter ? e.parameter : {};
   if (params.action === 'auth') {
     const result = authenticateStudent_(params.username || '', params.password_hash || '');
+    return jsonResponse(result, params.callback);
+  }
+  if (params.action === 'interacciones') {
+    const result = listInteracciones_(params);
     return jsonResponse(result, params.callback);
   }
   return jsonResponse({
@@ -115,6 +124,28 @@ function appendPayload_(ss, payload) {
       config_key: payload.config_key || payload.recurso || '',
       config_value: stringify_(payload.config_value || payload.valor || ''),
       detalle: stringify_(payload.detalle || ''),
+      session_id: payload.session_id || ''
+    });
+    return;
+  }
+
+  if (kind === 'interaccion' || kind === 'foro' || kind === 'consulta' || kind === 'anuncio') {
+    appendByHeaders_(ss.getSheetByName('Interacciones'), HEADERS.Interacciones, {
+      timestamp: payload.timestamp || now_(),
+      id: payload.id || payload.message_id || Utilities.getUuid(),
+      tipo: payload.tipo || payload.interaccion_tipo || kind,
+      canal: payload.canal || '',
+      usuario: payload.usuario || '',
+      nombre: payload.nombre || '',
+      rol: payload.rol || '',
+      unidad: payload.unidad || '',
+      recurso: payload.recurso || '',
+      titulo_recurso: payload.titulo_recurso || payload.titulo || '',
+      mensaje: payload.mensaje || payload.detalle || '',
+      parent_id: payload.parent_id || '',
+      estado: payload.estado || 'publicado',
+      origen_url: payload.origen_url || '',
+      user_agent: payload.user_agent || '',
       session_id: payload.session_id || ''
     });
     return;
@@ -221,6 +252,34 @@ function authenticateStudent_(username, passwordHash) {
       password_changed: String(latest.password_changed || '').toLowerCase() === 'true'
     }
   };
+}
+
+function listInteracciones_(params) {
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  ensureWorkbook_(ss);
+  const limit = Math.max(1, Math.min(Number(params.limit || 200), 500));
+  const tipo = String(params.tipo || '').trim().toLowerCase();
+  const unidad = String(params.unidad || '').trim();
+  const rows = readObjects_(ss.getSheetByName('Interacciones'))
+    .filter(row => !tipo || String(row.tipo || '').toLowerCase() === tipo)
+    .filter(row => !unidad || String(row.unidad || '') === unidad)
+    .slice(-limit)
+    .map(row => ({
+      timestamp: row.timestamp || '',
+      id: row.id || '',
+      tipo: row.tipo || '',
+      canal: row.canal || '',
+      usuario: row.usuario || '',
+      nombre: row.nombre || '',
+      rol: row.rol || '',
+      unidad: row.unidad || '',
+      recurso: row.recurso || '',
+      titulo_recurso: row.titulo_recurso || '',
+      mensaje: row.mensaje || '',
+      parent_id: row.parent_id || '',
+      estado: row.estado || 'publicado'
+    }));
+  return { status: 'ok', items: rows };
 }
 
 function sha256Hex_(value) {
