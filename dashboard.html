@@ -717,7 +717,7 @@
         }
 
         function jsArg(value) {
-            return JSON.stringify(value ?? '').replace(/</g, '\\u003c');
+            return JSON.stringify(value ?? '').replace(/</g, '\\u003c').replace(/"/g, '&quot;');
         }
 
         function unitIconHTML(unit, className = 'unit-inline-icon') {
