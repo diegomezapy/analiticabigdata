@@ -2729,7 +2729,13 @@ a:hover { text-decoration: underline; }
 }
 
 .learning-flashcard-card.flipped {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--sublevel-color) 10%, white), white);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--sublevel-color) 22%, white), color-mix(in srgb, var(--sublevel-soft) 72%, white));
+  border-color: color-mix(in srgb, var(--sublevel-color) 48%, var(--glass-border));
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--sublevel-color) 18%, transparent);
+}
+
+.learning-flashcard-card.flipped:hover {
+  box-shadow: 0 16px 42px color-mix(in srgb, var(--sublevel-color) 24%, transparent);
 }
 
 .learning-flashcard-card span {
@@ -2737,6 +2743,10 @@ a:hover { text-decoration: underline; }
   font-size: 0.74rem;
   font-weight: 900;
   text-transform: uppercase;
+}
+
+.learning-flashcard-card.flipped span {
+  color: color-mix(in srgb, var(--sublevel-color) 85%, black);
 }
 
 .learning-flashcard-card strong {
