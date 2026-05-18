@@ -476,7 +476,7 @@
                 '1.1': { diagram: 'edu_u1s1_5v_bigdata.svg', concept: 'edu_u1s1d_escala_datos.svg', primary: 'u1_data.svg', secondary: 'u1_circuit_board.svg', alt: 'Las 5V del Big Data y sus implicancias analiticas', caption: 'Lamina tecnica: 5V del Big Data, ejemplos y criterios de lectura.', conceptAlt: 'Escalas de datos desde byte hasta zettabyte con ejemplos concretos', conceptCaption: 'Figura conceptual: escala logaritmica de datos y umbral practico de Big Data.' },
                 '1.2': { diagram: 'edu_u1s2_rstudio.svg', concept: 'edu_u1s2d_tipos_objetos_r.svg', primary: 'u1_developer.svg', secondary: 'u1_cloud_hosting.svg', alt: 'Entorno RStudio y organizacion de un proyecto reproducible', caption: 'Lamina tecnica: IDE RStudio, paneles y flujo de trabajo reproducible.', conceptAlt: 'Tipos de objetos en R: vector, factor, matriz, data frame y lista', conceptCaption: 'Figura conceptual: objetos basicos de R y cuando conviene usar cada tipo.' },
                 '1.3': { diagram: 'edu_u1s3_pipeline.svg', primary: 'u1_data_input.svg', secondary: 'u1_data_processing.svg', alt: 'Pipeline de datos desde lectura hasta validacion', caption: 'Lamina tecnica: pipeline de carga, limpieza, transformacion y control.' },
-                '2.1': { diagram: 'edu_u2s1_grammar_graficos.svg', primary: 'u2_charts.svg', secondary: 'u2_analytics.svg', alt: 'Grammar of Graphics y capas de un grafico', caption: 'Lamina tecnica: datos, aesthetics, geometria, escalas y facetas.' },
+                '2.1': { diagram: 'edu_u2s1_grammar_graficos.svg', concept: 'edu_u2s1d_guia_graficos.svg', primary: 'u2_charts.svg', secondary: 'u2_analytics.svg', alt: 'Grammar of Graphics y capas de un grafico', caption: 'Lamina tecnica: datos, aesthetics, geometria, escalas y facetas.', conceptAlt: 'Guia de seleccion de graficos: 5 categorias con mini-charts y codigo ggplot2/seaborn', conceptCaption: 'Figura conceptual: que grafico usar segun el objetivo — distribucion, comparacion, relacion, composicion, tendencia.' },
                 '2.2': { diagram: 'edu_u2s2_boxplot.svg', concept: 'edu_u2s2d_distribuciones.svg', primary: 'u2_data_trends.svg', secondary: 'u2_statistics.svg', alt: 'Boxplot anatomico y lectura de distribuciones', caption: 'Lamina tecnica: mediana, IQR, bigotes, atipicos y comparacion.', conceptAlt: 'Histogramas de distribuciones normal, sesgada positiva, sesgada negativa y bimodal', conceptCaption: 'Figura conceptual: formas de distribucion, media, mediana, moda y diagnosticos iniciales.' },
                 '2.3': { diagram: 'edu_u2s3_correlacion.svg', primary: 'u2_data_points.svg', secondary: 'u2_research.svg', alt: 'Correlacion y patrones de dispersion', caption: 'Lamina tecnica: direccion, fuerza, outliers y advertencias de causalidad.' },
                 '3.1': { diagram: 'edu_u3s1_knn.svg', concept: 'edu_u3s1d_bias_variance.svg', primary: 'u3_ai.svg', secondary: 'u3_predictive.svg', alt: 'KNN, distancia y frontera de decision', caption: 'Lamina tecnica: vecinos, metrica de distancia, valor de K y decision.', conceptAlt: 'Dianas y curvas para explicar sesgo, varianza, underfitting y overfitting', conceptCaption: 'Figura conceptual: equilibrio sesgo-varianza y complejidad optima del modelo.' },
@@ -1542,6 +1542,7 @@
                 materiales: [
                     { name: 'Material de lectura — Unidad 1', file: 'unidades/unidad1/material-lectura.html', download: 'unidades/unidad1/Material_Lectura_Unidad1.pdf', type: 'html' },
                     { name: 'Material extendido — Unidad 1', file: 'unidades/unidad1/material-extendido.html', download: 'unidades/unidad1/material-extendido.pdf', type: 'html' },
+                    { name: 'Introducción a R y RStudio — Presentación interactiva', file: 'assets/presentaciones/intro_r_rstudio.html', type: 'html' },
                 ],
                 actividades: [
                     { name: 'AF — Estudio de materiales de aprendizaje', file: 'unidades/unidad1/actividad-1.html', download: 'unidades/unidad1/Descripcion_Actividad_Unidad1_Act1.pdf', type: 'html' },
@@ -4221,6 +4222,29 @@
       </section>`;
         }
 
+        function renderUnitMaterialesCard(unitNum) {
+            const files = UNIT_FILES[unitNum] || {};
+            const items = [...(files.materiales || []), ...(files.orientaciones || [])];
+            if (!items.length) return '';
+            return `
+      <div class="card" style="margin-bottom:1rem">
+        <h3>Materiales de estudio y presentaciones</h3>
+        <p>Recursos de lectura, presentaciones interactivas y orientaciones oficiales de la unidad.</p>
+        <div class="materials-list" style="margin-top:0.75rem">
+          ${items.map(item => `
+            <a class="material-item" href="${escapeHtml(item.file)}" target="_blank" rel="noopener"
+               onclick="markRead(${unitNum}, ${jsArg(item.file)})">
+              <span class="material-icon">${item.file.endsWith('.html') && item.file.includes('presentac') ? '📊' : '📄'}</span>
+              <div class="material-info">
+                <h4>${escapeHtml(item.name)}</h4>
+                <p>${escapeHtml(item.file)}</p>
+              </div>
+              ${item.download ? `<a class="btn-secondary as-link" href="${escapeHtml(item.download)}" download style="flex-shrink:0">PDF</a>` : '<span class="material-badge badge-act">HTML</span>'}
+            </a>`).join('')}
+        </div>
+      </div>`;
+        }
+
         function renderNotebookUnitResources(unitNum) {
             const unitResources = getNotebookUnit(unitNum);
             if (!unitResources) return '';
@@ -4427,8 +4451,9 @@
             } else if (activeTab === 'recursos') {
                 const notebookResources = renderNotebookUnitResources(n);
                 const visualAtlas = renderUnitVisualAtlas(n);
-                tabContent.innerHTML = (notebookResources || visualAtlas)
-                    ? `${notebookResources}${visualAtlas}`
+                const unitMaterials = renderUnitMaterialesCard(n);
+                tabContent.innerHTML = (notebookResources || visualAtlas || unitMaterials)
+                    ? `${unitMaterials}${notebookResources}${visualAtlas}`
                     : `
       <div class="card" style="text-align:center;padding:2rem">
         <p>Los recursos de esta unidad aun no estan indexados.</p>

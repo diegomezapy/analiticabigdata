@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introducción a R y RStudio — FACEN-UNA ABD 2026</title>
+<style>
+  :root {
+    --bg: #020617;
+    --surface: #0f172a;
+    --surface2: #1e293b;
+    --border: #334155;
+    --teal: #14b8a6;
+    --teal-dim: #0f766e;
+    --sky: #38bdf8;
+    --amber: #fbbf24;
+    --rose: #f43f5e;
+    --green: #22c55e;
+    --purple: #a78bfa;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --code-bg: #0d1117;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+  }
+  /* ── Slide container ── */
+  #deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 56px 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  /* ── Navigation ── */
+  #nav {
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(15,23,42,0.92);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 8px 20px;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+  .nav-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .nav-btn:hover { background: var(--teal-dim); border-color: var(--teal); }
+  #dots { display: flex; gap: 7px; }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .dot.active { background: var(--teal); transform: scale(1.4); }
+  #slide-counter { font-size: 12px; color: var(--muted); min-width: 40px; text-align: center; }
+  /* ── Header bar ── */
+  .slide-header {
+    border-bottom: 2px solid var(--teal);
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+  }
+  .slide-header .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .slide-header h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  /* ── Layout helpers ── */
+  .cols { display: flex; gap: 24px; flex: 1; min-height: 0; }
+  .col { flex: 1; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+  .col-40 { flex: 0 0 40%; }
+  .col-60 { flex: 0 0 60%; }
+  /* ── Cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .card.teal  { border-color: var(--teal);   background: rgba(20,184,166,0.07); }
+  .card.sky   { border-color: var(--sky);    background: rgba(56,189,248,0.07); }
+  .card.amber { border-color: var(--amber);  background: rgba(251,191,36,0.07); }
+  .card.rose  { border-color: var(--rose);   background: rgba(244,63,94,0.07); }
+  .card.green { border-color: var(--green);  background: rgba(34,197,94,0.07); }
+  .card.purple{ border-color: var(--purple); background: rgba(167,139,250,0.07); }
+  .card h3 { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .card.teal h3  { color: var(--teal); }
+  .card.sky h3   { color: var(--sky); }
+  .card.amber h3 { color: var(--amber); }
+  .card.rose h3  { color: var(--rose); }
+  .card.green h3 { color: var(--green); }
+  .card.purple h3{ color: var(--purple); }
+  /* ── Typography ── */
+  ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  ul li { font-size: 14px; color: var(--muted); padding-left: 18px; position: relative; line-height: 1.45; }
+  ul li::before { content: "›"; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+  p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  strong { color: var(--text); font-weight: 600; }
+  /* ── Code blocks ── */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+    flex-shrink: 0;
+  }
+  .kw  { color: #ff7b72; }   /* keyword */
+  .fn  { color: #d2a8ff; }   /* function */
+  .str { color: #a5d6ff; }   /* string */
+  .num { color: #ffa657; }   /* number */
+  .cmt { color: #6e7781; font-style: italic; } /* comment */
+  .op  { color: #79c0ff; }   /* operator / symbol */
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    border: none;
+  }
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn-teal  { background: var(--teal);  color: #020617; }
+  .btn-sky   { background: var(--sky);   color: #020617; }
+  .btn-amber { background: var(--amber); color: #020617; }
+  .btn-green { background: var(--green); color: #020617; }
+  .btn-purple{ background: var(--purple);color: #020617; }
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--surface2); color: var(--teal); font-weight: 700; padding: 9px 12px; text-align: left; border-bottom: 2px solid var(--teal); }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { color: var(--text); font-weight: 600; }
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: var(--rose); }
+  .partial { color: var(--amber); }
+  /* ── Badges ── */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .badge-teal  { background: rgba(20,184,166,0.2); color: var(--teal); }
+  .badge-amber { background: rgba(251,191,36,0.2); color: var(--amber); }
+  .badge-rose  { background: rgba(244,63,94,0.2);  color: var(--rose); }
+  .badge-green { background: rgba(34,197,94,0.2);  color: var(--green); }
+  /* ── IDE mockup ── */
+  .ide-panel {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .ide-tab {
+    background: #161b22;
+    border-bottom: 1px solid var(--border);
+    padding: 6px 14px;
+    font-size: 11px;
+    color: var(--teal);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .ide-body { padding: 10px 14px; font-family: 'Cascadia Code','Consolas',monospace; font-size: 12px; line-height: 1.7; }
+  /* ── Step boxes ── */
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .step-num {
+    min-width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: #020617;
+    font-weight: 800;
+    font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-text { flex: 1; }
+  .step-text strong { display: block; font-size: 13px; color: var(--text); margin-bottom: 2px; }
+  .step-text span { font-size: 12px; color: var(--muted); }
+  /* ── Cover slide ── */
+  #slide-1 {
+    background: radial-gradient(ellipse at 30% 40%, rgba(20,184,166,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 75% 60%, rgba(56,189,248,0.08) 0%, transparent 50%),
+                var(--bg);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+    padding: 0;
+  }
+  #slide-1 .cover-inner { max-width: 720px; padding: 40px; }
+  #slide-1 .cover-badge {
+    display: inline-block;
+    background: rgba(20,184,166,0.15);
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  #slide-1 h1 { font-size: 48px; font-weight: 800; line-height: 1.1; margin-bottom: 8px; }
+  #slide-1 h1 span { color: var(--teal); }
+  #slide-1 .subtitle { font-size: 20px; color: var(--sky); font-weight: 600; margin-bottom: 16px; }
+  #slide-1 .desc { font-size: 15px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
+  #slide-1 .cover-meta { font-size: 12px; color: var(--border); margin-top: 28px; }
+  .divider { width: 60px; height: 3px; background: linear-gradient(90deg, var(--teal), var(--sky)); border-radius: 2px; margin: 0 auto 24px; }
+  /* ── Keyboard hint ── */
+  #keyhint {
+    position: fixed;
+    top: 16px; right: 20px;
+    font-size: 11px;
+    color: var(--border);
+  }
+  kbd {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: inherit;
+  }
+  /* ── Progress bar ── */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--sky));
+    transition: width 0.35s ease;
+    z-index: 200;
+  }
+  /* ── RStudio 4-panel ── */
+  .rstudio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px;
+    flex: 1;
+    min-height: 0;
+  }
+  .rstudio-pane {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .rstudio-pane-tab {
+    background: #161b22;
+    border-bottom: 1px solid var(--border);
+    padding: 5px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .rstudio-pane-body { padding: 8px 10px; font-size: 11px; color: var(--muted); flex: 1; overflow: hidden; font-family: 'Cascadia Code','Consolas',monospace; }
+  /* shortcut table */
+  .sc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sc-item { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; }
+  .sc-item span:first-child { font-size: 12px; color: var(--muted); }
+  .sc-keys { display: flex; gap: 4px; }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="keyhint"><kbd>←</kbd> <kbd>→</kbd> para navegar</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 1 — Cover
+══════════════════════════════════════════════════════ -->
+<div id="deck">
+<div class="slide active" id="slide-1">
+  <div class="cover-inner">
+    <div class="cover-badge">FACEN-UNA · Analítica de Big Data 2026</div>
+    <h1>Introducción a <span>R</span> y <span>RStudio</span></h1>
+    <div class="divider"></div>
+    <div class="subtitle">Tu primer entorno de análisis de datos estadístico</div>
+    <div class="desc">
+      Aprenderás qué es R, cómo instalarlo, cómo usar RStudio,<br>
+      tus primeros comandos y los paquetes esenciales del curso.
+    </div>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a class="btn btn-teal" href="https://cran.r-project.org/bin/windows/base/" target="_blank">⬇ Descargar R</a>
+      <a class="btn btn-sky" href="https://posit.co/download/rstudio-desktop/" target="_blank">⬇ Descargar RStudio</a>
+      <a class="btn btn-amber" href="https://posit.cloud/" target="_blank">☁ Posit Cloud (online)</a>
+    </div>
+    <div class="cover-meta">14 diapositivas · Usar ← → o botones para navegar</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 2 — ¿Qué es R?
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-2">
+  <div class="slide-header">
+    <div class="label">Diapositiva 2 de 14 · Fundamentos</div>
+    <h2>¿Qué es R?</h2>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <div class="card teal">
+        <h3>Definición</h3>
+        <p>R es un <strong>lenguaje de programación estadístico y entorno de análisis de datos</strong> de código abierto, desarrollado por Ross Ihaka y Robert Gentleman en 1993 en la Universidad de Auckland, Nueva Zelanda.</p>
+      </div>
+      <div class="card sky">
+        <h3>Características principales</h3>
+        <ul>
+          <li><strong>Especializado en estadística</strong>: regresión, series temporales, ML, visualización</li>
+          <li><strong>Vectorizado por naturaleza</strong>: opera sobre vectores y matrices directamente</li>
+          <li><strong>+20 000 paquetes</strong> en CRAN para casi cualquier tarea analítica</li>
+          <li><strong>Gráficos de calidad publicación</strong> con ggplot2, plotly, leaflet</li>
+          <li><strong>Reproducible</strong>: scripts, R Markdown, Quarto para informes automáticos</li>
+          <li><strong>Multiplataforma</strong>: Windows, macOS, Linux</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card amber">
+        <h3>¿Para qué se usa R en este curso?</h3>
+        <ul>
+          <li>Carga y limpieza de datos (tidyverse, data.table)</li>
+          <li>Análisis exploratorio (EDA) y visualización</li>
+          <li>Estadística descriptiva e inferencial</li>
+          <li>Machine learning supervisado y no supervisado</li>
+          <li>Evaluación de modelos (caret, tidymodels)</li>
+          <li>Informes reproducibles con R Markdown</li>
+          <li>Aplicaciones web con Shiny</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <h3>Dato histórico</h3>
+        <p>R es una implementación del lenguaje <strong>S</strong> (Bell Labs, 1976). La letra "R" refleja tanto los apellidos de sus creadores como esa herencia. Hoy es mantenido por el <strong>R Core Team</strong> y la fundación R Foundation.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 3 — R vs otras herramientas
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-3">
+  <div class="slide-header">
+    <div class="label">Diapositiva 3 de 14 · Contexto</div>
+    <h2>R vs otras herramientas de análisis</h2>
+  </div>
+  <div style="flex:1;overflow:auto;">
+  <table>
+    <thead>
+      <tr>
+        <th>Herramienta</th>
+        <th>Estadística</th>
+        <th>ML / Big Data</th>
+        <th>Visualización</th>
+        <th>Costo</th>
+        <th>Reproducibilidad</th>
+        <th>Curva aprendizaje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>R <span class="badge badge-teal">este curso</span></td>
+        <td class="check">✔ Excelente</td>
+        <td class="check">✔ Bueno</td>
+        <td class="check">✔ Excelente</td>
+        <td class="check">Gratis</td>
+        <td class="check">✔ R Markdown</td>
+        <td class="partial">Media</td>
+      </tr>
+      <tr>
+        <td>Python</td>
+        <td class="partial">Bueno</td>
+        <td class="check">✔ Excelente</td>
+        <td class="check">✔ Bueno</td>
+        <td class="check">Gratis</td>
+        <td class="check">✔ Jupyter</td>
+        <td class="partial">Media</td>
+      </tr>
+      <tr>
+        <td>Excel</td>
+        <td class="partial">Básico</td>
+        <td class="cross">✗ Limitado</td>
+        <td class="partial">Básico</td>
+        <td class="cross">Pago</td>
+        <td class="cross">✗ Manual</td>
+        <td class="check">Baja</td>
+      </tr>
+      <tr>
+        <td>SPSS</td>
+        <td class="check">✔ Bueno</td>
+        <td class="cross">✗ Limitado</td>
+        <td class="partial">Básico</td>
+        <td class="cross">Muy caro</td>
+        <td class="partial">Parcial</td>
+        <td class="check">Baja</td>
+      </tr>
+      <tr>
+        <td>Stata</td>
+        <td class="check">✔ Bueno</td>
+        <td class="cross">✗ Limitado</td>
+        <td class="partial">Básico</td>
+        <td class="cross">Pago</td>
+        <td class="partial">Parcial</td>
+        <td class="partial">Media</td>
+      </tr>
+      <tr>
+        <td>Power BI</td>
+        <td class="cross">✗ Mínimo</td>
+        <td class="cross">✗ Básico</td>
+        <td class="check">✔ Excelente</td>
+        <td class="cross">Pago</td>
+        <td class="cross">✗ Manual</td>
+        <td class="check">Baja</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="card teal" style="margin-top:14px;padding:10px 18px;">
+    <p style="font-size:13px;"><strong>Conclusión:</strong> R combina el mejor soporte estadístico de la industria con capacidades de ML, visualización de calidad de publicación y reproducibilidad total — todo de forma <strong>gratuita y open source</strong>. Ideal para investigación académica y ciencia de datos.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 4 — ¿Qué es RStudio?
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-4">
+  <div class="slide-header">
+    <div class="label">Diapositiva 4 de 14 · Entorno</div>
+    <h2>¿Qué es RStudio?</h2>
+  </div>
+  <div class="cols">
+    <div class="col col-40" style="gap:10px;">
+      <div class="card teal">
+        <h3>Definición</h3>
+        <p>RStudio es un <strong>IDE</strong> (Entorno de Desarrollo Integrado) para R. No es R en sí mismo, sino una interfaz gráfica que hace que trabajar con R sea mucho más cómodo y productivo.</p>
+      </div>
+      <div class="card sky">
+        <h3>Desarrollado por Posit</h3>
+        <p>La empresa <strong>Posit PBC</strong> (antes RStudio Inc.) mantiene el IDE. Existe versión <strong>Desktop gratuita</strong> y versión Server/Cloud. También desarrollan tidyverse, Quarto y Shiny.</p>
+      </div>
+      <div class="card amber">
+        <h3>¿R sin RStudio?</h3>
+        <p>Sí, es posible usar R desde la consola base. Pero RStudio agrega autocompletado, gestión de proyectos, visualización integrada, depuración y mucho más.</p>
+      </div>
+    </div>
+    <div class="col col-60">
+      <div style="font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Interfaz de RStudio — 4 paneles</div>
+      <div class="rstudio-grid" style="flex:1;min-height:0;">
+        <div class="rstudio-pane">
+          <div class="rstudio-pane-tab" style="color:var(--teal);">📝 Editor de scripts</div>
+          <div class="rstudio-pane-body">
+            <span class="cmt"># Escribe y guarda tu código</span><br>
+            <span class="fn">library</span>(<span class="str">tidyverse</span>)<br>
+            datos <span class="op">&lt;-</span> <span class="fn">read_csv</span>(<span class="str">"datos.csv"</span>)<br>
+            <span class="fn">ggplot</span>(datos, <span class="fn">aes</span>(x, y)) <span class="op">+</span><br>
+            &nbsp;&nbsp;<span class="fn">geom_point</span>()
+          </div>
+        </div>
+        <div class="rstudio-pane">
+          <div class="rstudio-pane-tab" style="color:var(--amber);">📊 Entorno / Environment</div>
+          <div class="rstudio-pane-body">
+            <span style="color:var(--amber);">datos</span> &nbsp;tibble [1200 × 8]<br>
+            <span style="color:var(--amber);">modelo</span> lm [coeff: 3]<br>
+            <span style="color:var(--amber);">x</span> &nbsp;&nbsp;&nbsp;&nbsp;num [1:100]<br><br>
+            <span style="color:var(--muted);font-size:10px;">History · Connections · Tutorial</span>
+          </div>
+        </div>
+        <div class="rstudio-pane">
+          <div class="rstudio-pane-tab" style="color:var(--sky);">⌨ Consola (Console)</div>
+          <div class="rstudio-pane-body">
+            <span style="color:var(--muted);">R version 4.4.2 (2024-10-31)</span><br>
+            <span class="op">&gt;</span> <span class="num">2</span> <span class="op">+</span> <span class="num">2</span><br>
+            [1] 4<br>
+            <span class="op">&gt;</span> <span class="fn">mean</span>(<span class="fn">c</span>(<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>))<br>
+            [1] 2
+          </div>
+        </div>
+        <div class="rstudio-pane">
+          <div class="rstudio-pane-tab" style="color:var(--green);">📁 Files · Plots · Help</div>
+          <div class="rstudio-pane-body">
+            <span style="color:var(--green);">Plots:</span> visualiza gráficos<br>
+            <span style="color:var(--green);">Files:</span> explorador de archivos<br>
+            <span style="color:var(--green);">Help:</span> documentación<br>
+            <span style="color:var(--green);">Packages:</span> gestión paquetes<br>
+            <span style="color:var(--green);">Viewer:</span> HTML/Shiny apps
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 5 — Instalar R
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-5">
+  <div class="slide-header">
+    <div class="label">Diapositiva 5 de 14 · Instalación</div>
+    <h2>Paso 1: Instalar R</h2>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>Ir a CRAN (Comprehensive R Archive Network)</strong>
+            <span>Visitar el repositorio oficial de R: <strong>cran.r-project.org</strong></span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>Seleccionar tu sistema operativo</strong>
+            <span>Elegir <em>Download R for Windows</em> → <em>base</em> → Download R-4.x.x for Windows</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>Ejecutar el instalador</strong>
+            <span>Aceptar configuración predeterminada. R se instala en <code style="font-size:11px;color:var(--sky);">C:\Program Files\R\R-4.x.x\</code></span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <strong>Verificar instalación</strong>
+            <span>Abrir la consola base de R o CMD y ejecutar <code style="font-size:11px;color:var(--teal);">R --version</code></span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;">
+        <a class="btn btn-teal" href="https://cran.r-project.org/bin/windows/base/" target="_blank">⬇ Descargar R para Windows</a>
+        &nbsp;
+        <a class="btn btn-sky" href="https://cran.r-project.org/bin/macosx/" target="_blank">⬇ Descargar R para macOS</a>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card amber">
+        <h3>Versiones disponibles</h3>
+        <ul>
+          <li><strong>R 4.4.x</strong> (recomendada, estable) — compatibilidad máxima con paquetes</li>
+          <li>Se actualizan 2–3 veces por año (versiones menores trimestrales)</li>
+          <li>Para proyectos de aula: cualquier R ≥ 4.2 es suficiente</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <h3>Requisitos mínimos</h3>
+        <ul>
+          <li>Windows 10 / 11 (64-bit recomendado)</li>
+          <li>macOS 11 Big Sur o superior</li>
+          <li>RAM: 4 GB mínimo, 8 GB recomendado</li>
+          <li>Disco: ~200 MB para R base; paquetes extra ~1–2 GB</li>
+          <li>Conexión a internet para instalar paquetes desde CRAN</li>
+        </ul>
+      </div>
+      <div class="card rose">
+        <h3>Nota importante</h3>
+        <p>Instalar primero <strong>R</strong>, después <strong>RStudio</strong>. RStudio detecta automáticamente la instalación de R al iniciarse. Si instalas en orden inverso, deberás configurar la ruta manualmente.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 6 — Instalar RStudio
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-6">
+  <div class="slide-header">
+    <div class="label">Diapositiva 6 de 14 · Instalación</div>
+    <h2>Paso 2: Instalar RStudio Desktop</h2>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>Ir a posit.co/download/rstudio-desktop</strong>
+            <span>La página detecta automáticamente tu SO y muestra el instalador recomendado</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>Descargar RStudio Desktop Free</strong>
+            <span>Seleccionar <em>RStudio-YYYY.MM.x-NNN.exe</em> para Windows (~600 MB)</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>Ejecutar el instalador</strong>
+            <span>Hacer clic en "Siguiente" y aceptar la ubicación predeterminada. No requiere permisos de administrador adicionales.</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <strong>Abrir RStudio</strong>
+            <span>Al iniciar, RStudio detecta automáticamente la instalación de R. Se abre con los 4 paneles listos.</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;">
+        <a class="btn btn-sky" href="https://posit.co/download/rstudio-desktop/" target="_blank">⬇ Descargar RStudio Desktop Free</a>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card teal">
+        <h3>RStudio Desktop vs otros editores</h3>
+        <table style="margin-top:6px;">
+          <thead><tr><th>Editor</th><th>R integrado</th><th>Plots</th><th>R Markdown</th></tr></thead>
+          <tbody>
+            <tr><td>RStudio</td><td class="check">✔ Nativo</td><td class="check">✔</td><td class="check">✔</td></tr>
+            <tr><td>VS Code</td><td class="partial">Con extensión</td><td class="partial">Parcial</td><td class="partial">Parcial</td></tr>
+            <tr><td>Jupyter</td><td class="partial">Con kernel IR</td><td class="check">✔</td><td class="cross">✗</td></tr>
+            <tr><td>Notepad++</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card purple">
+        <h3>Crear un Proyecto RStudio</h3>
+        <ul>
+          <li>File → New Project → New Directory → New Project</li>
+          <li>Un proyecto gestiona automáticamente el directorio de trabajo</li>
+          <li>Guarda el historial y variables del entorno por separado</li>
+          <li>Esencial para análisis reproducibles y trabajo en equipo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 7 — Posit Cloud (alternativa online)
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-7">
+  <div class="slide-header">
+    <div class="label">Diapositiva 7 de 14 · Alternativa online</div>
+    <h2>Alternativa: Posit Cloud (sin instalar nada)</h2>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <div class="card teal">
+        <h3>¿Qué es Posit Cloud?</h3>
+        <p>RStudio completo en el <strong>navegador web</strong>. Sin instalación local. Ideal para practicar desde cualquier computadora, laboratorio o tableta.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>Registrarse en posit.cloud</strong>
+            <span>Crear cuenta gratuita con email (o autenticar con Google)</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>New Project → RStudio</strong>
+            <span>En tu espacio (Workspace), crear un nuevo proyecto con RStudio</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>¡Listo! RStudio en el navegador</strong>
+            <span>Misma interfaz de 4 paneles. Subir archivos, instalar paquetes, crear scripts.</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <a class="btn btn-amber" href="https://posit.cloud/" target="_blank">☁ Ir a Posit Cloud</a>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card sky">
+        <h3>Plan gratuito — límites</h3>
+        <ul>
+          <li><strong>25 horas de cómputo/mes</strong> (suficiente para el curso)</li>
+          <li>1 GB de RAM por proyecto</li>
+          <li>Hasta 5 proyectos simultáneos</li>
+          <li>R y paquetes preinstalados (CRAN completo disponible)</li>
+          <li>Almacenamiento: 1 GB de disco</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <h3>Cuándo usar Posit Cloud</h3>
+        <ul>
+          <li>Computadora sin permisos de instalación (laboratorio universitario)</li>
+          <li>Primera vez que usas R y no quieres instalar nada</li>
+          <li>Trabajo desde diferentes dispositivos</li>
+          <li>Compartir proyectos con compañeros de clase</li>
+        </ul>
+      </div>
+      <div class="card rose">
+        <h3>Limitaciones</h3>
+        <ul>
+          <li>Requiere conexión a internet estable</li>
+          <li>RAM limitada: datasets grandes (>500MB) pueden fallar</li>
+          <li>Para proyectos finales del curso se recomienda instalación local</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 8 — Primeros comandos
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-8">
+  <div class="slide-header">
+    <div class="label">Diapositiva 8 de 14 · Primeros pasos</div>
+    <h2>Primeros comandos en R</h2>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <div class="ide-panel">
+        <div class="ide-tab">Console — R como calculadora y variables</div>
+        <div class="ide-body">
+<span class="cmt"># R como calculadora</span><br>
+<span class="op">&gt;</span> <span class="num">2</span> <span class="op">+</span> <span class="num">3</span> <span class="op">*</span> <span class="num">4</span><br>
+[1] 14<br>
+<span class="op">&gt;</span> <span class="fn">sqrt</span>(<span class="num">144</span>)<br>
+[1] 12<br>
+<span class="op">&gt;</span> <span class="fn">log</span>(<span class="num">100</span>, base <span class="op">=</span> <span class="num">10</span>)<br>
+[1] 2<br><br>
+<span class="cmt"># Crear variables (asignación con &lt;-)</span><br>
+<span class="op">&gt;</span> nombre <span class="op">&lt;-</span> <span class="str">"Paraguay"</span><br>
+<span class="op">&gt;</span> poblacion <span class="op">&lt;-</span> <span class="num">7353038</span><br>
+<span class="op">&gt;</span> <span class="fn">paste</span>(<span class="str">"Población de"</span>, nombre, <span class="str">":"</span>, poblacion)<br>
+[1] <span class="str">"Población de Paraguay : 7353038"</span><br><br>
+<span class="cmt"># Vector: colección de valores del mismo tipo</span><br>
+<span class="op">&gt;</span> notas <span class="op">&lt;-</span> <span class="fn">c</span>(<span class="num">85</span>, <span class="num">72</span>, <span class="num">91</span>, <span class="num">68</span>, <span class="num">95</span>)<br>
+<span class="op">&gt;</span> <span class="fn">mean</span>(notas); <span class="fn">sd</span>(notas)<br>
+[1] 82.2<br>
+[1] 10.87
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="ide-panel">
+        <div class="ide-tab">Script — Tu primer gráfico</div>
+        <div class="ide-body">
+<span class="cmt"># Gráfico básico con R base</span><br>
+x <span class="op">&lt;-</span> <span class="fn">seq</span>(<span class="num">1</span>, <span class="num">10</span>)<br>
+y <span class="op">&lt;-</span> x<span class="op">^</span><span class="num">2</span><br>
+<span class="fn">plot</span>(x, y,<br>
+&nbsp;&nbsp;&nbsp;&nbsp; type <span class="op">=</span> <span class="str">"b"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp; col  <span class="op">=</span> <span class="str">"steelblue"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp; main <span class="op">=</span> <span class="str">"y = x²"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp; xlab <span class="op">=</span> <span class="str">"x"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ylab <span class="op">=</span> <span class="str">"y"</span>)<br><br>
+<span class="cmt"># Guardar resultado</span><br>
+<span class="fn">png</span>(<span class="str">"mi_grafico.png"</span>, width<span class="op">=</span><span class="num">800</span>, height<span class="op">=</span><span class="num">600</span>)<br>
+<span class="fn">plot</span>(x, y, type<span class="op">=</span><span class="str">"b"</span>, col<span class="op">=</span><span class="str">"steelblue"</span>)<br>
+<span class="fn">dev.off</span>()
+        </div>
+      </div>
+      <div class="card teal" style="margin-top:10px;">
+        <h3>Atajos esenciales</h3>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span class="badge badge-teal"><kbd style="background:transparent;border:none;color:var(--teal);font-size:11px;">Alt + -</kbd> → asignación &lt;-</span>
+          <span class="badge badge-green"><kbd style="background:transparent;border:none;color:var(--green);font-size:11px;">Ctrl+Enter</kbd> → ejecutar línea</span>
+          <span class="badge badge-amber"><kbd style="background:transparent;border:none;color:var(--amber);font-size:11px;">Ctrl+Shift+M</kbd> → pipe |&gt;</span>
+          <span class="badge badge-rose"><kbd style="background:transparent;border:none;color:var(--rose);font-size:11px;">Tab</kbd> → autocompletar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 9 — Tipos de datos y estructuras
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-9">
+  <div class="slide-header">
+    <div class="label">Diapositiva 9 de 14 · Fundamentos</div>
+    <h2>Tipos de datos y estructuras en R</h2>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <div class="ide-panel">
+        <div class="ide-tab">Tipos básicos — class() y typeof()</div>
+        <div class="ide-body">
+<span class="cmt"># Tipos de datos básicos</span><br>
+<span class="fn">class</span>(<span class="num">3.14</span>)      <span class="cmt"># "numeric"</span><br>
+<span class="fn">class</span>(<span class="num">5L</span>)       <span class="cmt"># "integer"</span><br>
+<span class="fn">class</span>(<span class="str">"hola"</span>)  <span class="cmt"># "character"</span><br>
+<span class="fn">class</span>(<span class="kw">TRUE</span>)    <span class="cmt"># "logical"</span><br>
+<span class="fn">class</span>(<span class="kw">NA</span>)      <span class="cmt"># "logical" (valor faltante)</span><br><br>
+<span class="cmt"># Estructuras de datos</span><br>
+vec  <span class="op">&lt;-</span> <span class="fn">c</span>(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>)          <span class="cmt"># vector</span><br>
+mat  <span class="op">&lt;-</span> <span class="fn">matrix</span>(<span class="num">1</span><span class="op">:</span><span class="num">9</span>, <span class="num">3</span>, <span class="num">3</span>)   <span class="cmt"># matriz</span><br>
+df   <span class="op">&lt;-</span> <span class="fn">data.frame</span>(x<span class="op">=</span><span class="fn">c</span>(<span class="num">1</span>,<span class="num">2</span>), y<span class="op">=</span><span class="fn">c</span>(<span class="str">"a"</span>,<span class="str">"b"</span>)) <span class="cmt"># data frame</span><br>
+lst  <span class="op">&lt;-</span> <span class="fn">list</span>(n<span class="op">=</span><span class="num">42</span>, s<span class="op">=</span><span class="str">"hola"</span>)  <span class="cmt"># lista</span><br>
+fac  <span class="op">&lt;-</span> <span class="fn">factor</span>(<span class="fn">c</span>(<span class="str">"A"</span>,<span class="str">"B"</span>,<span class="str">"A"</span>)) <span class="cmt"># factor</span>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="ide-panel">
+        <div class="ide-tab">Indexación y operaciones</div>
+        <div class="ide-body">
+<span class="cmt"># Indexar vectores (empieza en 1, no 0)</span><br>
+notas <span class="op">&lt;-</span> <span class="fn">c</span>(<span class="num">85</span>, <span class="num">72</span>, <span class="num">91</span>, <span class="num">68</span>, <span class="num">95</span>)<br>
+notas[<span class="num">1</span>]            <span class="cmt"># primer elemento → 85</span><br>
+notas[<span class="num">2</span><span class="op">:</span><span class="num">4</span>]          <span class="cmt"># elementos 2 al 4</span><br>
+notas[notas <span class="op">&gt;</span> <span class="num">80</span>]   <span class="cmt"># filtro lógico</span><br><br>
+<span class="cmt"># Manejo de NA</span><br>
+datos <span class="op">&lt;-</span> <span class="fn">c</span>(<span class="num">1</span>, <span class="kw">NA</span>, <span class="num">3</span>, <span class="kw">NA</span>, <span class="num">5</span>)<br>
+<span class="fn">is.na</span>(datos)         <span class="cmt"># detectar faltantes</span><br>
+<span class="fn">mean</span>(datos, na.rm<span class="op">=</span><span class="kw">TRUE</span>)  <span class="cmt"># ignorar NA → 3</span><br>
+<span class="fn">sum</span>(<span class="fn">is.na</span>(datos))    <span class="cmt"># contar NA → 2</span><br><br>
+<span class="cmt"># Columnas de un data frame</span><br>
+df<span class="op">$</span>columna            <span class="cmt"># acceso con $</span><br>
+df[df<span class="op">$</span>x <span class="op">&gt;</span> <span class="num">1</span>, ]       <span class="cmt"># filtrar filas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 10 — Instalar paquetes
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-10">
+  <div class="slide-header">
+    <div class="label">Diapositiva 10 de 14 · Paquetes</div>
+    <h2>Instalar y cargar paquetes</h2>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <div class="ide-panel">
+        <div class="ide-tab">Gestión de paquetes</div>
+        <div class="ide-body">
+<span class="cmt"># Instalar un paquete (solo una vez)</span><br>
+<span class="fn">install.packages</span>(<span class="str">"ggplot2"</span>)<br>
+<span class="fn">install.packages</span>(<span class="fn">c</span>(<span class="str">"dplyr"</span>, <span class="str">"tidyr"</span>))<br><br>
+<span class="cmt"># Cargar el paquete (en cada sesión)</span><br>
+<span class="fn">library</span>(<span class="str">ggplot2</span>)<br>
+<span class="fn">library</span>(<span class="str">dplyr</span>)<br><br>
+<span class="cmt"># Ver paquetes instalados</span><br>
+<span class="fn">installed.packages</span>()[, <span class="str">"Package"</span>]<br><br>
+<span class="cmt"># Actualizar todos los paquetes</span><br>
+<span class="fn">update.packages</span>(ask <span class="op">=</span> <span class="kw">FALSE</span>)<br><br>
+<span class="cmt"># Instalar desde GitHub (con remotes)</span><br>
+<span class="fn">install.packages</span>(<span class="str">"remotes"</span>)<br>
+remotes<span class="op">::</span><span class="fn">install_github</span>(<span class="str">"usuario/repo"</span>)<br><br>
+<span class="cmt"># Usar función sin cargar el paquete</span><br>
+ggplot2<span class="op">::</span><span class="fn">ggplot</span>(data, <span class="fn">aes</span>(x, y))
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card teal">
+        <h3>CRAN — El repositorio oficial</h3>
+        <p>El <strong>Comprehensive R Archive Network</strong> contiene más de 21 000 paquetes revisados y probados. <code style="font-size:11px;color:var(--sky);">install.packages()</code> descarga directamente desde CRAN.</p>
+      </div>
+      <div class="card amber">
+        <h3>install.packages() vs library()</h3>
+        <table style="margin-top:6px;">
+          <thead><tr><th>Función</th><th>Cuándo</th><th>Frecuencia</th></tr></thead>
+          <tbody>
+            <tr><td>install.packages()</td><td>Descargar e instalar</td><td><strong style="color:var(--green);">Una vez</strong></td></tr>
+            <tr><td>library()</td><td>Activar en sesión</td><td><strong style="color:var(--amber);">Cada script</strong></td></tr>
+            <tr><td>update.packages()</td><td>Actualizar versiones</td><td><strong style="color:var(--sky);">Periódica</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card rose">
+        <h3>Error común</h3>
+        <p><code style="font-size:12px;color:var(--rose);">Error: there is no package called 'ggplot2'</code></p>
+        <p style="margin-top:6px;">Significa que olvidaste instalar el paquete. Ejecutar primero <code style="font-size:11px;color:var(--teal);">install.packages("ggplot2")</code> y luego <code style="font-size:11px;color:var(--teal);">library(ggplot2)</code>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 11 — Paquetes esenciales del curso
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-11">
+  <div class="slide-header">
+    <div class="label">Diapositiva 11 de 14 · Paquetes</div>
+    <h2>Paquetes esenciales del curso ABD 2026</h2>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <div class="ide-panel">
+        <div class="ide-tab">Instalación completa para el curso</div>
+        <div class="ide-body">
+<span class="cmt"># Ejecutar UNA SOLA VEZ al configurar R</span><br>
+paquetes <span class="op">&lt;-</span> <span class="fn">c</span>(<br>
+&nbsp;&nbsp;<span class="cmt"># Manipulación de datos</span><br>
+&nbsp;&nbsp;<span class="str">"tidyverse"</span>, <span class="str">"data.table"</span>, <span class="str">"lubridate"</span>,<br>
+&nbsp;&nbsp;<span class="cmt"># Machine Learning</span><br>
+&nbsp;&nbsp;<span class="str">"caret"</span>, <span class="str">"tidymodels"</span>, <span class="str">"rpart"</span>, <span class="str">"rpart.plot"</span>,<br>
+&nbsp;&nbsp;<span class="str">"randomForest"</span>, <span class="str">"e1071"</span>, <span class="str">"nnet"</span>,<br>
+&nbsp;&nbsp;<span class="cmt"># Visualización</span><br>
+&nbsp;&nbsp;<span class="str">"ggplot2"</span>, <span class="str">"plotly"</span>, <span class="str">"leaflet"</span>, <span class="str">"DT"</span>,<br>
+&nbsp;&nbsp;<span class="cmt"># Reportes y apps</span><br>
+&nbsp;&nbsp;<span class="str">"rmarkdown"</span>, <span class="str">"shiny"</span>, <span class="str">"flexdashboard"</span>,<br>
+&nbsp;&nbsp;<span class="cmt"># Estadística</span><br>
+&nbsp;&nbsp;<span class="str">"psych"</span>, <span class="str">"corrplot"</span>, <span class="str">"moments"</span><br>
+)<br>
+<span class="fn">install.packages</span>(paquetes)
+        </div>
+      </div>
+    </div>
+    <div class="col" style="overflow-y:auto;">
+      <table>
+        <thead><tr><th>Paquete</th><th>Para qué</th><th>Unidad</th></tr></thead>
+        <tbody>
+          <tr><td>tidyverse</td><td>Carga, limpieza, visualización (dplyr+ggplot2+...)</td><td><span class="badge badge-teal">U1-U2</span></td></tr>
+          <tr><td>data.table</td><td>Manipulación de datos a gran escala (Big Data)</td><td><span class="badge badge-teal">U1</span></td></tr>
+          <tr><td>caret</td><td>ML: entrenamiento, CV, métricas</td><td><span class="badge badge-amber">U3-U4</span></td></tr>
+          <tr><td>rpart + rpart.plot</td><td>Árboles de decisión + visualización</td><td><span class="badge badge-amber">U4</span></td></tr>
+          <tr><td>randomForest</td><td>Random Forest ensemble</td><td><span class="badge badge-amber">U4</span></td></tr>
+          <tr><td>e1071</td><td>SVM, Naive Bayes</td><td><span class="badge badge-amber">U4</span></td></tr>
+          <tr><td>ggplot2</td><td>Visualización declarativa (Grammar of Graphics)</td><td><span class="badge badge-green">U2</span></td></tr>
+          <tr><td>shiny</td><td>Apps web interactivas con R</td><td><span class="badge badge-green">U2</span></td></tr>
+          <tr><td>rmarkdown</td><td>Informes reproducibles (HTML, PDF, Word)</td><td><span class="badge badge-green">Todas</span></td></tr>
+          <tr><td>psych + moments</td><td>Estadística descriptiva avanzada, skewness</td><td><span class="badge badge-green">U2</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 12 — Tu primer script
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-12">
+  <div class="slide-header">
+    <div class="label">Diapositiva 12 de 14 · Práctica</div>
+    <h2>Tu primer script completo en R</h2>
+  </div>
+  <div class="cols">
+    <div class="col col-60">
+      <div class="ide-panel" style="flex:1;">
+        <div class="ide-tab">mi_primer_script.R — Análisis demográfico Paraguay</div>
+        <div class="ide-body" style="overflow-y:auto;max-height:360px;">
+<span class="cmt"># ── 1. Cargar paquetes ─────────────────────────</span><br>
+<span class="fn">library</span>(ggplot2)<br>
+<span class="fn">library</span>(dplyr)<br><br>
+<span class="cmt"># ── 2. Crear datos ─────────────────────────────</span><br>
+departamentos <span class="op">&lt;-</span> <span class="fn">data.frame</span>(<br>
+&nbsp;&nbsp;depto <span class="op">=</span> <span class="fn">c</span>(<span class="str">"Central"</span>, <span class="str">"Alto Paraná"</span>, <span class="str">"Itapúa"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"Caaguazú"</span>, <span class="str">"San Pedro"</span>),<br>
+&nbsp;&nbsp;pob   <span class="op">=</span> <span class="fn">c</span>(<span class="num">2310000</span>, <span class="num">850000</span>, <span class="num">560000</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="num">475000</span>, <span class="num">320000</span>)<br>
+)<br><br>
+<span class="cmt"># ── 3. Exploración básica ──────────────────────</span><br>
+<span class="fn">str</span>(departamentos)       <span class="cmt"># estructura</span><br>
+<span class="fn">summary</span>(departamentos)   <span class="cmt"># estadísticas</span><br>
+<span class="fn">glimpse</span>(departamentos)   <span class="cmt"># vista rápida (dplyr)</span><br><br>
+<span class="cmt"># ── 4. Visualizar ─────────────────────────────</span><br>
+<span class="fn">ggplot</span>(departamentos, <span class="fn">aes</span>(x <span class="op">=</span> <span class="fn">reorder</span>(depto, pob),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y <span class="op">=</span> pob<span class="op">/</span><span class="num">1e6</span>)) <span class="op">+</span><br>
+&nbsp;&nbsp;<span class="fn">geom_col</span>(fill <span class="op">=</span> <span class="str">"#14b8a6"</span>, width <span class="op">=</span> <span class="num">0.7</span>) <span class="op">+</span><br>
+&nbsp;&nbsp;<span class="fn">coord_flip</span>() <span class="op">+</span><br>
+&nbsp;&nbsp;<span class="fn">labs</span>(title <span class="op">=</span> <span class="str">"Población por departamento"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x <span class="op">=</span> <span class="str">""</span>, y <span class="op">=</span> <span class="str">"Millones de habitantes"</span>) <span class="op">+</span><br>
+&nbsp;&nbsp;<span class="fn">theme_minimal</span>()
+        </div>
+      </div>
+    </div>
+    <div class="col col-40">
+      <div class="card teal">
+        <h3>Flujo típico de un script R</h3>
+        <ul>
+          <li><strong>1. library()</strong> — cargar paquetes al inicio</li>
+          <li><strong>2. Importar datos</strong> — read_csv(), read_excel(), read.csv()</li>
+          <li><strong>3. Explorar</strong> — str(), summary(), head(), dim()</li>
+          <li><strong>4. Limpiar</strong> — filter(), mutate(), na.omit()</li>
+          <li><strong>5. Analizar</strong> — modelos, tests estadísticos</li>
+          <li><strong>6. Visualizar</strong> — ggplot2, plotly</li>
+          <li><strong>7. Exportar</strong> — write_csv(), ggsave(), rmarkdown</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <h3>Buenas prácticas</h3>
+        <ul>
+          <li>Guardar el script con <strong>Ctrl+S</strong> frecuentemente</li>
+          <li>Usar comentarios <code style="font-size:11px;color:var(--teal);"># ──</code> para secciones</li>
+          <li>Nombres descriptivos: <code style="font-size:11px;color:var(--teal);">datos_limpios</code> en lugar de <code style="font-size:11px;color:var(--rose);">d2</code></li>
+          <li>Un proyecto RStudio por análisis</li>
+          <li>Nunca usar <code style="font-size:11px;color:var(--rose);">setwd()</code> en scripts compartidos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 13 — Atajos y tips
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-13">
+  <div class="slide-header">
+    <div class="label">Diapositiva 13 de 14 · Productividad</div>
+    <h2>Atajos de teclado y tips de productividad</h2>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <div style="font-size:12px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Atajos esenciales de RStudio</div>
+      <div class="sc-grid">
+        <div class="sc-item"><span>Ejecutar línea</span><div class="sc-keys"><kbd>Ctrl</kbd><kbd>Enter</kbd></div></div>
+        <div class="sc-item"><span>Ejecutar todo</span><div class="sc-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Enter</kbd></div></div>
+        <div class="sc-item"><span>Asignación &lt;-</span><div class="sc-keys"><kbd>Alt</kbd><kbd>-</kbd></div></div>
+        <div class="sc-item"><span>Pipe |&gt;</span><div class="sc-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>M</kbd></div></div>
+        <div class="sc-item"><span>Comentar</span><div class="sc-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>C</kbd></div></div>
+        <div class="sc-item"><span>Nueva sección</span><div class="sc-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>R</kbd></div></div>
+        <div class="sc-item"><span>Buscar/reemplazar</span><div class="sc-keys"><kbd>Ctrl</kbd><kbd>H</kbd></div></div>
+        <div class="sc-item"><span>Limpiar consola</span><div class="sc-keys"><kbd>Ctrl</kbd><kbd>L</kbd></div></div>
+        <div class="sc-item"><span>Ayuda función</span><div class="sc-keys"><kbd>F1</kbd></div></div>
+        <div class="sc-item"><span>Autocompletar</span><div class="sc-keys"><kbd>Tab</kbd></div></div>
+        <div class="sc-item"><span>Guardar script</span><div class="sc-keys"><kbd>Ctrl</kbd><kbd>S</kbd></div></div>
+        <div class="sc-item"><span>Nuevo script</span><div class="sc-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>N</kbd></div></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card teal">
+        <h3>Funciones de ayuda imprescindibles</h3>
+        <pre style="margin-top:6px;font-size:12px;padding:10px;">?<span class="fn">ggplot</span>         <span class="cmt"># abre documentación</span>
+<span class="fn">help</span>(<span class="str">"filter"</span>)  <span class="cmt"># igual que ?</span>
+<span class="fn">example</span>(<span class="fn">lm</span>)    <span class="cmt"># ejecuta ejemplos</span>
+<span class="fn">vignette</span>(<span class="str">"dplyr"</span>)  <span class="cmt"># guías largas</span>
+<span class="fn">args</span>(<span class="fn">mean</span>)      <span class="cmt"># argumentos de función</span></pre>
+      </div>
+      <div class="card amber">
+        <h3>Configuración recomendada</h3>
+        <ul>
+          <li>Tools → Global Options → Code → <strong>Soft-wrap R source files</strong></li>
+          <li>Tools → Global Options → Appearance → <strong>Theme: Tomorrow Night</strong> (o tu preferido)</li>
+          <li>Desactivar <em>"Restore .RData into workspace"</em> → mejor reproducibilidad</li>
+          <li>Activar <em>Rainbow parentheses</em> para código anidado</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SLIDE 14 — Recursos adicionales
+══════════════════════════════════════════════════════ -->
+<div class="slide" id="slide-14">
+  <div class="slide-header">
+    <div class="label">Diapositiva 14 de 14 · Recursos</div>
+    <h2>Recursos adicionales para aprender R</h2>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <div class="card teal">
+        <h3>Documentación oficial</h3>
+        <ul>
+          <li><a href="https://cran.r-project.org/manuals.html" target="_blank" style="color:var(--sky);">CRAN Manuals</a> — manuales oficiales de R base</li>
+          <li><a href="https://www.tidyverse.org/" target="_blank" style="color:var(--sky);">tidyverse.org</a> — documentación del ecosistema tidyverse</li>
+          <li><a href="https://ggplot2.tidyverse.org/reference/" target="_blank" style="color:var(--sky);">ggplot2 Reference</a> — todas las geometrías y opciones</li>
+          <li><a href="https://www.rdocumentation.org/" target="_blank" style="color:var(--sky);">RDocumentation.org</a> — búsqueda en todos los paquetes CRAN</li>
+        </ul>
+      </div>
+      <div class="card sky">
+        <h3>Libros gratuitos online</h3>
+        <ul>
+          <li><a href="https://r4ds.hadley.nz/" target="_blank" style="color:var(--sky);">R for Data Science (2e)</a> — Hadley Wickham &amp; Mine Çetinkaya-Rundel</li>
+          <li><a href="https://adv-r.hadley.nz/" target="_blank" style="color:var(--sky);">Advanced R</a> — Hadley Wickham (para cuando domines lo básico)</li>
+          <li><a href="https://bookdown.org/yihui/rmarkdown/" target="_blank" style="color:var(--sky);">R Markdown: The Definitive Guide</a> — reportes y presentaciones</li>
+          <li><a href="https://moderndive.com/" target="_blank" style="color:var(--sky);">Modern Dive</a> — estadística y ciencia de datos con tidyverse</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card green">
+        <h3>Aprendizaje interactivo</h3>
+        <ul>
+          <li><strong>swirl</strong>: paquete de R que enseña R directamente en la consola → <code style="font-size:11px;color:var(--teal);">install.packages("swirl"); library(swirl); swirl()</code></li>
+          <li><a href="https://posit.co/resources/cheatsheets/" target="_blank" style="color:var(--sky);">Posit Cheatsheets</a> — hojas de referencia rápida (PDF) para tidyverse, ggplot2, rmarkdown</li>
+          <li><a href="https://exercism.org/tracks/r" target="_blank" style="color:var(--sky);">Exercism R track</a> — ejercicios con mentoring</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <h3>Comunidad</h3>
+        <ul>
+          <li><a href="https://community.rstudio.com/" target="_blank" style="color:var(--sky);">Posit Community</a> — foro oficial para dudas de R y RStudio</li>
+          <li><a href="https://stackoverflow.com/questions/tagged/r" target="_blank" style="color:var(--sky);">Stack Overflow [r]</a> — más de 400 000 preguntas/respuestas</li>
+          <li><strong>Búsqueda efectiva:</strong> al buscar errores, añadir el prefijo <code style="font-size:11px;color:var(--teal);">R</code> y el nombre del paquete, ej: "R ggplot2 error bars"</li>
+          <li><a href="https://rweekly.org/" target="_blank" style="color:var(--sky);">R Weekly</a> — newsletter semanal con novedades del ecosistema R</li>
+        </ul>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
+        <a class="btn btn-teal" href="https://cran.r-project.org/bin/windows/base/" target="_blank">⬇ Descargar R</a>
+        <a class="btn btn-sky" href="https://posit.co/download/rstudio-desktop/" target="_blank">⬇ Descargar RStudio</a>
+        <a class="btn btn-amber" href="https://posit.cloud/" target="_blank">☁ Posit Cloud</a>
+        <a class="btn btn-green" href="https://r4ds.hadley.nz/" target="_blank">📚 R4DS</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- #deck -->
+
+<!-- Navigation -->
+<div id="nav">
+  <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">&#8592;</button>
+  <div id="dots"></div>
+  <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">&#8594;</button>
+  <span id="slide-counter">1 / 14</span>
+</div>
+
+<script>
+  const TOTAL = 14;
+  let current = 1;
+
+  const dotsEl = document.getElementById('dots');
+  const counterEl = document.getElementById('slide-counter');
+  const progressEl = document.getElementById('progress');
+
+  // Build dots
+  for (let i = 1; i <= TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 1 ? ' active' : '');
+    d.title = 'Diapositiva ' + i;
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(n) {
+    if (n < 1 || n > TOTAL) return;
+    document.getElementById('slide-' + current).classList.remove('active');
+    dotsEl.children[current - 1].classList.remove('active');
+    current = n;
+    document.getElementById('slide-' + current).classList.add('active');
+    dotsEl.children[current - 1].classList.add('active');
+    counterEl.textContent = current + ' / ' + TOTAL;
+    progressEl.style.width = (current / TOTAL * 100) + '%';
+  }
+
+  function changeSlide(dir) { goTo(current + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') changeSlide(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp') changeSlide(-1);
+    if (e.key === 'Home') goTo(1);
+    if (e.key === 'End')  goTo(TOTAL);
+  });
+
+  // Init progress
+  progressEl.style.width = (1 / TOTAL * 100) + '%';
+</script>
+</body>
+</html>
