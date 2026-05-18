@@ -98,18 +98,6 @@
                     <span class="nav-item-icon">⌨️</span>
                     <span>Laboratorio R/Python</span>
                 </div>
-                <div class="nav-item" onclick="showPage('flashcards')" id="nav-flashcards">
-                    <span class="nav-item-icon">🃏</span>
-                    <span>Flashcards</span>
-                </div>
-                <div class="nav-item" onclick="showPage('matching')" id="nav-matching">
-                    <span class="nav-item-icon">🔗</span>
-                    <span>Clasificador interactivo</span>
-                </div>
-                <div class="nav-item" onclick="showPage('simulators')" id="nav-simulators">
-                    <span class="nav-item-icon">🧪</span>
-                    <span>Simuladores</span>
-                </div>
                 <div class="nav-item" onclick="showPage('guia')" id="nav-guia">
                     <span class="nav-item-icon">📖</span>
                     <span>Guía Didáctica</span>
@@ -232,7 +220,7 @@
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
         const NOTEBOOK_CONTENT_URL = 'recursos/notebooklm/contenido_fichas.json';
-        const APP_VERSION = 'v40';
+        const APP_VERSION = 'v41';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -638,6 +626,11 @@
         // NAVIGATION
         // ================================================================
         function showPage(page) {
+            const integratedToolRoutes = { flashcards: 'flashcards', matching: 'classifier', simulators: 'simulator' };
+            if (integratedToolRoutes[page]) {
+                openIntegratedToolInUnit(STATE.currentUnit || 1, integratedToolRoutes[page]);
+                return;
+            }
             if (page !== 'simulators' && typeof stopSimulatorTimer === 'function') stopSimulatorTimer();
             if (page === 'admin' && STATE.user?.rol !== 'profesor') {
                 showToast('La administración está disponible solo para el profesor.', 'error');
@@ -697,6 +690,14 @@
             const content = document.getElementById('pageContent');
             content.innerHTML = '';
             renderUnitDetail(n, 'ruta');
+        }
+
+        function openIntegratedToolInUnit(unitNum = 1, microKind = 'simulator') {
+            const unit = Math.max(1, Math.min(4, Number(unitNum) || 1));
+            const slides = getUnitLearningPath(unit);
+            const target = slides.findIndex(slide => slide.microKind === microKind);
+            if (target >= 0) setCurrentUnitPathSlide(unit, target);
+            showUnit(unit);
         }
 
         // ================================================================
@@ -1504,20 +1505,10 @@
 
     <h2 style="margin:1.5rem 0 1rem;">⚡ Actividades Rápidas</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
-      <div class="card" style="cursor:pointer" onclick="showPage('flashcards')">
-        <div style="font-size:2rem;margin-bottom:0.5rem">🃏</div>
-        <h3>Flashcards</h3>
-        <p style="font-size:0.8rem;margin-top:0.3rem">Repasa conceptos clave con tarjetas interactivas</p>
-      </div>
-      <div class="card" style="cursor:pointer" onclick="showPage('matching')">
-        <div style="font-size:2rem;margin-bottom:0.5rem">🔗</div>
-        <h3>Clasificador interactivo</h3>
-        <p style="font-size:0.8rem;margin-top:0.3rem">Ubica casos reales en la categoría correcta</p>
-      </div>
-      <div class="card" style="cursor:pointer" onclick="showPage('simulators')">
-        <div style="font-size:2rem;margin-bottom:0.5rem">🧪</div>
-        <h3>Simuladores</h3>
-        <p style="font-size:0.8rem;margin-top:0.3rem">Experimenta con muestras, limpieza, modelos y sesgo</p>
+      <div class="card" style="cursor:pointer" onclick="showUnit(${nextUnit.id})">
+        <div style="font-size:2rem;margin-bottom:0.5rem">🧭</div>
+        <h3>Ruta con recursos integrados</h3>
+        <p style="font-size:0.8rem;margin-top:0.3rem">Flashcards, clasificadores y simuladores viven dentro de cada secuencia.</p>
       </div>
       <div class="card" style="cursor:pointer" onclick="showPage('badges')">
         <div style="font-size:2rem;margin-bottom:0.5rem">🏆</div>
@@ -2402,6 +2393,10 @@
             const hasResource = baseSlide.notebookResource || (baseSlide.resources || []).length;
             const hasExecution = ['function', 'formula', 'practice'].includes(baseKind) || baseSlide.codeBlocks?.length;
             let nextMicroOrder = 3;
+            if (baseKind === 'concept') {
+                slides.push(make('flashcards', nextMicroOrder, 'Tarjetas de repaso', 'Repasa los terminos clave del subnivel con tarjetas integradas antes de comprobar la idea.'));
+                nextMicroOrder++;
+            }
             if (hasResource) {
                 slides.push(make('resource', nextMicroOrder, 'Recurso integrado', 'Consulta el recurso dentro de la ficha sin salir de la secuencia.'));
                 nextMicroOrder++;
@@ -2410,6 +2405,14 @@
                 slides.push(make('execution', nextMicroOrder, 'Practica ejecutable', 'Ejecuta el comando dentro de esta ficha y observa la salida.', {
                     kind: baseKind === 'practice' ? 'practice' : baseKind
                 }));
+                nextMicroOrder++;
+            }
+            if (baseKind === 'practice') {
+                slides.push(make('simulator', nextMicroOrder, 'Simulador integrado', 'Manipula parametros, observa resultados y guarda una evidencia sin abandonar la ruta.'));
+                nextMicroOrder++;
+            }
+            if (baseKind === 'activity') {
+                slides.push(make('classifier', nextMicroOrder, 'Clasificador integrado', 'Ordena casos, compara categorias y registra el resultado como actividad de aplicacion.'));
                 nextMicroOrder++;
             }
             slides.push(make('formative', nextMicroOrder, 'Comprobacion', 'Completa una actividad breve para verificar que la idea quedo clara.'));
@@ -2469,6 +2472,9 @@
             if (slide.microKind === 'execution' && sourceKind === 'practice' && Number.isInteger(slide.practiceStepIndex)) {
                 return isPracticeStepComplete(slide.practiceId, slide.practiceStepIndex);
             }
+            if (slide.microKind === 'flashcards') return Boolean(STATE.completedActivities[learningFlashcardsKey(unitNum, slide)]);
+            if (slide.microKind === 'classifier') return Boolean(STATE.completedActivities[learningClassifierKey(unitNum, slide)]);
+            if (slide.microKind === 'simulator') return Boolean(STATE.completedActivities[learningSimulatorKey(unitNum, slide)]);
             if (!slide.microKind && slide.kind === 'practice' && slide.practiceId) return isPracticeComplete(slide.practiceId);
             if (slide.microKind === 'summative' && sourceKind === 'quiz') return Boolean(STATE.quizResults[`u${unitNum}`]);
             if (!slide.microKind && slide.kind === 'quiz') return Boolean(STATE.quizResults[`u${unitNum}`]);
@@ -2533,6 +2539,20 @@
             }
             if (slide.microKind === 'summative' && sourceKind === 'quiz' && !STATE.quizResults[`u${unitNum}`] && !isLearningInlineEvalComplete(unitNum, slideIndex)) {
                 startQuiz(unitNum);
+                return;
+            }
+            if (slide.microKind === 'flashcards' && !STATE.completedActivities[learningFlashcardsKey(unitNum, slide)]) {
+                showToast('Revisa las tarjetas de esta ficha y marca el repaso como completado.', 'info');
+                document.getElementById(learningFlashcardsHostId(unitNum, slideIndex))?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            if (slide.microKind === 'classifier' && !STATE.completedActivities[learningClassifierKey(unitNum, slide)]) {
+                showToast('Completa el clasificador integrado con al menos 70% antes de avanzar.', 'info');
+                return;
+            }
+            if (slide.microKind === 'simulator' && !STATE.completedActivities[learningSimulatorKey(unitNum, slide)]) {
+                showToast('Guarda una evidencia del simulador integrado antes de avanzar.', 'info');
+                document.getElementById('simEvidence')?.focus();
                 return;
             }
             if (!slide.microKind && slide.kind === 'practice' && slide.practiceId && !isUnitPathSlideComplete(unitNum, slide, slideIndex)) {
@@ -3106,6 +3126,287 @@
       </section>`;
         }
 
+        const learningFlashcardState = {};
+
+        function learningFlashcardsKey(unitNum, slide = {}) {
+            return `u${unitNum}_flashcards_s${slide.sublevelIndex || 1}`;
+        }
+
+        function learningClassifierKey(unitNum, slide = {}) {
+            return `u${unitNum}_classifier_s${slide.sublevelIndex || 1}`;
+        }
+
+        function learningSimulatorKey(unitNum, slide = {}) {
+            return `u${unitNum}_simulator_s${slide.sublevelIndex || 1}`;
+        }
+
+        function currentLearningPathSlide(unitNum) {
+            const slides = getUnitLearningPath(unitNum);
+            const current = getCurrentUnitPathSlide(unitNum, slides);
+            return slides[current] || null;
+        }
+
+        function learningFlashcardsHostId(unitNum, slideIndex) {
+            return `learningFlashcards_${unitNum}_${slideIndex}`;
+        }
+
+        function fallbackFlashcardsForSlide(slide) {
+            const pairs = buildLearningEvalPairs(slide);
+            const cards = pairs.map(pair => ({
+                front: pair.term,
+                back: pair.definition
+            }));
+            const concepts = slideConceptList(slide).map((item, index) => ({
+                front: `Idea ${index + 1}`,
+                back: item
+            }));
+            return [...cards, ...concepts].slice(0, 6);
+        }
+
+        function renderLearningInlineFlashcards(unitNum, slide, slideIndex, isActive) {
+            const done = Boolean(STATE.completedActivities[learningFlashcardsKey(unitNum, slide)]);
+            return `
+      <section class="learning-tool-embed learning-flashcards-tool ${done ? 'completed' : ''}">
+        <div class="learning-tool-head">
+          <div>
+            <span>Recurso integrado</span>
+            <strong>Tarjetas de repaso del subnivel</strong>
+            <p>Revisa, voltea y marca el repaso sin abandonar la secuencia.</p>
+          </div>
+          <em>${done ? 'Repaso completado' : 'Pendiente'}</em>
+        </div>
+        <div id="${learningFlashcardsHostId(unitNum, slideIndex)}" class="learning-flashcards-host"
+          data-flashcards-file="${escapeHtml(slide.notebookSupport?.flashcards || '')}">
+          ${isActive ? '<div class="learning-inline-lab-placeholder">Cargando tarjetas integradas...</div>' : '<div class="learning-inline-lab-placeholder">Abre esta diapositiva para cargar las tarjetas.</div>'}
+        </div>
+      </section>`;
+        }
+
+        async function loadLearningFlashcards(unitNum, slideIndex) {
+            const slide = getUnitLearningPath(unitNum)[slideIndex];
+            const host = document.getElementById(learningFlashcardsHostId(unitNum, slideIndex));
+            if (!slide || !host || host.dataset.loaded === 'true') return;
+            let cards = [];
+            try {
+                const file = host.dataset.flashcardsFile;
+                if (file) {
+                    const resp = await fetch(file);
+                    if (resp.ok) cards = normalizeFlashcardsData(await resp.json());
+                }
+            } catch (error) {
+                console.warn('No se pudieron cargar flashcards integradas:', error.message);
+            }
+            cards = (cards.length ? cards : fallbackFlashcardsForSlide(slide)).slice(0, 8);
+            if (!cards.length) cards = [{ front: slide.title, back: slide.lead || 'Explica esta idea con tus palabras.' }];
+            learningFlashcardState[`${unitNum}_${slideIndex}`] = {
+                cards,
+                index: 0,
+                flipped: false
+            };
+            host.dataset.loaded = 'true';
+            renderLearningFlashcardDeck(unitNum, slideIndex);
+        }
+
+        function renderLearningFlashcardDeck(unitNum, slideIndex) {
+            const key = `${unitNum}_${slideIndex}`;
+            const state = learningFlashcardState[key];
+            const slide = getUnitLearningPath(unitNum)[slideIndex];
+            const host = document.getElementById(learningFlashcardsHostId(unitNum, slideIndex));
+            if (!state || !slide || !host) return;
+            const card = state.cards[state.index] || state.cards[0];
+            const done = Boolean(STATE.completedActivities[learningFlashcardsKey(unitNum, slide)]);
+            const pct = Math.round(((state.index + 1) / state.cards.length) * 100);
+            host.innerHTML = `
+        <div class="learning-flashcard-deck">
+          <button class="learning-flashcard-card ${state.flipped ? 'flipped' : ''}" type="button" onclick="flipLearningFlashcard(${unitNum}, ${slideIndex})">
+            <span>${state.flipped ? 'Respuesta' : 'Pregunta'}</span>
+            <strong>${escapeHtml(state.flipped ? card.back : card.front)}</strong>
+            <small>${state.flipped ? 'Toca para volver a la pregunta' : 'Toca para ver la respuesta'}</small>
+          </button>
+          <div class="learning-flashcard-progress">
+            <span>Tarjeta ${state.index + 1}/${state.cards.length}</span>
+            <div><i style="width:${pct}%"></i></div>
+          </div>
+          <div class="learning-tool-actions">
+            <button class="btn-secondary" onclick="moveLearningFlashcard(${unitNum}, ${slideIndex}, -1)">Anterior</button>
+            <button class="btn-secondary" onclick="moveLearningFlashcard(${unitNum}, ${slideIndex}, 1)">Siguiente</button>
+            <button class="btn-primary" onclick="completeLearningFlashcards(${unitNum}, ${slideIndex})">${done ? 'Repaso registrado' : 'Marcar repaso completo'}</button>
+          </div>
+        </div>`;
+        }
+
+        function flipLearningFlashcard(unitNum, slideIndex) {
+            const state = learningFlashcardState[`${unitNum}_${slideIndex}`];
+            if (!state) return;
+            state.flipped = !state.flipped;
+            renderLearningFlashcardDeck(unitNum, slideIndex);
+        }
+
+        function moveLearningFlashcard(unitNum, slideIndex, direction) {
+            const state = learningFlashcardState[`${unitNum}_${slideIndex}`];
+            if (!state) return;
+            state.index = (state.index + direction + state.cards.length) % state.cards.length;
+            state.flipped = false;
+            renderLearningFlashcardDeck(unitNum, slideIndex);
+        }
+
+        function completeLearningFlashcards(unitNum, slideIndex) {
+            const slide = getUnitLearningPath(unitNum)[slideIndex];
+            if (!slide) return;
+            const key = learningFlashcardsKey(unitNum, slide);
+            const wasNew = !STATE.completedActivities[key];
+            STATE.completedActivities[key] = true;
+            if (wasNew) addXP(6, 'Flashcards integradas completadas');
+            else saveProgress();
+            trackEvent('flashcards_integradas', {
+                unidad: unitNum,
+                recurso: key,
+                detalle: slide.title
+            });
+            showToast('Repaso con tarjetas registrado.', 'success');
+            renderLearningFlashcardDeck(unitNum, slideIndex);
+        }
+
+        function renderLearningInlineClassifier(unitNum, slideIndex, isActive) {
+            if (!isActive) {
+                return `
+      <section class="learning-tool-embed is-dormant">
+        <div class="learning-inline-lab-placeholder">Abre esta diapositiva para cargar el clasificador integrado.</div>
+      </section>`;
+            }
+            const selectedUnit = getClassifierUnit(unitNum);
+            const activity = CLASSIFIER_ACTIVITIES[selectedUnit];
+            if (!classifierState || classifierState.unit !== selectedUnit) classifierState = loadClassifierState(selectedUnit);
+            STATE.currentUnit = selectedUnit;
+            const orderedItems = classifierOrderedItems(activity);
+            const unplaced = orderedItems.filter(item => !classifierState.placements[item.id]);
+            const score = classifierScore(activity);
+            const best = getClassifierBest(selectedUnit);
+            const slide = getUnitLearningPath(unitNum)[slideIndex] || {};
+            const done = Boolean(STATE.completedActivities[learningClassifierKey(selectedUnit, slide)]);
+            return `
+      <section class="learning-tool-embed classifier-shell classifier-inline unit-theme-u${selectedUnit}" data-inline-classifier-unit="${selectedUnit}">
+        <section class="classifier-hero">
+          <div class="classifier-hero-copy">
+            <span class="classifier-kicker">Actividad integrada - Unidad ${selectedUnit}</span>
+            <h2>${escapeHtml(activity.title)}</h2>
+            <p>${escapeHtml(activity.subtitle)}</p>
+            <p class="classifier-prompt">${escapeHtml(activity.prompt)}</p>
+          </div>
+          <div class="classifier-hero-visual">
+            <img src="${escapeHtml(activity.image)}" alt="${escapeHtml(activity.title)}" loading="lazy">
+          </div>
+          <div class="classifier-meter" aria-label="Avance del clasificador">
+            <strong>${score.placed}/${score.total}</strong>
+            <span>ubicados</span>
+            <small>${done ? 'listo' : `mejor ${best}%`}</small>
+          </div>
+        </section>
+        <section class="classifier-definitions">
+          ${activity.categories.map(category => `
+            <article style="--zone-color:${escapeHtml(category.color)}">
+              <span></span>
+              <strong>${escapeHtml(category.label)}</strong>
+              <p>${escapeHtml(category.definition)}</p>
+            </article>
+          `).join('')}
+        </section>
+        <div class="classifier-actions">
+          <div class="classifier-action-status">
+            <strong>${score.placed}/${score.total} ubicados</strong>
+            <span>${done ? 'Actividad lista para avanzar' : `Mejor puntaje: ${best}%`}</span>
+          </div>
+          <button class="btn-primary" onclick="checkClassifier()">Verificar</button>
+          <button class="btn-secondary" onclick="showClassifierSolution()">Ver solucion</button>
+          <button class="btn-secondary" onclick="resetClassifier()">Reiniciar</button>
+        </div>
+        <div class="classifier-workspace">
+          <section class="classifier-pool"
+            onclick="returnClassifierSelected()"
+            ondragover="classifierDragOver(event)"
+            ondragleave="classifierDragLeave(event)"
+            ondrop="classifierDropToPool(event)">
+            <div class="classifier-section-head">
+              <div>
+                <span>Banco de casos</span>
+                <h3>${escapeHtml(activity.title)}</h3>
+              </div>
+              <strong>${unplaced.length}</strong>
+            </div>
+            <div class="classifier-pool-items">
+              ${unplaced.length ? unplaced.map(renderClassifierItem).join('') : '<div class="classifier-empty-large">Todos los casos ya estan ubicados.</div>'}
+            </div>
+          </section>
+          <section class="classifier-zones">
+            ${activity.categories.map(category => {
+                const items = orderedItems.filter(item => classifierState.placements[item.id] === category.id);
+                return renderClassifierZone(category, items);
+            }).join('')}
+          </section>
+        </div>
+        ${renderClassifierResult(activity)}
+      </section>`;
+        }
+
+        function renderLearningInlineSimulator(unitNum, slideIndex, isActive) {
+            if (!isActive) {
+                return `
+      <section class="learning-tool-embed is-dormant">
+        <div class="learning-inline-lab-placeholder">Abre esta diapositiva para cargar el simulador integrado.</div>
+      </section>`;
+            }
+            simulatorState.unit = getSimulatorUnit(unitNum);
+            const selectedUnit = simulatorState.unit;
+            const config = activeSimulatorConfig(selectedUnit);
+            const slide = getUnitLearningPath(unitNum)[slideIndex] || {};
+            const done = Boolean(STATE.completedActivities[learningSimulatorKey(selectedUnit, slide)]);
+            return `
+      <section class="learning-tool-embed sim-shell sim-inline unit-theme-u${selectedUnit}" data-inline-simulator-unit="${selectedUnit}">
+        <section class="sim-hero">
+          <div>
+            <span>Simulador integrado - Unidad ${selectedUnit}</span>
+            <h2>${escapeHtml(config.title)}</h2>
+            <p>${escapeHtml(config.subtitle)}</p>
+            <em>${done ? 'Evidencia guardada. Puedes completar la diapositiva.' : escapeHtml(config.question)}</em>
+          </div>
+          <img src="${escapeHtml(config.image)}" alt="${escapeHtml(config.title)}" loading="lazy">
+        </section>
+        <section class="sim-console">
+          <div class="sim-controls">
+            ${renderSimulatorControls(selectedUnit)}
+          </div>
+          <div class="sim-actions">
+            <button class="btn-primary" onclick="runSimulator(${selectedUnit}, true)">Iniciar simulacion</button>
+            <button class="btn-secondary" onclick="runSimulator(${selectedUnit}, false)">Actualizar</button>
+            <button class="btn-secondary" onclick="resetSimulatorView()">Reiniciar</button>
+          </div>
+        </section>
+        <div id="simMetricGrid" class="sim-metric-grid"></div>
+        <section class="sim-visual-grid">
+          <article><canvas id="simCanvasA"></canvas></article>
+          <article><canvas id="simCanvasB"></canvas></article>
+        </section>
+        <section class="sim-reflection">
+          <div>
+            <span>Evidencia breve</span>
+            <h3>Que observaste en este simulador</h3>
+            <p>Se guarda en el libro en linea y habilita avanzar en la secuencia.</p>
+          </div>
+          <textarea id="simEvidence" rows="3" placeholder="Describe el patron observado, la metrica que cambio y que decision tomarias..."></textarea>
+          <button class="btn-primary" onclick="completeSimulator()">Guardar evidencia</button>
+        </section>
+      </section>`;
+        }
+
+        function hydrateLearningSlideTools(unitNum) {
+            const slides = getUnitLearningPath(unitNum);
+            const current = getCurrentUnitPathSlide(unitNum, slides);
+            const slide = slides[current];
+            if (!slide) return;
+            if (slide.microKind === 'flashcards') loadLearningFlashcards(unitNum, current);
+            if (slide.microKind === 'simulator') window.setTimeout(() => runSimulator(unitNum, false), 0);
+        }
+
         function renderLearningPathPractice(slide, completionAllowed = true) {
             if (!slide.practiceId) return '';
             const lab = PRACTICES.find(item => item.id === slide.practiceId);
@@ -3360,6 +3661,9 @@
                 example: 'Ejemplo',
                 resource: 'Recurso integrado',
                 execution: 'Practica ejecutable',
+                flashcards: 'Tarjetas de repaso',
+                classifier: 'Clasificador integrado',
+                simulator: 'Simulador integrado',
                 formative: 'Evaluacion formativa',
                 summary: 'Repaso',
                 summative: 'Evaluacion sumativa'
@@ -3675,6 +3979,15 @@
               ${resource || '<div class="learning-inline-resource-placeholder">No hay un recurso embebible para esta ficha.</div>'}`, false);
             }
 
+            if (slide.microKind === 'flashcards') {
+                return shell('micro-flashcards', `
+              <div class="learning-card-example learning-feature-block">
+                <span>Repaso activo</span>
+                <p>Usa las tarjetas del subnivel para recuperar conceptos antes de pasar a practica o evaluacion.</p>
+              </div>
+              ${renderLearningInlineFlashcards(unitNum, slide, slideIndex, active)}`, false);
+            }
+
             if (slide.microKind === 'execution') {
                 return shell('micro-execution', `
               <div class="learning-card-example learning-feature-block">
@@ -3683,6 +3996,14 @@
               </div>
               ${renderLearningProcessRibbon(slide)}
               ${renderLearningInlineLab(unitNum, slide, slideIndex, active)}`, false);
+            }
+
+            if (slide.microKind === 'simulator') {
+                return shell('micro-simulator', renderLearningInlineSimulator(unitNum, slideIndex, active), false);
+            }
+
+            if (slide.microKind === 'classifier') {
+                return shell('micro-classifier', renderLearningInlineClassifier(unitNum, slideIndex, active), false);
             }
 
             if (slide.microKind === 'formative') {
@@ -3767,8 +4088,15 @@
             const previewOnly = !done && !completionAllowed;
             const status = done ? 'Completado' : (previewOnly ? 'Vista previa' : 'En curso');
             const sourceKind = slide.baseKind || slide.kind;
+            const toolPrimaryLabels = {
+                flashcards: 'Completar repaso',
+                classifier: 'Completar clasificador',
+                simulator: 'Completar simulador'
+            };
             const primaryLabel = previewOnly
                 ? 'Completa los bloques anteriores'
+                : (!done && toolPrimaryLabels[slide.microKind]
+                ? toolPrimaryLabels[slide.microKind]
                 : (slide.microKind === 'formative' && !done
                 ? 'Comprobar y avanzar'
                 : (slide.microKind === 'execution' && !done
@@ -3777,7 +4105,7 @@
                         ? 'Cerrar evaluacion'
                         : (slide.microKind === 'summative' && !done
                         ? 'Registrar evaluacion parcial'
-                        : (isLast ? (done ? 'Unidad completada' : 'Ya lei y comprendi') : (done ? 'Seguir al siguiente nivel' : 'Ya lei y comprendi'))))));
+                        : (isLast ? (done ? 'Unidad completada' : 'Ya lei y comprendi') : (done ? 'Seguir al siguiente nivel' : 'Ya lei y comprendi')))))));
             const stepLabel = slide.sublevelIndex
                 ? `${slide.sublevelIndex}.${slide.baseStageOrder || slide.stageOrder}.${slide.microOrder || 1}`
                 : String(slideIndex + 1).padStart(2, '0');
@@ -3982,6 +4310,7 @@
         }
 
         function renderUnitDetail(n, activeTab = 'ruta') {
+            if (typeof stopSimulatorTimer === 'function') stopSimulatorTimer();
             const unit = UNITS[n - 1];
             const files = UNIT_FILES[n];
             const quizKey = `u${n}`;
@@ -4021,6 +4350,7 @@
 
             if (activeTab === 'ruta') {
                 tabContent.innerHTML = renderLearningPath(n);
+                window.setTimeout(() => hydrateLearningSlideTools(n), 0);
             } else if (activeTab === 'materiales') {
                 const all = [...(files.orientaciones || []), ...(files.materiales || [])];
                 tabContent.innerHTML = renderEmbeddedResources(all, {
@@ -4084,11 +4414,11 @@
                 tabContent.innerHTML = `
       <div class="unit-simulator-cta unit-theme-u${n}">
         <div>
-          <span>Simulador experimental</span>
-          <h3>Explora la Unidad ${n} manipulando datos y parametros</h3>
-          <p>Cambia controles, observa graficos y guarda una evidencia breve de lo aprendido.</p>
+          <span>Simulador integrado</span>
+          <h3>Disponible dentro de la ruta secuencial</h3>
+          <p>Cambia controles, observa graficos y guarda evidencia sin salir del recorrido de aprendizaje.</p>
         </div>
-        <button class="btn-primary" onclick="openSimulatorUnit(${n})">Abrir simulador</button>
+        <button class="btn-primary" onclick="openSimulatorUnit(${n})">Ir a la ficha del simulador</button>
       </div>
       <div class="practice-grid">
         ${labs.map(lab => practiceCardHTML(lab)).join('')}
@@ -5034,9 +5364,18 @@
             renderMatching(unitNum);
         }
 
+        function refreshClassifierView(unitNum) {
+            const unit = getClassifierUnit(unitNum);
+            if (document.querySelector(`.learning-path-shell[data-unit="${unit}"]`)) {
+                renderUnitDetail(unit, 'ruta');
+                return;
+            }
+            renderMatching(unit);
+        }
+
         function selectClassifierItem(itemId) {
             classifierSelectedId = classifierSelectedId === itemId ? null : itemId;
-            renderMatching(classifierState.unit);
+            refreshClassifierView(classifierState.unit);
         }
 
         function placeClassifierItem(itemId, categoryId) {
@@ -5049,7 +5388,7 @@
             classifierState.solution = false;
             classifierSelectedId = itemId;
             saveClassifierState();
-            renderMatching(classifierState.unit);
+            refreshClassifierView(classifierState.unit);
         }
 
         function placeClassifierSelected(categoryId) {
@@ -5066,7 +5405,7 @@
             classifierState.checked = false;
             classifierState.solution = false;
             saveClassifierState();
-            renderMatching(classifierState.unit);
+            refreshClassifierView(classifierState.unit);
         }
 
         function classifierDragStart(event, itemId) {
@@ -5121,8 +5460,14 @@
             const previousBest = getClassifierBest(activity.unit);
             const improved = score.pct > previousBest;
             if (improved) setClassifierBest(activity.unit, score.pct);
+            if (score.pct >= 70) {
+                const activeSlide = currentLearningPathSlide(activity.unit);
+                STATE.completedActivities[learningClassifierKey(activity.unit, activeSlide || {})] = true;
+                STATE.completedActivities[`classifier_u${activity.unit}`] = true;
+            }
             const xp = improved && score.pct >= 80 ? (score.pct === 100 ? 18 : 12) : 0;
             if (xp) addXP(xp, `Clasificador Unidad ${activity.unit}: ${score.pct}%`);
+            else saveProgress();
 
             sendToSheets({
                 kind: 'calificacion',
@@ -5140,11 +5485,12 @@
                 detalle: {
                     placements: classifierState.placements,
                     categorias: activity.categories.map(category => category.label),
+                    subnivel: currentLearningPathSlide(activity.unit)?.sublevelCode || currentLearningPathSlide(activity.unit)?.sublevelIndex || '',
                     mejorAnterior: previousBest
                 }
             });
             syncProgressSnapshot();
-            renderMatching(activity.unit);
+            refreshClassifierView(activity.unit);
         }
 
         function showClassifierSolution() {
@@ -5157,7 +5503,7 @@
             classifierSelectedId = null;
             saveClassifierState();
             showToast('Solucion cargada como retroalimentacion.', 'info');
-            renderMatching(activity.unit);
+            refreshClassifierView(activity.unit);
         }
 
         function resetClassifier() {
@@ -5165,7 +5511,7 @@
             classifierSelectedId = null;
             classifierState = newClassifierState(unitNum);
             saveClassifierState();
-            renderMatching(unitNum);
+            refreshClassifierView(unitNum);
         }
 
         // ================================================================
@@ -5205,8 +5551,7 @@
         let simulatorState = { unit: 1, timer: null, payload: null, u3Mode: 'kmeans' };
 
         function openSimulatorUnit(unitNum) {
-            STATE.currentUnit = Number(unitNum) || 1;
-            showPage('simulators');
+            openIntegratedToolInUnit(Number(unitNum) || 1, 'simulator');
         }
 
         function stopSimulatorTimer() {
@@ -5227,6 +5572,10 @@
 
         function setU3SimulatorMode(mode) {
             simulatorState.u3Mode = mode === 'knn' ? 'knn' : 'kmeans';
+            if (document.querySelector('.learning-path-shell[data-unit="3"]')) {
+                renderUnitDetail(3, 'ruta');
+                return;
+            }
             renderSimulators(3);
         }
 
@@ -6047,6 +6396,10 @@
 
         function resetSimulatorView() {
             stopSimulatorTimer();
+            if (document.querySelector(`.learning-path-shell[data-unit="${simulatorState.unit}"]`)) {
+                renderUnitDetail(simulatorState.unit, 'ruta');
+                return;
+            }
             renderSimulators(simulatorState.unit);
         }
 
@@ -6058,9 +6411,13 @@
                 showToast('Escribe una evidencia breve antes de guardar.', 'info');
                 return;
             }
-            const key = `simulator_u${unitNum}`;
+            const activeSlide = currentLearningPathSlide(unitNum);
+            const key = activeSlide?.microKind === 'simulator'
+                ? learningSimulatorKey(unitNum, activeSlide)
+                : `simulator_u${unitNum}`;
             const firstCompletion = !STATE.completedActivities[key];
             STATE.completedActivities[key] = true;
+            STATE.completedActivities[`simulator_u${unitNum}`] = true;
             if (firstCompletion) addXP(14, `Simulador Unidad ${unitNum}`);
             else saveProgress();
             sendToSheets({
@@ -6078,6 +6435,7 @@
                 xp: firstCompletion ? 14 : 0,
                 detalle: {
                     evidencia: evidence,
+                    subnivel: activeSlide?.sublevelCode || activeSlide?.sublevelIndex || '',
                     resultado: simulatorState.payload
                 }
             });

@@ -1900,6 +1900,9 @@ a:hover { text-decoration: underline; }
 
 .learning-card-canvas.micro-execution .learning-focus-card,
 .learning-card-canvas.micro-resource .learning-focus-card,
+.learning-card-canvas.micro-flashcards .learning-focus-card,
+.learning-card-canvas.micro-classifier .learning-focus-card,
+.learning-card-canvas.micro-simulator .learning-focus-card,
 .learning-card-canvas.micro-formative .learning-focus-card,
 .learning-card-canvas.micro-summative .learning-focus-card {
   min-height: min(74vh, 860px);
@@ -2616,6 +2619,168 @@ a:hover { text-decoration: underline; }
 
 .learning-inline-lab.is-dormant .learning-command-reference {
   border-bottom: 0;
+}
+
+.learning-tool-embed {
+  min-width: 0;
+  width: 100%;
+}
+
+.learning-tool-embed.is-dormant {
+  display: grid;
+  min-height: 260px;
+}
+
+.learning-tool-head {
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.learning-tool-head span {
+  color: var(--sublevel-color);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.learning-tool-head strong {
+  color: var(--text-primary);
+  display: block;
+  font-size: 1.08rem;
+  margin: 0.1rem 0 0.25rem;
+}
+
+.learning-tool-head p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.learning-tool-head em {
+  background: color-mix(in srgb, var(--sublevel-color) 10%, white);
+  border: 1px solid color-mix(in srgb, var(--sublevel-color) 24%, white);
+  border-radius: var(--radius-full);
+  color: var(--sublevel-color);
+  flex: 0 0 auto;
+  font-size: 0.74rem;
+  font-style: normal;
+  font-weight: 900;
+  padding: 0.42rem 0.65rem;
+}
+
+.learning-flashcards-tool {
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), color-mix(in srgb, var(--sublevel-soft) 70%, white));
+  border: 1px solid var(--sublevel-border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  padding: 1rem;
+}
+
+.learning-flashcard-deck {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.learning-flashcard-card {
+  background: linear-gradient(135deg, white, color-mix(in srgb, var(--sublevel-soft) 58%, white));
+  border: 1px solid color-mix(in srgb, var(--sublevel-color) 22%, var(--glass-border));
+  border-radius: 18px;
+  box-shadow: 0 16px 34px rgba(18,42,66,0.1);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: grid;
+  gap: 0.65rem;
+  min-height: 240px;
+  padding: clamp(1rem, 3vw, 2rem);
+  text-align: center;
+  transition: transform 0.34s ease, box-shadow 0.34s ease;
+}
+
+.learning-flashcard-card:hover {
+  box-shadow: 0 20px 42px rgba(18,42,66,0.14);
+  transform: translateY(-2px);
+}
+
+.learning-flashcard-card.flipped {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--sublevel-color) 10%, white), white);
+}
+
+.learning-flashcard-card span {
+  color: var(--sublevel-color);
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.learning-flashcard-card strong {
+  align-self: center;
+  color: var(--text-primary);
+  font-size: clamp(1.05rem, 2.2vw, 1.65rem);
+  line-height: 1.35;
+}
+
+.learning-flashcard-card small {
+  color: var(--text-muted);
+  font-weight: 750;
+}
+
+.learning-flashcard-progress {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.learning-flashcard-progress span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.learning-flashcard-progress div {
+  background: #e5edf5;
+  border-radius: var(--radius-full);
+  height: 9px;
+  overflow: hidden;
+}
+
+.learning-flashcard-progress i {
+  background: linear-gradient(90deg, var(--sublevel-color), color-mix(in srgb, var(--sublevel-color) 54%, #14b8a6));
+  display: block;
+  height: 100%;
+}
+
+.learning-tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: flex-end;
+}
+
+.learning-tool-embed.classifier-shell,
+.learning-tool-embed.sim-shell {
+  max-width: 100%;
+  width: 100%;
+}
+
+.learning-tool-embed .classifier-actions,
+.learning-tool-embed .sim-console {
+  position: static;
+  top: auto;
+}
+
+.learning-tool-embed .classifier-hero,
+.learning-tool-embed .sim-hero {
+  box-shadow: none;
+}
+
+.learning-tool-embed .classifier-tabs,
+.learning-tool-embed .sim-tabs {
+  display: none;
 }
 
 .learning-official-doc {
@@ -6588,6 +6753,19 @@ a:hover { text-decoration: underline; }
   .learning-inline-lab-head {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .learning-tool-head {
+    flex-direction: column;
+  }
+
+  .learning-tool-actions .btn-primary,
+  .learning-tool-actions .btn-secondary {
+    width: 100%;
+  }
+
+  .learning-flashcard-card {
+    min-height: 210px;
   }
 
   .learning-inline-lab-head .btn-secondary {
