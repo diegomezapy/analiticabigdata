@@ -1,0 +1,2038 @@
+{
+  "generatedAt": "2026-05-18T00:20:28.202Z",
+  "version": 1,
+  "subniveles": {
+    "u1_s1_que_es_bigdata": {
+      "code": "1.1",
+      "title": "Que es Big Data",
+      "topic": "definicion de Big Data, las 5V, datos estructurados y no estructurados, ecosistema Hadoop Spark",
+      "resumen": {
+        "title": "1.1 Qué es Big Data y para qué sirve",
+        "definition": "¿Qué aprenderás? En este subnivel comprenderás qué es Big Data, por qué representa un cambio de paradigma en el análisis estadístico, y cuáles son sus características esenciales (las 5V). Al finalizar serás capaz de identificar situaciones reales donde aplica Big Data y distinguirlo del análisis estadístico tradicional.",
+        "example": "Big Data permite pasar del análisis basado en muestras al análisis de poblaciones completas . Un hospital con 10M de historiales médicos puede detectar patrones de diagnóstico imposibles de ver con una muestra de 1.000 casos. Empresas como Netflix ahorran más de USD 1.500M anuales gracias a sistemas de recomendación que procesan 1.000 millones de eventos de usuario diarios.",
+        "keyIdeas": [
+          "Volumen: Terabytes o petabytes de datos generados por millones de transacciones, sensores, redes sociales y sistemas empresariales.",
+          "Velocidad: Los datos se generan y deben procesarse en tiempo real o casi real (streaming). Ejemplo: detección de fraude en <50ms.",
+          "Variedad: Datos estructurados (SQL), semi-estructurados (JSON) y no estructurados (imágenes, texto, audio) conviven en los mismos pipelines.",
+          "Veracidad: Calidad, confiabilidad e integridad de los datos. Datos sucios producen modelos deficientes.",
+          "Valor: La 5V más importante: transformar datos en insights accionables que respalden decisiones."
+        ],
+        "headings": [
+          "Resumen",
+          "¿Qué es Big Data?",
+          "Las 5V del Big Data",
+          "¿Para qué sirve?",
+          "¿Qué debe poder hacer el estudiante al final?"
+        ],
+        "paragraphs": [
+          "¿Qué aprenderás? En este subnivel comprenderás qué es Big Data, por qué representa un cambio de paradigma en el análisis estadístico, y cuáles son sus características esenciales (las 5V). Al finalizar serás capaz de identificar situaciones reales donde aplica Big Data y distinguirlo del análisis estadístico tradicional.",
+          "Big Data se refiere a conjuntos de datos cuyo volumen, velocidad y variedad superan la capacidad de las herramientas convencionales para capturarlos, gestionarlos y procesarlos en un tiempo razonable. El término fue popularizado en los años 2000 y hoy abarca un ecosistema de tecnologías, metodologías y marcos analíticos que transforman datos masivos en valor estratégico.",
+          "Big Data permite pasar del análisis basado en muestras al análisis de poblaciones completas . Un hospital con 10M de historiales médicos puede detectar patrones de diagnóstico imposibles de ver con una muestra de 1.000 casos. Empresas como Netflix ahorran más de USD 1.500M anuales gracias a sistemas de recomendación que procesan 1.000 millones de eventos de usuario diarios."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/resumen.html"
+      },
+      "microlectura": {
+        "title": "Microlectura: 1.1 Qué es Big Data y para qué sirve",
+        "definition": "La historia del Big Data no comienza con Google o Amazon. En los años 1960, laboratorios de defensa y ciencia gestionaban los primeros sistemas de datos masivos. En 1990, investigadores de NASA acuñaron el término al enfrentarse a conjuntos de datos de visualización científica que desbordaban la RAM disponible.",
+        "example": "Caso concreto: Un banco con 50M de transacciones diarias puede entrenar un modelo de fraude con la totalidad de sus datos históricos, no con el 1% que cabría en memoria RAM convencional. El resultado: reducción de falsos positivos del 40% y ahorro de USD 200M anuales.",
+        "keyIdeas": [
+          "181 Zettabytes generados anualmente a nivel mundial (IDC, 2025)",
+          "YouTube: 720.000 horas de video subidas cada día",
+          "CERN LHC: 15 petabytes/segundo durante experimentos",
+          "Meta: 4 petabytes nuevos cada día",
+          "Batch: Horas/días. Ej: reportes mensuales de ventas."
+        ],
+        "headings": [
+          "1. Contexto histórico",
+          "2. El cambio de paradigma: del muestreo al análisis integral",
+          "3. Las 5V en profundidad",
+          "3.1 Volumen",
+          "3.2 Velocidad",
+          "3.3 Variedad",
+          "3.4 Veracidad",
+          "3.5 Valor"
+        ],
+        "paragraphs": [
+          "La historia del Big Data no comienza con Google o Amazon. En los años 1960, laboratorios de defensa y ciencia gestionaban los primeros sistemas de datos masivos. En 1990, investigadores de NASA acuñaron el término al enfrentarse a conjuntos de datos de visualización científica que desbordaban la RAM disponible.",
+          "La estadística clásica resuelve un problema práctico: no podemos medir a toda la población, entonces tomamos una muestra representativa e inferimos. Big Data disuelve esa restricción.",
+          "\"Más datos superan a algoritmos más inteligentes.\" — Peter Norvig, Google",
+          "Caso concreto: Un banco con 50M de transacciones diarias puede entrenar un modelo de fraude con la totalidad de sus datos históricos, no con el 1% que cabría en memoria RAM convencional. El resultado: reducción de falsos positivos del 40% y ahorro de USD 200M anuales.",
+          "Las métricas globales de 2025 ilustran la escala:"
+        ],
+        "codeBlocks": [],
+        "tables": [
+          [
+            "Año",
+            "Hito",
+            "Impacto"
+          ],
+          [
+            "1960s",
+            "Bases de datos para defensa y ciencia",
+            "Primeros sistemas de almacenamiento masivo"
+          ],
+          [
+            "1990",
+            "NASA acuña \"Big Data\"",
+            "El término entra al vocabulario técnico"
+          ],
+          [
+            "2004",
+            "Google publica MapReduce",
+            "Procesamiento distribuido escalable"
+          ],
+          [
+            "2006",
+            "Apache Hadoop",
+            "Democratización open-source"
+          ]
+        ],
+        "source": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/microlectura.html"
+      },
+      "funciones": {
+        "title": "Guía de Funciones: 1.1 Big Data — R y Python",
+        "definition": "En este subnivel aún no hay código de análisis de datos como tal, pero sí exploraremos cómo verificar el entorno y hacer una primera lectura de datos grandes.",
+        "example": "fread() : Lee CSV grandes usando múltiples núcleos. Es 10-100x más rápido que read.csv() .",
+        "keyIdeas": [
+          "R.version$version.string : Confirma que R está actualizado.",
+          "fread() : Lee CSV grandes usando múltiples núcleos. Es 10-100x más rápido que read.csv() .",
+          "str(dt) : Muestra la estructura interna: tipos de columnas, primeras observaciones.",
+          "dim(dt) : Retorna [n_filas, n_columnas]. Fundamental para conocer la escala.",
+          "object.size() : Cuánta RAM ocupa el dataset. Si supera el 80% de tu RAM, necesitás procesamiento por chunks."
+        ],
+        "headings": [
+          "R — Verificación del entorno y lectura inicial",
+          "Explicación línea a línea",
+          "Python — Verificación del entorno y lectura inicial"
+        ],
+        "paragraphs": [
+          "En este subnivel aún no hay código de análisis de datos como tal, pero sí exploraremos cómo verificar el entorno y hacer una primera lectura de datos grandes."
+        ],
+        "codeBlocks": [
+          "# Verificar version de R R.version$version.string # Instalar y cargar paquetes esenciales de Big Data en R if (!require(\"data.table\")) install.packages(\"data.table\") if (!require(\"arrow\")) install.packages(\"arrow\") library(data.table) library(arrow) # Leer un CSV grande con data.table (mucho más rápido que read.csv) # data.table usa todos los cores disponibles automáticamente dt <- fread(\"dataset_grande.csv\") # Ver estructura str(dt) # Tipos de variables y primeras filas dim(dt) # Filas y columnas head(dt, 10) # Primeras 10 filas summary(dt) # Estadísticas descriptivas básicas # Verificar memoria usada object.size(dt) # Tamaño en bytes format(object.size(dt), units = \"MB\") # En megabytes # Número de núcleos disponibles (para paralelismo) parallel::detectCores()",
+          "import sys import polars as pl import pandas as pd # Verificar versiones print(f\"Python: {sys.version}\") print(f\"Polars: {pl.__version__}\") print(f\"Pandas: {pd.__version__}\") # Leer CSV con Polars (más rápido que Pandas para datos grandes) df = pl.read_csv(\"dataset_grande.csv\") # Exploración inicial print(df.shape) # (n_filas, n_columnas) print(df.dtypes) # Tipos de datos por columna print(df.head(10)) # Primeras 10 filas print(df.describe()) # Estadísticas descriptivas # Ver uso de memoria aproximado print(f\"Memoria estimada: {df.estimated_size('mb'):.2f} MB\") # Lazy evaluation: solo ejecuta cuando se llama .collect() # Útil para datasets que no caben en memoria lazy_df = pl.scan_csv(\"dataset_grande.csv\") resultado = lazy_df.filter(pl.col(\"columna\") > 100).collect()"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "Procedimiento: 1.1 Qué es Big Data y para qué sirve",
+        "definition": "Entrada: Una situación o problema de negocio/investigación. Acción: Identificar si involucra datos masivos preguntando: ¿Los datos superan 10 GB? ¿Se generan en tiempo real? ¿Son de múltiples tipos (texto, imágenes, r...",
+        "example": "Entrada: Un caso Big Data confirmado. Acción: Mapear las 5V presentes. Para cada V: ¿está presente?, ¿cómo se manifiesta? Salida esperada: Tabla de 5 filas (una por V) con descripción específica del caso. Interpretaci...",
+        "keyIdeas": [
+          "Entrada: Una situación o problema de negocio/investigación. Acción: Identificar si involucra datos masivos preguntando: ¿Los datos superan 10 GB? ¿Se generan en tiempo real? ¿Son de múltiples tipos (texto, imágenes, r...",
+          "Entrada: Un caso Big Data confirmado. Acción: Mapear las 5V presentes. Para cada V: ¿está presente?, ¿cómo se manifiesta? Salida esperada: Tabla de 5 filas (una por V) con descripción específica del caso. Interpretaci...",
+          "Entrada: Dataset disponible (puede ser pequeño para práctica). Acción: Cargar con fread() en R o pl.read_csv() en Python. Ejecutar dim() , str() , summary() . Salida esperada: Reporte de: #filas, #columnas, tipos de v...",
+          "Entrada: Diagnóstico de la situación. Acción: Redactar una breve justificación (≤200 palabras) explicando qué tipo de Big Data es y qué tecnología sería apropiada (Spark, Flink, Hadoop, etc.). Salida esperada: Párrafo...",
+          "Secuencia paso a paso"
+        ],
+        "headings": [
+          "Secuencia paso a paso"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/procedimiento.html"
+      },
+      "practica": {
+        "title": "Práctica Guiada: 1.1 Qué es Big Data y para qué sirve",
+        "definition": "Dataset: Usaremos datos simulados del sector salud paraguayo (puede descargarse desde el aula o generarse con el código de Ficha 0).",
+        "example": "Dataset: Usaremos datos simulados del sector salud paraguayo (puede descargarse desde el aula o generarse con el código de Ficha 0).",
+        "keyIdeas": [
+          "Ficha 0: Preparación del dataset",
+          "Ficha 1: ¿Es Big Data?",
+          "Ficha 2: Mapeando las 5V"
+        ],
+        "headings": [
+          "Ficha 0: Preparación del dataset",
+          "Ficha 1: ¿Es Big Data?",
+          "Ficha 2: Mapeando las 5V"
+        ],
+        "paragraphs": [
+          "Dataset: Usaremos datos simulados del sector salud paraguayo (puede descargarse desde el aula o generarse con el código de Ficha 0).",
+          "# R — Generar dataset simulado de historiales médicos set.seed(2026) n Criterio de completado: El archivo historiales_salud.csv existe y tiene exactamente 100.000 filas.",
+          "Consigna: Evaluá si el dataset generado es Big Data.",
+          "library(data.table) dt Pregunta de reflexión: Con 100.000 registros, ¿este dataset es Big Data? ¿Qué debería cambiar para que lo sea? ¿Qué escala usaría un ministerio de salud real?",
+          "Criterio de completado: Respondiste la pregunta de reflexión con al menos 2 argumentos concretos que mencionan las 5V."
+        ],
+        "codeBlocks": [
+          "# R — Generar dataset simulado de historiales médicos set.seed(2026) n <- 100000 # 100K registros simulados historiales <- data.frame( id_paciente = 1:n, edad = sample(0:90, n, replace = TRUE), sexo = sample(c(\"M\",\"F\"), n, replace = TRUE), diagnostico = sample(c(\"Diabetes\",\"Hipertension\",\"Anemia\",\"Otro\"), n, replace = TRUE, prob = c(0.25,0.3,0.2,0.25)), tiempo_espera = round(rnorm(n, mean=45, sd=20)), region = sample(c(\"Central\",\"Alto_Paraguay\",\"Caaguazu\",\"Itapua\"), n, replace=TRUE), resultado = sample(c(\"Alta\",\"Seguimiento\",\"Referido\"), n, replace = TRUE) ) write.csv(historiales, \"historiales_salud.csv\", row.names = FALSE) cat(\"Dataset generado:\", nrow(historiales), \"registros \")",
+          "library(data.table) dt <- fread(\"historiales_salud.csv\") # Diagnóstico de escala cat(\"Filas:\", nrow(dt), \" \") cat(\"Columnas:\", ncol(dt), \" \") cat(\"Tamaño en RAM:\", format(object.size(dt), units=\"MB\"), \" \") cat(\"Tipos de variable:\", paste(sapply(dt, class), collapse=\", \"), \" \")",
+          "# Código para extraer métricas relevantes summary_5v <- list( Volumen = paste(nrow(dt), \"registros,\", format(object.size(dt), units=\"MB\")), Velocidad = \"Batch diario (no en tiempo real en este caso)\", Variedad = paste(ncol(dt), \"variables de tipos:\", paste(unique(sapply(dt, class)), collapse=\"/\")), Veracidad = paste(\"NAs:\", sum(is.na(dt)), \"de\", nrow(dt)*ncol(dt), \"valores\"), Valor = \"Identificar regiones con mayor prevalencia de diagnósticos críticos\" ) print(summary_5v)"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "Aplicación Contextualizada: 1.1 Qué es Big Data",
+        "definition": "El Instituto de Previsión Social del Paraguay gestiona prestaciones de salud para más de 1.2 millones de asegurados. Su sistema de información genera diariamente:",
+        "example": "El Instituto de Previsión Social del Paraguay gestiona prestaciones de salud para más de 1.2 millones de asegurados. Su sistema de información genera diariamente:",
+        "keyIdeas": [
+          "300.000 registros de consultas médicas",
+          "1.200.000 transacciones de farmacia",
+          "450.000 resultados de laboratorio",
+          "Imágenes médicas (radiografías, ecografías): ~5 TB semanales",
+          "Datos de GPS de ambulancias: 200.000 eventos/día"
+        ],
+        "headings": [
+          "Mini caso: Sistema de Información de Salud del IPS",
+          "Pregunta para foro/mini informe"
+        ],
+        "paragraphs": [
+          "El Instituto de Previsión Social del Paraguay gestiona prestaciones de salud para más de 1.2 millones de asegurados. Su sistema de información genera diariamente:",
+          "Analizá el caso del IPS con las 5V del Big Data. Luego respondé:",
+          "Extensión esperada: 300-500 palabras. Usar vocabulario del curso (5V, paradigma, veracidad, valor). Conectar con el contexto institucional paraguayo."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s1_que_es_bigdata/aplicacion.html"
+      }
+    },
+    "u1_s2_entorno_trabajo": {
+      "code": "1.2",
+      "title": "Entorno R y RStudio",
+      "topic": "instalacion de R y RStudio, tipos de datos en R, paquetes, primeros pasos en Python y Jupyter",
+      "resumen": {
+        "title": "1.2 Entorno de trabajo: R/RStudio, archivos y lectura de datos",
+        "definition": "R es el lenguaje de referencia en estadística y análisis de datos. RStudio es su IDE (entorno de desarrollo integrado) más utilizado, que organiza en 4 paneles: Editor de código, Consola, Entorno/Historia y Archivos/Plots/Paquetes. Para Big Data, los paquetes data.table y arrow permiten leer gigabytes de datos en segundos.",
+        "example": "R es el lenguaje de referencia en estadística y análisis de datos. RStudio es su IDE (entorno de desarrollo integrado) más utilizado, que organiza en 4 paneles: Editor de código, Consola, Entorno/Historia y Archivos/Plots/Paquetes. Para Big Data, los paquetes data.table y arrow permiten leer gigabytes de datos en segundos.",
+        "keyIdeas": [
+          "CSV: El más común. Legible por humanos pero lento para GB+.",
+          "Excel (.xlsx): Frecuente en instituciones. Usar readxl .",
+          "JSON: Datos de APIs y sistemas modernos. Usar jsonlite .",
+          "Parquet: Formato columnar óptimo para Big Data. 5-10x más rápido que CSV, comprimido.",
+          "Instalar y configurar R + RStudio correctamente."
+        ],
+        "headings": [
+          "Resumen",
+          "¿Por qué R y RStudio?",
+          "Formatos de datos relevantes",
+          "¿Qué debe poder hacer el estudiante al final?"
+        ],
+        "paragraphs": [
+          "¿Qué aprenderás? Configurarás el entorno de análisis estadístico con R y RStudio, entenderás la estructura del espacio de trabajo, y aprenderás a leer datos en distintos formatos (CSV, Excel, JSON, Parquet) de forma eficiente. Al finalizar podrás cargar cualquier dataset del curso y explorar su estructura inicial.",
+          "R es el lenguaje de referencia en estadística y análisis de datos. RStudio es su IDE (entorno de desarrollo integrado) más utilizado, que organiza en 4 paneles: Editor de código, Consola, Entorno/Historia y Archivos/Plots/Paquetes. Para Big Data, los paquetes data.table y arrow permiten leer gigabytes de datos en segundos."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/resumen.html"
+      },
+      "microlectura": {
+        "title": "Microlectura: 1.2 Entorno de trabajo",
+        "definition": "R se descarga desde cran.r-project.org . RStudio desde posit.co . Instalar en ese orden. Versiones mínimas recomendadas para el curso: R ≥ 4.3, RStudio ≥ 2024.01.",
+        "example": "mi_proyecto/ data/ raw/ ← datos originales, nunca modificar processed/ ← datos limpios listos para análisis scripts/ 01_lectura.R 02_limpieza.R 03_analisis.R outputs/ graficos/ tablas/ README.md Esta estructura garantiza reproducibilidad: cualquier persona puede reproducir el análisis ejecutando los scripts en orden numérico.",
+        "keyIdeas": [
+          "Compresión automática: un CSV de 5 GB puede ser 800 MB en Parquet.",
+          "Lectura selectiva de columnas: si querés solo \"edad\" y \"diagnostico\", no lee las otras 50 columnas.",
+          "Preserva tipos de datos: evita el problema de leer fechas como texto.",
+          "1. Instalación y configuración",
+          "2. Estructura de un proyecto reproducible"
+        ],
+        "headings": [
+          "1. Instalación y configuración",
+          "2. Estructura de un proyecto reproducible",
+          "3. Paquetes esenciales del curso",
+          "4. Formatos de archivo en detalle",
+          "CSV — Comma Separated Values",
+          "Parquet — El formato del Big Data"
+        ],
+        "paragraphs": [
+          "R se descarga desde cran.r-project.org . RStudio desde posit.co . Instalar en ese orden. Versiones mínimas recomendadas para el curso: R ≥ 4.3, RStudio ≥ 2024.01.",
+          "mi_proyecto/ data/ raw/ ← datos originales, nunca modificar processed/ ← datos limpios listos para análisis scripts/ 01_lectura.R 02_limpieza.R 03_analisis.R outputs/ graficos/ tablas/ README.md Esta estructura garantiza reproducibilidad: cualquier persona puede reproducir el análisis ejecutando los scripts en orden numérico.",
+          "Formato universal, legible por cualquier herramienta. Desventaja: no guarda tipos de datos (todo se lee como texto inicialmente). Para archivos grandes, fread() de data.table es ~10x más rápido que read.csv() .",
+          "Almacenamiento columnar: guarda los datos por columna, no por fila. Ventajas:"
+        ],
+        "codeBlocks": [
+          "mi_proyecto/ data/ raw/ ← datos originales, nunca modificar processed/ ← datos limpios listos para análisis scripts/ 01_lectura.R 02_limpieza.R 03_analisis.R outputs/ graficos/ tablas/ README.md"
+        ],
+        "tables": [
+          [
+            "Paquete",
+            "Función principal",
+            "Instalación"
+          ],
+          [
+            "data.table",
+            "Lectura y manipulación de datos grandes",
+            "install.packages(\"data.table\")"
+          ],
+          [
+            "arrow",
+            "Lectura/escritura de Parquet",
+            "install.packages(\"arrow\")"
+          ],
+          [
+            "readxl",
+            "Lectura de archivos Excel",
+            "install.packages(\"readxl\")"
+          ],
+          [
+            "jsonlite",
+            "Lectura/escritura de JSON",
+            "install.packages(\"jsonlite\")"
+          ]
+        ],
+        "source": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/microlectura.html"
+      },
+      "funciones": {
+        "title": "Guía de Funciones: 1.2 Entorno y Lectura de Datos",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "R — Lectura de distintos formatos",
+          "Python — Polars para lectura eficiente"
+        ],
+        "headings": [
+          "R — Lectura de distintos formatos",
+          "Python — Polars para lectura eficiente"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [
+          "# ============ Instalar paquetes (solo una vez) ============ install.packages(c(\"data.table\", \"arrow\", \"readxl\", \"jsonlite\")) # ============ CSV con data.table (recomendado para Big Data) ============ library(data.table) dt_csv filter(edad > 18) |> select(id, edad, diagnostico) |> collect() # solo aquí se ejecuta la lectura # ============ Diagnóstico inicial universal ============ diagnostico <- function(df) { cat(\"=== DIAGNÓSTICO DEL DATASET === \") cat(\"Filas:\", nrow(df), \"| Columnas:\", ncol(df), \" \") cat(\"Tamaño en RAM:\", format(object.size(df), units = \"MB\"), \" \") cat(\" Tipos de variable: \") print(sapply(df, class)) cat(\" Valores faltantes por columna: \") print(colSums(is.na(df))) } diagnostico(dt_csv)",
+          "import polars as pl import pandas as pd # ============ CSV con Polars ============ df = pl.read_csv(\"data/raw/datos.csv\") # Con separador diferente: df2 = pl.read_csv(\"datos.csv\", separator=\";\") # Seleccionar columnas específicas: df3 = pl.read_csv(\"datos.csv\", columns=[\"id\", \"edad\", \"diagnostico\"]) # ============ Excel (via pandas) ============ df_excel = pd.read_excel(\"informe.xlsx\", sheet_name=\"Hoja1\", skiprows=2) df_excel_pl = pl.from_pandas(df_excel) # convertir a Polars si es necesario # ============ JSON ============ df_json = pl.read_json(\"datos.json\") # Para JSON por líneas (ndjson): df_ndjson = pl.read_ndjson(\"datos_lines.json\") # ============ Parquet ============ df_parquet = pl.read_parquet(\"datos.parquet\") # Lazy (para archivos muy grandes): lazy = pl.scan_parquet(\"datos.parquet\") resultado = lazy.filter(pl.col(\"edad\") > 18).select([\"id\",\"edad\",\"diagnostico\"]).collect() # ============ Diagnóstico inicial ============ def diagnostico(df): print(\"=== DIAGNÓSTICO ===\") print(f\"Forma: {df.shape}\") print(f\"Memoria: {df.estimated_size('mb'):.2f} MB\") print(f\" Tipos: {df.dtypes}\") print(f\" Nulos por columna: {df.null_count()}\") print(f\" Estadísticas: {df.describe()}\") diagnostico(df)"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "Procedimiento: 1.2 Configurar entorno y leer datos",
+        "definition": "Instalar R ≥ 4.3 desde cran.r-project.org. Verificar con R.version .",
+        "example": "Instalar RStudio ≥ 2024 desde posit.co. Abrir RStudio y verificar que R está conectado (esquina inferior izquierda de la consola).",
+        "keyIdeas": [
+          "Instalar R ≥ 4.3 desde cran.r-project.org. Verificar con R.version .",
+          "Instalar RStudio ≥ 2024 desde posit.co. Abrir RStudio y verificar que R está conectado (esquina inferior izquierda de la consola).",
+          "Crear proyecto RStudio : File → New Project → New Directory. Nombrar con patrón ABD_UNIDAD1 .",
+          "Crear estructura de carpetas ejecutando en consola: dir.create(\"data/raw\", recursive=TRUE); dir.create(\"data/processed\"); dir.create(\"scripts\"); dir.create(\"outputs\")",
+          "Instalar paquetes esenciales : ejecutar el bloque de instalación de la guía de funciones."
+        ],
+        "headings": [],
+        "paragraphs": [],
+        "codeBlocks": [
+          "dir.create(\"data/raw\", recursive=TRUE); dir.create(\"data/processed\"); dir.create(\"scripts\"); dir.create(\"outputs\")"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/procedimiento.html"
+      },
+      "practica": {
+        "title": "Práctica Guiada: 1.2 Entorno y lectura de datos",
+        "definition": "Consigna: Verificá que tenés R y RStudio correctamente instalados y los paquetes del curso disponibles.",
+        "example": "# Verificar instalación cat(\"R version:\", R.version$version.string, \" \") pkgs_necesarios 0) { install.packages(pkgs_faltantes) } else { cat(\"Todos los paquetes están instalados! \") } Criterio: El mensaje \"Todos los paquetes están instalados!\" aparece sin errores.",
+        "keyIdeas": [
+          "Ficha 1: Configuración del entorno",
+          "Ficha 2: Leer el dataset del curso",
+          "Ficha 3: Diagnóstico completo"
+        ],
+        "headings": [
+          "Ficha 1: Configuración del entorno",
+          "Ficha 2: Leer el dataset del curso",
+          "Ficha 3: Diagnóstico completo"
+        ],
+        "paragraphs": [
+          "Consigna: Verificá que tenés R y RStudio correctamente instalados y los paquetes del curso disponibles.",
+          "# Verificar instalación cat(\"R version:\", R.version$version.string, \" \") pkgs_necesarios 0) { install.packages(pkgs_faltantes) } else { cat(\"Todos los paquetes están instalados! \") } Criterio: El mensaje \"Todos los paquetes están instalados!\" aparece sin errores.",
+          "library(data.table) # Descargar dataset de práctica desde el aula o usar el generado en 1.1 dt Pregunta de reflexión: ¿Cuántos milisegundos tardó fread() en comparación con read.csv()? ¿Por qué es más rápido?",
+          "# Ejecutar diagnóstico completo str(dt) summary(dt) cat(\"NAs totales:\", sum(is.na(dt)), \" \") cat(\"Columnas con NAs: \") print(colSums(is.na(dt))[colSums(is.na(dt)) > 0]) Criterio: Podés responder: ¿cuántas variables numéricas hay? ¿cuántas categóricas? ¿alguna tiene NAs?"
+        ],
+        "codeBlocks": [
+          "# Verificar instalación cat(\"R version:\", R.version$version.string, \" \") pkgs_necesarios 0) { install.packages(pkgs_faltantes) } else { cat(\"Todos los paquetes están instalados! \") }",
+          "library(data.table) # Descargar dataset de práctica desde el aula o usar el generado en 1.1 dt <- fread(\"historiales_salud.csv\") cat(\"Leído correctamente:\", nrow(dt), \"filas,\", ncol(dt), \"columnas \")",
+          "# Ejecutar diagnóstico completo str(dt) summary(dt) cat(\"NAs totales:\", sum(is.na(dt)), \" \") cat(\"Columnas con NAs: \") print(colSums(is.na(dt))[colSums(is.na(dt)) > 0])"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "Aplicación: 1.2 Entorno de trabajo",
+        "definition": "Sos analista de datos en el Ministerio de Industria y Comercio del Paraguay. Te entregan tres archivos con datos de empresas registradas:",
+        "example": "Sos analista de datos en el Ministerio de Industria y Comercio del Paraguay. Te entregan tres archivos con datos de empresas registradas:",
+        "keyIdeas": [
+          "empresas_2024.csv (500.000 filas)",
+          "exportaciones.xlsx (20.000 filas, 3 hojas)",
+          "indicadores_economicos.json (API del BCP)",
+          "Leer los tres archivos con las funciones apropiadas.",
+          "Ejecutar diagnóstico de cada uno."
+        ],
+        "headings": [
+          "Situación",
+          "Tarea"
+        ],
+        "paragraphs": [
+          "Sos analista de datos en el Ministerio de Industria y Comercio del Paraguay. Te entregan tres archivos con datos de empresas registradas:",
+          "Escribí el script R completo para:",
+          "Entregable: Script lectura_ministerio.R comentado."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s2_entorno_trabajo/aplicacion.html"
+      }
+    },
+    "u1_s3_operaciones_basicas": {
+      "code": "1.3",
+      "title": "Operaciones basicas y graficos",
+      "topic": "data.table, lectura CSV y Parquet, graficos basicos con ggplot2, pandas y polars",
+      "resumen": {
+        "title": "1.3 Operaciones básicas, resúmenes y gráficos",
+        "definition": "¿Qué aprenderás? Aplicarás las operaciones más frecuentes en el análisis de datos: filtrado, selección de columnas, agrupación, resúmenes estadísticos y visualizaciones básicas con R (data.table + ggplot2) y Python (Polars + matplotlib/seaborn). Al finalizar podrás producir un reporte exploratorio completo de cualquier dataset del curso.",
+        "example": "Antes de cualquier modelo estadístico, el analista debe conocer sus datos en detalle. Esta exploración detecta errores de datos, distribuciones inesperadas, outliers y relaciones entre variables que informan las decisiones de preprocesamiento y modelado.",
+        "keyIdeas": [
+          "Filtrar filas y seleccionar columnas con data.table y Polars.",
+          "Calcular estadísticas agrupadas (medias, conteos, porcentajes) por categoría.",
+          "Generar histogramas, boxplots, gráficos de barras y scatter plots.",
+          "Interpretar los gráficos y redactar conclusiones estadísticas básicas.",
+          "¿Por qué es fundamental?"
+        ],
+        "headings": [
+          "Resumen",
+          "¿Por qué es fundamental?",
+          "¿Qué debe poder hacer el estudiante?"
+        ],
+        "paragraphs": [
+          "¿Qué aprenderás? Aplicarás las operaciones más frecuentes en el análisis de datos: filtrado, selección de columnas, agrupación, resúmenes estadísticos y visualizaciones básicas con R (data.table + ggplot2) y Python (Polars + matplotlib/seaborn). Al finalizar podrás producir un reporte exploratorio completo de cualquier dataset del curso.",
+          "Antes de cualquier modelo estadístico, el analista debe conocer sus datos en detalle. Esta exploración detecta errores de datos, distribuciones inesperadas, outliers y relaciones entre variables que informan las decisiones de preprocesamiento y modelado."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/resumen.html"
+      },
+      "microlectura": {
+        "title": "Microlectura: 1.3 Operaciones básicas",
+        "definition": "Todo análisis de datos sigue un ciclo de 4 pasos:",
+        "example": "La sintaxis de data.table es dt[i, j, by] :",
+        "keyIdeas": [
+          "Preguntar: ¿Qué quiero saber? (ej: ¿cuál región tiene mayor prevalencia de diabetes?)",
+          "Filtrar/Agregar: Seleccionar y resumir los datos necesarios.",
+          "Visualizar: Representar el patrón visualmente.",
+          "Interpretar: ¿Qué dice el dato? ¿Qué decisión informaría?",
+          "i : filas a seleccionar (filtro)"
+        ],
+        "headings": [
+          "1. El ciclo de exploración",
+          "2. Operaciones en data.table (R)",
+          "3. Visualización con ggplot2",
+          "4. Estadísticas descriptivas clave"
+        ],
+        "paragraphs": [
+          "Todo análisis de datos sigue un ciclo de 4 pasos:",
+          "La sintaxis de data.table es dt[i, j, by] :",
+          "Esta sintaxis concisa es extremadamente eficiente para datasets grandes.",
+          "ggplot2 usa una \"gramática de gráficos\": cada gráfico se construye con capas:"
+        ],
+        "codeBlocks": [],
+        "tables": [
+          [
+            "Medida",
+            "¿Para qué?",
+            "R",
+            "Python/Polars"
+          ],
+          [
+            "Media",
+            "Tendencia central (sensible a outliers)",
+            "mean(x)",
+            "pl.col(\"x\").mean()"
+          ],
+          [
+            "Mediana",
+            "Tendencia central robusta",
+            "median(x)",
+            "pl.col(\"x\").median()"
+          ],
+          [
+            "Desvío estándar",
+            "Dispersión",
+            "sd(x)",
+            "pl.col(\"x\").std()"
+          ],
+          [
+            "Cuantiles",
+            "Distribución",
+            "quantile(x, 0.25)",
+            "pl.col(\"x\").quantile(0.25)"
+          ]
+        ],
+        "source": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/microlectura.html"
+      },
+      "funciones": {
+        "title": "Guía de Funciones: 1.3 Operaciones básicas",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "R — data.table + ggplot2",
+          "Python — Polars + Seaborn"
+        ],
+        "headings": [
+          "R — data.table + ggplot2",
+          "Python — Polars + Seaborn"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [
+          "library(data.table) library(ggplot2) dt = 18 & diagnostico == \"Diabetes\"] # ============ SELECCIÓN DE COLUMNAS ============ resumen_cols <- dt[, .(id_paciente, edad, diagnostico, region)] # ============ ESTADÍSTICAS POR GRUPO ============ por_region <- dt[, .( n = .N, edad_media = mean(edad, na.rm = TRUE), pct_diabet = mean(diagnostico == \"Diabetes\") * 100 ), by = region] print(por_region) # ============ ORDENAR ============ por_region[order(-pct_diabet)] # mayor a menor # ============ VISUALIZACIÓN: Histograma ============ ggplot(dt, aes(x = edad)) + geom_histogram(binwidth = 5, fill = \"#2196F3\", color = \"white\") + labs(title = \"Distribución de edad de pacientes\", x = \"Edad (años)\", y = \"Frecuencia\") + theme_minimal() # ============ VISUALIZACIÓN: Boxplot por diagnóstico ============ ggplot(dt, aes(x = diagnostico, y = tiempo_espera, fill = diagnostico)) + geom_boxplot(outlier.alpha = 0.3) + labs(title = \"Tiempo de espera por diagnóstico\", x = \"Diagnóstico\", y = \"Tiempo de espera (minutos)\") + theme_minimal() + theme(legend.position = \"none\") # ============ VISUALIZACIÓN: Barras de frecuencia ============ ggplot(dt[, .(n = .N), by = region][order(-n)], aes(x = reorder(region, -n), y = n)) + geom_col(fill = \"#4CAF50\") + labs(title = \"Pacientes por región\", x = \"Región\", y = \"N\") + theme_minimal()",
+          "import polars as pl import seaborn as sns import matplotlib.pyplot as plt df = pl.read_csv(\"historiales_salud.csv\") # ============ FILTRADO ============ adultos_diabetes = df.filter( (pl.col(\"edad\") >= 18) & (pl.col(\"diagnostico\") == \"Diabetes\") ) # ============ SELECCIÓN ============ resumen_cols = df.select([\"id_paciente\", \"edad\", \"diagnostico\", \"region\"]) # ============ ESTADÍSTICAS POR GRUPO ============ por_region = df.group_by(\"region\").agg([ pl.count().alias(\"n\"), pl.col(\"edad\").mean().alias(\"edad_media\"), (pl.col(\"diagnostico\") == \"Diabetes\").mean().alias(\"pct_diabet\") * 100 ]).sort(\"pct_diabet\", descending=True) print(por_region) # ============ HISTOGRAMA ============ df_pd = df.to_pandas() # seaborn usa pandas plt.figure(figsize=(10, 5)) sns.histplot(data=df_pd, x=\"edad\", bins=30, color=\"#2196F3\") plt.title(\"Distribución de edad de pacientes\") plt.xlabel(\"Edad (años)\"); plt.ylabel(\"Frecuencia\") plt.tight_layout(); plt.show() # ============ BOXPLOT ============ plt.figure(figsize=(10, 5)) sns.boxplot(data=df_pd, x=\"diagnostico\", y=\"tiempo_espera\", palette=\"Set2\") plt.title(\"Tiempo de espera por diagnóstico\") plt.tight_layout(); plt.show()"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "Procedimiento: 1.3 Operaciones básicas",
+        "definition": "Cargar datos con fread() o pl.read_csv(). Ejecutar diagnóstico inicial.",
+        "example": "Formular preguntas : definir al menos 3 preguntas analíticas sobre los datos (ej: ¿cuál región tiene mayor tiempo de espera promedio?).",
+        "keyIdeas": [
+          "Cargar datos con fread() o pl.read_csv(). Ejecutar diagnóstico inicial.",
+          "Formular preguntas : definir al menos 3 preguntas analíticas sobre los datos (ej: ¿cuál región tiene mayor tiempo de espera promedio?).",
+          "Filtrar y agregar : para cada pregunta, escribir el código de filtrado/agrupación correspondiente.",
+          "Visualizar : crear al menos un gráfico por pregunta. Elegir el tipo adecuado: histograma (distribución), boxplot (comparación grupos), barras (frecuencias), scatter (relaciones).",
+          "Interpretar : escribir 1-2 oraciones de conclusión por cada gráfico. Incluir valores numéricos concretos."
+        ],
+        "headings": [],
+        "paragraphs": [],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/procedimiento.html"
+      },
+      "practica": {
+        "title": "Práctica Guiada: 1.3 Operaciones básicas y gráficos",
+        "definition": "library(data.table) dt Pregunta: ¿Cuál región tiene mayor prevalencia de diabetes? ¿Coincide con la que tiene mayor tiempo de espera?",
+        "example": "library(ggplot2) ggplot(dt, aes(x = edad)) + geom_histogram(binwidth = 5, fill = \"#1976D2\", color = \"white\", alpha = 0.8) + geom_vline(aes(xintercept = mean(edad)), color = \"red\", linetype = \"dashed\") + labs(title = \"Distribución de edades\", subtitle = paste(\"Media:\", round(mean(dt$edad), 1), \"años\"), x = \"Edad\", y = \"Frecuencia\") + theme_minimal() Pregunta: ¿La distribución es simétrica o sesgada? ¿Qué implica esto para el análisis de la media vs la mediana?",
+        "keyIdeas": [
+          "Ficha 1: Estadísticas por grupo",
+          "Ficha 2: Histograma de edades",
+          "Ficha 3: Comparación de grupos con boxplot"
+        ],
+        "headings": [
+          "Ficha 1: Estadísticas por grupo",
+          "Ficha 2: Histograma de edades",
+          "Ficha 3: Comparación de grupos con boxplot"
+        ],
+        "paragraphs": [
+          "library(data.table) dt Pregunta: ¿Cuál región tiene mayor prevalencia de diabetes? ¿Coincide con la que tiene mayor tiempo de espera?",
+          "library(ggplot2) ggplot(dt, aes(x = edad)) + geom_histogram(binwidth = 5, fill = \"#1976D2\", color = \"white\", alpha = 0.8) + geom_vline(aes(xintercept = mean(edad)), color = \"red\", linetype = \"dashed\") + labs(title = \"Distribución de edades\", subtitle = paste(\"Media:\", round(mean(dt$edad), 1), \"años\"), x = \"Edad\", y = \"Frecuencia\") + theme_minimal() Pregunta: ¿La distribución es simétrica o sesgada? ¿Qué implica esto para el análisis de la media vs la mediana?",
+          "ggplot(dt, aes(x = resultado, y = tiempo_espera, fill = resultado)) + geom_boxplot() + labs(title = \"Tiempo de espera según resultado de consulta\") + theme_minimal() + theme(legend.position = \"none\") Pregunta: ¿Los pacientes referidos esperan más? ¿Hay outliers? ¿Son problemáticos o esperables?"
+        ],
+        "codeBlocks": [
+          "library(data.table) dt <- fread(\"historiales_salud.csv\") # Estadísticas por región tabla_region <- dt[, .( pacientes = .N, edad_media = round(mean(edad), 1), pct_diabetes = round(mean(diagnostico == \"Diabetes\") * 100, 1), espera_mediana = median(tiempo_espera) ), by = region][order(-pacientes)] print(tabla_region)",
+          "library(ggplot2) ggplot(dt, aes(x = edad)) + geom_histogram(binwidth = 5, fill = \"#1976D2\", color = \"white\", alpha = 0.8) + geom_vline(aes(xintercept = mean(edad)), color = \"red\", linetype = \"dashed\") + labs(title = \"Distribución de edades\", subtitle = paste(\"Media:\", round(mean(dt$edad), 1), \"años\"), x = \"Edad\", y = \"Frecuencia\") + theme_minimal()",
+          "ggplot(dt, aes(x = resultado, y = tiempo_espera, fill = resultado)) + geom_boxplot() + labs(title = \"Tiempo de espera según resultado de consulta\") + theme_minimal() + theme(legend.position = \"none\")"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "Aplicación: 1.3 Operaciones básicas",
+        "definition": "El director del hospital te pide un reporte ejecutivo de una sola página con los 4 hallazgos más importantes del dataset de historiales. Tiene 5 minutos para leerlo.",
+        "example": "El director del hospital te pide un reporte ejecutivo de una sola página con los 4 hallazgos más importantes del dataset de historiales. Tiene 5 minutos para leerlo.",
+        "keyIdeas": [
+          "Calculá las 4 estadísticas que considerás más relevantes para la gestión del hospital.",
+          "Creá 2 gráficos que las ilustren visualmente.",
+          "Redactá las 4 conclusiones en lenguaje no técnico (sin mencionar p-valores, estadísticas, etc.)."
+        ],
+        "headings": [
+          "Mini caso",
+          "Tarea"
+        ],
+        "paragraphs": [
+          "El director del hospital te pide un reporte ejecutivo de una sola página con los 4 hallazgos más importantes del dataset de historiales. Tiene 5 minutos para leerlo.",
+          "Formato esperado: Documento de 1 página con título, 2 gráficos y 4 bullets de conclusión. Podés entregarlo como HTML generado desde R Markdown."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u1_s3_operaciones_basicas/aplicacion.html"
+      }
+    },
+    "u2_s1_fundamentos_visualizacion": {
+      "code": "2.1",
+      "title": "Fundamentos de Visualizacion",
+      "topic": "gramatica de graficos, variables visuales, jerarquia perceptual, tipos de graficos",
+      "resumen": {
+        "title": "2.1 Fundamentos de Visualización de Datos — Resumen",
+        "definition": "La visualización de datos transforma números y tablas en representaciones gráficas que permiten detectar patrones, tendencias y anomalías de forma intuitiva. En el contexto del Big Data, la capacidad de visualizar grandes volúmenes es clave para extraer valor.",
+        "example": "Exploración → Descripción → Visualización → Conclusión. El EDA (Análisis Exploratorio de Datos) no busca confirmar hipótesis sino descubrirlas .",
+        "keyIdeas": [
+          "Percepción visual: el cerebro humano procesa imágenes 60,000× más rápido que texto.",
+          "Variables visuales: posición, tamaño, color, forma, orientación y textura codifican información.",
+          "Gramática de gráficos (ggplot2): datos → estéticas → geometrías → escalas → facetas → tema.",
+          "Principios clave",
+          "Tipos de gráficos según propósito"
+        ],
+        "headings": [
+          "Principios clave",
+          "Tipos de gráficos según propósito",
+          "Flujo EDA",
+          "Herramientas"
+        ],
+        "paragraphs": [
+          "La visualización de datos transforma números y tablas en representaciones gráficas que permiten detectar patrones, tendencias y anomalías de forma intuitiva. En el contexto del Big Data, la capacidad de visualizar grandes volúmenes es clave para extraer valor.",
+          "Exploración → Descripción → Visualización → Conclusión. El EDA (Análisis Exploratorio de Datos) no busca confirmar hipótesis sino descubrirlas .",
+          "R: ggplot2 (declarativo), lattice (condicionado), plotly (interactivo). Python: matplotlib (imperativo), seaborn (estadístico), plotly (interactivo), altair (declarativo)."
+        ],
+        "codeBlocks": [],
+        "tables": [
+          [
+            "Propósito",
+            "Gráfico recomendado"
+          ],
+          [
+            "Distribución",
+            "Histograma, densidad, boxplot"
+          ],
+          [
+            "Comparación",
+            "Barras, puntos, lollipop"
+          ],
+          [
+            "Relación",
+            "Dispersión, burbuja, heatmap"
+          ],
+          [
+            "Evolución temporal",
+            "Líneas, área, ridgeline"
+          ]
+        ],
+        "source": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/resumen.html"
+      },
+      "microlectura": {
+        "title": "2.1 Fundamentos de Visualización de Datos",
+        "definition": "ggplot2 en R implementa esta gramática directamente. Cada capa es una función que modifica el gráfico base.",
+        "example": "El célebre cuarteto de Anscombe ilustra por qué: cuatro datasets con medias, varianzas y correlaciones idénticas pero con distribuciones radicalmente distintas. Sin visualización, el analista concluiría que son iguales.",
+        "keyIdeas": [
+          "Datos: el dataset que se mapea.",
+          "Estéticas (aes): variables mapeadas a propiedades visuales (x, y, color, size, shape).",
+          "Geometrías (geom): la representación visual (punto, línea, barra, área).",
+          "Estadísticas (stat): transformaciones opcionales (conteo, suavizado, media).",
+          "Facetas: subgráficos para subgrupos."
+        ],
+        "headings": [
+          "1. Por qué visualizamos",
+          "2. Gramática de Gráficos",
+          "3. Codificación visual efectiva",
+          "4. EDA: el proceso",
+          "5. Errores comunes",
+          "6. Buenas prácticas"
+        ],
+        "paragraphs": [
+          "John Tukey, padre del análisis exploratorio, decía que el propósito del análisis de datos era el insight , no los números. La visualización es el puente entre los datos crudos y la comprensión humana.",
+          "El célebre cuarteto de Anscombe ilustra por qué: cuatro datasets con medias, varianzas y correlaciones idénticas pero con distribuciones radicalmente distintas. Sin visualización, el analista concluiría que son iguales.",
+          "Leland Wilkinson formalizó en 2005 los componentes de cualquier gráfico estadístico:",
+          "ggplot2 en R implementa esta gramática directamente. Cada capa es una función que modifica el gráfico base.",
+          "Cleveland y McGill (1984) establecieron la jerarquía de precisión perceptual:"
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/microlectura.html"
+      },
+      "funciones": {
+        "title": "2.1 Guía de Funciones: Visualización con ggplot2 y seaborn",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "Python — seaborn + matplotlib"
+        ],
+        "headings": [
+          "R — ggplot2",
+          "Python — seaborn + matplotlib"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [
+          "library(ggplot2) library(dplyr) # ESTRUCTURA BASE # ggplot(datos, aes(x=var_x, y=var_y)) + geom_*() # 1. Histograma de distribución ggplot(iris, aes(x = Sepal.Length)) + geom_histogram(bins = 20, fill = \"#1565C0\", color = \"white\", alpha = 0.8) + labs(title = \"Distribución del largo del sépalo\", x = \"Largo del sépalo (cm)\", y = \"Frecuencia\") + theme_minimal() # bins: número de barras # fill: color de relleno, color: borde, alpha: transparencia # 2. Boxplot por grupo ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) + geom_boxplot(outlier.color = \"red\", outlier.shape = 16) + scale_fill_brewer(palette = \"Set2\") + labs(title = \"Largo del sépalo por especie\") + theme_classic() # outlier.color/shape: personaliza puntos atípicos # scale_fill_brewer: paleta de ColorBrewer # 3. Gráfico de dispersión con regresión ggplot(iris, aes(x = Sepal.Length, y = Petal.Length, color = Species)) + geom_point(alpha = 0.7, size = 3) + geom_smooth(method = \"lm\", se = TRUE) + labs(title = \"Relación sépalo vs pétalo por especie\") + theme_light() # geom_smooth: agrega línea de tendencia # method=\"lm\": regresión lineal, se=TRUE: intervalo de confianza # 4. Facetas ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) + geom_point(aes(color = Species)) + facet_wrap(~ Species, ncol = 3) + theme_bw() # facet_wrap: subgráficos por variable # 5. Heatmap de correlación library(reshape2) corr_mat <",
+          "import seaborn as sns import matplotlib.pyplot as plt import pandas as pd from sklearn.datasets import load_iris iris_df = pd.DataFrame(load_iris().data, columns=load_iris().feature_names) iris_df['species'] = load_iris().target_names[load_iris().target] # Tema global sns.set_theme(style=\"whitegrid\", palette=\"muted\") # 1. Histograma con curva de densidad fig, ax = plt.subplots(figsize=(8, 5)) sns.histplot(iris_df, x='sepal length (cm)', hue='species', kde=True, element='bars', alpha=0.6, ax=ax) ax.set_title('Distribución del largo del sépalo') plt.tight_layout() plt.savefig('histograma.png', dpi=150) # kde=True: agrega curva de densidad kernel # hue: colorea por categoría # 2. Boxplot fig, ax = plt.subplots(figsize=(8, 5)) sns.boxplot(data=iris_df, x='species', y='sepal length (cm)', palette='Set2', linewidth=1.5, ax=ax) ax.set_title('Largo del sépalo por especie') plt.tight_layout() # 3. Dispersión con regresión sns.lmplot(data=iris_df, x='sepal length (cm)', y='petal length (cm)', hue='species', height=5, aspect=1.4, scatter_kws={'alpha': 0.7}, line_kws={'lw': 2}) plt.title('Relación sépalo vs pétalo') plt.tight_layout() # lmplot: combina dispersión + regresión lineal por grupo # 4. Pairplot (matriz de dispersión) sns.pairplot(iris_df, hue='species', diag_kind='kde', plot_kws={'alpha': 0.6}) plt.suptitle('Matriz de dispersión — iris', y=1.02) plt.tight_layout() # 5. Heatmap d"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "2.1 Procedimiento: EDA con ggplot2 paso a paso",
+        "definition": "Realizar un Análisis Exploratorio de Datos completo usando ggplot2 en R, siguiendo una secuencia sistemática para descubrir patrones en los datos.",
+        "example": "Realizar un Análisis Exploratorio de Datos completo usando ggplot2 en R, siguiendo una secuencia sistemática para descubrir patrones en los datos.",
+        "keyIdeas": [
+          "Paso 1: Preparar el entorno",
+          "Paso 2: Vista general del dataset",
+          "Paso 3: Análisis univariado",
+          "Paso 4: Análisis bivariado",
+          "Paso 5: Análisis multivariado"
+        ],
+        "headings": [
+          "Objetivo",
+          "Pasos",
+          "Paso 1: Preparar el entorno",
+          "Paso 2: Vista general del dataset",
+          "Paso 3: Análisis univariado",
+          "Paso 4: Análisis bivariado",
+          "Paso 5: Análisis multivariado",
+          "Paso 6: Guardar y documentar"
+        ],
+        "paragraphs": [
+          "Realizar un Análisis Exploratorio de Datos completo usando ggplot2 en R, siguiendo una secuencia sistemática para descubrir patrones en los datos."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/procedimiento.html"
+      },
+      "practica": {
+        "title": "2.1 Práctica Guiada: Exploración Visual del Dataset Gapminder",
+        "definition": "Dataset: gapminder (esperanza de vida, PIB, población por país y año)",
+        "example": "americas % filter(continent == \"Americas\") %>% mutate(highlight = country == \"Paraguay\") ggplot(americas, aes(x = year, y = lifeExp, group = country)) + geom_line(color = \"gray70\", alpha = 0.6) + geom_line(data = filter(americas, highlight), color = \"red\", size = 1.5) + labs(title = \"Esperanza de vida — Américas (Paraguay en rojo)\") Reflexiona: ¿Cómo se ubica Paraguay respecto al continente?",
+        "keyIdeas": [
+          "Ficha 1: Configuración",
+          "Ficha 2: Distribución de esperanza de vida",
+          "Ficha 3: El famoso gráfico de Gapminder",
+          "Ficha 4: Evolución de América",
+          "Ficha 5: Tu gráfico original"
+        ],
+        "headings": [
+          "Ficha 1: Configuración",
+          "Ficha 2: Distribución de esperanza de vida",
+          "Ficha 3: El famoso gráfico de Gapminder",
+          "Ficha 4: Evolución de América",
+          "Ficha 5: Tu gráfico original"
+        ],
+        "paragraphs": [
+          "Dataset: gapminder (esperanza de vida, PIB, población por país y año)",
+          "Duración estimada: 45-60 minutos",
+          "install.packages(c(\"gapminder\", \"ggplot2\", \"dplyr\")) library(gapminder); library(ggplot2); library(dplyr) glimpse(gapminder) # ¿Cuántas filas? ¿Cuántas variables? Responde: ¿Qué tipos de variables tiene el dataset? ¿Hay valores faltantes?",
+          "ggplot(gapminder, aes(x = lifeExp)) + geom_histogram(bins = 30, fill = \"#0288D1\") + facet_wrap(~ year, ncol = 4) + labs(title = \"Distribución de la esperanza de vida por año\") Observa: ¿Cómo cambia la distribución a lo largo de los años? ¿Hay bimodalidad?",
+          "gapminder_2007 % filter(year == 2007) ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, size = pop, color = continent)) + geom_point(alpha = 0.7) + scale_x_log10(labels = scales::comma) + scale_size_continuous(range = c(2, 15)) + labs(title = \"Riqueza vs Salud (2007)\", x = \"PIB per cápita (escala log)\", y = \"Esperanza de vida\") Analiza: ¿Qué continente tiene más variabilidad en PIB? ¿Existe una relación clara?"
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "2.1 Aplicación: Visualización de Datos de Salud en Paraguay",
+        "definition": "El Ministerio de Salud Pública y Bienestar Social de Paraguay publica datos epidemiológicos que pueden analizarse con las técnicas de visualización aprendidas. En este ejercicio, simulamos un dataset realista basado en indicadores de salud.",
+        "example": "El Ministerio de Salud Pública y Bienestar Social de Paraguay publica datos epidemiológicos que pueden analizarse con las técnicas de visualización aprendidas. En este ejercicio, simulamos un dataset realista basado en indicadores de salud.",
+        "keyIdeas": [
+          "Dataset simulado",
+          "Tareas de visualización",
+          "Tarea 1: Distribución del IMC por departamento",
+          "Tarea 2: Relación edad-glucosa por categoría IMC",
+          "Tarea 3: Evolución temporal"
+        ],
+        "headings": [
+          "Contexto",
+          "Dataset simulado",
+          "Tareas de visualización",
+          "Tarea 1: Distribución del IMC por departamento",
+          "Tarea 2: Relación edad-glucosa por categoría IMC",
+          "Tarea 3: Evolución temporal"
+        ],
+        "paragraphs": [
+          "El Ministerio de Salud Pública y Bienestar Social de Paraguay publica datos epidemiológicos que pueden analizarse con las técnicas de visualización aprendidas. En este ejercicio, simulamos un dataset realista basado en indicadores de salud."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s1_fundamentos_visualizacion/aplicacion.html"
+      }
+    },
+    "u2_s2_estadisticos_descriptivos": {
+      "code": "2.2",
+      "title": "Estadisticos Descriptivos y Limpieza",
+      "topic": "media, mediana, varianza, outliers, valores faltantes, imputacion y normalizacion",
+      "resumen": {
+        "title": "2.2 Estadísticos Descriptivos y Limpieza de Datos — Resumen",
+        "definition": "Los estadísticos descriptivos resumen numéricamente las características de un dataset. La limpieza de datos (data cleaning) garantiza que el análisis se realice sobre datos fiables.",
+        "example": "Regla de Tukey: outlier si x < Q1 − 1.5×IQR o x > Q3 + 1.5×IQR. Z-score: outlier si |z| > 3.",
+        "keyIdeas": [
+          "Varianza: var(x) — promedio de desviaciones cuadráticas",
+          "Desvío estándar: sd(x) — raíz de la varianza, misma unidad que x",
+          "Rango intercuartílico (IQR): IQR(x) — Q3-Q1, robusto a outliers",
+          "Coeficiente de variación: sd/mean×100 — dispersión relativa",
+          "Valores faltantes: omitir (na.rm=TRUE), imputar media/mediana/KNN"
+        ],
+        "headings": [
+          "Medidas de tendencia central",
+          "Medidas de dispersión",
+          "Detección de outliers",
+          "Limpieza de datos"
+        ],
+        "paragraphs": [
+          "Los estadísticos descriptivos resumen numéricamente las características de un dataset. La limpieza de datos (data cleaning) garantiza que el análisis se realice sobre datos fiables.",
+          "Regla de Tukey: outlier si x < Q1 − 1.5×IQR o x > Q3 + 1.5×IQR. Z-score: outlier si |z| > 3."
+        ],
+        "codeBlocks": [],
+        "tables": [
+          [
+            "Medida",
+            "Función R",
+            "Función Python",
+            "Cuándo usar"
+          ],
+          [
+            "Media",
+            "mean(x)",
+            "x.mean()",
+            "Distribuciones simétricas"
+          ],
+          [
+            "Mediana",
+            "median(x)",
+            "x.median()",
+            "Con outliers o distribuciones sesgadas"
+          ],
+          [
+            "Moda",
+            "table(x) → max",
+            "x.mode()[0]",
+            "Variables categóricas"
+          ]
+        ],
+        "source": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/resumen.html"
+      },
+      "microlectura": {
+        "title": "2.2 Estadísticos Descriptivos y Limpieza de Datos",
+        "definition": "Se estima que los científicos de datos dedican entre el 60% y el 80% de su tiempo a limpiar y preparar datos. Los datos \"sucios\" incluyen: valores faltantes (NA/NaN), tipos incorrectos, duplicados, outliers, inconsistencias de formato y codificaciones erróneas.",
+        "example": "Cuando la distribución es simétrica, media ≈ mediana. Cuando hay sesgo positivo (cola derecha larga, como ingresos), media > mediana: la media es \"jalada\" por los valores extremos. En ese caso, la mediana es más representativa del \"centro\".",
+        "keyIdeas": [
+          "Tendencia central: dónde está el \"centro\" de los datos (media, mediana, moda).",
+          "Dispersión: cuánto se alejan los datos del centro (varianza, SD, IQR, rango).",
+          "Forma: asimetría (skewness) y curtosis (kurtosis) de la distribución.",
+          "Posición: cuartiles, percentiles, valores extremos.",
+          "MCAR (Missing Completely At Random): cualquier estrategia funciona; la más simple es omitir."
+        ],
+        "headings": [
+          "1. El ciclo de datos sucios",
+          "2. Estadísticos descriptivos: el resumen numérico",
+          "3. Distribuciones asimétricas",
+          "4. La regla de Tukey para outliers",
+          "5. Normalización vs estandarización",
+          "6. Imputación de valores faltantes"
+        ],
+        "paragraphs": [
+          "Se estima que los científicos de datos dedican entre el 60% y el 80% de su tiempo a limpiar y preparar datos. Los datos \"sucios\" incluyen: valores faltantes (NA/NaN), tipos incorrectos, duplicados, outliers, inconsistencias de formato y codificaciones erróneas.",
+          "Un dato sucio no detectado puede invalidar todo un análisis. La regla de oro: nunca confiar en datos sin haberlos explorado con estadísticos descriptivos y visualizaciones.",
+          "Los estadísticos descriptivos se dividen en cuatro grupos:",
+          "En R, summary(df) entrega los 6 números de Tukey para cada variable numérica: mínimo, Q1, mediana, media, Q3, máximo.",
+          "Cuando la distribución es simétrica, media ≈ mediana. Cuando hay sesgo positivo (cola derecha larga, como ingresos), media > mediana: la media es \"jalada\" por los valores extremos. En ese caso, la mediana es más representativa del \"centro\"."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/microlectura.html"
+      },
+      "funciones": {
+        "title": "2.2 Guía de Funciones: Estadísticos Descriptivos y Limpieza",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "R — dplyr + base R",
+          "Python — pandas"
+        ],
+        "headings": [
+          "R — dplyr + base R",
+          "Python — pandas"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [
+          "library(dplyr) # ESTADÍSTICOS DESCRIPTIVOS # ───────────────────────── df Q3 + 1.5*IQR_val] # na.rm=TRUE: ignora NAs en el cálculo # LIMPIEZA DE DATOS # ───────────────── # Detectar NAs sum(is.na(df$valor)) # total de NAs colSums(is.na(df)) # NAs por columna # Eliminar filas con NA df_sin_na % filter(!is.na(valor)) # Imputar con la mediana del grupo df_imputado % group_by(grupo) %>% mutate(valor = ifelse(is.na(valor), median(valor, na.rm=TRUE), valor)) %>% ungroup() # group_by: agrupa para imputar por grupo # ifelse: si es NA, reemplaza con mediana del grupo # Eliminar duplicados df_unico % distinct() # distinct(columna1, columna2): duplicados basados en columnas específicas # Cambiar tipos df$grupo <- as.factor(df$grupo) # texto → factor df$valor <- as.numeric(df$valor) # texto → número # Normalización min-max normalizar <- function(x) (x - min(x, na.rm=T)) / (max(x, na.rm=T) - min(x, na.rm=T)) df$valor_norm <- normalizar(df$valor) # Estandarización Z-score df$valor_z <- scale(df$valor) # media=0, sd=1",
+          "import pandas as pd import numpy as np df = pd.DataFrame({ 'valor': [10, 20, None, 35, 200, 15, 22, 18, 25, 30], 'grupo': ['A','A','B','B','A','B','A','B','A','B'] }) # ESTADÍSTICOS DESCRIPTIVOS df['valor'].describe() # resumen completo df['valor'].mean() # media df['valor'].median() # mediana df['valor'].std() # desvío estándar df['valor'].quantile([.25,.75]) # Q1, Q3 # Outliers (Tukey) Q1 = df['valor'].quantile(0.25) Q3 = df['valor'].quantile(0.75) IQR = Q3 - Q1 outliers = df[(df['valor'] Q3 + 1.5*IQR)] # LIMPIEZA df.isnull().sum() # NAs por columna df.dropna() # eliminar filas con NA df['valor'].fillna(df['valor'].median()) # imputar con mediana # Imputar por grupo df['valor'] = df.groupby('grupo')['valor'].transform( lambda x: x.fillna(x.median()) ) # transform: aplica función y devuelve serie del mismo tamaño df.drop_duplicates() # eliminar duplicados # Normalización min-max from sklearn.preprocessing import MinMaxScaler, StandardScaler scaler_mm = MinMaxScaler() df['valor_norm'] = scaler_mm.fit_transform(df[['valor']]) scaler_z = StandardScaler() df['valor_z'] = scaler_z.fit_transform(df[['valor']])"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "2.2 Procedimiento: Limpieza de Datos Sistemática en R",
+        "definition": "Aplicar un pipeline de limpieza reproducible a un dataset con problemas típicos: NAs, duplicados, outliers y tipos incorrectos.",
+        "example": "Aplicar un pipeline de limpieza reproducible a un dataset con problemas típicos: NAs, duplicados, outliers y tipos incorrectos.",
+        "keyIdeas": [
+          "Paso 1: Cargar y auditar",
+          "Paso 2: Valores faltantes",
+          "Paso 3: Outliers",
+          "Paso 4: Duplicados y tipos",
+          "Paso 5: Reporte final"
+        ],
+        "headings": [
+          "Objetivo",
+          "Pasos",
+          "Paso 1: Cargar y auditar",
+          "Paso 2: Valores faltantes",
+          "Paso 3: Outliers",
+          "Paso 4: Duplicados y tipos",
+          "Paso 5: Reporte final"
+        ],
+        "paragraphs": [
+          "Aplicar un pipeline de limpieza reproducible a un dataset con problemas típicos: NAs, duplicados, outliers y tipos incorrectos."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/procedimiento.html"
+      },
+      "practica": {
+        "title": "2.2 Práctica Guiada: Limpieza de Dataset de Ventas",
+        "definition": "library(dplyr) summary(ventas) colSums(is.na(ventas)) sum(duplicated(ventas)) # ¿Cuántos NAs hay en precio? ¿Y en cantidad? # ¿Cuántos duplicados? # ¿Los valores de 'producto' son consistentes? Ficha 3: Limpieza paso a paso ventas_clean % distinct() %>% # Paso 1: eliminar duplicados mutate( producto = toupper(producto), # Paso 2: normalizar texto precio = na_if(precio, 0), # Paso 3: ceros → NA precio = na_if(precio, 999999) # outlier extremo → NA ) %>% mutate( precio = ifelse(is.na(precio), median(precio, na.rm=...",
+        "example": "set.seed(100) ventas Responde: ¿Qué problemas identificás a simple vista?",
+        "keyIdeas": [
+          "Ficha 1: Crear dataset con problemas",
+          "Ficha 2: Auditoría inicial",
+          "Ficha 3: Limpieza paso a paso",
+          "Ficha 4: Análisis post-limpieza"
+        ],
+        "headings": [
+          "Ficha 1: Crear dataset con problemas",
+          "Ficha 2: Auditoría inicial",
+          "Ficha 3: Limpieza paso a paso",
+          "Ficha 4: Análisis post-limpieza"
+        ],
+        "paragraphs": [
+          "Duración: 50 minutos | Herramienta: R + dplyr",
+          "set.seed(100) ventas Responde: ¿Qué problemas identificás a simple vista?",
+          "library(dplyr) summary(ventas) colSums(is.na(ventas)) sum(duplicated(ventas)) # ¿Cuántos NAs hay en precio? ¿Y en cantidad? # ¿Cuántos duplicados? # ¿Los valores de 'producto' son consistentes? Ficha 3: Limpieza paso a paso ventas_clean % distinct() %>% # Paso 1: eliminar duplicados mutate( producto = toupper(producto), # Paso 2: normalizar texto precio = na_if(precio, 0), # Paso 3: ceros → NA precio = na_if(precio, 999999) # outlier extremo → NA ) %>% mutate( precio = ifelse(is.na(precio), median(precio, na.rm=...",
+          "ventas_clean %>% group_by(producto, vendedor) %>% summarise( total_ventas = sum(cantidad * precio), n_transacciones = n(), .groups = \"drop\" ) %>% arrange(desc(total_ventas)) ¿Cuál es el producto más vendido? ¿Qué vendedor genera más ingresos?"
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "2.2 Aplicación: Pipeline de Calidad de Datos en Producción",
+        "definition": "Una empresa de telecomunicaciones en Paraguay requiere un pipeline automático que evalúe la calidad de datos de sus archivos de facturación antes de cargarlos a su data warehouse.",
+        "example": "Una empresa de telecomunicaciones en Paraguay requiere un pipeline automático que evalúe la calidad de datos de sus archivos de facturación antes de cargarlos a su data warehouse.",
+        "keyIdeas": [
+          "Función de auditoría automática"
+        ],
+        "headings": [
+          "Contexto",
+          "Función de auditoría automática"
+        ],
+        "paragraphs": [
+          "Una empresa de telecomunicaciones en Paraguay requiere un pipeline automático que evalúe la calidad de datos de sus archivos de facturación antes de cargarlos a su data warehouse."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s2_estadisticos_descriptivos/aplicacion.html"
+      }
+    },
+    "u2_s3_correlacion_agrupacion": {
+      "code": "2.3",
+      "title": "Correlacion y Agrupacion",
+      "topic": "correlacion Pearson y Spearman, matrices de correlacion, groupby, chi-cuadrado",
+      "resumen": {
+        "title": "2.3 Correlación y Análisis de Agrupación — Resumen",
+        "definition": "El análisis de correlación mide la fuerza y dirección de la relación lineal entre dos variables. El análisis de agrupación (groupby) resume datasets por categorías para obtener métricas por segmento.",
+        "example": "r = Cov(X,Y) / (σX × σY), donde r ∈ [−1, 1].",
+        "keyIdeas": [
+          "r = 1: correlación positiva perfecta",
+          "r = 0: sin correlación lineal",
+          "r = −1: correlación negativa perfecta",
+          "|r| > 0.7: fuerte; 0.4–0.7: moderada; < 0.4: débil",
+          "Correlación de Pearson"
+        ],
+        "headings": [
+          "Correlación de Pearson",
+          "Correlación de Spearman",
+          "Agrupación con dplyr",
+          "Tabla cruzada (contingencia)"
+        ],
+        "paragraphs": [
+          "El análisis de correlación mide la fuerza y dirección de la relación lineal entre dos variables. El análisis de agrupación (groupby) resume datasets por categorías para obtener métricas por segmento.",
+          "r = Cov(X,Y) / (σX × σY), donde r ∈ [−1, 1].",
+          "Alternativa no paramétrica: mide correlación entre los rangos de las variables. Más robusta a outliers y para variables ordinales.",
+          "df %>% group_by(categoria) %>% summarise( n = n(), media = mean(valor), sd = sd(valor), mediana = median(valor) ) Tabla cruzada (contingencia) Para variables categóricas: table(df$var1, df$var2) o crosstab en Python. Chi-cuadrado prueba independencia."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/resumen.html"
+      },
+      "microlectura": {
+        "title": "2.3 Correlación y Análisis de Agrupación",
+        "definition": "El coeficiente r de Pearson cuantifica la fuerza y dirección de la relación lineal entre dos variables cuantitativas. Se calcula como la covarianza estandarizada:",
+        "example": "r = Σ[(xᵢ − x̄)(yᵢ − ȳ)] / √[Σ(xᵢ − x̄)² × Σ(yᵢ − ȳ)²]",
+        "keyIdeas": [
+          "Detectar variables altamente correlacionadas (multicolinealidad)",
+          "Seleccionar features para modelos",
+          "Descubrir grupos de variables que se mueven juntas",
+          "group_by(variable): segmenta el dataset por categorías.",
+          "summarise(...): calcula estadísticos dentro de cada grupo."
+        ],
+        "headings": [
+          "1. El coeficiente de correlación de Pearson",
+          "2. La trampa de la correlación",
+          "3. Cuando Pearson falla",
+          "4. Matrices de correlación",
+          "5. Análisis de agrupación (GroupBy)",
+          "6. Tablas de contingencia y chi-cuadrado"
+        ],
+        "paragraphs": [
+          "El coeficiente r de Pearson cuantifica la fuerza y dirección de la relación lineal entre dos variables cuantitativas. Se calcula como la covarianza estandarizada:",
+          "r = Σ[(xᵢ − x̄)(yᵢ − ȳ)] / √[Σ(xᵢ − x̄)² × Σ(yᵢ − ȳ)²]",
+          "Valores de r van de −1 a +1. Un r de 0.85 indica una correlación positiva fuerte; −0.60 indica correlación negativa moderada.",
+          "Existen \"correlaciones espurias\" históricamente documentadas: el consumo de queso per cápita en EE.UU. correlaciona r=0.95 con muertes por enredarse en sábanas. Claramente no hay causalidad: ambas crecen con el tiempo (variable confusora: año).",
+          "La regla: correlación es necesaria pero no suficiente para causalidad. Para establecer causalidad se necesitan experimentos controlados o métodos de inferencia causal (diferencias en diferencias, variables instrumentales)."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/microlectura.html"
+      },
+      "funciones": {
+        "title": "2.3 Guía de Funciones: Correlación y Agrupación",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "R — cor, dplyr, data.table",
+          "Python — pandas + scipy"
+        ],
+        "headings": [
+          "R — cor, dplyr, data.table",
+          "Python — pandas + scipy"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [
+          "library(dplyr) library(ggplot2) library(data.table) # CORRELACIÓN # ───────────── data(mtcars) # Correlación entre dos variables cor(mtcars$mpg, mtcars$wt) # → retorna el coeficiente r de Pearson # Correlación de Spearman (más robusta a outliers) cor(mtcars$mpg, mtcars$wt, method = \"spearman\") # Matriz de correlación completa cor_matrix % group_by(cyl) %>% summarise( n = n(), mpg_media = mean(mpg), mpg_sd = sd(mpg), hp_media = mean(hp), .groups = \"drop\" ) %>% arrange(desc(mpg_media)) # group_by: segmenta por nro de cilindros # n(): cuenta filas en cada grupo # .groups=\"drop\": elimina agrupación después de summarise # Agrupación múltiple mtcars %>% group_by(cyl, am) %>% # am: transmisión (0=automática, 1=manual) summarise(mpg_promedio = mean(mpg), .groups = \"drop\") # AGRUPACIÓN con data.table (más rápido para big data) dt <- as.data.table(mtcars) resultado <- dt[, .( n = .N, mpg_media = mean(mpg), hp_media = mean(hp) ), by = .(cyl, am)] # .N: número de filas del grupo # by: variables de agrupación # TABLA DE CONTINGENCIA table(mtcars$cyl, mtcars$am) # Test chi-cuadrado de independencia chisq.test(table(mtcars$cyl, mtcars$am)) # p < 0.05: hay asociación entre nro cilindros y tipo de transmisión",
+          "import pandas as pd import numpy as np from scipy import stats import seaborn as sns import matplotlib.pyplot as plt df = pd.read_csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv') # CORRELACIÓN df[['total_bill','tip','size']].corr() # Pearson df[['total_bill','tip','size']].corr(method='spearman') # Spearman # Test de significancia r, p = stats.pearsonr(df['total_bill'], df['tip']) print(f\"r = {r:.3f}, p = {p:.4f}\") # Heatmap fig, ax = plt.subplots(figsize=(6,5)) sns.heatmap(df[['total_bill','tip','size']].corr(), annot=True, fmt='.2f', cmap='coolwarm', center=0, vmin=-1, vmax=1, ax=ax) plt.title('Matriz de correlación') plt.tight_layout() # AGRUPACIÓN # Por un grupo df.groupby('day')['total_bill'].agg(['mean','std','count']) # Por múltiples grupos resumen = df.groupby(['day','sex']).agg( promedio_cuenta=('total_bill', 'mean'), propina_media=('tip', 'mean'), n=('total_bill', 'count') ).reset_index() # .agg(): agrega con nombre personalizado # reset_index(): convierte índices jerárquicos en columnas # TABLA DE CONTINGENCIA tabla = pd.crosstab(df['day'], df['sex']) # Test chi-cuadrado chi2, p, dof, expected = stats.chi2_contingency(tabla) print(f\"chi2={chi2:.2f}, p={p:.4f}, gl={dof}\")"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "2.3 Procedimiento: Análisis de Correlación y Agrupación",
+        "definition": "Identificar relaciones entre variables mediante correlación y resumir patrones por grupos en un dataset multivariado.",
+        "example": "Identificar relaciones entre variables mediante correlación y resumir patrones por grupos en un dataset multivariado.",
+        "keyIdeas": [
+          "Paso 1: Cargar datos y seleccionar variables",
+          "Paso 2: Calcular matriz de correlación",
+          "Paso 3: Visualizar",
+          "Paso 4: Scatterplot de la correlación más alta",
+          "Paso 5: Análisis de agrupación"
+        ],
+        "headings": [
+          "Objetivo",
+          "Pasos",
+          "Paso 1: Cargar datos y seleccionar variables",
+          "Paso 2: Calcular matriz de correlación",
+          "Paso 3: Visualizar",
+          "Paso 4: Scatterplot de la correlación más alta",
+          "Paso 5: Análisis de agrupación",
+          "Paso 6: Visualizar grupos"
+        ],
+        "paragraphs": [
+          "Identificar relaciones entre variables mediante correlación y resumir patrones por grupos en un dataset multivariado."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/procedimiento.html"
+      },
+      "practica": {
+        "title": "2.3 Práctica Guiada: Análisis de Correlación en Dataset Económico",
+        "definition": "Duración: 50 minutos | Dataset: World Bank indicators",
+        "example": "set.seed(21) n ¿Qué tipo tiene cada variable? ¿Qué rango esperarías para el PIB per cápita?",
+        "keyIdeas": [
+          "Ficha 1: Simular datos de indicadores económicos",
+          "Ficha 2: Matriz de correlación",
+          "Ficha 3: Agrupación por región",
+          "Ficha 4: Gráfico de burbuja"
+        ],
+        "headings": [
+          "Ficha 1: Simular datos de indicadores económicos",
+          "Ficha 2: Matriz de correlación",
+          "Ficha 3: Agrupación por región",
+          "Ficha 4: Gráfico de burbuja"
+        ],
+        "paragraphs": [
+          "Duración: 50 minutos | Dataset: World Bank indicators",
+          "set.seed(21) n ¿Qué tipo tiene cada variable? ¿Qué rango esperarías para el PIB per cápita?",
+          "library(corrplot) vars_num ¿Qué par de variables tiene la correlación más alta? ¿Qué par tiene correlación negativa?",
+          "library(dplyr) economicos %>% group_by(region) %>% summarise( n_paises = n(), pib_mediana = median(pib_per_capita), vida_media = mean(esperanza_vida), alfabetizacion = mean(tasa_alfabetizacion) ) %>% arrange(desc(pib_mediana)) ¿Qué región tiene mayor PIB mediano? ¿Coincide con mayor esperanza de vida?",
+          "library(ggplot2) ggplot(economicos, aes(x = pib_per_capita, y = esperanza_vida, size = tasa_alfabetizacion, color = region)) + geom_point(alpha = 0.7) + scale_x_log10(labels = scales::dollar) + scale_size_continuous(range = c(3, 12), name = \"Alfabetización %\") + labs(title = \"PIB vs Esperanza de vida\", x = \"PIB per cápita (escala log)\", y = \"Esperanza de vida (años)\") + theme_minimal() ¿Qué patrón observas? ¿La relación es lineal o curvilínea en escala original?"
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "2.3 Aplicación: Análisis de Correlación para Selección de Features",
+        "definition": "Antes de entrenar un modelo de Machine Learning, es fundamental analizar las correlaciones entre variables. Variables altamente correlacionadas (multicolinealidad) pueden causar inestabilidad en los modelos de regresión. El análisis de correlación permite seleccionar un subconjunto óptimo de features.",
+        "example": "Antes de entrenar un modelo de Machine Learning, es fundamental analizar las correlaciones entre variables. Variables altamente correlacionadas (multicolinealidad) pueden causar inestabilidad en los modelos de regresión. El análisis de correlación permite seleccionar un subconjunto óptimo de features.",
+        "keyIdeas": [
+          "Pipeline de selección de features por correlación"
+        ],
+        "headings": [
+          "Contexto",
+          "Pipeline de selección de features por correlación"
+        ],
+        "paragraphs": [
+          "Antes de entrenar un modelo de Machine Learning, es fundamental analizar las correlaciones entre variables. Variables altamente correlacionadas (multicolinealidad) pueden causar inestabilidad en los modelos de regresión. El análisis de correlación permite seleccionar un subconjunto óptimo de features."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u2_s3_correlacion_agrupacion/aplicacion.html"
+      }
+    },
+    "u3_s1_knn_naive_bayes": {
+      "code": "3.1",
+      "title": "KNN y Naive Bayes",
+      "topic": "KNN, distancia euclidiana, eleccion de K, normalizacion, Naive Bayes y matriz de confusion",
+      "resumen": {
+        "title": "3.1 KNN y Naive Bayes — Resumen",
+        "definition": "KNN y Naive Bayes son algoritmos de clasificación supervisada. Representan dos filosofías distintas: KNN basado en distancia (instancia), Naive Bayes basado en probabilidad (modelo).",
+        "example": "Para clasificar un nuevo punto, busca los K vecinos más cercanos en el espacio de features y asigna la clase mayoritaria. Sin entrenamiento explícito: \"lazy learner\".",
+        "keyIdeas": [
+          "Distancia euclidiana: d = √[Σ(xᵢ − yᵢ)²]",
+          "Elección de K: K pequeño = overfitting; K grande = underfitting. Usar K impar para evitar empates. Probar con √n.",
+          "Normalización obligatoria: sin normalizar, variables con mayor escala dominan la distancia.",
+          "Complejidad predicción: O(n·d) — lento en datasets grandes.",
+          "Gaussian NB: para features continuas, asume distribución normal por clase."
+        ],
+        "headings": [
+          "KNN — K-Nearest Neighbors",
+          "Naive Bayes",
+          "Comparación"
+        ],
+        "paragraphs": [
+          "KNN y Naive Bayes son algoritmos de clasificación supervisada. Representan dos filosofías distintas: KNN basado en distancia (instancia), Naive Bayes basado en probabilidad (modelo).",
+          "Para clasificar un nuevo punto, busca los K vecinos más cercanos en el espacio de features y asigna la clase mayoritaria. Sin entrenamiento explícito: \"lazy learner\".",
+          "Aplica el teorema de Bayes asumiendo independencia condicional entre features dado la clase.",
+          "P(clase | features) ∝ P(clase) × ΠP(featureᵢ | clase)"
+        ],
+        "codeBlocks": [],
+        "tables": [
+          [
+            "Característica",
+            "KNN",
+            "Naive Bayes"
+          ],
+          [
+            "Tipo",
+            "Basado en instancia",
+            "Probabilístico"
+          ],
+          [
+            "Entrenamiento",
+            "Sin entrenamiento",
+            "Rápido"
+          ],
+          [
+            "Predicción",
+            "Lenta (busca vecinos)",
+            "Muy rápida"
+          ],
+          [
+            "Interpetabilidad",
+            "Alta"
+          ]
+        ],
+        "source": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/resumen.html"
+      },
+      "microlectura": {
+        "title": "3.1 KNN y Naive Bayes",
+        "definition": "\"Dime con quién andas y te diré quién eres.\" Esta frase resume KNN: un punto desconocido se clasifica por la mayoría de sus K vecinos más cercanos en el espacio de features.",
+        "example": "El algoritmo funciona en tres pasos: (1) calcular la distancia entre el punto nuevo y todos los puntos de entrenamiento, (2) seleccionar los K puntos más cercanos, (3) asignar la clase más frecuente entre esos K vecinos.",
+        "keyIdeas": [
+          "1. La intuición detrás de KNN",
+          "2. La elección de K",
+          "3. Por qué normalizar es obligatorio en KNN",
+          "4. El teorema de Bayes y Naive Bayes",
+          "5. La suposición \"naive\""
+        ],
+        "headings": [
+          "1. La intuición detrás de KNN",
+          "2. La elección de K",
+          "3. Por qué normalizar es obligatorio en KNN",
+          "4. El teorema de Bayes y Naive Bayes",
+          "5. La suposición \"naive\"",
+          "6. Evaluación de modelos de clasificación"
+        ],
+        "paragraphs": [
+          "\"Dime con quién andas y te diré quién eres.\" Esta frase resume KNN: un punto desconocido se clasifica por la mayoría de sus K vecinos más cercanos en el espacio de features.",
+          "El algoritmo funciona en tres pasos: (1) calcular la distancia entre el punto nuevo y todos los puntos de entrenamiento, (2) seleccionar los K puntos más cercanos, (3) asignar la clase más frecuente entre esos K vecinos.",
+          "No hay ecuación que \"aprender\": el modelo es el conjunto de datos de entrenamiento. Por eso se llama \"lazy learner\" — no aprende durante el entrenamiento pero trabaja duro al predecir.",
+          "K es el hiperparámetro más crítico de KNN. Si K=1, el modelo es muy sensible al ruido — un outlier puede clasificar mal un punto cercano (overfitting). Si K=n (todos los vecinos), siempre predice la clase mayoritaria global (underfitting).",
+          "La regla empírica es K = √n, donde n es el tamaño del dataset. En la práctica, se usa validación cruzada para seleccionar el K óptimo probando varios valores y eligiendo el que minimiza el error de clasificación."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/microlectura.html"
+      },
+      "funciones": {
+        "title": "3.1 Guía de Funciones: KNN y Naive Bayes en R y Python",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "R — class + e1071",
+          "Python — sklearn"
+        ],
+        "headings": [
+          "R — class + e1071",
+          "Python — sklearn"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [
+          "library(class) # KNN library(e1071) # Naive Bayes library(caret) # evaluación y CV data(iris) set.seed(42) # PREPROCESAMIENTO # ───────────────── # División train/test (80/20) idx <- createDataPartition(iris$Species, p = 0.8, list = FALSE) train <- iris[idx, ] test <- iris[-idx, ] # Normalización (NECESARIA para KNN) preproc <- preProcess(train[, 1:4], method = c(\"center\", \"scale\")) train_norm <- predict(preproc, train[, 1:4]) test_norm <- predict(preproc, test[, 1:4]) # preProcess: calcula media y SD del train # predict(preproc, ...): aplica la misma transformación al test # KNN # ──── pred_knn <- knn( train = train_norm, # datos de entrenamiento (features) test = test_norm, # datos de test (features) cl = train$Species, # etiquetas de entrenamiento k = 5 # número de vecinos ) # knn() retorna factor con predicciones # Evaluar KNN conf_knn <- confusionMatrix(pred_knn, test$Species) print(conf_knn) # → Accuracy, Kappa, Sensitivity, Specificity por clase # Encontrar K óptimo k_vals <- 1:20 errores <- sapply(k_vals, function(k) { pred <- knn(train_norm, test_norm, train$Species, k=k) mean(pred != test$Species) # tasa de error }) plot(k_vals, errores, type=\"b\", xlab=\"K\", ylab=\"Tasa de error\", main=\"KNN: selección de K\") k_optimo <- k_vals[which.min(errores)] cat(\"K óptimo:\", k_optimo, \" \") # NAIVE BAYES # ──────────── modelo_nb <- naiveBayes(Species ~ ., data = train) # Fórmula: va",
+          "from sklearn.datasets import load_iris from sklearn.model_selection import train_test_split, cross_val_score from sklearn.preprocessing import StandardScaler from sklearn.neighbors import KNeighborsClassifier from sklearn.naive_bayes import GaussianNB from sklearn.metrics import classification_report, confusion_matrix, accuracy_score import numpy as np import matplotlib.pyplot as plt import seaborn as sns X, y = load_iris(return_X_y=True) target_names = load_iris().target_names # División train/test X_train, X_test, y_train, y_test = train_test_split( X, y, test_size=0.2, random_state=42, stratify=y ) # stratify=y: mantiene proporción de clases en cada split # Normalización scaler = StandardScaler() X_train_s = scaler.fit_transform(X_train) # fit+transform en train X_test_s = scaler.transform(X_test) # solo transform en test (!) # KNN knn = KNeighborsClassifier(n_neighbors=5, metric='euclidean') knn.fit(X_train_s, y_train) y_pred_knn = knn.predict(X_test_s) print(\"KNN — Reporte de clasificación:\") print(classification_report(y_test, y_pred_knn, target_names=target_names)) # Matriz de confusión cm = confusion_matrix(y_test, y_pred_knn) sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=target_names, yticklabels=target_names) plt.title('Matriz de confusión — KNN') plt.ylabel('Real'); plt.xlabel('Predicho') plt.tight_layout() # Selección de K óptimo k_range = range(1, "
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "3.1 Procedimiento: Clasificación con KNN y Naive Bayes",
+        "definition": "Implementar un pipeline completo de clasificación con KNN y Naive Bayes, evaluando ambos modelos y comparando resultados.",
+        "example": "Implementar un pipeline completo de clasificación con KNN y Naive Bayes, evaluando ambos modelos y comparando resultados.",
+        "keyIdeas": [
+          "Paso 1: Preparar datos",
+          "Paso 2: Normalizar features",
+          "Paso 3: Entrenar y evaluar KNN",
+          "Paso 4: Entrenar y evaluar Naive Bayes",
+          "Paso 5: Comparar modelos"
+        ],
+        "headings": [
+          "Objetivo",
+          "Pasos",
+          "Paso 1: Preparar datos",
+          "Paso 2: Normalizar features",
+          "Paso 3: Entrenar y evaluar KNN",
+          "Paso 4: Entrenar y evaluar Naive Bayes",
+          "Paso 5: Comparar modelos",
+          "Paso 6: Validación cruzada robusta"
+        ],
+        "paragraphs": [
+          "Implementar un pipeline completo de clasificación con KNN y Naive Bayes, evaluando ambos modelos y comparando resultados."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/procedimiento.html"
+      },
+      "practica": {
+        "title": "3.1 Práctica Guiada: Clasificación de Tumores (Benignos vs Malignos)",
+        "definition": "Dataset: Wisconsin Breast Cancer | Objetivo: clasificar tumores",
+        "example": "library(mlbench); library(caret); library(class); library(e1071) data(BreastCancer, package=\"mlbench\") # Limpiar NAs y convertir tipos bc Ficha 2: División y normalización set.seed(42) idx Ficha 3: KNN con selección de K k_vals Ficha 4: Naive Bayes y comparación nb Ficha 5: Reflexión En diagnóstico médico, ¿qué tipo de error es más costoso: predecir \"benigno\" cuando es \"maligno\" (falso negativo) o predecir \"maligno\" cuando es \"benigno\" (falso positivo)? ¿Qué métrica usarías para optimizar el modelo?",
+        "keyIdeas": [
+          "Ficha 1: Cargar y explorar",
+          "Ficha 2: División y normalización",
+          "Ficha 3: KNN con selección de K",
+          "Ficha 4: Naive Bayes y comparación",
+          "Ficha 5: Reflexión"
+        ],
+        "headings": [
+          "Ficha 1: Cargar y explorar",
+          "Ficha 2: División y normalización",
+          "Ficha 3: KNN con selección de K",
+          "Ficha 4: Naive Bayes y comparación",
+          "Ficha 5: Reflexión"
+        ],
+        "paragraphs": [
+          "Dataset: Wisconsin Breast Cancer | Objetivo: clasificar tumores",
+          "library(mlbench); library(caret); library(class); library(e1071) data(BreastCancer, package=\"mlbench\") # Limpiar NAs y convertir tipos bc Ficha 2: División y normalización set.seed(42) idx Ficha 3: KNN con selección de K k_vals Ficha 4: Naive Bayes y comparación nb Ficha 5: Reflexión En diagnóstico médico, ¿qué tipo de error es más costoso: predecir \"benigno\" cuando es \"maligno\" (falso negativo) o predecir \"maligno\" cuando es \"benigno\" (falso positivo)? ¿Qué métrica usarías para optimizar el modelo?"
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "3.1 Aplicación: Detección de Clientes en Riesgo de Mora",
+        "definition": "Un banco en Paraguay quiere predecir qué clientes podrían caer en mora antes de los 90 días. Se dispone de datos históricos de clientes con sus características y el resultado final (mora: sí/no).",
+        "example": "Un banco en Paraguay quiere predecir qué clientes podrían caer en mora antes de los 90 días. Se dispone de datos históricos de clientes con sus características y el resultado final (mora: sí/no).",
+        "keyIdeas": [
+          "Simulación del dataset",
+          "Pipeline KNN con manejo de desbalance",
+          "Estrategia de umbral variable"
+        ],
+        "headings": [
+          "Contexto",
+          "Simulación del dataset",
+          "Pipeline KNN con manejo de desbalance",
+          "Estrategia de umbral variable"
+        ],
+        "paragraphs": [
+          "Un banco en Paraguay quiere predecir qué clientes podrían caer en mora antes de los 90 días. Se dispone de datos históricos de clientes con sus características y el resultado final (mora: sí/no)."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s1_knn_naive_bayes/aplicacion.html"
+      }
+    },
+    "u3_s2_regresion_logistica": {
+      "code": "3.2",
+      "title": "Regresion Logistica",
+      "topic": "sigmoide, log-odds, odds ratios, regularizacion, curva ROC y AUC",
+      "resumen": {
+        "title": "3.2 Regresión Logística — Resumen",
+        "definition": "La regresión logística es un modelo de clasificación que predice la probabilidad de pertenencia a una clase usando la función sigmoide.",
+        "example": "σ(z) = 1 / (1 + e^{-z}), donde z = β₀ + β₁x₁ + β₂x₂ + ... + βₚxₚ",
+        "keyIdeas": [
+          "L1 (Lasso): sparsity — algunos coeficientes quedan en cero (selección de features).",
+          "L2 (Ridge): shrinkage — coeficientes pequeños pero no cero (evita overfitting).",
+          "Función sigmoide",
+          "Log-odds (logit)",
+          "Entrenamiento: máxima verosimilitud"
+        ],
+        "headings": [
+          "Función sigmoide",
+          "Log-odds (logit)",
+          "Entrenamiento: máxima verosimilitud",
+          "Multiclase",
+          "Regularización"
+        ],
+        "paragraphs": [
+          "La regresión logística es un modelo de clasificación que predice la probabilidad de pertenencia a una clase usando la función sigmoide.",
+          "σ(z) = 1 / (1 + e^{-z}), donde z = β₀ + β₁x₁ + β₂x₂ + ... + βₚxₚ",
+          "La sigmoide mapea cualquier número real a (0,1) — ideal para representar probabilidades.",
+          "log[p/(1-p)] = β₀ + Σβᵢxᵢ",
+          "Los coeficientes β se interpretan en escala log-odds. exp(β) es el odds ratio: cuánto cambia el odds de la clase 1 por un aumento unitario en xᵢ."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/resumen.html"
+      },
+      "microlectura": {
+        "title": "3.2 Regresión Logística",
+        "definition": "La regresión lineal predice valores en (−∞, +∞), pero una probabilidad debe estar en [0,1]. Si aplicamos regresión lineal directamente, podemos obtener predicciones como −0.3 o 1.7 — sin sentido como probabilidades.",
+        "example": "Además, la regresión lineal asume distribución normal de los residuos, lo cual no se cumple cuando la variable de respuesta es binaria (0/1).",
+        "keyIdeas": [
+          "exp(β) = 2 → el odds de clase 1 se duplica por cada unidad de aumento en x.",
+          "exp(β) = 0.5 → el odds se reduce a la mitad.",
+          "exp(β) = 1 → la variable no tiene efecto en el odds.",
+          "L2 (Ridge): penaliza Σβᵢ² — reduce todos los coeficientes proporcionalmente.",
+          "L1 (Lasso): penaliza Σ|βᵢ| — puede hacer algunos β exactamente cero (selección automática de variables)."
+        ],
+        "headings": [
+          "1. ¿Por qué no usar regresión lineal para clasificar?",
+          "2. La función sigmoide: el puente",
+          "3. El umbral de decisión",
+          "4. Interpretación de coeficientes",
+          "5. Regularización: combatir el overfitting",
+          "6. Supuestos de la regresión logística"
+        ],
+        "paragraphs": [
+          "La regresión lineal predice valores en (−∞, +∞), pero una probabilidad debe estar en [0,1]. Si aplicamos regresión lineal directamente, podemos obtener predicciones como −0.3 o 1.7 — sin sentido como probabilidades.",
+          "Además, la regresión lineal asume distribución normal de los residuos, lo cual no se cumple cuando la variable de respuesta es binaria (0/1).",
+          "La solución es transformar la combinación lineal de features (z = Xβ) con la función sigmoide:",
+          "P(Y=1|X) = σ(z) = 1 / (1 + e^{-z})",
+          "La sigmoide tiene propiedades perfectas para este propósito: siempre produce valores en (0,1), tiene derivada continua (necesaria para el gradiente), y es monótonamente creciente (preserva el orden relativo de predicciones)."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/microlectura.html"
+      },
+      "funciones": {
+        "title": "3.2 Guía de Funciones: Regresión Logística en R y Python",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "R — glm + caret",
+          "Python — sklearn + statsmodels"
+        ],
+        "headings": [
+          "R — glm + caret",
+          "Python — sklearn + statsmodels"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [
+          "library(caret) data(PimaIndiansDiabetes, package=\"mlbench\") set.seed(42) # División idx = 0.5, \"pos\", \"neg\"), levels=levels(test$diabetes)) confusionMatrix(pred_glm, test$diabetes, positive=\"pos\") # CURVA ROC y AUC library(pROC) roc_obj <- roc(test$diabetes, probs_glm, levels=c(\"neg\",\"pos\")) auc(roc_obj) # Área bajo la curva plot(roc_obj, col=\"#2E7D32\", lwd=2, main=paste(\"ROC — AUC:\", round(auc(roc_obj),3))) abline(0, 1, lty=2, col=\"gray\") # línea aleatoria # REGULARIZACIÓN con glmnet library(glmnet) X_train <- model.matrix(diabetes~., train)[,-1] y_train <- as.numeric(train$diabetes==\"pos\") X_test <- model.matrix(diabetes~., test)[,-1] # Ridge (alpha=0), Lasso (alpha=1), ElasticNet (0<alpha<1) modelo_lasso <- cv.glmnet(X_train, y_train, family=\"binomial\", alpha=1) # cv.glmnet: encuentra lambda óptimo via validación cruzada plot(modelo_lasso) # CV error vs log(lambda) probs_lasso <- predict(modelo_lasso, X_test, s=\"lambda.1se\", type=\"response\") # s=\"lambda.1se\": lambda que da error a 1 SE del mínimo (más parsimonioso)",
+          "from sklearn.linear_model import LogisticRegression from sklearn.metrics import classification_report, roc_auc_score, roc_curve from sklearn.preprocessing import StandardScaler from sklearn.model_selection import train_test_split import pandas as pd import numpy as np import matplotlib.pyplot as plt from sklearn.datasets import load_breast_cancer X, y = load_breast_cancer(return_X_y=True) X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) # Escalar (importante para convergencia) scaler = StandardScaler() X_train_s = scaler.fit_transform(X_train) X_test_s = scaler.transform(X_test) # Regresión logística — L2 (Ridge) por defecto lr = LogisticRegression( C=1.0, # inverso de regularización (C pequeño = más regularización) penalty='l2', # tipo de regularización max_iter=1000, # máximo de iteraciones de optimización random_state=42 ) lr.fit(X_train_s, y_train) # Coeficientes feature_names = load_breast_cancer().feature_names coef_df = pd.DataFrame({'feature': feature_names, 'coef': lr.coef_[0]}) print(coef_df.sort_values('coef', ascending=False).head(10)) # Predicción y métricas y_prob = lr.predict_proba(X_test_s)[:,1] # probabilidad de clase 1 y_pred = lr.predict(X_test_s) print(classification_report(y_test, y_pred)) print(f\"AUC-ROC: {roc_auc_score(y_test, y_prob):.4f}\") # Curva ROC fpr, tpr, _ = roc_curve(y_test, y_prob) plt.figure(figsize=(7,"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "3.2 Procedimiento: Regresión Logística Paso a Paso",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "Paso 1: Preparar y explorar",
+          "Paso 2: División y preprocesamiento",
+          "Paso 3: Modelo base",
+          "Paso 4: Modelo reducido con variables significativas",
+          "Paso 5: Predicción y evaluación"
+        ],
+        "headings": [
+          "Pasos",
+          "Paso 1: Preparar y explorar",
+          "Paso 2: División y preprocesamiento",
+          "Paso 3: Modelo base",
+          "Paso 4: Modelo reducido con variables significativas",
+          "Paso 5: Predicción y evaluación",
+          "Paso 6: Curva ROC y AUC",
+          "Paso 7: Ajustar umbral"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/procedimiento.html"
+      },
+      "practica": {
+        "title": "3.2 Práctica Guiada: Predicción de Deserción Estudiantil",
+        "definition": "Contexto: Un sistema universitario quiere predecir qué estudiantes corren riesgo de desertar.",
+        "example": "Contexto: Un sistema universitario quiere predecir qué estudiantes corren riesgo de desertar.",
+        "keyIdeas": [
+          "Ficha 1: Simular datos estudiantiles",
+          "Ficha 2: Modelo de regresión logística",
+          "Ficha 3: Odds ratios e interpretación",
+          "Ficha 4: Evaluación y umbral"
+        ],
+        "headings": [
+          "Ficha 1: Simular datos estudiantiles",
+          "Ficha 2: Modelo de regresión logística",
+          "Ficha 3: Odds ratios e interpretación",
+          "Ficha 4: Evaluación y umbral"
+        ],
+        "paragraphs": [
+          "Contexto: Un sistema universitario quiere predecir qué estudiantes corren riesgo de desertar."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "3.2 Aplicación: Modelo de Scoring de Crédito",
+        "definition": "El scoring de crédito es una de las aplicaciones más clásicas de la regresión logística en la industria financiera. Instituciones como Bancos y Cooperativas en Paraguay usan estos modelos para decidir si otorgar préstamos.",
+        "example": "El scoring de crédito es una de las aplicaciones más clásicas de la regresión logística en la industria financiera. Instituciones como Bancos y Cooperativas en Paraguay usan estos modelos para decidir si otorgar préstamos.",
+        "keyIdeas": [
+          "Implementación completa"
+        ],
+        "headings": [
+          "Contexto",
+          "Implementación completa"
+        ],
+        "paragraphs": [
+          "El scoring de crédito es una de las aplicaciones más clásicas de la regresión logística en la industria financiera. Instituciones como Bancos y Cooperativas en Paraguay usan estos modelos para decidir si otorgar préstamos."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s2_regresion_logistica/aplicacion.html"
+      }
+    },
+    "u3_s3_lda_evaluacion": {
+      "code": "3.3",
+      "title": "LDA y Evaluacion de Modelos",
+      "topic": "LDA, QDA, validacion cruzada, data leakage, comparacion de modelos",
+      "resumen": {
+        "title": "3.3 LDA y Evaluación de Modelos — Resumen",
+        "definition": "LDA (Linear Discriminant Analysis) es a la vez un método de clasificación y reducción de dimensionalidad. La evaluación de modelos provee un framework riguroso para comparar algoritmos.",
+        "example": "LDA encuentra las combinaciones lineales de features que maximizan la separación entre clases. Supuestos: distribución normal multivariada y matrices de covarianza iguales entre clases.",
+        "keyIdeas": [
+          "Between-class scatter (SB): varianza entre las medias de las clases.",
+          "Within-class scatter (SW): varianza dentro de cada clase.",
+          "Objetivo: maximizar SB/SW — maximizar separación relativa a dispersión interna.",
+          "QDA: versión cuadrática que permite matrices de covarianza distintas por clase.",
+          "Evaluación de modelos"
+        ],
+        "headings": [
+          "LDA",
+          "Evaluación de modelos",
+          "Validación cruzada k-fold"
+        ],
+        "paragraphs": [
+          "LDA (Linear Discriminant Analysis) es a la vez un método de clasificación y reducción de dimensionalidad. La evaluación de modelos provee un framework riguroso para comparar algoritmos.",
+          "LDA encuentra las combinaciones lineales de features que maximizan la separación entre clases. Supuestos: distribución normal multivariada y matrices de covarianza iguales entre clases.",
+          "Divide el dataset en k partes iguales. Itera k veces: una parte como test, resto como entrenamiento. Retorna k estimaciones de rendimiento → media y desvío."
+        ],
+        "codeBlocks": [],
+        "tables": [
+          [
+            "Métrica",
+            "Fórmula",
+            "Cuándo usar"
+          ],
+          [
+            "Accuracy",
+            "(TP+TN)/(total)",
+            "Clases balanceadas"
+          ],
+          [
+            "Precision",
+            "TP/(TP+FP)",
+            "Minimizar falsos positivos"
+          ],
+          [
+            "Recall",
+            "TP/(TP+FN)",
+            "Minimizar falsos negativos"
+          ],
+          [
+            "F1-Score",
+            "2×P×R/(P+R)",
+            "Balance precision-recall"
+          ]
+        ],
+        "source": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/resumen.html"
+      },
+      "microlectura": {
+        "title": "3.3 LDA y Evaluación de Modelos",
+        "definition": "LDA busca proyectar los datos a un espacio de menor dimensión donde las clases estén lo más separadas posible. Imagina puntos de dos clases en un espacio 2D: LDA encuentra la línea sobre la cual proyectar los puntos de manera que la distancia entre las proyecciones de cada clase sea máxima y la dispersión dentro de cada clase sea mínima.",
+        "example": "Matemáticamente, LDA maximiza el cociente de dispersión entre clases / dispersión dentro de clases, lo que Fisher (1936) formalizó como el criterio de Fisher.",
+        "keyIdeas": [
+          "TP (True Positive): predicho positivo, real positivo.",
+          "TN (True Negative): predicho negativo, real negativo.",
+          "FP (False Positive, Tipo I): predicho positivo, real negativo.",
+          "FN (False Negative, Tipo II): predicho negativo, real positivo.",
+          "1. La idea geométrica de LDA"
+        ],
+        "headings": [
+          "1. La idea geométrica de LDA",
+          "2. LDA como clasificador",
+          "3. La trampa del overfitting y el data leakage",
+          "4. Validación cruzada: la solución robusta",
+          "5. La matriz de confusión y sus derivados",
+          "6. Comparación de múltiples modelos"
+        ],
+        "paragraphs": [
+          "LDA busca proyectar los datos a un espacio de menor dimensión donde las clases estén lo más separadas posible. Imagina puntos de dos clases en un espacio 2D: LDA encuentra la línea sobre la cual proyectar los puntos de manera que la distancia entre las proyecciones de cada clase sea máxima y la dispersión dentro de cada clase sea mínima.",
+          "Matemáticamente, LDA maximiza el cociente de dispersión entre clases / dispersión dentro de clases, lo que Fisher (1936) formalizó como el criterio de Fisher.",
+          "El clasificador LDA asigna un punto nuevo a la clase con mayor probabilidad a posteriori usando el teorema de Bayes, bajo los supuestos de normalidad y covarianzas iguales. Esto produce fronteras de decisión lineales (planos en 3D, hiperplanos en general).",
+          "Cuando las covarianzas no son iguales entre clases, se usa QDA (Quadratic DA) que produce fronteras cuadráticas.",
+          "Un error común en ML es evaluar el modelo en los mismos datos usados para entrenarlo — obteniendo resultados demasiado optimistas. El data leakage ocurre cuando información del test set \"se filtra\" al entrenamiento."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/microlectura.html"
+      },
+      "funciones": {
+        "title": "3.3 Guía de Funciones: LDA y Evaluación de Modelos",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "R — MASS + caret",
+          "Python — sklearn evaluación completa"
+        ],
+        "headings": [
+          "R — MASS + caret",
+          "Python — sklearn evaluación completa"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [
+          "library(MASS) # lda, qda library(caret) library(pROC) data(iris) set.seed(42) idx <- createDataPartition(iris$Species, p=0.8, list=FALSE) train <- iris[idx,]; test <- iris[-idx,] # LDA # ──── modelo_lda <- lda(Species ~ ., data=train) print(modelo_lda) # → Prior probabilities: P(clase) en train # → Group means: media de cada feature por clase # → Coefficients of linear discriminants: pesos de las combinaciones lineales # Predicción pred_lda <- predict(modelo_lda, test) pred_lda$class # clases predichas pred_lda$posterior # probabilidades a posteriori por clase pred_lda$x # scores en el espacio LDA (coordenadas proyectadas) # Matriz de confusión confusionMatrix(pred_lda$class, test$Species) # Visualizar proyección LDA scores_df <- data.frame( LD1 = pred_lda$x[,1], LD2 = pred_lda$x[,2], Species = test$Species ) library(ggplot2) ggplot(scores_df, aes(x=LD1, y=LD2, color=Species)) + geom_point(size=3, alpha=0.8) + stat_ellipse(level=0.95) + labs(title=\"Proyección LDA — iris\") + theme_minimal() # QDA (cuando covarianzas son distintas por clase) modelo_qda <- qda(Species ~ ., data=train) pred_qda <- predict(modelo_qda, test)$class confusionMatrix(pred_qda, test$Species) # EVALUACIÓN RIGUROSA con CV # ────────────────────────── ctrl <- trainControl( method = \"cv\", number = 10, savePredictions = \"final\", classProbs = TRUE, summaryFunction = multiClassSummary # para multiclase ) # Compa",
+          "from sklearn.discriminant_analysis import LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis from sklearn.model_selection import cross_val_score, StratifiedKFold, cross_validate from sklearn.metrics import classification_report, confusion_matrix from sklearn.pipeline import Pipeline from sklearn.preprocessing import StandardScaler from sklearn.datasets import load_iris import numpy as np import pandas as pd import matplotlib.pyplot as plt import seaborn as sns X, y = load_iris(return_X_y=True) names = load_iris().target_names # LDA lda = LinearDiscriminantAnalysis() lda.fit(X, y) # en todos los datos para visualización X_lda = lda.transform(X) # proyectar a espacio LDA # Visualizar proyección fig, ax = plt.subplots(figsize=(8,6)) for i, name in enumerate(names): mask = y == i ax.scatter(X_lda[mask,0], X_lda[mask,1], label=name, alpha=0.7, s=60) ax.set_xlabel('LD1'); ax.set_ylabel('LD2') ax.set_title('Proyección LDA — iris'); ax.legend() plt.tight_layout() # EVALUACIÓN RIGUROSA # ──────────────────── from sklearn.neighbors import KNeighborsClassifier from sklearn.naive_bayes import GaussianNB modelos = { 'LDA': LinearDiscriminantAnalysis(), 'QDA': QuadraticDiscriminantAnalysis(), 'KNN': Pipeline([('scaler', StandardScaler()), ('knn', KNeighborsClassifier(n_neighbors=5))]), 'NaiveBayes': GaussianNB() } cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=42) result"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "3.3 Procedimiento: Comparación Rigurosa de Modelos de Clasificación",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "Paso 1: Preparar el benchmark",
+          "Paso 2: Entrenar múltiples modelos",
+          "Paso 3: Comparar",
+          "Paso 4: Análisis del mejor modelo",
+          "Paso 5: Selección final y documentación"
+        ],
+        "headings": [
+          "Pasos",
+          "Paso 1: Preparar el benchmark",
+          "Paso 2: Entrenar múltiples modelos",
+          "Paso 3: Comparar",
+          "Paso 4: Análisis del mejor modelo",
+          "Paso 5: Selección final y documentación"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/procedimiento.html"
+      },
+      "practica": {
+        "title": "3.3 Práctica Guiada: Torneo de Clasificadores",
+        "definition": "Objetivo: Comparar KNN, NB, LDA y RL en el mismo dataset y justificar la selección final.",
+        "example": "library(caret) data(wine, package=\"HDclassif\") # Convertir clase a factor wine$class Ficha 2: Entrenamiento con CV-10 set.seed(2024) ctrl Ficha 3: Visualización bwplot(res, metric=\"Accuracy\", main=\"Comparación de clasificadores — dataset Wine\") dotplot(res, metric=\"Accuracy\") ¿Cuál tiene mayor accuracy media? ¿Cuál tiene menor variabilidad?",
+        "keyIdeas": [
+          "Ficha 1: Dataset de vinos",
+          "Ficha 2: Entrenamiento con CV-10",
+          "Ficha 3: Visualización",
+          "Ficha 4: Proyección LDA",
+          "Ficha 5: Decisión y justificación"
+        ],
+        "headings": [
+          "Ficha 1: Dataset de vinos",
+          "Ficha 2: Entrenamiento con CV-10",
+          "Ficha 3: Visualización",
+          "Ficha 4: Proyección LDA",
+          "Ficha 5: Decisión y justificación"
+        ],
+        "paragraphs": [
+          "Objetivo: Comparar KNN, NB, LDA y RL en el mismo dataset y justificar la selección final.",
+          "library(caret) data(wine, package=\"HDclassif\") # Convertir clase a factor wine$class Ficha 2: Entrenamiento con CV-10 set.seed(2024) ctrl Ficha 3: Visualización bwplot(res, metric=\"Accuracy\", main=\"Comparación de clasificadores — dataset Wine\") dotplot(res, metric=\"Accuracy\") ¿Cuál tiene mayor accuracy media? ¿Cuál tiene menor variabilidad?",
+          "library(MASS); library(ggplot2) m_lda_full Ficha 5: Decisión y justificación Redacta en 3-4 oraciones: ¿Qué modelo elegirías y por qué? Considera accuracy, variabilidad, interpretabilidad y tiempo de entrenamiento."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "3.3 Aplicación: Pipeline Automático de Selección de Modelos",
+        "definition": "Un científico de datos de una empresa de seguros en Paraguay necesita seleccionar el mejor clasificador para predecir siniestros. Se construye un pipeline automático que entrena, evalúa y reporta todos los modelos.",
+        "example": "Un científico de datos de una empresa de seguros en Paraguay necesita seleccionar el mejor clasificador para predecir siniestros. Se construye un pipeline automático que entrena, evalúa y reporta todos los modelos.",
+        "keyIdeas": [
+          "Pipeline automático"
+        ],
+        "headings": [
+          "Contexto",
+          "Pipeline automático"
+        ],
+        "paragraphs": [
+          "Un científico de datos de una empresa de seguros en Paraguay necesita seleccionar el mejor clasificador para predecir siniestros. Se construye un pipeline automático que entrena, evalúa y reporta todos los modelos."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u3_s3_lda_evaluacion/aplicacion.html"
+      }
+    },
+    "u4_s1_importancia_variables": {
+      "code": "4.1",
+      "title": "Importancia de Variables",
+      "topic": "coeficientes, permutation importance, SHAP, RFE, multicolinealidad y VIF",
+      "resumen": {
+        "title": "4.1 Importancia de Variables y Feature Selection — Resumen",
+        "definition": "La importancia de variables cuantifica cuánto contribuye cada feature a las predicciones del modelo. La selección de features (feature selection) identifica el subconjunto óptimo para mejorar rendimiento, reducir overfitting y aumentar interpretabilidad.",
+        "example": "Más features no siempre = mejor modelo. La maldición de la dimensionalidad: en espacios de alta dimensión, los datos se vuelven dispersos y los algoritmos basados en distancia (KNN) se degradan. Generalmente, un modelo con 10 features bien seleccionadas supera a uno con 50 features sin selección.",
+        "keyIdeas": [
+          "Filter methods: seleccionan features por estadísticos (correlación, chi-cuadrado, ANOVA) independiente del modelo.",
+          "Wrapper methods: RFE (Recursive Feature Elimination) — entrena el modelo, elimina la feature menos importante, repite.",
+          "Embedded methods: regularización L1/Lasso — elimina features durante el entrenamiento.",
+          "Métodos de importancia de variables",
+          "Feature Selection"
+        ],
+        "headings": [
+          "Métodos de importancia de variables",
+          "Feature Selection",
+          "Regla general"
+        ],
+        "paragraphs": [
+          "La importancia de variables cuantifica cuánto contribuye cada feature a las predicciones del modelo. La selección de features (feature selection) identifica el subconjunto óptimo para mejorar rendimiento, reducir overfitting y aumentar interpretabilidad.",
+          "Más features no siempre = mejor modelo. La maldición de la dimensionalidad: en espacios de alta dimensión, los datos se vuelven dispersos y los algoritmos basados en distancia (KNN) se degradan. Generalmente, un modelo con 10 features bien seleccionadas supera a uno con 50 features sin selección."
+        ],
+        "codeBlocks": [],
+        "tables": [
+          [
+            "Método",
+            "Descripción",
+            "Modelos aplicables"
+          ],
+          [
+            "Coeficientes absolutos",
+            "|β| en regresión logística/lineal",
+            "Modelos lineales"
+          ],
+          [
+            "Impurity-based",
+            "Reducción de Gini/entropía en árboles",
+            "Árboles, Random Forest"
+          ],
+          [
+            "Permutation importance",
+            "Caída de rendimiento al permutar la variable",
+            "Cualquier modelo"
+          ],
+          [
+            "SHAP values",
+            "Contribución individual por observación",
+            "Cualquier modelo"
+          ]
+        ],
+        "source": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/resumen.html"
+      },
+      "microlectura": {
+        "title": "4.1 Importancia de Variables y Feature Selection",
+        "definition": "Cuando un modelo predice que un cliente caerá en mora, la empresa necesita saber por qué : ¿Es el nivel de deuda? ¿La edad? ¿El número de préstamos previos? Sin interpretabilidad, el modelo es una caja negra que puede ser discriminatoria, inaplicable en regulaciones estrictas, y difícil de mejorar.",
+        "example": "Cuando un modelo predice que un cliente caerá en mora, la empresa necesita saber por qué : ¿Es el nivel de deuda? ¿La edad? ¿El número de préstamos previos? Sin interpretabilidad, el modelo es una caja negra que puede ser discriminatoria, inaplicable en regulaciones estrictas, y difícil de mejorar.",
+        "keyIdeas": [
+          "1. ¿Por qué importa la importancia?",
+          "2. La maldición de la dimensionalidad",
+          "3. Métodos de importancia",
+          "4. SHAP: la revolución de la interpretabilidad",
+          "5. Recursive Feature Elimination (RFE)"
+        ],
+        "headings": [
+          "1. ¿Por qué importa la importancia?",
+          "2. La maldición de la dimensionalidad",
+          "3. Métodos de importancia",
+          "4. SHAP: la revolución de la interpretabilidad",
+          "5. Recursive Feature Elimination (RFE)",
+          "6. Cuando no hacer feature selection"
+        ],
+        "paragraphs": [
+          "Cuando un modelo predice que un cliente caerá en mora, la empresa necesita saber por qué : ¿Es el nivel de deuda? ¿La edad? ¿El número de préstamos previos? Sin interpretabilidad, el modelo es una caja negra que puede ser discriminatoria, inaplicable en regulaciones estrictas, y difícil de mejorar.",
+          "La importancia de variables responde: \"¿qué features tienen mayor impacto en las predicciones?\" Esto sirve tanto para interpretabilidad como para optimizar el modelo eliminando features irrelevantes.",
+          "Richard Bellman acuñó este término para describir cómo el espacio crece exponencialmente con la dimensionalidad. Con 2 features, 100 puntos pueden cubrir bien el espacio. Con 100 features, necesitarías 2^100 puntos para la misma densidad.",
+          "Consecuencias prácticas: los algoritmos basados en distancia (KNN) se degradan porque todas las distancias se vuelven similares; más features puede significar más ruido y overfitting; el tiempo de entrenamiento crece.",
+          "Coeficientes (modelos lineales): en regresión logística normalizada, |β| indica importancia relativa. Variable con mayor |β| tiene mayor impacto en el log-odds."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/microlectura.html"
+      },
+      "funciones": {
+        "title": "4.1 Guía de Funciones: Importancia de Variables y Feature Selection",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "R — caret + vip + DALEX",
+          "Python — sklearn + shap"
+        ],
+        "headings": [
+          "R — caret + vip + DALEX",
+          "Python — sklearn + shap"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [
+          "library(caret) library(vip) # variable importance plots library(randomForest) data(PimaIndiansDiabetes, package=\"mlbench\") # 1. IMPORTANCIA POR REGRESIÓN LOGÍSTICA # ──────────────────────────────────────── m_lr <- train(diabetes ~ ., data=PimaIndiansDiabetes, method=\"glm\", family=\"binomial\", preProcess=c(\"center\",\"scale\"), trControl=trainControl(method=\"cv\", number=5)) # Importancia absoluta de coeficientes vip(m_lr, num_features=8, geom=\"col\", aesthetics=list(fill=\"#6A1B9A\", alpha=0.8)) + ggtitle(\"Importancia de variables — Regresión Logística\") # 2. IMPORTANCIA EN RANDOM FOREST # ───────────────────────────────── m_rf <- train(diabetes ~ ., data=PimaIndiansDiabetes, method=\"rf\", ntree=200, trControl=trainControl(method=\"cv\", number=5)) vip(m_rf, num_features=8) # Gini importance # Permutation importance (más confiable) library(DALEX) explainer <- explain(m_rf$finalModel, data=PimaIndiansDiabetes[,-9], y=as.numeric(PimaIndiansDiabetes$diabetes==\"pos\"), label=\"Random Forest\") vi_permutation <- model_parts(explainer, type=\"difference\") # type=\"difference\": caída en AUC al permutar plot(vi_permutation) # 3. FEATURE SELECTION CON RFE # ────────────────────────────── ctrl_rfe <- rfeControl(functions=rfFuncs, method=\"cv\", number=5, verbose=FALSE) # rfFuncs: usa Random Forest para evaluar importancia # También disponible: lmFuncs (LR), nbFuncs (NB) rfe_result <- rfe(PimaIndiansDiabe",
+          "from sklearn.ensemble import RandomForestClassifier from sklearn.linear_model import LogisticRegression from sklearn.feature_selection import RFE, SelectKBest, chi2, mutual_info_classif from sklearn.preprocessing import StandardScaler from sklearn.datasets import load_breast_cancer import pandas as pd import numpy as np import matplotlib.pyplot as plt import shap X, y = load_breast_cancer(return_X_y=True) feature_names = load_breast_cancer().feature_names # Escalar scaler = StandardScaler() X_s = scaler.fit_transform(X) # 1. IMPORTANCIA — REGRESIÓN LOGÍSTICA lr = LogisticRegression(max_iter=5000, random_state=42) lr.fit(X_s, y) imp_df = pd.DataFrame({'feature': feature_names, 'importance': np.abs(lr.coef_[0])}) imp_df = imp_df.sort_values('importance', ascending=False) imp_df.head(10).plot(kind='barh', x='feature', y='importance', color='#6A1B9A', legend=False, figsize=(8,6)) plt.title('Importancia — Regresión Logística (|coeficiente|)') plt.tight_layout() # 2. IMPORTANCIA — RANDOM FOREST (Gini) rf = RandomForestClassifier(n_estimators=200, random_state=42) rf.fit(X, y) rf_imp = pd.Series(rf.feature_importances_, index=feature_names).sort_values(ascending=False) rf_imp.head(10).plot(kind='bar', color='#9C27B0', figsize=(10,5)) plt.title('Importancia Gini — Random Forest') plt.xticks(rotation=45, ha='right') plt.tight_layout() # 3. SHAP VALUES explainer = shap.TreeExplainer(rf) "
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "4.1 Procedimiento: Feature Selection Sistemática",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "Paso 1: Dataset y modelo base",
+          "Paso 2: Visualizar importancia",
+          "Paso 3: RFE para selección automática",
+          "Paso 4: Modelo reducido",
+          "Paso 5: Comparar"
+        ],
+        "headings": [
+          "Pasos",
+          "Paso 1: Dataset y modelo base",
+          "Paso 2: Visualizar importancia",
+          "Paso 3: RFE para selección automática",
+          "Paso 4: Modelo reducido",
+          "Paso 5: Comparar"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/procedimiento.html"
+      },
+      "practica": {
+        "title": "4.1 Práctica Guiada: Interpretando Importancia de Variables",
+        "definition": "library(randomForest); library(caret); library(vip) data(wine, package=\"HDclassif\") wine$class Ficha 2: Importancia por tipo # Gini importance importance(rf_wine, type=2) # Accuracy permutation importance importance(rf_wine, type=1) # ¿Las dos métricas concuerdan en qué variables son más importantes? Ficha 3: Visualizar varImpPlot(rf_wine, main=\"Importancia de variables — Vinos\", col=\"purple\", pch=19) # Con vip vip(rf_wine, num_features=10, aesthetics=list(fill=\"#6A1B9A\")) Ficha 4: Modelo con top 5 variables imp...",
+        "example": "¿Qué variable química del vino resultó más importante para distinguir entre los 3 tipos? ¿Tiene sentido desde el punto de vista enológico? ¿Cambiaría su recomendación si el objetivo fuera maximizar interpretabilidad vs maximizar accuracy?",
+        "keyIdeas": [
+          "Ficha 1: Entrenar Random Forest",
+          "Ficha 2: Importancia por tipo",
+          "Ficha 3: Visualizar",
+          "Ficha 4: Modelo con top 5 variables",
+          "Ficha 5: Reflexión"
+        ],
+        "headings": [
+          "Ficha 1: Entrenar Random Forest",
+          "Ficha 2: Importancia por tipo",
+          "Ficha 3: Visualizar",
+          "Ficha 4: Modelo con top 5 variables",
+          "Ficha 5: Reflexión"
+        ],
+        "paragraphs": [
+          "library(randomForest); library(caret); library(vip) data(wine, package=\"HDclassif\") wine$class Ficha 2: Importancia por tipo # Gini importance importance(rf_wine, type=2) # Accuracy permutation importance importance(rf_wine, type=1) # ¿Las dos métricas concuerdan en qué variables son más importantes? Ficha 3: Visualizar varImpPlot(rf_wine, main=\"Importancia de variables — Vinos\", col=\"purple\", pch=19) # Con vip vip(rf_wine, num_features=10, aesthetics=list(fill=\"#6A1B9A\")) Ficha 4: Modelo con top 5 variables imp...",
+          "¿Qué variable química del vino resultó más importante para distinguir entre los 3 tipos? ¿Tiene sentido desde el punto de vista enológico? ¿Cambiaría su recomendación si el objetivo fuera maximizar interpretabilidad vs maximizar accuracy?"
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "4.1 Aplicación: Feature Selection para Modelos en el Sector Público",
+        "definition": "Una institución pública paraguaya quiere implementar un sistema predictivo para identificar proyectos de inversión con riesgo de ejecución deficiente. El modelo debe ser interpretable para justificar las alertas ante auditores.",
+        "example": "Una institución pública paraguaya quiere implementar un sistema predictivo para identificar proyectos de inversión con riesgo de ejecución deficiente. El modelo debe ser interpretable para justificar las alertas ante auditores.",
+        "keyIdeas": [
+          "Dataset y modelo"
+        ],
+        "headings": [
+          "Contexto",
+          "Dataset y modelo"
+        ],
+        "paragraphs": [
+          "Una institución pública paraguaya quiere implementar un sistema predictivo para identificar proyectos de inversión con riesgo de ejecución deficiente. El modelo debe ser interpretable para justificar las alertas ante auditores."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s1_importancia_variables/aplicacion.html"
+      }
+    },
+    "u4_s2_comunicacion_resultados": {
+      "code": "4.2",
+      "title": "Comunicacion y Reportes",
+      "topic": "reportes, lenguaje de negocio, R Markdown, Quarto, tablas y dashboards",
+      "resumen": {
+        "title": "4.2 Comunicación de Resultados y Reportes — Resumen",
+        "definition": "Un análisis técnico perfecto pierde valor si no se comunica de manera efectiva. La habilidad de traducir hallazgos técnicos al lenguaje del negocio es diferenciadora del científico de datos.",
+        "example": "Documentos reproducibles que combinan código R/Python, texto narrativo y resultados (gráficos, tablas). Un solo archivo fuente genera HTML, PDF o Word.",
+        "keyIdeas": [
+          "Audiencia primero: técnica (p-valores, AUC) vs. no técnica (eficiencia, ahorro, riesgo).",
+          "Pirámide invertida: conclusión primero, luego evidencia, luego detalles técnicos.",
+          "Una sola historia: cada gráfico y tabla debe apoyar un único mensaje central.",
+          "Accionabilidad: todo reporte debe responder \"¿y entonces qué hacemos?\"",
+          "Resumen ejecutivo (1 página, no técnico)"
+        ],
+        "headings": [
+          "Principios de comunicación de datos",
+          "R Markdown / Quarto",
+          "Estructura de un reporte ejecutivo"
+        ],
+        "paragraphs": [
+          "Un análisis técnico perfecto pierde valor si no se comunica de manera efectiva. La habilidad de traducir hallazgos técnicos al lenguaje del negocio es diferenciadora del científico de datos.",
+          "Documentos reproducibles que combinan código R/Python, texto narrativo y resultados (gráficos, tablas). Un solo archivo fuente genera HTML, PDF o Word."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/resumen.html"
+      },
+      "microlectura": {
+        "title": "4.2 Comunicación de Resultados y Reportes",
+        "definition": "Una encuesta de Kaggle (2022) a 24,000 científicos de datos reveló que el 75% considera que la comunicación con stakeholders no técnicos es uno de los principales desafíos. El modelo más sofisticado del mundo no genera valor si el tomador de decisiones no entiende qué hacer con los resultados.",
+        "example": "F1 = 0.71 → \"Balance entre no perder casos de mora y no generar falsas alarmas\"",
+        "keyIdeas": [
+          "AUC = 0.85 → \"El modelo detecta correctamente al 85% de los clientes de riesgo\"",
+          "Recall = 0.78 → \"De cada 100 clientes que caerán en mora, el modelo identifica a 78\"",
+          "Precision = 0.65 → \"De cada 100 alertas del modelo, 65 corresponden a clientes que realmente caen en mora\"",
+          "F1 = 0.71 → \"Balance entre no perder casos de mora y no generar falsas alarmas\"",
+          "1. El problema de la brecha de comunicación"
+        ],
+        "headings": [
+          "1. El problema de la brecha de comunicación",
+          "2. La pirámide invertida del periodismo",
+          "3. Traducir métricas técnicas al lenguaje del negocio",
+          "4. R Markdown y Quarto: documentos reproducibles",
+          "5. El dashboard: comunicación continua",
+          "6. La ética de la visualización"
+        ],
+        "paragraphs": [
+          "Una encuesta de Kaggle (2022) a 24,000 científicos de datos reveló que el 75% considera que la comunicación con stakeholders no técnicos es uno de los principales desafíos. El modelo más sofisticado del mundo no genera valor si el tomador de decisiones no entiende qué hacer con los resultados.",
+          "La brecha existe en dos direcciones: el científico de datos no habla el lenguaje del negocio (ROI, costos de error, tiempo de implementación), y el decisor no entiende el lenguaje técnico (AUC, overfitting, p-valor).",
+          "Los periodistas aprendieron hace un siglo que los lectores necesitan el mensaje principal primero. Los reportes de datos deben seguir el mismo principio: el resumen ejecutivo con la conclusión y recomendación va primero. Los detalles metodológicos van al final en apéndice.",
+          "Un decisor con 5 minutos debe poder leer solo el resumen ejecutivo y entender: qué se analizó, qué se encontró, y qué debería hacerse. Alguien con más tiempo puede ir al análisis detallado.",
+          "R Markdown y su sucesor Quarto permiten crear documentos que mezclan código, texto y resultados en un solo archivo. Cuando los datos se actualizan, se re-ejecuta el documento y todos los números, gráficos y tablas se actualizan automáticamente — sin copiar-pegar."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/microlectura.html"
+      },
+      "funciones": {
+        "title": "4.2 Guía de Funciones: Reportes y Visualizaciones para Comunicación",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "R — R Markdown + knitr + ggplot2",
+          "Python — Matplotlib + tabulate"
+        ],
+        "headings": [
+          "R — R Markdown + knitr + ggplot2",
+          "Python — Matplotlib + tabulate"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [
+          "# PLANTILLA R MARKDOWN PARA REPORTE EJECUTIVO # Crear archivo: reporte_analisis.Rmd # Cabecera YAML: # --- # title: \"Análisis de Riesgo Crediticio\" # subtitle: \"Institución Financiera ABC — Informe Mensual\" # author: \"Depto. de Analítica de Datos\" # date: \"`r Sys.Date()`\" # output: # html_document: # toc: true # toc_float: true # theme: cosmo # code_folding: hide # pdf_document: # toc: true # --- # TABLA FORMATEADA (knitr + kableExtra) library(knitr) library(kableExtra) tabla_resumen % kbl(caption=\"Comparación de modelos de clasificación\", digits=3, col.names=c(\"Modelo\",\"AUC-ROC\",\"F1-Score\",\"Tiempo (ms)\")) %>% kable_styling(bootstrap_options=c(\"striped\",\"hover\",\"condensed\"), full_width=FALSE) %>% row_spec(1, bold=TRUE, background=\"#EDE7F6\") %>% # resaltar mejor footnote(general=\"Evaluación con 10-fold CV. Dataset: N=768.\") # GRÁFICO EJECUTIVO library(ggplot2) library(scales) # Gráfico de barras con etiquetas de valor ggplot(tabla_resumen, aes(x=reorder(Modelo, AUC), y=AUC, fill=Modelo)) + geom_col(alpha=0.85, width=0.7) + geom_text(aes(label=sprintf(\"%.3f\", AUC)), hjust=-0.1, size=4.5) + scale_fill_brewer(palette=\"Purples\") + coord_flip() + scale_y_continuous(limits=c(0, 1), labels=percent) + labs( title=\"AUC-ROC por modelo (10-fold CV)\", subtitle=\"Mayor AUC = mejor capacidad de discriminación\", x=NULL, y=\"AUC-ROC\", caption=\"Fuente: Analítica de Datos ABC, 2026\" ) + theme_minim",
+          "import matplotlib.pyplot as plt import matplotlib.patches as mpatches import pandas as pd import numpy as np # GRÁFICO EJECUTIVO CON ANOTACIONES modelos = ['Regresión Logística', 'LDA', 'KNN k=7', 'Naive Bayes'] aucs = [0.847, 0.831, 0.821, 0.789] colores = ['#6A1B9A', '#9C27B0', '#CE93D8', '#EDE7F6'] fig, ax = plt.subplots(figsize=(9, 5)) bars = ax.barh(modelos, aucs, color=colores, height=0.6, edgecolor='white') # Etiquetas de valor for bar, auc in zip(bars, aucs): ax.text(auc + 0.005, bar.get_y() + bar.get_height()/2, f'{auc:.3f}', va='center', ha='left', fontsize=12, fontweight='bold') # Línea de referencia aleatoria ax.axvline(x=0.5, color='red', linestyle='--', alpha=0.5, label='Aleatorio (AUC=0.5)') ax.set_xlim(0, 1.0) ax.set_xlabel('AUC-ROC', fontsize=12) ax.set_title('Comparación de Clasificadores (Evaluación 10-fold CV)', fontsize=14, fontweight='bold') ax.legend(loc='lower right') ax.spines['top'].set_visible(False) ax.spines['right'].set_visible(False) ax.text(0.98, -0.12, 'Fuente: Analítica de Datos ABC, 2026', transform=ax.transAxes, ha='right', fontsize=9, color='gray') plt.tight_layout() plt.savefig('comparacion_modelos.png', dpi=150, bbox_inches='tight') # TABLA FORMATEADA PARA REPORTE from tabulate import tabulate tabla = pd.DataFrame({ 'Modelo': modelos, 'AUC': aucs, 'Detecta 1 de cada N morosidades': [f'1 de {int(1/a*10):.0f}' for a in aucs] }) print(tabulat"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "4.2 Procedimiento: Crear un Reporte Ejecutivo con R Markdown",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "Paso 1: Instalar y configurar",
+          "Paso 2: Estructura del archivo Rmd",
+          "Paso 3: Componentes del reporte",
+          "Paso 4: Renderizar",
+          "Paso 5: Verificar accesibilidad"
+        ],
+        "headings": [
+          "Pasos",
+          "Paso 1: Instalar y configurar",
+          "Paso 2: Estructura del archivo Rmd",
+          "Paso 3: Componentes del reporte",
+          "Paso 4: Renderizar",
+          "Paso 5: Verificar accesibilidad"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/procedimiento.html"
+      },
+      "practica": {
+        "title": "4.2 Práctica Guiada: Crear tu Primer Reporte Ejecutivo en R Markdown",
+        "definition": "Objetivo: Producir un reporte HTML de 2-3 páginas comunicando resultados de clasificación.",
+        "example": "## Resumen ejecutivo Se analizó una muestra de 768 pacientes del Instituto Nacional de Diabetes de Pima (EE.UU.) para identificar qué factores predicen mejor el diagnóstico de diabetes tipo 2. **Hallazgo principal:** El nivel de glucosa en sangre, el índice de masa corporal y la edad son los predictores más importantes. El modelo de regresión logística identifica correctamente al 77% de los casos. **Recomendación:** Priorizar el control de glucosa y el IMC en el tamizaje preventivo de poblaciones de riesgo. Fich...",
+        "keyIdeas": [
+          "Ficha 1: Crear el archivo base",
+          "Ficha 2: Resumen ejecutivo",
+          "Ficha 3: Chunk de análisis",
+          "Ficha 4: Tabla de resultados formateada",
+          "Ficha 5: Renderizar y revisar"
+        ],
+        "headings": [
+          "Ficha 1: Crear el archivo base",
+          "Ficha 2: Resumen ejecutivo",
+          "Ficha 3: Chunk de análisis",
+          "Ficha 4: Tabla de resultados formateada",
+          "Ficha 5: Renderizar y revisar"
+        ],
+        "paragraphs": [
+          "Objetivo: Producir un reporte HTML de 2-3 páginas comunicando resultados de clasificación.",
+          "En RStudio: File > New File > R Markdown > HTML. Guarda como reporte_diabetes.Rmd .",
+          "Reemplaza la cabecera YAML con:",
+          "--- title: \"Predicción de Diabetes — Informe de Resultados\" author: \"Tu nombre\" date: \"`r format(Sys.Date(), '%d de %B de %Y')`\" output: html_document: theme: flatly toc: true toc_float: true code_folding: hide --- Ficha 2: Resumen ejecutivo Escribe en lenguaje no técnico (sin fórmulas ni código visible):",
+          "## Resumen ejecutivo Se analizó una muestra de 768 pacientes del Instituto Nacional de Diabetes de Pima (EE.UU.) para identificar qué factores predicen mejor el diagnóstico de diabetes tipo 2. **Hallazgo principal:** El nivel de glucosa en sangre, el índice de masa corporal y la edad son los predictores más importantes. El modelo de regresión logística identifica correctamente al 77% de los casos. **Recomendación:** Priorizar el control de glucosa y el IMC en el tamizaje preventivo de poblaciones de riesgo. Fich..."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "4.2 Aplicación: Dashboard Básico con Shiny para Monitoreo de Modelos",
+        "definition": "Un modelo de clasificación en producción necesita monitoreo continuo. Se crea un dashboard básico en Shiny que muestra el rendimiento del modelo en tiempo real y permite a usuarios no técnicos explorar los resultados.",
+        "example": "library(shiny) library(ggplot2) library(caret) library(mlbench) # Preparar datos y modelo (normalmente sería desde base de datos) data(PimaIndiansDiabetes) set.seed(42) idx = 0.5, \"pos\",\"neg\")) # UI ui = input$umbral, \"pos\",\"neg\"), levels=c(\"neg\",\"pos\")) cm =input$umbral, \"ALTO (positivo)\", \"BAJO (negativo)\")) }) }) } shinyApp(ui, server) Para ejecutar: guarda el código en app.R y ejecuta shiny::runApp(\".\")",
+        "keyIdeas": [
+          "App Shiny mínima funcional"
+        ],
+        "headings": [
+          "Contexto",
+          "App Shiny mínima funcional"
+        ],
+        "paragraphs": [
+          "Un modelo de clasificación en producción necesita monitoreo continuo. Se crea un dashboard básico en Shiny que muestra el rendimiento del modelo en tiempo real y permite a usuarios no técnicos explorar los resultados.",
+          "library(shiny) library(ggplot2) library(caret) library(mlbench) # Preparar datos y modelo (normalmente sería desde base de datos) data(PimaIndiansDiabetes) set.seed(42) idx = 0.5, \"pos\",\"neg\")) # UI ui = input$umbral, \"pos\",\"neg\"), levels=c(\"neg\",\"pos\")) cm =input$umbral, \"ALTO (positivo)\", \"BAJO (negativo)\")) }) }) } shinyApp(ui, server) Para ejecutar: guarda el código en app.R y ejecuta shiny::runApp(\".\")"
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s2_comunicacion_resultados/aplicacion.html"
+      }
+    },
+    "u4_s3_etica_ia_bigdata": {
+      "code": "4.3",
+      "title": "Etica en IA y Big Data",
+      "topic": "sesgo algoritmico, fairness, privacidad diferencial y responsabilidad profesional",
+      "resumen": {
+        "title": "4.3 Ética en IA y Big Data — Resumen",
+        "definition": "El poder de la IA y el Big Data trae responsabilidades éticas significativas. Los modelos pueden perpetuar sesgos, violar privacidad y tomar decisiones injustas a escala masiva.",
+        "example": "Origen del sesgo: datos históricos sesgados → modelo reproduce y amplifica el sesgo → decisiones injustas a escala. Ejemplo: sistema de contratación que penaliza CVs femeninos porque históricamente las mujeres fueron menos contratadas.",
+        "keyIdeas": [
+          "Equidad (Fairness): el modelo no debe discriminar por raza, género, edad u otras características protegidas.",
+          "Explicabilidad (Explainability): las decisiones automáticas deben poder justificarse.",
+          "Privacidad (Privacy): los datos personales deben manejarse conforme a regulaciones (GDPR, leyes locales).",
+          "Robustez (Robustness): el modelo debe funcionar en condiciones adversas y ser resistente a ataques.",
+          "Responsabilidad (Accountability): debe existir un humano responsable de las decisiones del sistema."
+        ],
+        "headings": [
+          "Principios éticos en IA",
+          "Sesgo algorítmico",
+          "IA en Paraguay: contexto",
+          "Técnicas de mitigación de sesgo"
+        ],
+        "paragraphs": [
+          "El poder de la IA y el Big Data trae responsabilidades éticas significativas. Los modelos pueden perpetuar sesgos, violar privacidad y tomar decisiones injustas a escala masiva.",
+          "Origen del sesgo: datos históricos sesgados → modelo reproduce y amplifica el sesgo → decisiones injustas a escala. Ejemplo: sistema de contratación que penaliza CVs femeninos porque históricamente las mujeres fueron menos contratadas.",
+          "Paraguay no tiene legislación específica de IA (2026), pero el MITIC trabaja en una política nacional. El GDPR europeo aplica a datos de ciudadanos europeos. La Ley 1682 de Datos Personales regula el tratamiento en Paraguay."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/resumen.html"
+      },
+      "microlectura": {
+        "title": "4.3 Ética en IA y Big Data",
+        "definition": "La privacidad diferencial es una técnica matemática que garantiza que la inclusión o exclusión de cualquier individuo específico en el dataset de entrenamiento no cambia significativamente la salida del modelo. Esto permite entrenar modelos con datos sensibles sin comprometer la privacidad individual. Apple y Google la usan para aprender de datos de usuarios sin exponer esos datos.",
+        "example": "El caso generó un debate global: ¿Puede un algoritmo ser discriminatorio incluso si no usa explícitamente la raza como variable? La respuesta es sí — variables proxy como código postal, nivel de empleo o antecedentes familiares pueden correlacionar fuertemente con la raza en datos históricos discriminatorios.",
+        "keyIdeas": [
+          "Paridad demográfica: la tasa de predicciones positivas debe ser igual en todos los grupos.",
+          "Igualdad de oportunidad: el Recall debe ser igual en todos los grupos.",
+          "Exactitud calibrada: las probabilidades predichas deben ser igualmente precisas en todos los grupos.",
+          "1. El caso COMPAS: una advertencia histórica",
+          "2. Tipos de sesgo en modelos de ML"
+        ],
+        "headings": [
+          "1. El caso COMPAS: una advertencia histórica",
+          "2. Tipos de sesgo en modelos de ML",
+          "3. Fairness: múltiples definiciones incompatibles",
+          "4. Privacidad diferencial",
+          "5. IA en Paraguay: oportunidades y riesgos",
+          "6. El rol del científico de datos"
+        ],
+        "paragraphs": [
+          "COMPAS fue un algoritmo usado en EE.UU. para predecir la reincidencia criminal y orientar decisiones judiciales de libertad condicional. En 2016, ProPublica reveló que el algoritmo clasificaba incorrectamente a afroamericanos como \"alto riesgo\" a tasas significativamente mayores que a personas blancas con historiales similares.",
+          "El caso generó un debate global: ¿Puede un algoritmo ser discriminatorio incluso si no usa explícitamente la raza como variable? La respuesta es sí — variables proxy como código postal, nivel de empleo o antecedentes familiares pueden correlacionar fuertemente con la raza en datos históricos discriminatorios.",
+          "Sesgo en los datos: si los datos de entrenamiento reflejan discriminación histórica, el modelo aprende a discriminar. Un sistema de contratación entrenado con 30 años de contrataciones masculinas aprenderá que \"hombre\" predice \"contratado\".",
+          "Sesgo de selección: si ciertos grupos están subrepresentados en los datos de entrenamiento, el modelo funcionará peor para esos grupos. Los modelos de reconocimiento facial fallan más en personas de piel oscura porque fueron entrenados mayormente con personas de piel clara.",
+          "Sesgo de medición: cuando las variables proxy no capturan el mismo concepto para todos los grupos. \"Antecedentes penales\" puede medir tanto comportamiento criminal real como desigualdad en la aplicación de la ley."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/microlectura.html"
+      },
+      "funciones": {
+        "title": "4.3 Guía de Funciones: Auditoría de Equidad (Fairness Audit)",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "R — Auditoría de sesgo por grupos",
+          "Python — fairlearn"
+        ],
+        "headings": [
+          "R — Auditoría de sesgo por grupos",
+          "Python — fairlearn"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [
+          "# AUDITORÍA DE FAIRNESS — ejemplo con dataset de crédito simulado library(caret) library(dplyr) library(ggplot2) set.seed(42) n % mutate(prob = probs, pred = pred, real = aprobado_historico) %>% group_by(!!sym(grupo_var)) %>% summarise( n = n(), tasa_aprobacion = mean(pred == \"Si\"), # Paridad demográfica tasa_aprobacion_real = mean(real == \"Si\"), recall = sum(pred==\"Si\" & real==\"Si\") / sum(real==\"Si\"), # Igualdad de oportunidad precision = sum(pred==\"Si\" & real==\"Si\") / sum(pred==\"Si\"), accuracy = mean(pred == real), .groups = \"drop\" ) resultados } cat(\"=== Modelo SIN sexo === \") print(auditar_fairness(m_sin_sexo, test, \"sexo\")) cat(\" === Modelo CON sexo === \") print(auditar_fairness(m_con_sexo, test, \"sexo\")) # 3. DISPARATE IMPACT RATIO (DIR) # DIR = tasa_aprobacion_grupo_minoritario / tasa_aprobacion_grupo_mayoritario # DIR % mutate(DIR = tasa_aprobacion / tasa_ref, Alerta = ifelse(DIR < 0.8, \"POSIBLE DISCRIMINACIÓN\", \"OK\")) } audit <- auditar_fairness(m_sin_sexo, test, \"sexo\") print(calcular_dir(audit, \"M\"))",
+          "# fairlearn es la librería de Microsoft para auditoría de fairness # pip install fairlearn import numpy as np import pandas as pd from sklearn.linear_model import LogisticRegression from sklearn.model_selection import train_test_split from sklearn.preprocessing import StandardScaler # Simular datos con sesgo np.random.seed(42) n = 1000 df = pd.DataFrame({ 'edad': np.random.normal(38, 10, n), 'ingresos': np.random.exponential(3000000, n), 'deuda_ratio': np.clip(np.random.normal(0.35, 0.2, n), 0, 1), 'sexo': np.random.choice(['M', 'F'], n, p=[0.55, 0.45]) }) lp = -1 + df['ingresos']*0.0000001 - 1.5*df['deuda_ratio'] + 0.02*df['edad'] - 0.4*(df['sexo']=='F') df['aprobado'] = (np.random.uniform(size=n) 0 else 0, accuracy=lambda x: (x['pred'] == x['real']).mean() ).reset_index() print(audit) # Disparate Impact Ratio tasa_m = audit.loc[audit['sexo']=='M','tasa_aprobacion'].values[0] audit['DIR'] = audit['tasa_aprobacion'] / tasa_m audit['Alerta'] = audit['DIR'].apply(lambda x: 'POSIBLE DISCRIMINACION' if x < 0.8 else 'OK') print(audit[['sexo','tasa_aprobacion','DIR','Alerta']])"
+        ],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/funciones_r_python.html"
+      },
+      "procedimiento": {
+        "title": "4.3 Procedimiento: Auditoría Ética de un Modelo Predictivo",
+        "definition": "",
+        "example": "",
+        "keyIdeas": [
+          "Paso 1: Identificar variables sensibles",
+          "Paso 2: Calcular métricas por grupo",
+          "Paso 3: Calcular Disparate Impact Ratio",
+          "Paso 4: Calibrar umbrales por grupo",
+          "Paso 5: Documentar y reportar"
+        ],
+        "headings": [
+          "Pasos",
+          "Paso 1: Identificar variables sensibles",
+          "Paso 2: Calcular métricas por grupo",
+          "Paso 3: Calcular Disparate Impact Ratio",
+          "Paso 4: Calibrar umbrales por grupo",
+          "Paso 5: Documentar y reportar"
+        ],
+        "paragraphs": [],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/procedimiento.html"
+      },
+      "practica": {
+        "title": "4.3 Práctica Guiada: Detectando y Mitigando Sesgo Algorítmico",
+        "definition": "set.seed(2026) n ¿Qué diferencia hay en la tasa de contratación entre hombres y mujeres?",
+        "example": "library(caret) set.seed(42) idx Ficha 3: Auditar ambos modelos for (nombre in c(\"Con sexo\", \"Sin sexo\")) { pred =0.5,\"Si\",\"No\"), levels=c(\"No\",\"Si\")) cat(sprintf(\" === Modelo %s === \", nombre)) for (g in c(\"M\",\"F\")) { mask Ficha 4: Reflexión ética ¿Eliminar la variable 'sexo' del modelo resuelve el sesgo? ¿Por qué sí o por qué no? ¿Qué otras medidas tomarías para construir un sistema de selección de candidatos equitativo?",
+        "keyIdeas": [
+          "Ficha 1: Crear dataset con sesgo deliberado",
+          "Ficha 2: Modelo con y sin variable sexo",
+          "Ficha 3: Auditar ambos modelos",
+          "Ficha 4: Reflexión ética"
+        ],
+        "headings": [
+          "Ficha 1: Crear dataset con sesgo deliberado",
+          "Ficha 2: Modelo con y sin variable sexo",
+          "Ficha 3: Auditar ambos modelos",
+          "Ficha 4: Reflexión ética"
+        ],
+        "paragraphs": [
+          "set.seed(2026) n ¿Qué diferencia hay en la tasa de contratación entre hombres y mujeres?",
+          "library(caret) set.seed(42) idx Ficha 3: Auditar ambos modelos for (nombre in c(\"Con sexo\", \"Sin sexo\")) { pred =0.5,\"Si\",\"No\"), levels=c(\"No\",\"Si\")) cat(sprintf(\" === Modelo %s === \", nombre)) for (g in c(\"M\",\"F\")) { mask Ficha 4: Reflexión ética ¿Eliminar la variable 'sexo' del modelo resuelve el sesgo? ¿Por qué sí o por qué no? ¿Qué otras medidas tomarías para construir un sistema de selección de candidatos equitativo?"
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/practica_guiada.html"
+      },
+      "aplicacion": {
+        "title": "4.3 Aplicación: Marco Ético para Proyectos de IA en el Sector Público Paraguayo",
+        "definition": "El MITIC (Ministerio de Tecnología de la Información y Comunicación) de Paraguay está evaluando implementar sistemas predictivos en tres áreas: salud pública, tributación y educación. Se necesita un marco ético para evaluar cada propuesta.",
+        "example": "El MITIC (Ministerio de Tecnología de la Información y Comunicación) de Paraguay está evaluando implementar sistemas predictivos en tres áreas: salud pública, tributación y educación. Se necesita un marco ético para evaluar cada propuesta.",
+        "keyIdeas": [
+          "Checklist Ético para Proyectos de IA"
+        ],
+        "headings": [
+          "Contexto",
+          "Checklist Ético para Proyectos de IA"
+        ],
+        "paragraphs": [
+          "El MITIC (Ministerio de Tecnología de la Información y Comunicación) de Paraguay está evaluando implementar sistemas predictivos en tres áreas: salud pública, tributación y educación. Se necesita un marco ético para evaluar cada propuesta."
+        ],
+        "codeBlocks": [],
+        "tables": [],
+        "source": "recursos/notebooklm/subniveles/u4_s3_etica_ia_bigdata/aplicacion.html"
+      }
+    }
+  }
+}

@@ -210,6 +210,7 @@
             calendarCursor: localStorage.getItem('abd_calendar_cursor') || '',
             calendarSelectedDate: localStorage.getItem('abd_calendar_selected_date') || '',
             notebookLmIndex: null,
+            notebookContent: null,
             sublevelEvaluation: null,
             socialTab: 'foro',
             socialMessages: [],
@@ -225,7 +226,8 @@
         };
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
-        const APP_VERSION = 'v30';
+        const NOTEBOOK_CONTENT_URL = 'recursos/notebooklm/contenido_fichas.json';
+        const APP_VERSION = 'v31';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -233,7 +235,7 @@
                 stage: 'Inicio',
                 stageOrder: 1,
                 fileKey: 'resumen',
-                label: 'Resumen NotebookLM',
+                label: 'Resumen del tema',
                 lead: sub => `Entrada breve al subnivel ${sub.code}. Lee la sintesis para ubicar el problema, el vocabulario clave y el producto esperado.`,
                 checks: ['Lee el resumen completo.', 'Identifica tres conceptos principales.', 'Ubica el tema dentro de la unidad.']
             },
@@ -242,7 +244,7 @@
                 stage: 'Conceptos',
                 stageOrder: 2,
                 fileKey: 'microlectura',
-                label: 'Microlectura',
+                label: 'Lectura completa',
                 lead: sub => `Profundiza el tema ${sub.code} con la lectura completa, ejemplos, contexto y errores frecuentes.`,
                 checks: ['Reconoce la definicion central.', 'Anota una duda o ejemplo.', 'Relaciona el tema con una situacion real.']
             },
@@ -519,6 +521,7 @@
             earnBadge('first_login');
 
             await loadNotebookLmIndex();
+            await loadNotebookContentIndex();
 
             const route = (window.location.hash || '').replace('#', '');
             if (['calendar', 'community', 'practices', 'lab', 'account', 'admin'].includes(route)) showPage(route);
@@ -704,6 +707,17 @@
             }
         }
 
+        async function loadNotebookContentIndex() {
+            try {
+                const resp = await fetch(NOTEBOOK_CONTENT_URL, { cache: 'reload' });
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                STATE.notebookContent = await resp.json();
+            } catch (error) {
+                console.warn('No se pudo cargar el contenido de fichas:', error.message);
+                STATE.notebookContent = null;
+            }
+        }
+
         function getNotebookSublevels(unitNum) {
             return (STATE.notebookLmIndex?.subniveles || [])
                 .filter(item => Number(item.unit) === Number(unitNum))
@@ -713,6 +727,11 @@
         function getNotebookSublevel(unitNum, sublevelIndex) {
             return getNotebookSublevels(unitNum)
                 .find(item => Number(item.sublevel) === Number(sublevelIndex));
+        }
+
+        function getNotebookResourceContent(slug, fileKey) {
+            if (!slug || !fileKey) return null;
+            return STATE.notebookContent?.subniveles?.[slug]?.[fileKey] || null;
         }
 
         function getNotebookUnit(unitNum) {
@@ -790,7 +809,7 @@
             if (!root) return '<p>Mapa mental no disponible.</p>';
             const children = getMindMapChildren(root).slice(0, 8);
             return `
-      <div class="mind-map-board" aria-label="Mapa mental NotebookLM">
+      <div class="mind-map-board" aria-label="Mapa mental">
         <div class="mind-map-center">
           <span>Mapa mental</span>
           <strong>${escapeHtml(getMindMapNodeName(root))}</strong>
@@ -1999,6 +2018,7 @@
                 };
                 return NOTEBOOK_STAGE_CONFIG.map((stage, localIndex) => {
                     const file = sublevel.archivos?.[stage.fileKey] || '';
+                    const content = getNotebookResourceContent(sublevel.slug, stage.fileKey);
                     const isAssessment = stage.kind === 'assessment';
                     const officialResources = stage.kind === 'intro'
                         ? ['orientation']
@@ -2007,19 +2027,21 @@
                         ? [
                             `${sublevel.estado?.preguntasEvaluacion || 0} preguntas de evaluacion formal.`,
                             sublevel.archivos?.quiz
-                                ? `${sublevel.estado?.preguntasQuiz || 0} preguntas adicionales de repaso ${sublevel.estado?.quizNotebookLm ? 'NotebookLM' : 'local'}.`
+                                ? `${sublevel.estado?.preguntasQuiz || 0} preguntas adicionales de repaso.`
                                 : 'Quiz adicional pendiente para este subnivel.',
                             'La retroalimentacion se muestra despues de enviar.'
                         ]
-                        : (stage.kind === 'concept' && fallback.concepts?.length
+                        : (content?.keyIdeas?.length
+                            ? content.keyIdeas.slice(0, 4)
+                            : (stage.kind === 'concept' && fallback.concepts?.length
                             ? fallback.concepts
                             : (stage.kind === 'activity' && fallback.application?.length
                                 ? fallback.application
                                 : [
-                                    `Tema central: ${sublevel.topic}.`,
-                                    `Recurso principal: ${stage.label}.`,
+                                    sublevel.topic,
+                                    content?.definition || 'Lee el contenido central y localiza la idea mas importante.',
                                     'Avanza cuando puedas explicarlo con tus palabras.'
-                                ]));
+                                ])));
                     const stageFormulas = stage.kind === 'formula' ? (fallback.formulas || []) : [];
                     const stageCodeBlocks = stage.kind === 'function'
                         ? (fallback.functionCode || [])
@@ -2036,6 +2058,7 @@
                         codeBlocks: stageCodeBlocks,
                         checks: stage.checks,
                         resources: officialResources,
+                        notebookContent: content,
                         evaluationFile: sublevel.archivos?.evaluacion,
                         quizFile: sublevel.archivos?.quiz,
                         notebookResource: file ? {
@@ -2444,7 +2467,7 @@
       <section class="learning-notebook-resource">
         <div class="learning-notebook-toolbar">
           <div>
-            <span>Recurso NotebookLM</span>
+            <span>Contenido integrado</span>
             <strong>${escapeHtml(resource.label)} · ${escapeHtml(slide.sublevelCode || '')}</strong>
           </div>
           <div class="learning-official-actions">
@@ -2463,7 +2486,7 @@
       <section class="learning-notebook-resource compact">
         <div class="learning-notebook-toolbar">
           <div>
-            <span>Recurso NotebookLM</span>
+            <span>Contenido integrado</span>
             <strong>${escapeHtml(resource.label)}</strong>
           </div>
           <div class="learning-official-actions">
@@ -2478,7 +2501,7 @@
             const done = isUnitPathSlideComplete(unitNum, slide, slideIndex);
             const questionCount = slide.notebookMeta?.preguntasEvaluacion || 0;
             const quizCount = slide.notebookMeta?.preguntasQuiz || 0;
-            const quizLabel = slide.notebookMeta?.quizNotebookLm ? 'repaso NotebookLM' : (slide.quizFile ? 'repaso local' : 'repaso pendiente');
+            const quizLabel = slide.notebookMeta?.quizNotebookLm ? 'repaso complementario' : (slide.quizFile ? 'repaso local' : 'repaso pendiente');
             return `
       <div class="learning-assessment-card ${done ? 'completed' : ''}">
         <div>
@@ -2635,7 +2658,7 @@
             if (!container || !support || container.dataset.loaded === 'true') return;
             const hasAny = support.mapaMental || support.flashcards || support.storyboard;
             if (!hasAny) {
-                container.innerHTML = '<p>No hay recursos ampliados NotebookLM para este bloque.</p>';
+                container.innerHTML = '<p>No hay recursos ampliados para este bloque.</p>';
                 container.dataset.loaded = 'true';
                 return;
             }
@@ -2655,7 +2678,7 @@
                 container.innerHTML = `
           <div class="notebook-support-grid">
             <div class="notebook-support-panel mind-map-panel">
-              <h4>Mapa mental NotebookLM</h4>
+              <h4>Mapa mental</h4>
               ${renderMindMapBoard(mindRoot)}
             </div>
             <div class="notebook-support-panel">
@@ -2788,10 +2811,26 @@
             return text.length > max ? `${text.slice(0, max - 3)}...` : text;
         }
 
+        function notebookContentForSlide(slide) {
+            return slide.notebookContent || getNotebookResourceContent(slide.slug, slide.notebookResource?.key);
+        }
+
+        function cleanLearningText(text) {
+            return String(text || '')
+                .replace(/\bNotebookLM\b/gi, 'material integrado')
+                .replace(/Recurso principal:\s*/gi, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
         function slideConceptList(slide) {
-            const items = (slide.bullets?.length ? slide.bullets : [slide.title, slide.lead])
+            const content = notebookContentForSlide(slide);
+            const sourceItems = content?.keyIdeas?.length
+                ? content.keyIdeas
+                : (slide.bullets?.length ? slide.bullets : [slide.title, slide.lead]);
+            const items = sourceItems
                 .filter(Boolean)
-                .map(item => compactLearningText(item, 92))
+                .map(item => compactLearningText(cleanLearningText(item), 92))
                 .slice(0, 4);
             return items.length ? items : ['Leer el concepto', 'Ejecutar un comando', 'Interpretar la salida'];
         }
@@ -3162,19 +3201,63 @@
         }
 
         function learningCardDefinition(slide, support) {
+            const content = notebookContentForSlide(slide);
+            if (content?.definition) return cleanLearningText(content.definition);
+            if (content?.paragraphs?.[0]) return cleanLearningText(content.paragraphs[0]);
             if (slide.formulas?.[0]?.note) return slide.formulas[0].note;
-            if (slide.bullets?.[0]) return slide.bullets[0];
+            if (slide.bullets?.[0]) return cleanLearningText(slide.bullets[0]);
             return support.text || slide.lead || 'Lee la idea central y compruebala con un comando pequeno.';
         }
 
         function learningCardExample(slide, support) {
+            const content = notebookContentForSlide(slide);
+            if (content?.example) return cleanLearningText(content.example);
+            if (content?.paragraphs?.[1]) return cleanLearningText(content.paragraphs[1]);
             if (slide.formulas?.[0]?.value) return `Ejemplo de lectura: ${slide.formulas[0].label} se expresa como ${slide.formulas[0].value}.`;
-            if (slide.bullets?.[1]) return slide.bullets[1];
+            if (slide.bullets?.[1]) return cleanLearningText(slide.bullets[1]);
             return support.example || 'Ejecuta el comando de la ficha y observa como cambia la salida.';
         }
 
+        function renderNotebookContentIdeas(slide, max = 4) {
+            const content = notebookContentForSlide(slide);
+            const ideas = (content?.keyIdeas || [])
+                .map(cleanLearningText)
+                .filter(Boolean)
+                .slice(0, max);
+            if (!ideas.length) return '';
+            return `
+        <div class="learning-content-list">
+          ${ideas.map((item, index) => `
+            <div>
+              <span>${index + 1}</span>
+              <p>${escapeHtml(item)}</p>
+            </div>
+          `).join('')}
+        </div>`;
+        }
+
+        function renderNotebookContentTable(slide) {
+            const content = notebookContentForSlide(slide);
+            const rows = (content?.tables || []).slice(0, 4);
+            if (rows.length < 2) return '';
+            return `
+        <div class="learning-mini-table-wrap">
+          <table class="learning-mini-table">
+            <tbody>
+              ${rows.map((row, rowIndex) => `
+                <tr>
+                  ${row.slice(0, 4).map(cell => rowIndex === 0
+                    ? `<th>${escapeHtml(cleanLearningText(cell))}</th>`
+                    : `<td>${escapeHtml(cleanLearningText(cell))}</td>`).join('')}
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>`;
+        }
+
         function renderLearningCardBullets(slide) {
-            const items = (slide.bullets || []).slice(0, 3);
+            const items = (slide.bullets || []).map(cleanLearningText).slice(0, 3);
             if (!items.length) return '';
             return `
         <div class="learning-card-points">
@@ -3260,7 +3343,8 @@
               <div class="learning-card-definition learning-feature-block">
                 <span>Definicion corta</span>
                 <p>${escapeHtml(definition)}</p>
-              </div>`);
+              </div>
+              ${renderNotebookContentIdeas(slide, 3)}`);
             }
 
             if (slide.microKind === 'example') {
@@ -3272,6 +3356,7 @@
                             <span>Ejemplo sencillo</span>
                             <p>${escapeHtml(example)}</p>
                           </div>
+                          ${renderNotebookContentTable(slide)}
                           ${renderLearningCardFigure(slide)}`);
                 return shell('micro-example', richExample);
             }
@@ -3321,7 +3406,7 @@
             const notebook = slide.notebookResource;
             const support = slide.notebookSupport || {};
             const mediaLinks = [
-                notebook ? { label: notebook.label || 'Lectura NotebookLM', href: notebook.file, kind: 'lectura' } : null,
+                notebook ? { label: notebook.label || 'Lectura integrada', href: notebook.file, kind: 'lectura' } : null,
                 notebook?.pdf ? { label: 'PDF del recurso', href: notebook.pdf, kind: 'pdf', download: true } : null,
                 support.audioMicroclaseUrl ? { label: 'Audio microclase', href: support.audioMicroclaseUrl, kind: 'audio' } : null,
                 support.audioRepasoUrl ? { label: 'Audio repaso', href: support.audioRepasoUrl, kind: 'audio' } : null,
@@ -3500,10 +3585,10 @@
             const videos = media.filter(item => item.tipo === 'video').length;
             return `
       <div class="card notebook-unit-card">
-        <h3>Recursos NotebookLM de sintesis</h3>
+        <h3>Recursos de sintesis</h3>
         <p>Presentaciones PowerPoint, podcasts, videos y artefactos JSON de la unidad, listos para descargar o enlazar desde otros entornos.</p>
         <div class="notebook-resource-summary">
-          <span><strong>${presentations}</strong> PPTX NotebookLM</span>
+          <span><strong>${presentations}</strong> PPTX</span>
           <span><strong>${audios}</strong> podcasts</span>
           <span><strong>${videos}</strong> videos</span>
           <span><strong>${files.length}</strong> recursos JSON</span>
@@ -3556,7 +3641,7 @@
             <div>
               <span class="material-badge badge-quiz">Video</span>
               <h4>${escapeHtml(title)}</h4>
-              <p>${size ? `${size} · ` : ''}Video NotebookLM de vision macro.</p>
+              <p>${size ? `${size} · ` : ''}Video de vision macro.</p>
             </div>
             <video controls preload="metadata" src="${escapeHtml(item.archivo)}"></video>
             <a class="btn-secondary as-link" href="${escapeHtml(item.archivo)}" download>Descargar video</a>
@@ -3567,7 +3652,7 @@
           <a class="notebook-media-item notebook-presentation download" href="${escapeHtml(item.archivo)}" download>
             <span class="material-badge badge-pptx">PowerPoint / PPTX</span>
             <h4>${escapeHtml(title)}</h4>
-            <p>${size ? `${size} · ` : ''}Presentacion NotebookLM descargable para clase, repaso o exposicion.</p>
+            <p>${size ? `${size} · ` : ''}Presentacion descargable para clase, repaso o exposicion.</p>
           </a>`;
             }
             return `
@@ -3682,7 +3767,7 @@
             } else if (activeTab === 'recursos') {
                 tabContent.innerHTML = renderNotebookUnitResources(n) || `
       <div class="card" style="text-align:center;padding:2rem">
-        <p>Los recursos NotebookLM de esta unidad aun no estan indexados.</p>
+        <p>Los recursos de esta unidad aun no estan indexados.</p>
       </div>`;
             } else if (activeTab === 'info') {
                 tabContent.innerHTML = `
@@ -3695,7 +3780,7 @@
           <span class="material-badge badge-quiz">100 XP disponibles</span>
         </div>
         <div style="margin-top:1rem">
-          <button class="btn-secondary" onclick="renderUnitDetail(${n}, 'recursos')">Ver presentaciones y recursos NotebookLM</button>
+          <button class="btn-secondary" onclick="renderUnitDetail(${n}, 'recursos')">Ver presentaciones y recursos</button>
         </div>
       </div>
     `;

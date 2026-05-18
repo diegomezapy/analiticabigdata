@@ -1,4 +1,4 @@
-const CACHE_NAME = 'analitica-bigdata-v30';
+const CACHE_NAME = 'analitica-bigdata-v31';
 
 const APP_SHELL = [
   './',
@@ -17,6 +17,7 @@ const APP_SHELL = [
   'data/datasets/estudiantes_ead.csv',
   'data/datasets/modelos_credito.csv',
   'recursos/notebooklm/indice.json',
+  'recursos/notebooklm/contenido_fichas.json',
   'guia_didactica/index.html',
   'practicas/index.html',
   'laboratorio/index.html',
