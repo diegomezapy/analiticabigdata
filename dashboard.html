@@ -227,7 +227,7 @@
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
         const NOTEBOOK_CONTENT_URL = 'recursos/notebooklm/contenido_fichas.json';
-        const APP_VERSION = 'v31';
+        const APP_VERSION = 'v32';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -3256,6 +3256,104 @@
         </div>`;
         }
 
+        function contentSnippets(slide, max = 4) {
+            const content = notebookContentForSlide(slide);
+            const pool = [
+                ...(content?.keyIdeas || []),
+                ...(content?.paragraphs || []),
+                ...(slide.bullets || []),
+                slide.lead,
+                slide.sublevelTitle
+            ];
+            const seen = new Set();
+            return pool
+                .map(item => compactLearningText(cleanLearningText(item), 115))
+                .filter(item => {
+                    if (!item || item.length < 8 || seen.has(item)) return false;
+                    seen.add(item);
+                    return true;
+                })
+                .slice(0, max);
+        }
+
+        function renderLearningConceptCanvas(slide) {
+            const ideas = contentSnippets(slide, 5);
+            const center = compactLearningText(slide.sublevelTitle || slide.baseTitle || slide.title, 44);
+            const labels = ['Idea', 'Dato', 'Metodo', 'Decision', 'Cuidado'];
+            return `
+        <section class="learning-visual-card concept-map" aria-label="Mapa visual de conceptos">
+          <div class="visual-center">
+            <span>${escapeHtml(slide.sublevelCode || 'ABD')}</span>
+            <strong>${escapeHtml(center)}</strong>
+          </div>
+          <div class="visual-orbit">
+            ${ideas.map((idea, index) => `
+              <div class="visual-orbit-node node-${index + 1}">
+                <em>${labels[index] || `P${index + 1}`}</em>
+                <p>${escapeHtml(idea)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>`;
+        }
+
+        function renderLearningCaseStoryboard(slide) {
+            const example = learningCardExample(slide, learningSupportContent(STATE.currentUnit || 1, slide));
+            const ideas = contentSnippets(slide, 3);
+            const cards = [
+                { label: 'Situacion', text: example },
+                { label: 'Dato visible', text: ideas[0] || slide.lead },
+                { label: 'Lectura esperada', text: ideas[1] || 'Identifica que cambia y que decision permite tomar.' }
+            ];
+            return `
+        <section class="learning-storyboard" aria-label="Caso representado">
+          ${cards.map((card, index) => `
+            <div>
+              <span>${index + 1}</span>
+              <strong>${escapeHtml(card.label)}</strong>
+              <p>${escapeHtml(compactLearningText(cleanLearningText(card.text), 150))}</p>
+            </div>
+          `).join('')}
+        </section>`;
+        }
+
+        function renderLearningProcessRibbon(slide) {
+            const sourceKind = slide.baseKind || slide.kind;
+            const profile = slideDatasetProfile(STATE.currentUnit || 1, slide);
+            const steps = sourceKind === 'formula'
+                ? ['Identificar simbolos', 'Sustituir valores', 'Calcular', 'Interpretar']
+                : (sourceKind === 'practice'
+                    ? ['Leer consigna', 'Ejecutar', 'Comparar salida', 'Registrar evidencia']
+                    : ['Cargar datos', 'Inspeccionar', 'Transformar', 'Explicar salida']);
+            return `
+        <section class="learning-process-ribbon" aria-label="Proceso de trabajo">
+          <div class="process-dataset">
+            <span>Dataset</span>
+            <strong>${escapeHtml(profile.file)}</strong>
+          </div>
+          ${steps.map((step, index) => `
+            <div class="process-step">
+              <span>${index + 1}</span>
+              <p>${escapeHtml(step)}</p>
+            </div>
+          `).join('')}
+        </section>`;
+        }
+
+        function renderLearningEvidencePanel(slide, title = 'Lo que debes demostrar') {
+            const ideas = contentSnippets(slide, 4);
+            return `
+        <section class="learning-evidence-panel" aria-label="${escapeHtml(title)}">
+          <div>
+            <span>Evidencia</span>
+            <strong>${escapeHtml(title)}</strong>
+          </div>
+          <ul>
+            ${ideas.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+          </ul>
+        </section>`;
+        }
+
         function renderLearningCardBullets(slide) {
             const items = (slide.bullets || []).map(cleanLearningText).slice(0, 3);
             if (!items.length) return '';
@@ -3344,18 +3442,20 @@
                 <span>Definicion corta</span>
                 <p>${escapeHtml(definition)}</p>
               </div>
+              ${renderLearningConceptCanvas(slide)}
               ${renderNotebookContentIdeas(slide, 3)}`);
             }
 
             if (slide.microKind === 'example') {
                 const richExample = slide.formulas?.length
-                    ? renderLearningPathFormulas(slide)
+                    ? `${renderLearningPathFormulas(slide)}${renderLearningConceptCanvas(slide)}`
                     : (slide.codeBlocks?.length && ['function', 'formula'].includes(sourceKind)
-                        ? renderLearningPathCode(slide)
+                        ? `${renderLearningPathCode(slide)}${renderLearningProcessRibbon(slide)}`
                         : `<div class="learning-card-example learning-feature-block">
                             <span>Ejemplo sencillo</span>
                             <p>${escapeHtml(example)}</p>
                           </div>
+                          ${renderLearningCaseStoryboard(slide)}
                           ${renderNotebookContentTable(slide)}
                           ${renderLearningCardFigure(slide)}`);
                 return shell('micro-example', richExample);
@@ -3363,8 +3463,9 @@
 
             if (slide.microKind === 'resource') {
                 const resource = renderLearningInlineResource(unitNum, slide, slideIndex, active, true);
-                return shell('micro-resource', resource || `
-              <div class="learning-inline-resource-placeholder">No hay un recurso embebible para esta ficha.</div>`);
+                return shell('micro-resource', `
+              ${renderLearningEvidencePanel(slide, 'Que buscar en esta lectura')}
+              ${resource || '<div class="learning-inline-resource-placeholder">No hay un recurso embebible para esta ficha.</div>'}`);
             }
 
             if (slide.microKind === 'execution') {
@@ -3373,11 +3474,14 @@
                 <span>Practica inmediata</span>
                 <p>Trabaja en el laboratorio embebido. Puedes alternar R/data.table y Python/Polars sin salir de esta diapositiva.</p>
               </div>
+              ${renderLearningProcessRibbon(slide)}
               ${renderLearningInlineLab(unitNum, slide, slideIndex, active)}`);
             }
 
             if (slide.microKind === 'formative') {
-                return shell('micro-formative', renderLearningInlineEvaluation(unitNum, slide, slideIndex));
+                return shell('micro-formative', `
+              ${renderLearningEvidencePanel(slide, 'Antes de responder')}
+              ${renderLearningInlineEvaluation(unitNum, slide, slideIndex)}`);
             }
 
             if (slide.microKind === 'summary') {
@@ -3386,11 +3490,14 @@
                 <span>Antes de evaluar</span>
                 <p>${escapeHtml(definition)}</p>
               </div>
+              ${renderLearningConceptCanvas(slide)}
               ${renderLearningCardBullets(slide)}`);
             }
 
             if (slide.microKind === 'summative') {
-                return shell('micro-summative', renderLearningInlineEvaluation(unitNum, slide, slideIndex));
+                return shell('micro-summative', `
+              ${renderLearningEvidencePanel(slide, 'Criterios de cierre')}
+              ${renderLearningInlineEvaluation(unitNum, slide, slideIndex)}`);
             }
 
             return shell('micro-default', `
