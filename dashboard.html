@@ -225,7 +225,7 @@
         };
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
-        const APP_VERSION = 'v29';
+        const APP_VERSION = 'v30';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -2303,7 +2303,16 @@
             const slides = getUnitLearningPath(unitNum);
             if (!slides.length) return;
             const target = Math.max(0, Math.min(slideIndex, slides.length - 1));
+            const current = getCurrentUnitPathSlide(unitNum, slides);
             setCurrentUnitPathSlide(unitNum, target);
+            const track = document.querySelector(`.learning-path-shell[data-unit="${unitNum}"] .learning-track`);
+            if (track && target !== current) {
+                track.classList.add('is-animating');
+                track.style.transform = `translateX(-${target * 100}%)`;
+                window.clearTimeout(STATE.unitPathAnimationTimer);
+                STATE.unitPathAnimationTimer = window.setTimeout(() => renderUnitDetail(unitNum, 'ruta'), 620);
+                return;
+            }
             renderUnitDetail(unitNum, 'ruta');
         }
 
@@ -3394,13 +3403,17 @@
           </div>
 
           ${renderLearningSupport(unitNum, slide, slideIndex)}
-
-          <footer class="learning-slide-actions">
-            <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex - 1})" ${slideIndex === 0 ? 'disabled' : ''}>Anterior</button>
-            <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${slideIndex + 1})" ${isLast ? 'disabled' : ''}>Siguiente</button>
-          </footer>
         </div>
       </article>`;
+        }
+
+        function renderLearningFloatingNav(unitNum, current, total) {
+            return `
+        <nav class="learning-floating-nav" aria-label="Navegacion de diapositivas">
+          <button class="btn-secondary" onclick="goToUnitPathSlide(${unitNum}, ${current - 1})" ${current === 0 ? 'disabled' : ''}>Anterior</button>
+          <span>${current + 1}/${total}</span>
+          <button class="btn-primary" onclick="goToUnitPathSlide(${unitNum}, ${current + 1})" ${current >= total - 1 ? 'disabled' : ''}>Siguiente</button>
+        </nav>`;
         }
 
         function renderSublevelNavigator(unitNum, slides, current, maxUnlocked) {
@@ -3439,7 +3452,7 @@
             const pct = Math.round((completed / slides.length) * 100);
             const maxUnlocked = maxUnlockedPathSlide(unitNum, slides);
             return `
-      <section class="learning-path-shell unit-theme-u${unitNum} sublevel-theme-s${currentSlide?.sublevelIndex || 1}">
+      <section class="learning-path-shell unit-theme-u${unitNum} sublevel-theme-s${currentSlide?.sublevelIndex || 1}" data-unit="${unitNum}">
         <div class="learning-path-head">
           <div class="learning-path-compact-title">
             <span>Ruta secuencial</span>
@@ -3473,6 +3486,7 @@
             ${slides.map((slide, index) => renderLearningPathSlide(unitNum, slide, index, slides, current)).join('')}
           </div>
         </div>
+        ${renderLearningFloatingNav(unitNum, current, slides.length)}
       </section>`;
         }
 

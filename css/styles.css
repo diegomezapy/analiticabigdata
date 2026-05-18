@@ -1301,8 +1301,25 @@ a:hover { text-decoration: underline; }
 .learning-track {
   display: flex;
   min-width: 0;
-  transition: transform 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.68s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
   width: 100%;
+}
+
+.learning-track.is-animating .learning-card-stage {
+  animation: learningSlideFocus 0.68s ease both;
+}
+
+@keyframes learningSlideFocus {
+  from {
+    opacity: 0.78;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .learning-slide {
@@ -2897,6 +2914,41 @@ a:hover { text-decoration: underline; }
 .learning-slide-actions button:disabled {
   cursor: not-allowed;
   opacity: 0.45;
+}
+
+.learning-floating-nav {
+  align-items: center;
+  background: rgba(255,255,255,0.94);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  gap: 0.55rem;
+  justify-content: center;
+  max-width: calc(100vw - 1.5rem);
+  padding: 0.45rem;
+  position: fixed;
+  right: 1.25rem;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom));
+  z-index: 120;
+}
+
+.learning-floating-nav button {
+  min-height: 42px;
+  min-width: 112px;
+}
+
+.learning-floating-nav button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.learning-floating-nav span {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 900;
+  min-width: 54px;
+  text-align: center;
 }
 
 /* Materials List */
@@ -4825,6 +4877,26 @@ a:hover { text-decoration: underline; }
     flex: 1;
     padding-left: 0.8rem;
     padding-right: 0.8rem;
+  }
+
+  .learning-floating-nav {
+    bottom: calc(4.9rem + env(safe-area-inset-bottom));
+    gap: 0.35rem;
+    left: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .learning-floating-nav button {
+    flex: 1;
+    font-size: 0.82rem;
+    min-width: 0;
+    padding-left: 0.55rem;
+    padding-right: 0.55rem;
+    white-space: nowrap;
+  }
+
+  .learning-floating-nav span {
+    min-width: 42px;
   }
 
   .learning-support-grid {
