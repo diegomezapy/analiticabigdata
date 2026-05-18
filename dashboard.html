@@ -216,6 +216,7 @@
             socialMessages: [],
             socialDraft: null,
             socialReplyTo: null,
+            socialGradeTarget: null,
         };
 
         const COURSE_CONFIG = {
@@ -227,7 +228,7 @@
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
         const NOTEBOOK_CONTENT_URL = 'recursos/notebooklm/contenido_fichas.json';
-        const APP_VERSION = 'v32';
+        const APP_VERSION = 'v33';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -5159,6 +5160,109 @@
                 .join('');
         }
 
+        function forumGradeStorageKey() {
+            return 'abd_forum_grades';
+        }
+
+        function localForumGrades() {
+            try {
+                return JSON.parse(localStorage.getItem(forumGradeStorageKey()) || '[]');
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function saveLocalForumGrades(grades) {
+            localStorage.setItem(forumGradeStorageKey(), JSON.stringify(grades.slice(-500)));
+        }
+
+        function forumGradeForMessage(messageId) {
+            return localForumGrades()
+                .filter(item => item.message_id === messageId)
+                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0] || null;
+        }
+
+        function rubricOptions(max, selected = '') {
+            return Array.from({ length: max + 1 }, (_, value) =>
+                `<option value="${value}" ${Number(selected) === value ? 'selected' : ''}>${value}</option>`
+            ).join('');
+        }
+
+        function forumPromptOptions() {
+            const notebookItems = (STATE.notebookLmIndex?.subniveles || [])
+                .map(item => ({
+                    value: `${item.unit}|${item.sublevel}`,
+                    label: `Unidad ${item.unit}.${item.sublevel} - ${item.title}`
+                }));
+            const fallback = UNITS.map(unit => ({
+                value: `${unit.id}|1`,
+                label: `Unidad ${unit.id} - ${unit.title}`
+            }));
+            const items = notebookItems.length ? notebookItems : fallback;
+            return items.map(item => `<option value="${escapeHtml(item.value)}">${escapeHtml(item.label)}</option>`).join('');
+        }
+
+        function buildForumPrompt(unitNum, sublevelIndex) {
+            const sublevel = getNotebookSublevel(unitNum, sublevelIndex);
+            const slug = sublevel?.slug;
+            const content = getNotebookResourceContent(slug, 'resumen')
+                || getNotebookResourceContent(slug, 'microlectura')
+                || {};
+            const title = sublevel?.title || UNITS[unitNum - 1]?.title || 'tema de la unidad';
+            const idea = cleanLearningText(content.definition || content.paragraphs?.[0] || sublevel?.topic || 'explica la idea central con tus palabras');
+            const example = cleanLearningText(content.example || content.paragraphs?.[1] || 'propone una situacion real donde el concepto pueda aplicarse');
+            const keyIdeas = (content.keyIdeas || [])
+                .map(cleanLearningText)
+                .filter(Boolean)
+                .slice(0, 3);
+            return [
+                `FORO U${unitNum}.${sublevelIndex} - ${title}`,
+                '',
+                `Idea de partida: ${compactLearningText(idea, 280)}`,
+                '',
+                'Consigna:',
+                `1. Explica con tus palabras que significa este tema y por que es relevante en Analitica de Big Data.`,
+                `2. Aplica la idea a un caso concreto de Paraguay, de la universidad, de una institucion publica, empresa o investigacion.`,
+                `3. Responde a un companero comparando su caso con el tuyo: que dato, criterio o riesgo agregarias?`,
+                '',
+                'Pistas para orientar el aporte:',
+                ...(keyIdeas.length ? keyIdeas.map((item, index) => `- ${index + 1}. ${item}`) : [`- ${compactLearningText(example, 180)}`]),
+                '',
+                'Producto esperado: un aporte inicial de 120 a 180 palabras y al menos una respuesta sustantiva a un companero.'
+            ].join('\n');
+        }
+
+        function renderForumTools(activeKind) {
+            if (activeKind !== 'foro' || STATE.user?.rol !== 'profesor') return '';
+            return `
+        <section class="forum-tools">
+          <div class="forum-tool-card">
+            <div>
+              <span>Crear contenido del foro</span>
+              <strong>Consigna sugerida por unidad/subnivel</strong>
+              <p>Elige un subnivel y genera una consigna lista para pegar en el foro. Se basa en los contenidos integrados de la unidad.</p>
+            </div>
+            <div class="forum-prompt-controls">
+              <select id="forumPromptSelect" onchange="previewForumPrompt()">${forumPromptOptions()}</select>
+              <button class="btn-secondary" type="button" onclick="previewForumPrompt()">Vista previa</button>
+              <button class="btn-primary" type="button" onclick="useForumPrompt()">Usar consigna</button>
+            </div>
+            <textarea id="forumPromptPreview" rows="7" readonly></textarea>
+          </div>
+          <div class="forum-rubric-card">
+            <span>Calificar participacion</span>
+            <strong>Rubrica de 100 puntos</strong>
+            <div class="forum-rubric-grid">
+              <div><b>30</b><p>Pertinencia conceptual</p></div>
+              <div><b>25</b><p>Uso de evidencia o ejemplo</p></div>
+              <div><b>25</b><p>Interaccion con companeros</p></div>
+              <div><b>20</b><p>Claridad academica</p></div>
+            </div>
+            <p>La nota se registra en Calificaciones como <strong>participacion_foro</strong> y queda vinculada al aporte evaluado.</p>
+          </div>
+        </section>`;
+        }
+
         function renderCommunity(tab = STATE.socialTab || 'foro') {
             if (STATE.socialDraft?.tipo) tab = socialTabForKind(STATE.socialDraft.tipo);
             STATE.socialTab = tab;
@@ -5183,6 +5287,7 @@
             <button class="${item.id === tab ? 'active' : ''}" onclick="renderCommunity('${item.id}')">${item.label}</button>
           `).join('')}
         </div>
+        ${renderForumTools(activeKind)}
         ${canCompose ? `
           <form class="social-composer" onsubmit="submitSocialMessage(event)">
             <input type="hidden" id="socialParentId" value="${escapeHtml(draft.parent_id || '')}">
@@ -5212,6 +5317,7 @@
       </div>`;
             STATE.socialDraft = null;
             renderSocialMessagesList();
+            if (activeKind === 'foro' && isTeacher) previewForumPrompt();
             loadSocialMessagesRemote();
         }
 
@@ -5243,11 +5349,47 @@
         </form>`;
         }
 
+        function renderForumGradeForm(item) {
+            const current = forumGradeForMessage(item.id) || {};
+            return `
+        <form class="forum-grade-form" onsubmit="submitForumGrade(event, ${jsArg(item.id)})">
+          <div class="forum-grade-head">
+            <div>
+              <strong>Calificar participacion en foro</strong>
+              <span>Rubrica analitica de 100 puntos</span>
+            </div>
+            <button class="btn-secondary" type="button" onclick="cancelForumGrade()">Cancelar</button>
+          </div>
+          <div class="forum-grade-grid">
+            <label>Pertinencia conceptual /30
+              <select name="conceptual">${rubricOptions(30, current.conceptual)}</select>
+            </label>
+            <label>Uso de evidencia o ejemplo /25
+              <select name="evidencia">${rubricOptions(25, current.evidencia)}</select>
+            </label>
+            <label>Interaccion con companeros /25
+              <select name="interaccion">${rubricOptions(25, current.interaccion)}</select>
+            </label>
+            <label>Claridad academica /20
+              <select name="claridad">${rubricOptions(20, current.claridad)}</select>
+            </label>
+          </div>
+          <label class="forum-grade-feedback">Retroalimentacion breve
+            <textarea name="feedback" rows="3" placeholder="Indica un acierto y una mejora concreta.">${escapeHtml(current.feedback || '')}</textarea>
+          </label>
+          <div class="forum-grade-actions">
+            <button class="btn-primary" type="submit">Guardar nota</button>
+          </div>
+        </form>`;
+        }
+
         function renderSocialMessage(item, allItems = [], depth = 0) {
             const date = new Date(item.timestamp).toLocaleString('es-PY');
             const isTeacher = item.rol === 'profesor';
             const canReply = item.tipo !== 'anuncio' || STATE.user?.rol === 'profesor';
             const canResolve = STATE.user?.rol === 'profesor' && item.tipo === 'consulta' && item.estado !== 'atendida';
+            const canGrade = STATE.user?.rol === 'profesor' && item.tipo === 'foro' && item.rol !== 'profesor';
+            const grade = forumGradeForMessage(item.id);
             const context = [item.unidad ? `Unidad ${item.unidad}` : '', item.titulo_recurso || item.recurso || '']
                 .filter(Boolean).join(' · ');
             const children = allItems
@@ -5263,13 +5405,16 @@
             <span class="social-status ${escapeHtml(item.estado)}">${escapeHtml(item.estado)}</span>
           </header>
           ${context ? `<div class="social-context">${escapeHtml(context)}</div>` : ''}
+          ${grade ? `<div class="forum-grade-pill">Nota foro: <strong>${Number(grade.puntaje || 0)}/100</strong>${grade.feedback ? ` - ${escapeHtml(grade.feedback)}` : ''}</div>` : ''}
           <p>${escapeHtml(item.mensaje)}</p>
           <footer>
             ${item.recurso ? `<button class="btn-secondary" onclick="openResourceInAula(${jsArg(item.recurso)}, ${jsArg(item.unidad)})">Abrir recurso</button>` : ''}
             ${canReply ? `<button class="btn-secondary" onclick="prepareSocialReply(${jsArg(item.id)})">Responder</button>` : ''}
             ${canResolve ? `<button class="btn-secondary" onclick="resolveSocialMessage(${jsArg(item.id)})">Marcar atendida</button>` : ''}
+            ${canGrade ? `<button class="btn-secondary" onclick="prepareForumGrade(${jsArg(item.id)})">${grade ? 'Editar nota' : 'Calificar'}</button>` : ''}
           </footer>
           ${STATE.socialReplyTo === item.id ? renderSocialReplyForm(item) : ''}
+          ${STATE.socialGradeTarget === item.id ? renderForumGradeForm(item) : ''}
           ${children.length ? `
             <div class="social-replies">
               ${children.map(child => renderSocialMessage(child, allItems, depth + 1)).join('')}
@@ -5345,6 +5490,118 @@
             STATE.socialReplyTo = null;
             sendToSheets({ kind: 'interaccion', ...item });
             showToast('Respuesta publicada.', 'success');
+            renderSocialMessagesList();
+        }
+
+        function selectedForumPrompt() {
+            const raw = document.getElementById('forumPromptSelect')?.value || '1|1';
+            const [unitRaw, sublevelRaw] = raw.split('|');
+            const unitNum = Number(unitRaw) || 1;
+            const sublevelIndex = Number(sublevelRaw) || 1;
+            return {
+                unitNum,
+                sublevelIndex,
+                text: buildForumPrompt(unitNum, sublevelIndex)
+            };
+        }
+
+        function previewForumPrompt() {
+            const preview = document.getElementById('forumPromptPreview');
+            if (!preview) return;
+            preview.value = selectedForumPrompt().text;
+        }
+
+        function useForumPrompt() {
+            if (STATE.user?.rol !== 'profesor') {
+                showToast('Solo el profesor puede crear consignas del foro.', 'error');
+                return;
+            }
+            const prompt = selectedForumPrompt();
+            const preview = document.getElementById('forumPromptPreview');
+            const message = document.getElementById('socialMessage');
+            const unit = document.getElementById('socialUnit');
+            const resource = document.getElementById('socialResource');
+            const title = document.getElementById('socialResourceTitle');
+            const text = preview?.value.trim() || prompt.text;
+            if (preview) preview.value = text;
+            if (message) {
+                message.value = text;
+                message.focus();
+            }
+            if (unit) unit.value = String(prompt.unitNum);
+            if (resource) resource.value = `foro/u${prompt.unitNum}/s${prompt.sublevelIndex}`;
+            if (title) title.value = `Foro U${prompt.unitNum}.${prompt.sublevelIndex}`;
+            showToast('Consigna insertada en el foro. Puedes editarla antes de publicar.', 'success');
+        }
+
+        function prepareForumGrade(id) {
+            if (STATE.user?.rol !== 'profesor') return;
+            STATE.socialGradeTarget = STATE.socialGradeTarget === id ? null : id;
+            STATE.socialReplyTo = null;
+            renderSocialMessagesList();
+            setTimeout(() => document.querySelector('.forum-grade-form select')?.focus(), 0);
+        }
+
+        function cancelForumGrade() {
+            STATE.socialGradeTarget = null;
+            renderSocialMessagesList();
+        }
+
+        function submitForumGrade(event, messageId) {
+            event.preventDefault();
+            if (STATE.user?.rol !== 'profesor') {
+                showToast('Solo el profesor puede calificar foros.', 'error');
+                return;
+            }
+            const item = mergeSocialMessages(STATE.socialMessages, localSocialMessages()).find(msg => msg.id === messageId);
+            if (!item || item.tipo !== 'foro' || item.rol === 'profesor') {
+                showToast('No se encontro un aporte de estudiante para calificar.', 'error');
+                return;
+            }
+            const form = event.currentTarget;
+            const conceptual = Number(form.elements.conceptual?.value || 0);
+            const evidencia = Number(form.elements.evidencia?.value || 0);
+            const interaccion = Number(form.elements.interaccion?.value || 0);
+            const claridad = Number(form.elements.claridad?.value || 0);
+            const puntaje = conceptual + evidencia + interaccion + claridad;
+            const feedback = form.elements.feedback?.value.trim() || '';
+            const grade = {
+                id: `forum_grade_${messageId}_${Date.now()}`,
+                timestamp: new Date().toISOString(),
+                message_id: messageId,
+                usuario: item.usuario || '',
+                nombre: item.nombre || '',
+                unidad: item.unidad || '',
+                actividad: item.titulo_recurso || item.recurso || `Foro ${item.unidad || ''}`.trim(),
+                tipo: 'participacion_foro',
+                puntaje,
+                porcentaje: puntaje,
+                total: 100,
+                conceptual,
+                evidencia,
+                interaccion,
+                claridad,
+                feedback,
+                evaluador: STATE.user?.username || '',
+                evaluador_nombre: STATE.user?.nombre || STATE.user?.username || '',
+                recurso: item.recurso || '',
+                titulo_recurso: item.titulo_recurso || ''
+            };
+            const grades = localForumGrades().filter(saved => saved.message_id !== messageId);
+            grades.push(grade);
+            saveLocalForumGrades(grades);
+            STATE.socialGradeTarget = null;
+            sendToSheets({
+                kind: 'calificacion',
+                ...grade,
+                detalle: {
+                    message_id: messageId,
+                    rubrica: { conceptual, evidencia, interaccion, claridad },
+                    feedback,
+                    aporte: item.mensaje
+                }
+            });
+            showToast(`Nota de foro guardada: ${puntaje}/100.`, 'success');
             renderSocialMessagesList();
         }
 

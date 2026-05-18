@@ -4018,6 +4018,95 @@ a:hover { text-decoration: underline; }
   color: #fff;
 }
 
+.forum-tools {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.55fr);
+}
+
+.forum-tool-card,
+.forum-rubric-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(236,248,255,0.9));
+  border: 1px solid rgba(44,123,159,0.18);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
+}
+
+.forum-tool-card span,
+.forum-rubric-card span {
+  color: var(--primary);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.forum-tool-card strong,
+.forum-rubric-card strong {
+  color: var(--text-primary);
+  display: block;
+  font-size: 1rem;
+  margin-top: 0.15rem;
+}
+
+.forum-tool-card p,
+.forum-rubric-card p {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin-top: 0.25rem;
+}
+
+.forum-prompt-controls {
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+}
+
+.forum-prompt-controls select,
+.forum-tool-card textarea,
+.forum-grade-form select,
+.forum-grade-form textarea {
+  background: #fff;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font: inherit;
+  min-width: 0;
+  padding: 0.65rem 0.75rem;
+}
+
+.forum-tool-card textarea {
+  font-size: 0.84rem;
+  line-height: 1.45;
+  min-height: 170px;
+  resize: vertical;
+}
+
+.forum-rubric-grid,
+.forum-grade-grid {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.forum-rubric-grid div {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(44,123,159,0.16);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem;
+}
+
+.forum-rubric-grid b {
+  color: var(--primary-dark);
+  display: block;
+  font-size: 1.05rem;
+}
+
 .social-composer,
 .social-message {
   background: var(--bg-elevated);
@@ -4144,6 +4233,16 @@ a:hover { text-decoration: underline; }
   padding: 0.45rem 0.6rem;
 }
 
+.forum-grade-pill {
+  background: rgba(5,150,105,0.12);
+  border: 1px solid rgba(5,150,105,0.22);
+  border-radius: var(--radius-sm);
+  color: #065f46;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.5rem 0.65rem;
+}
+
 .social-status {
   background: rgba(30,64,175,0.1);
   border: 1px solid rgba(30,64,175,0.2);
@@ -4205,6 +4304,45 @@ a:hover { text-decoration: underline; }
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: flex-end;
+}
+
+.forum-grade-form {
+  background: linear-gradient(135deg, rgba(236,248,255,0.92), rgba(255,255,255,0.96));
+  border: 1px solid rgba(44,123,159,0.2);
+  border-radius: var(--radius-md);
+  display: grid;
+  gap: 0.8rem;
+  padding: 0.85rem;
+}
+
+.forum-grade-head,
+.forum-grade-actions {
+  align-items: center;
+  display: flex;
+  gap: 0.65rem;
+  justify-content: space-between;
+}
+
+.forum-grade-head strong {
+  color: var(--text-primary);
+  display: block;
+  font-size: 0.9rem;
+}
+
+.forum-grade-head span,
+.forum-grade-form label {
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.forum-grade-form label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.forum-grade-feedback {
+  grid-column: 1 / -1;
 }
 
 .practice-grid {
@@ -5257,8 +5395,18 @@ a:hover { text-decoration: underline; }
   }
 
   .mind-map-branches,
-  .social-form-grid {
+  .social-form-grid,
+  .forum-tools,
+  .forum-rubric-grid,
+  .forum-grade-grid,
+  .forum-prompt-controls {
     grid-template-columns: 1fr;
+  }
+
+  .forum-grade-head,
+  .forum-grade-actions {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .social-replies {
@@ -5424,6 +5572,8 @@ a:hover { text-decoration: underline; }
   .practice-actions a,
   .calendar-actions button,
   .practice-nav button,
+  .forum-prompt-controls button,
+  .forum-grade-actions button,
   .social-composer-actions button,
   .social-message footer button {
     justify-content: center;
