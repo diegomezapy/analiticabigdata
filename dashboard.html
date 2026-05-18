@@ -1404,6 +1404,14 @@
                 </div>
                 <button class="btn-secondary" onclick="showPage('account')">Cambiar clave</button>
               </div>` : '';
+            const emailPrompt = (!STATE.user.email && STATE.user.rol !== 'profesor') ? `
+              <div class="smart-card warning">
+                <div>
+                  <strong>Registra tu correo</strong>
+                  <p>Sin correo registrado el profesor no puede enviarte recordatorios ni devoluciones del curso.</p>
+                </div>
+                <button class="btn-secondary" onclick="showPage('account')">Agregar correo</button>
+              </div>` : '';
 
             const content = document.getElementById('pageContent');
             content.innerHTML = `
@@ -1452,6 +1460,7 @@
 
     <div class="smart-grid">
       ${passwordPrompt}
+      ${emailPrompt}
       <div class="smart-card">
         <div>
           <strong>Próximas fechas</strong>
@@ -7730,6 +7739,17 @@
         </div>
       </div>
       <div class="card">
+        <h3>Correo de notificaciones</h3>
+        <p style="margin:0.5rem 0 1rem">El profesor usa este correo para enviarte recordatorios, devoluciones y avisos del curso. Sin correo registrado no podras recibir notificaciones.</p>
+        <div class="form-row">
+          <label>Correo electronico</label>
+          <input class="form-control" type="email" id="accountEmail" autocomplete="email"
+            placeholder="tu@correo.com" value="${escapeHtml(STATE.user.email || '')}">
+        </div>
+        <button class="btn-primary" onclick="handleEmailUpdate()">Guardar correo</button>
+        ${!STATE.user.email ? '<p style="margin-top:0.75rem;font-size:0.82rem;color:var(--warning)">No tienes correo registrado aun. Agrega uno para recibir avisos.</p>' : ''}
+      </div>
+      <div class="card">
         <h3>Version de la app</h3>
         <p style="margin:0.5rem 0 1rem">Si el celular conserva una version anterior, usa este boton para buscar cambios, limpiar la cache del aula y recargar.</p>
         <div class="info-list" style="margin-bottom:1rem">
@@ -7771,6 +7791,24 @@
             earnBadge('password_changed');
             trackEvent('password_changed', { detalle: 'Contraseña actualizada por el usuario' });
             showToast('Contraseña actualizada.', 'success');
+            renderAccount();
+        }
+
+        function handleEmailUpdate() {
+            const email = document.getElementById('accountEmail').value.trim();
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast('Ingresa un correo válido.', 'error');
+                return;
+            }
+            const users = localUsers();
+            const idx = users.findIndex(u => u.username === STATE.user.username);
+            if (idx >= 0) users[idx] = { ...users[idx], email };
+            else users.push({ username: STATE.user.username, email });
+            saveLocalUsers(users);
+            STATE.user = { ...STATE.user, email };
+            sessionStorage.setItem('abd_user', JSON.stringify(STATE.user));
+            sendToSheets({ kind: 'perfil', usuario: STATE.user.username, nombre: STATE.user.nombre, email, timestamp: new Date().toISOString() });
+            showToast(email ? 'Correo guardado.' : 'Correo eliminado.', 'success');
             renderAccount();
         }
 
