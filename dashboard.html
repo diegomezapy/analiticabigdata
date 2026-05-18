@@ -228,7 +228,7 @@
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
         const NOTEBOOK_CONTENT_URL = 'recursos/notebooklm/contenido_fichas.json';
-        const APP_VERSION = 'v35';
+        const APP_VERSION = 'v36';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -3401,6 +3401,12 @@
         </figure>`;
         }
 
+        function shouldShowSublevelDiagram(slide) {
+            return slide?.microKind === 'definition'
+                && Number(slide.baseStageOrder || slide.stageOrder || 0) === 1
+                && Number(slide.microOrder || 0) === 1;
+        }
+
         function renderLearningCaseStoryboard(slide) {
             const example = learningCardExample(slide, learningSupportContent(STATE.currentUnit || 1, slide));
             const ideas = contentSnippets(slide, 3);
@@ -3543,12 +3549,15 @@
             </section>`;
 
             if (slide.microKind === 'definition') {
+                const visual = shouldShowSublevelDiagram(slide)
+                    ? renderLearningPedagogicalFigure(unitNum, slide, 'diagram')
+                    : renderLearningConceptCanvas(slide);
                 return shell('micro-definition', `
               <div class="learning-card-definition learning-feature-block">
                 <span>Definicion corta</span>
                 <p>${escapeHtml(definition)}</p>
               </div>
-              ${renderLearningPedagogicalFigure(unitNum, slide, 'diagram')}
+              ${visual}
               ${renderNotebookContentIdeas(slide, 3)}`);
             }
 
@@ -3561,7 +3570,6 @@
                             <span>Ejemplo sencillo</span>
                             <p>${escapeHtml(example)}</p>
                           </div>
-                          ${renderLearningPedagogicalFigure(unitNum, slide, 'diagram')}
                           ${renderLearningCaseStoryboard(slide)}
                           ${renderNotebookContentTable(slide)}
                           ${renderLearningCardFigure(slide)}`);
@@ -3597,7 +3605,7 @@
                 <span>Antes de evaluar</span>
                 <p>${escapeHtml(definition)}</p>
               </div>
-              ${renderLearningPedagogicalFigure(unitNum, slide, 'diagram')}
+              ${renderLearningConceptCanvas(slide)}
               ${renderLearningCardBullets(slide)}`);
             }
 
