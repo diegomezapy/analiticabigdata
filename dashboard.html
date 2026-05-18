@@ -3239,8 +3239,19 @@
         function flipLearningFlashcard(unitNum, slideIndex) {
             const state = learningFlashcardState[`${unitNum}_${slideIndex}`];
             if (!state) return;
-            state.flipped = !state.flipped;
-            renderLearningFlashcardDeck(unitNum, slideIndex);
+            const host = document.getElementById(learningFlashcardsHostId(unitNum, slideIndex));
+            const card = host?.querySelector('.learning-flashcard-card');
+            if (!card || card.classList.contains('is-flipping-out') || card.classList.contains('is-flipping-in')) return;
+            card.classList.add('is-flipping-out');
+            setTimeout(() => {
+                state.flipped = !state.flipped;
+                renderLearningFlashcardDeck(unitNum, slideIndex);
+                const newCard = host.querySelector('.learning-flashcard-card');
+                if (newCard) {
+                    newCard.classList.add('is-flipping-in');
+                    setTimeout(() => newCard.classList.remove('is-flipping-in'), 240);
+                }
+            }, 180);
         }
 
         function moveLearningFlashcard(unitNum, slideIndex, direction) {

@@ -2682,6 +2682,16 @@ a:hover { text-decoration: underline; }
   padding: 1.25rem 1.5rem;
 }
 
+@keyframes fc-flip-out {
+  from { transform: perspective(900px) rotateY(0deg); }
+  to   { transform: perspective(900px) rotateY(90deg); }
+}
+
+@keyframes fc-flip-in {
+  from { transform: perspective(900px) rotateY(-90deg); }
+  to   { transform: perspective(900px) rotateY(0deg); }
+}
+
 .learning-flashcard-deck {
   display: grid;
   gap: 1rem;
@@ -2691,7 +2701,7 @@ a:hover { text-decoration: underline; }
   background: linear-gradient(135deg, white, color-mix(in srgb, var(--sublevel-soft) 58%, white));
   border: 1px solid color-mix(in srgb, var(--sublevel-color) 22%, var(--glass-border));
   border-radius: 18px;
-  box-shadow: 0 16px 34px rgba(18,42,66,0.1);
+  box-shadow: 0 8px 28px rgba(18,42,66,0.1);
   color: var(--text-primary);
   cursor: pointer;
   display: grid;
@@ -2701,13 +2711,21 @@ a:hover { text-decoration: underline; }
   padding: clamp(1.25rem, 3vw, 2rem);
   place-items: center;
   text-align: center;
-  transition: transform 0.34s ease, box-shadow 0.34s ease;
+  transform-origin: center;
+  transition: box-shadow 0.28s ease;
   width: 100%;
 }
 
 .learning-flashcard-card:hover {
-  box-shadow: 0 20px 42px rgba(18,42,66,0.14);
-  transform: translateY(-2px);
+  box-shadow: 0 16px 42px rgba(18,42,66,0.14);
+}
+
+.learning-flashcard-card.is-flipping-out {
+  animation: fc-flip-out 0.18s ease-in forwards;
+}
+
+.learning-flashcard-card.is-flipping-in {
+  animation: fc-flip-in 0.22s ease-out forwards;
 }
 
 .learning-flashcard-card.flipped {
