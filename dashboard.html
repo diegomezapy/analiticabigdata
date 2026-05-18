@@ -104,7 +104,7 @@
                 </div>
                 <div class="nav-item" onclick="showPage('matching')" id="nav-matching">
                     <span class="nav-item-icon">🔗</span>
-                    <span>Emparejar Conceptos</span>
+                    <span>Clasificador interactivo</span>
                 </div>
                 <div class="nav-item" onclick="showPage('guia')" id="nav-guia">
                     <span class="nav-item-icon">📖</span>
@@ -228,7 +228,7 @@
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
         const NOTEBOOK_CONTENT_URL = 'recursos/notebooklm/contenido_fichas.json';
-        const APP_VERSION = 'v36';
+        const APP_VERSION = 'v37';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -554,7 +554,7 @@
             await loadNotebookContentIndex();
 
             const route = (window.location.hash || '').replace('#', '');
-            if (['calendar', 'community', 'practices', 'lab', 'account', 'admin'].includes(route)) showPage(route);
+            if (['progress', 'badges', 'calendar', 'community', 'practices', 'lab', 'flashcards', 'matching', 'guia', 'account', 'admin'].includes(route)) showPage(route);
             else if (/^u[1-4]$/.test(route)) showUnit(Number(route.slice(1)));
             else showPage('home');
             checkReminders();
@@ -658,7 +658,7 @@
                 home: 'Inicio', progress: 'Mi Progreso', badges: 'Mis Logros',
                 calendar: 'Calendario', community: 'Comunidad', practices: 'Prácticas guiadas',
                 lab: 'Laboratorio R/Python',
-                flashcards: 'Flashcards', matching: 'Emparejar Conceptos', guia: 'Guía Didáctica',
+                flashcards: 'Flashcards', matching: 'Clasificador interactivo', guia: 'Guía Didáctica',
                 account: 'Cuenta', admin: 'Administración'
             };
             document.getElementById('topbarTitle').textContent = titles[page] || page;
@@ -1428,8 +1428,8 @@
       </div>
       <div class="card" style="cursor:pointer" onclick="showPage('matching')">
         <div style="font-size:2rem;margin-bottom:0.5rem">🔗</div>
-        <h3>Emparejar Conceptos</h3>
-        <p style="font-size:0.8rem;margin-top:0.3rem">Arrastra y suelta para emparejar términos</p>
+        <h3>Clasificador interactivo</h3>
+        <p style="font-size:0.8rem;margin-top:0.3rem">Ubica casos reales en la categoría correcta</p>
       </div>
       <div class="card" style="cursor:pointer" onclick="showPage('badges')">
         <div style="font-size:2rem;margin-bottom:0.5rem">🏆</div>
@@ -4544,126 +4544,524 @@
         }
 
         // ================================================================
-        // MATCHING ACTIVITY (DRAG & DROP)
+        // UNIT CLASSIFIER ACTIVITY (DRAG, DROP & TOUCH)
         // ================================================================
-        const MATCH_DATA = [
-            { concept: 'Volumen', definition: 'Cantidad masiva de datos que exige almacenamiento y procesamiento adecuados' },
-            { concept: 'Variedad', definition: 'Datos con múltiples formatos, fuentes y estructuras' },
-            { concept: 'Binarización', definition: 'Transformación de categorías en variables indicadoras' },
-            { concept: 'Imputación', definition: 'Tratamiento de valores faltantes mediante reemplazo razonado' },
-            { concept: 'KNN', definition: 'Modelo que predice usando las observaciones más cercanas' },
-            { concept: 'LDA', definition: 'Método que discrimina grupos con combinaciones lineales de variables' },
-        ];
+        const CLASSIFIER_ACTIVITIES = {
+            1: {
+                unit: 1,
+                title: 'Clasificador de variables',
+                subtitle: 'Antes de limpiar o modelar, el estudiante debe reconocer que tipo de dato tiene entre manos.',
+                prompt: 'Ubica cada variable en su familia. Si estas en celular, toca una etiqueta y luego una caja.',
+                image: 'assets/pedagogical/edu_u1s1_5v_bigdata.svg',
+                categories: [
+                    { id: 'dicotomica', label: 'Dicotomica', short: 'Dos estados', definition: 'Solo admite dos valores posibles: si/no, activo/inactivo, aprobado/reprobado.', color: '#1f6f8b' },
+                    { id: 'nominal', label: 'Nominal', short: 'Nombres sin orden', definition: 'Clasifica por etiquetas sin jerarquia natural: carrera, pais, tipo de sangre.', color: '#7c3aed' },
+                    { id: 'ordinal', label: 'Ordinal', short: 'Categorias ordenadas', definition: 'Tiene niveles con orden, aunque la distancia entre niveles no sea medible.', color: '#b45309' },
+                    { id: 'conteo', label: 'De conteo', short: 'Enteros de ocurrencia', definition: 'Cuenta eventos, personas, intentos o repeticiones. No tiene decimales.', color: '#047857' },
+                    { id: 'continua', label: 'Continua', short: 'Medicion precisa', definition: 'Puede tomar valores con decimales dentro de un intervalo: altura, temperatura, ingreso.', color: '#be123c' }
+                ],
+                items: [
+                    { id: 'u1_i01', label: 'Aprobado (Si/No)', category: 'dicotomica', hint: 'Se decide entre dos estados.' },
+                    { id: 'u1_i02', label: 'Tiene internet en casa', category: 'dicotomica', hint: 'La respuesta se codifica como si o no.' },
+                    { id: 'u1_i03', label: 'Estado laboral: empleado/desempleado', category: 'dicotomica', hint: 'En este caso solo hay dos estados posibles.' },
+                    { id: 'u1_i04', label: 'Pais de origen', category: 'nominal', hint: 'Son nombres de paises sin orden natural.' },
+                    { id: 'u1_i05', label: 'Tipo de sangre', category: 'nominal', hint: 'A, B, AB y O son etiquetas, no rangos.' },
+                    { id: 'u1_i06', label: 'Carrera universitaria', category: 'nominal', hint: 'Identifica grupos sin jerarquia.' },
+                    { id: 'u1_i07', label: 'Codigo postal', category: 'nominal', hint: 'Aunque use numeros, funciona como identificador.' },
+                    { id: 'u1_i08', label: 'Nivel de dolor: bajo, medio, alto', category: 'ordinal', hint: 'Los niveles tienen orden.' },
+                    { id: 'u1_i09', label: 'Nivel educativo alcanzado', category: 'ordinal', hint: 'Los niveles avanzan de menor a mayor.' },
+                    { id: 'u1_i10', label: 'Riesgo crediticio: bajo, medio, alto', category: 'ordinal', hint: 'Es una escala ordenada de riesgo.' },
+                    { id: 'u1_i11', label: 'Numero de hijos', category: 'conteo', hint: 'Cuenta personas con valores enteros.' },
+                    { id: 'u1_i12', label: 'Intentos en un examen', category: 'conteo', hint: 'Cuenta ocurrencias.' },
+                    { id: 'u1_i13', label: 'Cursos completados', category: 'conteo', hint: 'Es una cantidad entera de cursos.' },
+                    { id: 'u1_i14', label: 'Altura en metros', category: 'continua', hint: 'Puede medirse con decimales.' },
+                    { id: 'u1_i15', label: 'Temperatura corporal', category: 'continua', hint: 'La medicion puede tener decimales.' },
+                    { id: 'u1_i16', label: 'Ingreso mensual exacto', category: 'continua', hint: 'Puede variar en una escala numerica fina.' }
+                ]
+            },
+            2: {
+                unit: 2,
+                title: 'Elegir la visualizacion correcta',
+                subtitle: 'La pregunta de analisis determina el grafico, no al reves.',
+                prompt: 'Clasifica cada necesidad de analisis segun la lectura visual mas adecuada.',
+                image: 'assets/pedagogical/edu_u2s1_grammar_graficos.svg',
+                categories: [
+                    { id: 'distribucion', label: 'Distribucion', short: 'Forma y dispersion', definition: 'Muestra concentracion, asimetria, colas y valores atipicos.', color: '#1d4ed8' },
+                    { id: 'comparacion', label: 'Comparacion', short: 'Grupos o rankings', definition: 'Compara categorias, sedes, periodos o grupos de estudiantes.', color: '#b45309' },
+                    { id: 'relacion', label: 'Relacion', short: 'Asociacion entre variables', definition: 'Explora si dos variables se mueven juntas o si hay patrones conjuntos.', color: '#7c3aed' },
+                    { id: 'cambio', label: 'Cambio temporal', short: 'Evolucion', definition: 'Ordena los datos por fecha para mirar tendencias, saltos y estacionalidad.', color: '#047857' },
+                    { id: 'calidad', label: 'Calidad de datos', short: 'Faltantes y anomalias', definition: 'Hace visibles problemas que deben resolverse antes del analisis.', color: '#be123c' }
+                ],
+                items: [
+                    { id: 'u2_i01', label: 'Histograma de edades de ingresantes', category: 'distribucion', hint: 'Interesa la forma de una variable numerica.' },
+                    { id: 'u2_i02', label: 'Boxplot de ingresos por sede', category: 'distribucion', hint: 'Resume dispersion y posibles atipicos.' },
+                    { id: 'u2_i03', label: 'Curva de densidad de horas de estudio', category: 'distribucion', hint: 'Describe donde se concentra la variable.' },
+                    { id: 'u2_i04', label: 'Barras de estudiantes por carrera', category: 'comparacion', hint: 'Compara cantidades por categoria.' },
+                    { id: 'u2_i05', label: 'Ranking de cursos por aprobacion', category: 'comparacion', hint: 'Ordena grupos por una medida.' },
+                    { id: 'u2_i06', label: 'Barras agrupadas por sede y turno', category: 'comparacion', hint: 'Contrasta grupos cruzados.' },
+                    { id: 'u2_i07', label: 'Dispersion: horas de estudio vs nota final', category: 'relacion', hint: 'Dos variables numericas se observan juntas.' },
+                    { id: 'u2_i08', label: 'Mapa de calor de correlaciones', category: 'relacion', hint: 'Resume asociaciones entre muchas variables.' },
+                    { id: 'u2_i09', label: 'Nube de puntos con linea de tendencia', category: 'relacion', hint: 'Permite ver patron y direccion.' },
+                    { id: 'u2_i10', label: 'Serie mensual de matriculados', category: 'cambio', hint: 'La fecha organiza la lectura.' },
+                    { id: 'u2_i11', label: 'Linea semanal de abandono', category: 'cambio', hint: 'Busca evolucion en el tiempo.' },
+                    { id: 'u2_i12', label: 'Area acumulada de creditos aprobados', category: 'cambio', hint: 'Muestra acumulacion temporal.' },
+                    { id: 'u2_i13', label: 'Mapa de valores faltantes', category: 'calidad', hint: 'Diagnostica ausencias.' },
+                    { id: 'u2_i14', label: 'Conteo de duplicados por identificador', category: 'calidad', hint: 'Detecta registros repetidos.' },
+                    { id: 'u2_i15', label: 'Puntos extremos de una variable de precio', category: 'calidad', hint: 'Busca valores anomalos antes de modelar.' }
+                ]
+            },
+            3: {
+                unit: 3,
+                title: 'Pipeline de Machine Learning',
+                subtitle: 'Un modelo confiable nace de separar preparacion, entrenamiento, ajuste y evaluacion.',
+                prompt: 'Coloca cada accion o concepto en la etapa correcta del flujo predictivo.',
+                image: 'assets/pedagogical/edu_u3s3_roc_confusion.svg',
+                categories: [
+                    { id: 'preparacion', label: 'Preparacion', short: 'Datos listos', definition: 'Transforma los datos para que el algoritmo pueda aprender sin contaminar el resultado.', color: '#1f6f8b' },
+                    { id: 'algoritmo', label: 'Algoritmo', short: 'Regla de aprendizaje', definition: 'Define como se aprende la relacion entre variables predictoras y objetivo.', color: '#7c3aed' },
+                    { id: 'evaluacion', label: 'Evaluacion', short: 'Medir desempeno', definition: 'Cuantifica aciertos, errores y capacidad de discriminar casos.', color: '#b45309' },
+                    { id: 'ajuste', label: 'Ajuste', short: 'Control de complejidad', definition: 'Modifica hiperparametros o penalizaciones para mejorar generalizacion.', color: '#047857' },
+                    { id: 'riesgo', label: 'Riesgo metodologico', short: 'Errores de diseno', definition: 'Problemas que inflan resultados o impiden que el modelo funcione en datos nuevos.', color: '#be123c' }
+                ],
+                items: [
+                    { id: 'u3_i01', label: 'Division train/test', category: 'preparacion', hint: 'Separa datos antes de estimar desempeno.' },
+                    { id: 'u3_i02', label: 'Imputar valores faltantes', category: 'preparacion', hint: 'Corrige datos antes del entrenamiento.' },
+                    { id: 'u3_i03', label: 'Estandarizar variables numericas', category: 'preparacion', hint: 'Escala variables para algoritmos sensibles a distancia.' },
+                    { id: 'u3_i04', label: 'K-Nearest Neighbors', category: 'algoritmo', hint: 'Clasifica usando vecinos cercanos.' },
+                    { id: 'u3_i05', label: 'Naive Bayes', category: 'algoritmo', hint: 'Modelo probabilistico de clasificacion.' },
+                    { id: 'u3_i06', label: 'Regresion logistica', category: 'algoritmo', hint: 'Estima probabilidad de pertenecer a una clase.' },
+                    { id: 'u3_i07', label: 'Matriz de confusion', category: 'evaluacion', hint: 'Cruza prediccion contra clase real.' },
+                    { id: 'u3_i08', label: 'AUC-ROC', category: 'evaluacion', hint: 'Mide discriminacion en distintos umbrales.' },
+                    { id: 'u3_i09', label: 'F1-score', category: 'evaluacion', hint: 'Combina precision y sensibilidad.' },
+                    { id: 'u3_i10', label: 'Penalizacion L1 (Lasso)', category: 'ajuste', hint: 'Puede llevar coeficientes a cero.' },
+                    { id: 'u3_i11', label: 'Penalizacion L2 (Ridge)', category: 'ajuste', hint: 'Reduce coeficientes sin eliminarlos necesariamente.' },
+                    { id: 'u3_i12', label: 'Elegir el valor de k', category: 'ajuste', hint: 'Es un hiperparametro del KNN.' },
+                    { id: 'u3_i13', label: 'Data leakage', category: 'riesgo', hint: 'La informacion del futuro o del test entra al entrenamiento.' },
+                    { id: 'u3_i14', label: 'Sobreajuste', category: 'riesgo', hint: 'Aprende demasiado el ruido de entrenamiento.' },
+                    { id: 'u3_i15', label: 'Validacion cruzada mal estratificada', category: 'riesgo', hint: 'Puede distorsionar la medicion en clases desbalanceadas.' }
+                ]
+            },
+            4: {
+                unit: 4,
+                title: 'Interpretacion, reporte y equidad',
+                subtitle: 'Un resultado analitico vale mas cuando se puede explicar, auditar y comunicar.',
+                prompt: 'Ubica cada recurso de interpretacion segun el tipo de evidencia que aporta.',
+                image: 'assets/pedagogical/edu_u4s3_sesgo_algoritmico.svg',
+                categories: [
+                    { id: 'local', label: 'Explicacion local', short: 'Un caso', definition: 'Explica por que el modelo tomo una decision para una observacion especifica.', color: '#1f6f8b' },
+                    { id: 'global', label: 'Explicacion global', short: 'El modelo completo', definition: 'Describe patrones generales del modelo en todo el conjunto de datos.', color: '#7c3aed' },
+                    { id: 'reproducible', label: 'Reporte reproducible', short: 'Codigo + narrativa', definition: 'Integra datos, codigo, tablas, figuras y conclusiones en un documento auditable.', color: '#b45309' },
+                    { id: 'equidad', label: 'Equidad algoritmica', short: 'Sesgo y grupos', definition: 'Evalua si el sistema perjudica de manera desigual a grupos relevantes.', color: '#047857' },
+                    { id: 'comunicacion', label: 'Comunicacion ejecutiva', short: 'Decision accionable', definition: 'Traduce evidencia tecnica a una recomendacion clara para tomar decisiones.', color: '#be123c' }
+                ],
+                items: [
+                    { id: 'u4_i01', label: 'SHAP para un solicitante de credito', category: 'local', hint: 'Explica una prediccion individual.' },
+                    { id: 'u4_i02', label: 'Escenario contrafactual de aprobacion', category: 'local', hint: 'Pregunta que deberia cambiar en un caso.' },
+                    { id: 'u4_i03', label: 'Desglose de variables para una alerta', category: 'local', hint: 'Se concentra en una observacion.' },
+                    { id: 'u4_i04', label: 'Importancia global de variables', category: 'global', hint: 'Resume peso relativo en todo el modelo.' },
+                    { id: 'u4_i05', label: 'Partial Dependence Plot', category: 'global', hint: 'Muestra efecto promedio de una variable.' },
+                    { id: 'u4_i06', label: 'Patron general de errores por segmento', category: 'global', hint: 'Mira comportamiento agregado.' },
+                    { id: 'u4_i07', label: 'Documento Quarto con codigo ejecutable', category: 'reproducible', hint: 'Une narrativa y ejecucion.' },
+                    { id: 'u4_i08', label: 'Chunk con semilla y librerias', category: 'reproducible', hint: 'Permite repetir el analisis.' },
+                    { id: 'u4_i09', label: 'Tabla generada desde el dataset final', category: 'reproducible', hint: 'La tabla no se copia manualmente.' },
+                    { id: 'u4_i10', label: 'Paridad demografica', category: 'equidad', hint: 'Compara tasas de seleccion entre grupos.' },
+                    { id: 'u4_i11', label: 'Igualdad de oportunidades', category: 'equidad', hint: 'Compara sensibilidad entre grupos.' },
+                    { id: 'u4_i12', label: 'Auditoria de sesgo por zona rural/urbana', category: 'equidad', hint: 'Evalua impacto desigual.' },
+                    { id: 'u4_i13', label: 'Resumen ejecutivo para autoridades', category: 'comunicacion', hint: 'Sintetiza hallazgos para decision.' },
+                    { id: 'u4_i14', label: 'Semaforo de riesgo institucional', category: 'comunicacion', hint: 'Convierte evidencia en senales claras.' },
+                    { id: 'u4_i15', label: 'Recomendacion accionable con prioridad', category: 'comunicacion', hint: 'Conecta analisis con intervencion.' }
+                ]
+            }
+        };
 
-        let dragSource = null;
+        let classifierState = null;
+        let classifierDragId = null;
+        let classifierSelectedId = null;
 
-        function renderMatching() {
-            const shuffled = [...MATCH_DATA].sort(() => Math.random() - 0.5);
-            const defs = [...MATCH_DATA].sort(() => Math.random() - 0.5);
+        function classifierStorageKey(unitNum) {
+            return `abd_classifier_${STATE.user?.username || 'anon'}_u${unitNum}`;
+        }
 
+        function classifierBestKey(unitNum) {
+            return `abd_classifier_best_${STATE.user?.username || 'anon'}_u${unitNum}`;
+        }
+
+        function getClassifierUnit(unitNum) {
+            const requested = Number(unitNum || classifierState?.unit || STATE.currentUnit || 1);
+            return CLASSIFIER_ACTIVITIES[requested] ? requested : 1;
+        }
+
+        function shuffledClassifierOrder(activity) {
+            return activity.items
+                .map(item => item.id)
+                .sort(() => Math.random() - 0.5);
+        }
+
+        function normalizeClassifierState(activity, saved = {}) {
+            const itemIds = new Set(activity.items.map(item => item.id));
+            const categoryIds = new Set(activity.categories.map(category => category.id));
+            const placements = {};
+            Object.entries(saved.placements || {}).forEach(([itemId, categoryId]) => {
+                if (itemIds.has(itemId) && categoryIds.has(categoryId)) placements[itemId] = categoryId;
+            });
+            const savedOrder = Array.isArray(saved.order) ? saved.order.filter(itemId => itemIds.has(itemId)) : [];
+            const missingOrder = activity.items.map(item => item.id).filter(itemId => !savedOrder.includes(itemId));
+            return {
+                unit: activity.unit,
+                placements,
+                checked: Boolean(saved.checked),
+                solution: Boolean(saved.solution),
+                order: [...savedOrder, ...missingOrder]
+            };
+        }
+
+        function newClassifierState(unitNum) {
+            const activity = CLASSIFIER_ACTIVITIES[getClassifierUnit(unitNum)];
+            return normalizeClassifierState(activity, {
+                placements: {},
+                checked: false,
+                solution: false,
+                order: shuffledClassifierOrder(activity)
+            });
+        }
+
+        function loadClassifierState(unitNum) {
+            const activity = CLASSIFIER_ACTIVITIES[getClassifierUnit(unitNum)];
+            try {
+                const raw = localStorage.getItem(classifierStorageKey(activity.unit));
+                if (raw) return normalizeClassifierState(activity, JSON.parse(raw));
+            } catch (error) {
+                console.warn('No se pudo cargar el clasificador', error);
+            }
+            return newClassifierState(activity.unit);
+        }
+
+        function saveClassifierState() {
+            if (!classifierState) return;
+            try {
+                localStorage.setItem(classifierStorageKey(classifierState.unit), JSON.stringify(classifierState));
+            } catch (error) {
+                console.warn('No se pudo guardar el clasificador', error);
+            }
+        }
+
+        function getClassifierBest(unitNum) {
+            try {
+                return Number(localStorage.getItem(classifierBestKey(unitNum)) || 0);
+            } catch {
+                return 0;
+            }
+        }
+
+        function setClassifierBest(unitNum, value) {
+            try {
+                localStorage.setItem(classifierBestKey(unitNum), String(value));
+            } catch (error) {
+                console.warn('No se pudo guardar el mejor puntaje', error);
+            }
+        }
+
+        function classifierOrderedItems(activity) {
+            const byId = new Map(activity.items.map(item => [item.id, item]));
+            return classifierState.order.map(itemId => byId.get(itemId)).filter(Boolean);
+        }
+
+        function classifierScore(activity) {
+            const correct = activity.items.filter(item => classifierState.placements[item.id] === item.category).length;
+            const placed = activity.items.filter(item => classifierState.placements[item.id]).length;
+            const total = activity.items.length;
+            return { correct, placed, total, pct: Math.round((correct / total) * 100) };
+        }
+
+        function classifierItemStatus(item) {
+            if (!classifierState?.checked) return '';
+            return classifierState.placements[item.id] === item.category ? 'correct' : 'incorrect';
+        }
+
+        function renderClassifierItem(item) {
+            const status = classifierItemStatus(item);
+            const isSelected = classifierSelectedId === item.id;
+            const statusText = status === 'correct' ? 'Correcto' : (status === 'incorrect' ? item.hint : '');
+            return `
+        <button type="button"
+          class="classifier-item ${status} ${isSelected ? 'selected' : ''}"
+          draggable="true"
+          data-item-id="${escapeHtml(item.id)}"
+          onclick="selectClassifierItem(${jsArg(item.id)})"
+          ondragstart="classifierDragStart(event, ${jsArg(item.id)})"
+          ondragend="classifierDragEnd(event)">
+          <span>${escapeHtml(item.label)}</span>
+          ${statusText ? `<small>${escapeHtml(statusText)}</small>` : ''}
+        </button>`;
+        }
+
+        function renderClassifierZone(category, items) {
+            return `
+      <section class="classifier-zone" style="--zone-color:${escapeHtml(category.color)}"
+        onclick="placeClassifierSelected(${jsArg(category.id)})"
+        ondragover="classifierDragOver(event)"
+        ondragleave="classifierDragLeave(event)"
+        ondrop="classifierDrop(event, ${jsArg(category.id)})">
+        <div class="classifier-zone-head">
+          <span class="classifier-zone-dot"></span>
+          <div>
+            <strong>${escapeHtml(category.label)}</strong>
+            <small>${escapeHtml(category.short)}</small>
+          </div>
+          <em>${items.length}</em>
+        </div>
+        <p>${escapeHtml(category.definition)}</p>
+        <div class="classifier-zone-items">
+          ${items.length ? items.map(renderClassifierItem).join('') : '<span class="classifier-empty">Caja disponible</span>'}
+        </div>
+      </section>`;
+        }
+
+        function renderClassifierResult(activity) {
+            const score = classifierScore(activity);
+            const selected = activity.items.find(item => item.id === classifierSelectedId);
+            if (!classifierState.checked) {
+                return `
+          <div class="classifier-result neutral">
+            <strong>${score.placed}/${score.total} casos ubicados</strong>
+            <span>${selected ? `Seleccionado: ${escapeHtml(selected.label)}` : 'Selecciona una etiqueta para moverla con toque o arrastre.'}</span>
+          </div>`;
+            }
+            const tone = score.pct >= 80 ? 'success' : 'warning';
+            return `
+        <div class="classifier-result ${tone}">
+          <strong>${score.correct}/${score.total} correctos · ${score.pct}%</strong>
+          <span>${score.pct >= 80 ? 'Dominio suficiente para seguir avanzando.' : 'Revisa las pistas marcadas y vuelve a intentarlo.'}</span>
+        </div>`;
+        }
+
+        function renderMatching(unitNum = null) {
+            const selectedUnit = getClassifierUnit(unitNum);
+            const activity = CLASSIFIER_ACTIVITIES[selectedUnit];
+            if (!classifierState || classifierState.unit !== selectedUnit) classifierState = loadClassifierState(selectedUnit);
+            STATE.currentUnit = selectedUnit;
+
+            const unit = UNITS.find(item => item.id === selectedUnit) || UNITS[0];
+            const orderedItems = classifierOrderedItems(activity);
+            const unplaced = orderedItems.filter(item => !classifierState.placements[item.id]);
+            const score = classifierScore(activity);
+            const best = getClassifierBest(selectedUnit);
             const content = document.getElementById('pageContent');
             content.innerHTML = `
-    <div style="max-width:800px">
-      <h2 style="margin-bottom:0.5rem">🔗 Emparejar Conceptos</h2>
-      <p style="margin-bottom:1.5rem">Arrastra los conceptos de la izquierda hacia la definición correcta de la derecha.</p>
-      
-      <div class="dnd-container">
-        <div class="dnd-column">
-          <h4>📌 Conceptos</h4>
-          <div id="concepts-col">
-            ${shuffled.map(item => `
-              <div class="draggable-item" draggable="true" data-concept="${item.concept}"
-                ondragstart="dragStart(event)" ondragend="dragEnd(event)">
-                🏷️ ${item.concept}
-              </div>
-            `).join('')}
-          </div>
+    <div class="classifier-shell unit-theme-u${selectedUnit}">
+      <section class="classifier-hero">
+        <div class="classifier-hero-copy">
+          <span class="classifier-kicker">Actividad interactiva · Unidad ${selectedUnit}</span>
+          <h2>${escapeHtml(activity.title)}</h2>
+          <p>${escapeHtml(activity.subtitle)}</p>
+          <p class="classifier-prompt">${escapeHtml(activity.prompt)}</p>
         </div>
-        <div class="dnd-column">
-          <h4>📖 Definiciones</h4>
-          ${defs.map(item => `
-            <div class="drop-zone" data-answer="${item.concept}"
-              ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="drop(event)">
-              ${item.definition}
+        <div class="classifier-hero-visual">
+          <img src="${escapeHtml(activity.image)}" alt="${escapeHtml(activity.title)}" loading="lazy">
+        </div>
+        <div class="classifier-meter" aria-label="Avance del clasificador">
+          <strong>${score.placed}/${score.total}</strong>
+          <span>ubicados</span>
+          <small>mejor ${best}%</small>
+        </div>
+      </section>
+
+      <div class="classifier-tabs" role="tablist" aria-label="Unidades del clasificador">
+        ${UNITS.map(item => `
+          <button type="button" class="${item.id === selectedUnit ? 'active' : ''}" onclick="classifierSetUnit(${item.id})">
+            ${unitIconHTML(item, 'classifier-tab-icon')}
+            <span>U${item.id}</span>
+          </button>
+        `).join('')}
+      </div>
+
+      <section class="classifier-definitions">
+        ${activity.categories.map(category => `
+          <article style="--zone-color:${escapeHtml(category.color)}">
+            <span></span>
+            <strong>${escapeHtml(category.label)}</strong>
+            <p>${escapeHtml(category.definition)}</p>
+          </article>
+        `).join('')}
+      </section>
+
+      <div class="classifier-actions">
+        <div class="classifier-action-status">
+          <strong>${score.placed}/${score.total} ubicados</strong>
+          <span>Mejor puntaje: ${best}%</span>
+        </div>
+        <button class="btn-primary" onclick="checkClassifier()">Verificar</button>
+        <button class="btn-secondary" onclick="showClassifierSolution()">Ver solucion</button>
+        <button class="btn-secondary" onclick="resetClassifier()">Reiniciar</button>
+      </div>
+
+      <div class="classifier-workspace">
+        <section class="classifier-pool"
+          onclick="returnClassifierSelected()"
+          ondragover="classifierDragOver(event)"
+          ondragleave="classifierDragLeave(event)"
+          ondrop="classifierDropToPool(event)">
+          <div class="classifier-section-head">
+            <div>
+              <span>Banco de casos</span>
+              <h3>${escapeHtml(unit.title)}</h3>
             </div>
-          `).join('')}
-        </div>
+            <strong>${unplaced.length}</strong>
+          </div>
+          <div class="classifier-pool-items">
+            ${unplaced.length ? unplaced.map(renderClassifierItem).join('') : '<div class="classifier-empty-large">Todos los casos ya estan ubicados.</div>'}
+          </div>
+        </section>
+
+        <section class="classifier-zones">
+          ${activity.categories.map(category => {
+                const items = orderedItems.filter(item => classifierState.placements[item.id] === category.id);
+                return renderClassifierZone(category, items);
+            }).join('')}
+        </section>
       </div>
-
-      <div style="margin-top:1.5rem;display:flex;gap:1rem">
-        <button class="btn-primary" onclick="checkMatching()">✅ Verificar</button>
-        <button class="btn-secondary" onclick="renderMatching()">🔄 Reiniciar</button>
-      </div>
-      <div id="matchResult" style="margin-top:1rem"></div>
-    </div>
-  `;
+      ${renderClassifierResult(activity)}
+    </div>`;
         }
 
-        function dragStart(e) {
-            dragSource = e.target;
-            e.target.classList.add('dragging');
-            e.dataTransfer.setData('text/plain', e.target.dataset.concept);
+        function classifierSetUnit(unitNum) {
+            classifierSelectedId = null;
+            classifierState = loadClassifierState(unitNum);
+            renderMatching(unitNum);
         }
 
-        function dragEnd(e) { e.target.classList.remove('dragging'); }
-
-        function dragOver(e) {
-            e.preventDefault();
-            e.currentTarget.classList.add('drag-over');
+        function selectClassifierItem(itemId) {
+            classifierSelectedId = classifierSelectedId === itemId ? null : itemId;
+            renderMatching(classifierState.unit);
         }
 
-        function dragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
-
-        function drop(e) {
-            e.preventDefault();
-            const zone = e.currentTarget;
-            zone.classList.remove('drag-over');
-            const concept = e.dataTransfer.getData('text/plain');
-            zone.dataset.dropped = concept;
-            zone.style.borderStyle = 'solid';
-            zone.style.background = 'rgba(20,184,166,0.1)';
-            zone.style.borderColor = 'var(--primary)';
-            zone.style.color = 'var(--primary-light)';
+        function placeClassifierItem(itemId, categoryId) {
+            const activity = CLASSIFIER_ACTIVITIES[classifierState.unit];
+            const validItem = activity.items.some(item => item.id === itemId);
+            const validCategory = activity.categories.some(category => category.id === categoryId);
+            if (!validItem || !validCategory) return;
+            classifierState.placements[itemId] = categoryId;
+            classifierState.checked = false;
+            classifierState.solution = false;
+            classifierSelectedId = itemId;
+            saveClassifierState();
+            renderMatching(classifierState.unit);
         }
 
-        function checkMatching() {
-            const zones = document.querySelectorAll('.drop-zone');
-            let correct = 0;
-            zones.forEach(z => {
-                if (z.dataset.dropped === z.dataset.answer) {
-                    z.style.borderColor = 'var(--success)';
-                    z.style.background = 'rgba(34,197,94,0.1)';
-                    correct++;
-                } else if (z.dataset.dropped) {
-                    z.style.borderColor = 'var(--danger)';
-                    z.style.background = 'rgba(239,68,68,0.1)';
-                }
-            });
-            const total = zones.length;
-            const pct = Math.round(correct / total * 100);
-            document.getElementById('matchResult').innerHTML = `
-    <div class="card" style="text-align:center;padding:1.5rem">
-      <p><strong>${correct}/${total}</strong> emparejados correctamente — <strong>${pct}%</strong></p>
-      ${correct === total ? '<p style="color:var(--success)">🎉 ¡Perfecto! ¡Los emparejaste todos!</p>' : ''}
-    </div>
-  `;
-            if (correct === total) addXP(20, 'Actividad de emparejamiento completada');
+        function placeClassifierSelected(categoryId) {
+            if (!classifierSelectedId) {
+                showToast('Selecciona primero una etiqueta.', 'info');
+                return;
+            }
+            placeClassifierItem(classifierSelectedId, categoryId);
+        }
+
+        function returnClassifierSelected() {
+            if (!classifierSelectedId || !classifierState?.placements[classifierSelectedId]) return;
+            delete classifierState.placements[classifierSelectedId];
+            classifierState.checked = false;
+            classifierState.solution = false;
+            saveClassifierState();
+            renderMatching(classifierState.unit);
+        }
+
+        function classifierDragStart(event, itemId) {
+            classifierDragId = itemId;
+            event.currentTarget.classList.add('dragging');
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('text/plain', itemId);
+        }
+
+        function classifierDragEnd(event) {
+            event.currentTarget.classList.remove('dragging');
+            classifierDragId = null;
+        }
+
+        function classifierDragOver(event) {
+            event.preventDefault();
+            event.currentTarget.classList.add('drag-over');
+        }
+
+        function classifierDragLeave(event) {
+            event.currentTarget.classList.remove('drag-over');
+        }
+
+        function classifierDrop(event, categoryId) {
+            event.preventDefault();
+            event.currentTarget.classList.remove('drag-over');
+            const itemId = event.dataTransfer.getData('text/plain') || classifierDragId;
+            if (itemId) placeClassifierItem(itemId, categoryId);
+        }
+
+        function classifierDropToPool(event) {
+            event.preventDefault();
+            event.currentTarget.classList.remove('drag-over');
+            const itemId = event.dataTransfer.getData('text/plain') || classifierDragId;
+            if (!itemId || !classifierState?.placements[itemId]) return;
+            classifierSelectedId = itemId;
+            returnClassifierSelected();
+        }
+
+        function checkClassifier() {
+            const activity = CLASSIFIER_ACTIVITIES[classifierState.unit];
+            const scoreBefore = classifierScore(activity);
+            if (scoreBefore.placed < scoreBefore.total) {
+                showToast(`Faltan ${scoreBefore.total - scoreBefore.placed} casos por ubicar.`, 'info');
+                return;
+            }
+            classifierState.checked = true;
+            classifierState.solution = false;
+            saveClassifierState();
+
+            const score = classifierScore(activity);
+            const previousBest = getClassifierBest(activity.unit);
+            const improved = score.pct > previousBest;
+            if (improved) setClassifierBest(activity.unit, score.pct);
+            const xp = improved && score.pct >= 80 ? (score.pct === 100 ? 18 : 12) : 0;
+            if (xp) addXP(xp, `Clasificador Unidad ${activity.unit}: ${score.pct}%`);
+
             sendToSheets({
                 kind: 'calificacion',
                 timestamp: new Date().toISOString(),
                 usuario: STATE.user.username,
                 nombre: STATE.user.nombre,
-                unidad: 'general',
-                actividad: 'Emparejar conceptos',
-                tipo: 'actividad_interactiva',
-                puntaje: pct,
-                porcentaje: pct,
-                correctas: correct,
-                total,
-                xp: correct === total ? 20 : 0,
-                detalle: { conceptos: MATCH_DATA.map(item => item.concept) }
+                unidad: activity.unit,
+                actividad: activity.title,
+                tipo: 'clasificador_interactivo',
+                puntaje: score.pct,
+                porcentaje: score.pct,
+                correctas: score.correct,
+                total: score.total,
+                xp,
+                detalle: {
+                    placements: classifierState.placements,
+                    categorias: activity.categories.map(category => category.label),
+                    mejorAnterior: previousBest
+                }
             });
             syncProgressSnapshot();
+            renderMatching(activity.unit);
+        }
+
+        function showClassifierSolution() {
+            const activity = CLASSIFIER_ACTIVITIES[classifierState.unit];
+            activity.items.forEach(item => {
+                classifierState.placements[item.id] = item.category;
+            });
+            classifierState.checked = true;
+            classifierState.solution = true;
+            classifierSelectedId = null;
+            saveClassifierState();
+            showToast('Solucion cargada como retroalimentacion.', 'info');
+            renderMatching(activity.unit);
+        }
+
+        function resetClassifier() {
+            const unitNum = classifierState?.unit || STATE.currentUnit || 1;
+            classifierSelectedId = null;
+            classifierState = newClassifierState(unitNum);
+            saveClassifierState();
+            renderMatching(unitNum);
         }
 
         // ================================================================
