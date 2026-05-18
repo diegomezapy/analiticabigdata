@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520">
+  <defs>
+    <linearGradient id="bgv" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef2ff"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="520" fill="url(#bgv)"/>
+  <rect width="900" height="54" fill="#1e3a5f"/>
+  <text x="450" y="31" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="800" fill="white">Las 5V del Big Data</text>
+  <text x="450" y="47" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#7dd3fc">Unidad 1.1 · Analítica de Big Data · FACEN-UNA 2026</text>
+
+  <!-- Pentagon outline -->
+  <polygon points="450,142 596,246 541,416 359,416 304,246" fill="none" stroke="#c7d2fe" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- Connection lines to center (450, 295) -->
+  <line x1="450" y1="295" x2="450" y2="188" stroke="#c7d2fe" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <line x1="450" y1="295" x2="550" y2="246" stroke="#c7d2fe" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <line x1="450" y1="295" x2="495" y2="370" stroke="#c7d2fe" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <line x1="450" y1="295" x2="405" y2="370" stroke="#c7d2fe" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <line x1="450" y1="295" x2="350" y2="246" stroke="#c7d2fe" stroke-width="1.5" stroke-dasharray="5,4"/>
+
+  <!-- Center hub -->
+  <circle cx="450" cy="295" r="52" fill="#1e3a5f" stroke="#334155" stroke-width="2"/>
+  <text x="450" y="288" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="800" fill="white">BIG</text>
+  <text x="450" y="306" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="800" fill="#38bdf8">DATA</text>
+
+  <!-- V1 VOLUMEN (450, 142) -->
+  <circle cx="450" cy="142" r="46" fill="#1d4ed8"/>
+  <text x="450" y="135" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="900" fill="white">V1</text>
+  <text x="450" y="153" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#bfdbfe">VOLUMEN</text>
+  <text x="450" y="82" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#1e40af">Petabytes de datos generados</text>
+  <text x="450" y="97" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#475569">Estructurados · semi · no estructurados</text>
+
+  <!-- V2 VELOCIDAD (596, 246) -->
+  <circle cx="596" cy="246" r="46" fill="#0891b2"/>
+  <text x="596" y="239" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="900" fill="white">V2</text>
+  <text x="596" y="257" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#bae6fd">VELOCIDAD</text>
+  <text x="742" y="235" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#0e7490">Generación en tiempo real</text>
+  <text x="742" y="250" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#475569">Streaming · Kafka · Spark</text>
+
+  <!-- V3 VARIEDAD (541, 416) -->
+  <circle cx="541" cy="416" r="46" fill="#d97706"/>
+  <text x="541" y="409" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="900" fill="white">V3</text>
+  <text x="541" y="427" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#fde68a">VARIEDAD</text>
+  <text x="690" y="474" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#b45309">Texto · imagen · video · GPS</text>
+  <text x="690" y="489" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#475569">CSV · JSON · Parquet · APIs</text>
+
+  <!-- V4 VERACIDAD (359, 416) -->
+  <circle cx="359" cy="416" r="46" fill="#16a34a"/>
+  <text x="359" y="409" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="900" fill="white">V4</text>
+  <text x="359" y="427" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#bbf7d0">VERACIDAD</text>
+  <text x="210" y="474" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#15803d">Calidad y confiabilidad</text>
+  <text x="210" y="489" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#475569">Limpieza · validación · outliers</text>
+
+  <!-- V5 VALOR (304, 246) -->
+  <circle cx="304" cy="246" r="46" fill="#7c3aed"/>
+  <text x="304" y="239" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="900" fill="white">V5</text>
+  <text x="304" y="257" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#ddd6fe">VALOR</text>
+  <text x="158" y="235" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#6d28d9">Insights accionables</text>
+  <text x="158" y="250" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#475569">Decisiones basadas en datos</text>
+</svg>

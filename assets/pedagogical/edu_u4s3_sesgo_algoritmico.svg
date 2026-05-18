@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
+  <defs>
+    <linearGradient id="bg43" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f5f3ff"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="500" fill="url(#bg43)"/>
+  <rect width="900" height="50" fill="#1e1b4b"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Sesgo Algorítmico y Equidad en IA</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#c4b5fd">Unidad 4.3 · Fairness · Disparidad de rendimiento por grupo demográfico · FACEN-UNA 2026</text>
+
+  <!-- ===== LEFT: Performance disparity grouped bar chart ===== -->
+  <rect x="18" y="58" width="430" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="233" y="78" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#1e1b4b">Disparidad de Rendimiento por Grupo</text>
+  <text x="233" y="93" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">Modelo de aprobación de crédito — datos rurales · Paraguay</text>
+
+  <!-- Chart axes: Y axis x=80, X axis y=372 -->
+  <!-- Scale: y(p%) = 372 − p/100×250 → y(100%)=122, y(0%)=372 -->
+  <line x1="80" y1="120" x2="80" y2="372" stroke="#374151" stroke-width="1.5"/>
+  <line x1="80" y1="372" x2="430" y2="372" stroke="#374151" stroke-width="1.5"/>
+
+  <!-- Gridlines -->
+  <line x1="80" y1="309" x2="430" y2="309" stroke="#f3f4f6" stroke-width="1"/>
+  <line x1="80" y1="247" x2="430" y2="247" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="80" y1="184" x2="430" y2="184" stroke="#f3f4f6" stroke-width="1"/>
+  <line x1="80" y1="122" x2="430" y2="122" stroke="#f3f4f6" stroke-width="1"/>
+
+  <!-- Y labels -->
+  <text x="75" y="376" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">0%</text>
+  <text x="75" y="313" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">25%</text>
+  <text x="75" y="251" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">50%</text>
+  <text x="75" y="188" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">75%</text>
+  <text x="75" y="126" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">100%</text>
+
+  <!-- Section dividers -->
+  <line x1="212" y1="120" x2="212" y2="372" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="322" y1="120" x2="322" y2="372" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- SECTION 1: Accuracy | bars x=120,144,168, w=20 -->
+  <!-- Urbano 89%: h=223, y=149 -->
+  <rect x="120" y="149" width="20" height="223" rx="2" fill="#3b82f6"/>
+  <text x="130" y="143" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#1d4ed8">89%</text>
+  <!-- Rural 77%: h=193, y=179 -->
+  <rect x="144" y="179" width="20" height="193" rx="2" fill="#f97316"/>
+  <text x="154" y="173" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#c2410c">77%</text>
+  <!-- Indígena 63%: h=158, y=214 -->
+  <rect x="168" y="214" width="20" height="158" rx="2" fill="#dc2626"/>
+  <text x="178" y="208" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#991b1b">63%</text>
+  <!-- Gap bracket Urbano→Indígena -->
+  <line x1="143" y1="149" x2="143" y2="214" stroke="#374151" stroke-width="1" stroke-dasharray="2,2"/>
+  <line x1="140" y1="149" x2="146" y2="149" stroke="#374151" stroke-width="1"/>
+  <line x1="140" y1="214" x2="146" y2="214" stroke="#374151" stroke-width="1"/>
+  <text x="113" y="184" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#374151">−26pp</text>
+  <text x="154" y="388" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#374151">Accuracy</text>
+
+  <!-- SECTION 2: Sensibilidad | bars x=230,254,278 -->
+  <!-- Urbano 87%: h=218, y=154 -->
+  <rect x="230" y="154" width="20" height="218" rx="2" fill="#3b82f6"/>
+  <text x="240" y="148" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#1d4ed8">87%</text>
+  <!-- Rural 71%: h=178, y=194 -->
+  <rect x="254" y="194" width="20" height="178" rx="2" fill="#f97316"/>
+  <text x="264" y="188" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#c2410c">71%</text>
+  <!-- Indígena 53%: h=133, y=239 -->
+  <rect x="278" y="239" width="20" height="133" rx="2" fill="#dc2626"/>
+  <text x="288" y="233" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#991b1b">53%</text>
+  <!-- Gap bracket -->
+  <line x1="253" y1="154" x2="253" y2="239" stroke="#374151" stroke-width="1" stroke-dasharray="2,2"/>
+  <line x1="250" y1="154" x2="256" y2="154" stroke="#374151" stroke-width="1"/>
+  <line x1="250" y1="239" x2="256" y2="239" stroke="#374151" stroke-width="1"/>
+  <text x="223" y="199" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#374151">−34pp</text>
+  <text x="264" y="388" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#374151">Sensibilidad</text>
+
+  <!-- SECTION 3: FPR (higher = worse) | bars x=340,364,388 -->
+  <!-- Urbano 9%: h=23, y=349 -->
+  <rect x="340" y="349" width="20" height="23" rx="2" fill="#3b82f6"/>
+  <text x="350" y="343" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#1d4ed8">9%</text>
+  <!-- Rural 21%: h=53, y=319 -->
+  <rect x="364" y="319" width="20" height="53" rx="2" fill="#f97316"/>
+  <text x="374" y="313" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#c2410c">21%</text>
+  <!-- Indígena 35%: h=88, y=284 -->
+  <rect x="388" y="284" width="20" height="88" rx="2" fill="#dc2626"/>
+  <text x="398" y="278" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#991b1b">35%</text>
+  <!-- Gap bracket -->
+  <line x1="411" y1="284" x2="411" y2="349" stroke="#dc2626" stroke-width="1" stroke-dasharray="2,2"/>
+  <line x1="408" y1="284" x2="414" y2="284" stroke="#dc2626" stroke-width="1"/>
+  <line x1="408" y1="349" x2="414" y2="349" stroke="#dc2626" stroke-width="1"/>
+  <text x="424" y="318" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#dc2626">+26pp</text>
+  <text x="374" y="388" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#dc2626">FPR (peor ↑)</text>
+
+  <!-- Legend -->
+  <rect x="88" y="399" width="12" height="10" rx="2" fill="#3b82f6"/>
+  <text x="106" y="408" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Urbano</text>
+  <rect x="157" y="399" width="12" height="10" rx="2" fill="#f97316"/>
+  <text x="175" y="408" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Rural</text>
+  <rect x="215" y="399" width="12" height="10" rx="2" fill="#dc2626"/>
+  <text x="233" y="408" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Indígena / Marginalizado</text>
+
+  <!-- Warning banner -->
+  <rect x="28" y="420" width="410" height="38" rx="5" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="233" y="436" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#dc2626">Brecha: −26pp Accuracy · +26pp FPR para grupo indígena</text>
+  <text x="233" y="450" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#7f1d1d">El modelo discrimina sistemáticamente al grupo más vulnerable</text>
+
+  <!-- ===== RIGHT: Fairness criteria + bias pipeline ===== -->
+  <rect x="462" y="58" width="424" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="674" y="78" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#1e1b4b">Criterios de Equidad Algorítmica</text>
+
+  <!-- Criterion 1 -->
+  <rect x="472" y="88" width="404" height="48" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="480" y="104" font-family="Inter,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#1d4ed8">1. Paridad Demográfica</text>
+  <text x="480" y="118" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#374151">P(Ŷ=1 | A=a) = P(Ŷ=1 | A=b)  →  igual tasa de aprobación</text>
+  <text x="480" y="130" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6b7280">Métrica: disparate_impact_ratio ≥ 0.8  (regla del 80%)</text>
+
+  <!-- Criterion 2 -->
+  <rect x="472" y="144" width="404" height="48" rx="6" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="480" y="160" font-family="Inter,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#16a34a">2. Igualdad de Oportunidades</text>
+  <text x="480" y="174" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#374151">TPR_A = TPR_B  →  misma sensibilidad entre grupos</text>
+  <text x="480" y="186" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6b7280">Los verdaderos positivos se detectan con igual eficacia</text>
+
+  <!-- Criterion 3 -->
+  <rect x="472" y="200" width="404" height="48" rx="6" fill="#fefce8" stroke="#fef08a" stroke-width="1"/>
+  <text x="480" y="216" font-family="Inter,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#b45309">3. Odds Equalizados</text>
+  <text x="480" y="230" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#374151">TPR_A = TPR_B  Y  FPR_A = FPR_B  (ambas iguales)</text>
+  <text x="480" y="242" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6b7280">Criterio más estricto: sensibilidad y especificidad iguales</text>
+
+  <!-- Bias pipeline title -->
+  <text x="674" y="268" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#374151">¿Dónde ingresa el sesgo?</text>
+
+  <!-- Pipeline box 1: Datos -->
+  <rect x="472" y="276" width="115" height="58" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="529" y="295" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#b91c1c">① Datos</text>
+  <text x="529" y="309" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Subrepresentación</text>
+  <text x="529" y="323" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">etiquetas sesgadas</text>
+  <!-- Arrow 1→2 -->
+  <line x1="588" y1="305" x2="602" y2="305" stroke="#6b7280" stroke-width="1.5"/>
+  <polygon points="598,300 607,305 598,310" fill="#6b7280"/>
+
+  <!-- Pipeline box 2: Modelo -->
+  <rect x="606" y="276" width="115" height="58" rx="6" fill="#fef3c7" stroke="#fde68a" stroke-width="1.5"/>
+  <text x="663" y="295" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#92400e">② Modelo</text>
+  <text x="663" y="309" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Sin restricción</text>
+  <text x="663" y="323" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">de equidad</text>
+  <!-- Arrow 2→3 -->
+  <line x1="722" y1="305" x2="736" y2="305" stroke="#6b7280" stroke-width="1.5"/>
+  <polygon points="732,300 741,305 732,310" fill="#6b7280"/>
+
+  <!-- Pipeline box 3: Decisión -->
+  <rect x="740" y="276" width="138" height="58" rx="6" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1.5"/>
+  <text x="809" y="295" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#6d28d9">③ Decisión</text>
+  <text x="809" y="309" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Umbral uniforme</text>
+  <text x="809" y="323" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">amplifica disparidad</text>
+
+  <!-- Mitigation strategies -->
+  <rect x="472" y="346" width="404" height="70" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <text x="674" y="362" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#052e16">Estrategias de mitigación</text>
+  <text x="478" y="377" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">• Pre-procesamiento: re-muestreo / re-ponderación de grupos minoritarios</text>
+  <text x="478" y="391" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">• Post-procesamiento: umbral diferencial por grupo (calibración)</text>
+  <text x="478" y="405" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">• Auditoría continua: disparate impact ratio, métricas por subgrupo</text>
+
+  <!-- Code snippet -->
+  <rect x="462" y="426" width="424" height="40" fill="#1e1e2e" rx="6"/>
+  <text x="474" y="441" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># R: </tspan><tspan fill="#c678dd">library</tspan><tspan fill="#abb2bf">(fairness);  check_all_groups(model, datos, </tspan><tspan fill="#98c379">"grupo"</tspan><tspan fill="#abb2bf">)</tspan></text>
+  <text x="474" y="459" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># Python: </tspan><tspan fill="#c678dd">from</tspan><tspan fill="#abb2bf"> fairlearn.metrics </tspan><tspan fill="#c678dd">import</tspan><tspan fill="#abb2bf"> equalized_odds_ratio</tspan></text>
+</svg>

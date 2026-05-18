@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
+  <defs>
+    <linearGradient id="bg21" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fffbeb"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="500" fill="url(#bg21)"/>
+  <rect width="900" height="50" fill="#92400e"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Gramática de Gráficos — ggplot2</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#fde68a">Unidad 2.1 · Capas que se suman para construir cualquier visualización</text>
+
+  <!-- Layer cake: 5 layers stacked with 3D offset -->
+  <!-- Layer 5 (bottom): TEMA -->
+  <rect x="60" y="380" width="360" height="52" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+  <rect x="74" y="374" width="360" height="52" rx="8" fill="#c7d2fe" stroke="#4f46e5" stroke-width="1" opacity="0.3"/>
+  <text x="240" y="401" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="800" fill="#3730a3">⑤ theme_*()</text>
+  <text x="240" y="420" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#4338ca">Fondo · ejes · fuentes · grilla</text>
+  <text x="432" y="401" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#6366f1">theme_minimal()</text>
+  <text x="432" y="416" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#6366f1">theme_bw()</text>
+  <text x="432" y="431" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#6366f1">element_text()</text>
+
+  <!-- Layer 4: ESCALAS -->
+  <rect x="60" y="314" width="360" height="52" rx="8" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+  <text x="240" y="336" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="800" fill="#065f46">④ scale_*()</text>
+  <text x="240" y="355" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#047857">Ejes · colores · tamaños · rangos</text>
+  <text x="432" y="330" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#10b981">scale_x_continuous()</text>
+  <text x="432" y="345" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#10b981">scale_color_manual()</text>
+  <text x="432" y="360" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#10b981">scale_fill_gradient()</text>
+
+  <!-- Layer 3: GEOMETRÍAS -->
+  <rect x="60" y="248" width="360" height="52" rx="8" fill="#fde68a" stroke="#d97706" stroke-width="2"/>
+  <text x="240" y="270" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="800" fill="#92400e">③ geom_*()</text>
+  <text x="240" y="289" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#b45309">Tipo de gráfico: puntos, barras, líneas</text>
+  <text x="432" y="264" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#d97706">geom_point()  geom_bar()</text>
+  <text x="432" y="279" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#d97706">geom_line()   geom_hist()</text>
+  <text x="432" y="294" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#d97706">geom_boxplot()  geom_tile()</text>
+
+  <!-- Layer 2: AESTHETICS -->
+  <rect x="60" y="182" width="360" height="52" rx="8" fill="#bae6fd" stroke="#0284c7" stroke-width="2"/>
+  <text x="240" y="204" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="800" fill="#0c4a6e">② aes()</text>
+  <text x="240" y="223" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#0369a1">Mapeo variables → propiedades visuales</text>
+  <text x="432" y="198" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#0284c7">aes(x=edad, y=IMC)</text>
+  <text x="432" y="213" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#0284c7">color=sexo, size=ingreso</text>
+  <text x="432" y="228" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#0284c7">shape=region, alpha=0.6</text>
+
+  <!-- Layer 1 (top): DATOS -->
+  <rect x="60" y="116" width="360" height="52" rx="8" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+  <text x="240" y="138" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="800" fill="#831843">① ggplot(data=...)</text>
+  <text x="240" y="157" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#be185d">El data frame o tibble base del gráfico</text>
+  <text x="432" y="132" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#db2777">ggplot(datos)</text>
+  <text x="432" y="147" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#db2777">ggplot(df, aes(...))</text>
+  <text x="432" y="162" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#db2777">datos |&gt; ggplot()</text>
+
+  <!-- Plus signs between layers -->
+  <text x="40" y="354" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="900" fill="#94a3b8">+</text>
+  <text x="40" y="288" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="900" fill="#94a3b8">+</text>
+  <text x="40" y="222" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="900" fill="#94a3b8">+</text>
+  <text x="40" y="156" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="20" font-weight="900" fill="#94a3b8">+</text>
+
+  <!-- Right: actual example scatter output mockup -->
+  <rect x="600" y="72" width="282" height="300" rx="10" fill="white" stroke="#e5e7eb" stroke-width="2"/>
+  <text x="741" y="92" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#374151">Resultado: scatter plot</text>
+  <!-- Mini axes -->
+  <line x1="635" y1="100" x2="635" y2="338" stroke="#9ca3af" stroke-width="1.2"/>
+  <line x1="635" y1="338" x2="872" y2="338" stroke="#9ca3af" stroke-width="1.2"/>
+  <!-- Y-axis label -->
+  <text x="622" y="228" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280" transform="rotate(-90,622,228)">IMC</text>
+  <!-- X-axis label -->
+  <text x="755" y="356" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">edad</text>
+  <!-- Scatter dots (2 groups by color) -->
+  <circle cx="660" cy="280" r="5" fill="#ef4444" opacity="0.75"/> <!-- sexo=F -->
+  <circle cx="672" cy="268" r="5" fill="#ef4444" opacity="0.75"/>
+  <circle cx="685" cy="290" r="5" fill="#ef4444" opacity="0.75"/>
+  <circle cx="698" cy="258" r="5" fill="#ef4444" opacity="0.75"/>
+  <circle cx="712" cy="248" r="5" fill="#ef4444" opacity="0.75"/>
+  <circle cx="725" cy="242" r="5" fill="#ef4444" opacity="0.75"/>
+  <circle cx="740" cy="232" r="5" fill="#ef4444" opacity="0.75"/>
+  <circle cx="755" cy="220" r="5" fill="#ef4444" opacity="0.75"/>
+  <circle cx="665" cy="300" r="5" fill="#3b82f6" opacity="0.75"/> <!-- sexo=M -->
+  <circle cx="680" cy="316" r="5" fill="#3b82f6" opacity="0.75"/>
+  <circle cx="700" cy="300" r="5" fill="#3b82f6" opacity="0.75"/>
+  <circle cx="718" cy="285" r="5" fill="#3b82f6" opacity="0.75"/>
+  <circle cx="735" cy="268" r="5" fill="#3b82f6" opacity="0.75"/>
+  <circle cx="750" cy="254" r="5" fill="#3b82f6" opacity="0.75"/>
+  <circle cx="768" cy="240" r="5" fill="#3b82f6" opacity="0.75"/>
+  <circle cx="785" cy="228" r="5" fill="#3b82f6" opacity="0.75"/>
+  <circle cx="800" cy="218" r="5" fill="#3b82f6" opacity="0.75"/>
+  <circle cx="820" cy="205" r="5" fill="#3b82f6" opacity="0.75"/>
+  <!-- Trend line -->
+  <line x1="650" y1="308" x2="840" y2="195" stroke="#374151" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <!-- Legend -->
+  <circle cx="648" cy="112" r="5" fill="#ef4444"/>
+  <text x="657" y="116" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Femenino</text>
+  <circle cx="648" cy="128" r="5" fill="#3b82f6"/>
+  <text x="657" y="132" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Masculino</text>
+
+  <!-- Code snippet below -->
+  <rect x="600" y="382" width="282" height="90" rx="8" fill="#1e1e2e"/>
+  <text x="614" y="400" font-family="'Courier New',monospace" font-size="10.5"><tspan fill="#c678dd">ggplot</tspan><tspan fill="#abb2bf">(datos, </tspan><tspan fill="#c678dd">aes</tspan><tspan fill="#abb2bf">(</tspan></text>
+  <text x="614" y="415" font-family="'Courier New',monospace" font-size="10.5"><tspan fill="#abb2bf">  x=edad, y=IMC,</tspan></text>
+  <text x="614" y="430" font-family="'Courier New',monospace" font-size="10.5"><tspan fill="#abb2bf">  color=sexo)) +</tspan></text>
+  <text x="614" y="445" font-family="'Courier New',monospace" font-size="10.5"><tspan fill="#c678dd">  geom_point</tspan><tspan fill="#abb2bf">(alpha=</tspan><tspan fill="#d19a66">0.7</tspan><tspan fill="#abb2bf">) +</tspan></text>
+  <text x="614" y="460" font-family="'Courier New',monospace" font-size="10.5"><tspan fill="#c678dd">  geom_smooth</tspan><tspan fill="#abb2bf">(method=</tspan><tspan fill="#98c379">"lm"</tspan><tspan fill="#abb2bf">)</tspan></text>
+</svg>

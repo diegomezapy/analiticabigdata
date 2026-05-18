@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480">
+  <defs>
+    <linearGradient id="bg22" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fefce8"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="480" fill="url(#bg22)"/>
+  <rect width="900" height="50" fill="#713f12"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Boxplot — Estadísticos y Detección de Outliers</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#fde68a">Unidad 2.2 · Limpieza de datos y análisis exploratorio · FACEN-UNA 2026</text>
+
+  <!-- Chart area -->
+  <rect x="80" y="68" width="450" height="360" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="6"/>
+
+  <!-- Grid lines -->
+  <line x1="80" y1="140" x2="530" y2="140" stroke="#f3f4f6" stroke-width="1"/>
+  <line x1="80" y1="200" x2="530" y2="200" stroke="#f3f4f6" stroke-width="1"/>
+  <line x1="80" y1="260" x2="530" y2="260" stroke="#f3f4f6" stroke-width="1"/>
+  <line x1="80" y1="320" x2="530" y2="320" stroke="#f3f4f6" stroke-width="1"/>
+
+  <!-- Y-axis -->
+  <line x1="130" y1="80" x2="130" y2="420" stroke="#9ca3af" stroke-width="1.5"/>
+  <!-- Y-axis ticks and labels -->
+  <text x="118" y="84" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">90</text>
+  <text x="118" y="144" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">75</text>
+  <text x="118" y="204" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">60</text>
+  <text x="118" y="264" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">45</text>
+  <text x="118" y="324" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">30</text>
+  <text x="118" y="424" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">0</text>
+
+  <!-- Y-axis title -->
+  <text x="88" y="250" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#374151" transform="rotate(-90,88,250)">IMC (kg/m²)</text>
+
+  <!-- === BOXPLOT 1: Grupo "Normal" (azul) === -->
+  <!-- Data: min=18, Q1=22, median=25, Q3=29, max=38, outlier=44 -->
+  <!-- Scale: 90 at y=80, 0 at y=420 → 1 unit = 3.78px -->
+  <!-- y(v) = 420 - v*3.78 -->
+  <!-- min=18→y=352  Q1=22→y=337  median=25→y=326  Q3=29→y=310  max=38→y=276  outlier=44→y=254 -->
+  <line x1="215" y1="352" x2="215" y2="276" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,2"/> <!-- whisker low-high -->
+  <rect x="185" y="310" width="60" height="27" fill="#bfdbfe" stroke="#3b82f6" stroke-width="2"/> <!-- IQR box Q3=310, Q1=337 -->
+  <line x1="185" y1="326" x2="245" y2="326" stroke="#1d4ed8" stroke-width="2.5"/> <!-- Median -->
+  <line x1="200" y1="352" x2="230" y2="352" stroke="#3b82f6" stroke-width="1.5"/> <!-- min whisker cap -->
+  <line x1="200" y1="276" x2="230" y2="276" stroke="#3b82f6" stroke-width="1.5"/> <!-- max whisker cap -->
+  <!-- Outlier -->
+  <circle cx="215" cy="254" r="5" fill="none" stroke="#ef4444" stroke-width="2"/>
+  <circle cx="215" cy="244" r="5" fill="none" stroke="#ef4444" stroke-width="2"/>
+  <!-- Group label -->
+  <text x="215" y="440" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">Normal</text>
+
+  <!-- === BOXPLOT 2: Grupo "Sobrepeso" (naranja) === -->
+  <!-- Data: min=24, Q1=27, median=31, Q3=36, max=44, outlier=52 -->
+  <line x1="340" y1="329" x2="340" y2="253" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <rect x="310" y="253" width="60" height="34" fill="#fde68a" stroke="#d97706" stroke-width="2"/>
+  <line x1="310" y1="303" x2="370" y2="303" stroke="#92400e" stroke-width="2.5"/>
+  <line x1="325" y1="329" x2="355" y2="329" stroke="#d97706" stroke-width="1.5"/>
+  <line x1="325" y1="253" x2="355" y2="253" stroke="#d97706" stroke-width="1.5"/>
+  <circle cx="340" cy="231" r="5" fill="none" stroke="#ef4444" stroke-width="2"/>
+  <text x="340" y="440" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#92400e">Sobrepeso</text>
+
+  <!-- === BOXPLOT 3: Grupo "Obesidad" (rojo) === -->
+  <!-- Data: min=30, Q1=34, median=40, Q3=47, max=57, outliers=62,65 -->
+  <line x1="465" y1="306" x2="465" y2="201" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <rect x="435" y="201" width="60" height="51" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+  <line x1="435" y1="269" x2="495" y2="269" stroke="#991b1b" stroke-width="2.5"/>
+  <line x1="450" y1="306" x2="480" y2="306" stroke="#dc2626" stroke-width="1.5"/>
+  <line x1="450" y1="201" x2="480" y2="201" stroke="#dc2626" stroke-width="1.5"/>
+  <circle cx="465" cy="176" r="5" fill="none" stroke="#ef4444" stroke-width="2"/>
+  <circle cx="465" cy="160" r="5" fill="none" stroke="#ef4444" stroke-width="2"/>
+  <text x="465" y="440" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#991b1b">Obesidad</text>
+
+  <!-- Annotations panel on right -->
+  <rect x="555" y="68" width="330" height="360" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="6"/>
+  <text x="720" y="90" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="700" fill="#0f172a">Anatomía del Boxplot</text>
+
+  <!-- Annotation diagram -->
+  <!-- Small example box at right -->
+  <line x1="640" y1="180" x2="640" y2="370" stroke="#374151" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.5"/>
+  <rect x="610" y="230" width="60" height="90" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="610" y1="280" x2="670" y2="280" stroke="#1d4ed8" stroke-width="2.5"/>
+  <line x1="622" y1="370" x2="658" y2="370" stroke="#374151" stroke-width="1.5"/>
+  <line x1="622" y1="180" x2="658" y2="180" stroke="#374151" stroke-width="1.5"/>
+  <circle cx="640" cy="155" r="6" fill="none" stroke="#ef4444" stroke-width="2"/>
+
+  <!-- Annotation arrows and labels -->
+  <line x1="672" y1="155" x2="700" y2="155" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="705" y="153" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#dc2626">Outlier</text>
+  <text x="705" y="166" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">= Q3 + 1.5×IQR</text>
+
+  <line x1="672" y1="180" x2="700" y2="180" stroke="#374151" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="705" y="178" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#374151">Bigote sup.</text>
+  <text x="705" y="191" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">máx sin outlier</text>
+
+  <line x1="672" y1="230" x2="700" y2="220" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="705" y="218" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#2563eb">Q3 (75%)</text>
+
+  <line x1="672" y1="280" x2="700" y2="280" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="705" y="278" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">Mediana (Q2)</text>
+  <text x="705" y="291" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">50% de los datos</text>
+
+  <line x1="672" y1="320" x2="700" y2="330" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="705" y="328" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#2563eb">Q1 (25%)</text>
+
+  <!-- IQR brace -->
+  <line x1="580" y1="230" x2="570" y2="230" stroke="#16a34a" stroke-width="1.5"/>
+  <line x1="580" y1="320" x2="570" y2="320" stroke="#16a34a" stroke-width="1.5"/>
+  <line x1="570" y1="230" x2="570" y2="320" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="565" y="280" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#16a34a">IQR</text>
+  <text x="565" y="293" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">Q3-Q1</text>
+
+  <line x1="672" y1="370" x2="700" y2="380" stroke="#374151" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="705" y="378" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#374151">Bigote inf.</text>
+  <text x="705" y="391" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">mín sin outlier</text>
+
+  <!-- R code snippet -->
+  <rect x="555" y="390" width="330" height="38" fill="#1e1e2e" rx="4"/>
+  <text x="568" y="405" font-family="'Courier New',monospace" font-size="10"><tspan fill="#c678dd">ggplot</tspan><tspan fill="#abb2bf">(datos, </tspan><tspan fill="#c678dd">aes</tspan><tspan fill="#abb2bf">(x=grupo, y=IMC)) +</tspan></text>
+  <text x="568" y="421" font-family="'Courier New',monospace" font-size="10"><tspan fill="#abb2bf">  </tspan><tspan fill="#c678dd">geom_boxplot</tspan><tspan fill="#abb2bf">(fill=</tspan><tspan fill="#98c379">"#bfdbfe"</tspan><tspan fill="#abb2bf">, outlier.color=</tspan><tspan fill="#98c379">"red"</tspan><tspan fill="#abb2bf">)</tspan></text>
+
+  <!-- Title for chart -->
+  <text x="305" y="458" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#6b7280">Distribución IMC por grupo (datos MSPBS · Paraguay)</text>
+</svg>

@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 490">
+  <rect width="900" height="490" fill="#f8fafc"/>
+  <rect width="900" height="50" fill="#2e1065"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Evaluación de Modelos — ROC · AUC · Matriz de Confusión</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#d8b4fe">Unidad 3.3 · LDA · Validación cruzada · FACEN-UNA 2026</text>
+
+  <!-- ====== LEFT: ROC Curve ====== -->
+  <rect x="18" y="62" width="410" height="380" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="223" y="84" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#2e1065">Curva ROC</text>
+
+  <!-- Chart area: x from 55 to 395 (FPR 0→1), y from 100 to 410 (TPR 1→0) -->
+  <!-- Diagonal reference (random) -->
+  <line x1="55" y1="410" x2="395" y2="100" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="260" y="285" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#9ca3af" transform="rotate(-42,260,285)">Clasificador aleatorio</text>
+
+  <!-- AUC shaded area -->
+  <path d="M 55,410 L 55,380 C 80,310 100,270 130,222 C 160,175 180,150 220,126 C 260,105 300,98 340,94 L 395,94 L 395,100 C 355,98 305,105 265,126 C 220,151 190,176 155,225 C 120,272 100,315 75,385 Z"
+    fill="#c4b5fd" opacity="0.4"/>
+
+  <!-- ROC curve -->
+  <path d="M 55,410 C 65,388 75,360 95,330 C 115,295 140,265 175,228 C 210,192 250,162 295,140 C 340,120 365,110 395,100"
+    fill="none" stroke="#7c3aed" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- AUC annotation -->
+  <rect x="180" y="290" width="105" height="30" rx="6" fill="#ede9fe"/>
+  <text x="232" y="302" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#5b21b6">AUC = 0.89</text>
+  <text x="232" y="314" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6d28d9">Excelente discriminación</text>
+
+  <!-- Axes -->
+  <line x1="55" y1="100" x2="55" y2="415" stroke="#374151" stroke-width="1.5"/>
+  <line x1="55" y1="415" x2="400" y2="415" stroke="#374151" stroke-width="1.5"/>
+
+  <!-- Tick marks and labels X (FPR) -->
+  <text x="55" y="432" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0</text>
+  <text x="140" y="432" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0.25</text>
+  <text x="225" y="432" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0.50</text>
+  <text x="310" y="432" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0.75</text>
+  <text x="395" y="432" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">1.0</text>
+  <text x="225" y="450" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#374151">Tasa de Falsos Positivos (FPR = 1−Especificidad)</text>
+
+  <!-- Tick marks and labels Y (TPR) -->
+  <text x="45" y="414" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0</text>
+  <text x="45" y="337" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0.25</text>
+  <text x="45" y="257" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0.50</text>
+  <text x="45" y="178" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0.75</text>
+  <text x="45" y="104" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">1.0</text>
+  <text x="28" y="257" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#374151" transform="rotate(-90,28,257)">Tasa de Verdaderos Positivos (Sensibilidad)</text>
+
+  <!-- AUC interpretation bar at bottom of ROC -->
+  <text x="55" y="472" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">AUC: </text>
+  <rect x="85" y="460" width="38" height="10" rx="2" fill="#dc2626"/>
+  <text x="128" y="470" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0.5</text>
+  <rect x="155" y="460" width="38" height="10" rx="2" fill="#f97316"/>
+  <text x="198" y="470" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0.7</text>
+  <rect x="225" y="460" width="38" height="10" rx="2" fill="#22c55e"/>
+  <text x="268" y="470" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0.8</text>
+  <rect x="290" y="460" width="38" height="10" rx="2" fill="#7c3aed"/>
+  <text x="333" y="470" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">0.9</text>
+  <rect x="358" y="460" width="38" height="10" rx="2" fill="#0d9488"/>
+  <text x="401" y="470" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Perfecto</text>
+
+  <!-- ====== RIGHT: Confusion Matrix ====== -->
+  <rect x="448" y="62" width="436" height="420" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="666" y="84" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#2e1065">Matriz de Confusión</text>
+  <text x="666" y="100" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#6b7280">Modelo: detección de diabetes · Datos MSPBS Paraguay</text>
+
+  <!-- Matrix headers -->
+  <text x="614" y="122" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">Predicho = 0</text>
+  <text x="726" y="122" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">Predicho = 1</text>
+  <text x="480" y="185" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151" transform="rotate(-90,480,185)">Real = 0</text>
+  <text x="480" y="288" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151" transform="rotate(-90,480,288)">Real = 1</text>
+
+  <!-- TN cell (top-left) -->
+  <rect x="496" y="130" width="106" height="100" rx="4" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+  <text x="549" y="170" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="800" fill="#065f46">88</text>
+  <text x="549" y="190" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#059669">Verdadero Neg.</text>
+  <text x="549" y="204" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">TN — Correcto</text>
+  <text x="549" y="218" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">sano pred. sano</text>
+  <text x="549" y="228" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#059669">42.9%</text>
+
+  <!-- FP cell (top-right) -->
+  <rect x="614" y="130" width="106" height="100" rx="4" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+  <text x="667" y="170" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="800" fill="#92400e">12</text>
+  <text x="667" y="190" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#ca8a04">Falso Positivo</text>
+  <text x="667" y="204" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">FP — Error Tipo I</text>
+  <text x="667" y="218" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">sano pred. diabético</text>
+  <text x="667" y="228" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#ca8a04">5.9%</text>
+
+  <!-- FN cell (bottom-left) -->
+  <rect x="496" y="242" width="106" height="100" rx="4" fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+  <text x="549" y="282" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="800" fill="#991b1b">15</text>
+  <text x="549" y="302" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#dc2626">Falso Negativo</text>
+  <text x="549" y="316" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">FN — Error Tipo II</text>
+  <text x="549" y="330" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">diab. pred. sano</text>
+  <text x="549" y="340" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#dc2626">7.3%</text>
+
+  <!-- TP cell (bottom-right) -->
+  <rect x="614" y="242" width="106" height="100" rx="4" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+  <text x="667" y="282" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="800" fill="#065f46">90</text>
+  <text x="667" y="302" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#059669">Verdadero Pos.</text>
+  <text x="667" y="316" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">TP — Correcto</text>
+  <text x="667" y="330" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">diab. pred. diabético</text>
+  <text x="667" y="340" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#059669">43.9%</text>
+
+  <!-- Metrics derived -->
+  <rect x="730" y="130" width="140" height="212" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="800" y="150" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="800" fill="#0f172a">Métricas</text>
+
+  <text x="740" y="170" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#374151">Accuracy:</text>
+  <text x="860" y="170" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#059669">86.8%</text>
+  <text x="740" y="186" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6b7280">(TP+TN) / Total</text>
+
+  <text x="740" y="206" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#374151">Sensibilidad:</text>
+  <text x="860" y="206" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#3b82f6">85.7%</text>
+  <text x="740" y="222" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6b7280">TP / (TP+FN)</text>
+
+  <text x="740" y="242" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#374151">Precisión:</text>
+  <text x="860" y="242" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#7c3aed">88.2%</text>
+  <text x="740" y="258" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6b7280">TP / (TP+FP)</text>
+
+  <text x="740" y="278" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#374151">F1-Score:</text>
+  <text x="860" y="278" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#0d9488">86.9%</text>
+  <text x="740" y="294" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6b7280">2·P·R / (P+R)</text>
+
+  <text x="740" y="314" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#374151">Especificidad:</text>
+  <text x="860" y="314" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#d97706">88.0%</text>
+  <text x="740" y="330" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6b7280">TN / (TN+FP)</text>
+
+  <!-- Bottom code snippet -->
+  <rect x="448" y="358" width="436" height="62" fill="#1e1e2e" rx="0 0 8 8"/>
+  <text x="462" y="374" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># R:</tspan>
+    <tspan fill="#c678dd"> confusionMatrix</tspan><tspan fill="#abb2bf">(predicted, actual);   </tspan>
+    <tspan fill="#c678dd">roc</tspan><tspan fill="#abb2bf">(actual, prob)</tspan></text>
+  <text x="462" y="391" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># Python:</tspan>
+    <tspan fill="#c678dd"> confusion_matrix</tspan><tspan fill="#abb2bf">(y_true, y_pred)</tspan></text>
+  <text x="462" y="407" font-family="'Courier New',monospace" font-size="9.5">
+    <tspan fill="#c678dd">         roc_auc_score</tspan><tspan fill="#abb2bf">(y_true, y_score)    </tspan>
+    <tspan fill="#6b7280"># sklearn.metrics</tspan></text>
+</svg>

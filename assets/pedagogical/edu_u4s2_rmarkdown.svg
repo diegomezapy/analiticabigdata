@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480">
+  <defs>
+    <linearGradient id="bg42" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0fdfa"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <marker id="arr42" markerWidth="10" markerHeight="8" refX="5" refY="4" orient="auto">
+      <path d="M1,1 L9,4 L1,7 Z" fill="#0d9488"/>
+    </marker>
+  </defs>
+  <rect width="900" height="480" fill="url(#bg42)"/>
+  <rect width="900" height="50" fill="#0f4c3a"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Comunicación de Resultados — R Markdown &amp; Shiny</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#99f6e4">Unidad 4.2 · Reportes ejecutivos · Dashboards interactivos · FACEN-UNA 2026</text>
+
+  <!-- ===== Input: R Markdown source ===== -->
+  <rect x="18" y="62" width="220" height="310" rx="10" fill="#1e1e2e" stroke="#0d9488" stroke-width="2"/>
+  <rect x="18" y="62" width="220" height="32" rx="10" fill="#0d9488"/>
+  <text x="128" y="83" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="white">📄 reporte.Rmd</text>
+
+  <!-- YAML header -->
+  <rect x="26" y="98" width="204" height="58" rx="4" fill="#2d3748"/>
+  <text x="34" y="112" font-family="'Courier New',monospace" font-size="9.5" fill="#e5c07b">---</text>
+  <text x="34" y="126" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#61afef">title:</tspan><tspan fill="#98c379"> "Análisis MSPBS 2025"</tspan></text>
+  <text x="34" y="140" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#61afef">output:</tspan><tspan fill="#abb2bf"> html_document</tspan></text>
+  <text x="34" y="154" font-family="'Courier New',monospace" font-size="9.5" fill="#e5c07b">---</text>
+
+  <!-- Markdown content -->
+  <text x="34" y="172" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#a78bfa">## Resultados</tspan></text>
+  <text x="34" y="186" font-family="'Courier New',monospace" font-size="9.5" fill="#abb2bf">Se analizaron **12,450**</text>
+  <text x="34" y="200" font-family="'Courier New',monospace" font-size="9.5" fill="#abb2bf">pacientes del MSPBS.</text>
+
+  <!-- Code chunk -->
+  <rect x="26" y="208" width="204" height="64" rx="4" fill="#2d3748"/>
+  <text x="34" y="222" font-family="'Courier New',monospace" font-size="9.5" fill="#6b7280">```{r}</text>
+  <text x="34" y="236" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">ggplot</tspan><tspan fill="#abb2bf">(datos, </tspan></text>
+  <text x="34" y="250" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#abb2bf">  aes(x=edad)) +</tspan></text>
+  <text x="34" y="264" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">  geom_hist</tspan><tspan fill="#abb2bf">(...)</tspan></text>
+  <text x="34" y="278" font-family="'Courier New',monospace" font-size="9.5" fill="#6b7280">```</text>
+
+  <!-- More text -->
+  <text x="34" y="296" font-family="'Courier New',monospace" font-size="9.5" fill="#abb2bf">La mediana de edad es</text>
+  <text x="34" y="310" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#98c379">`r median(d$edad)`</tspan><tspan fill="#abb2bf"> años.</tspan></text>
+  <text x="34" y="326" font-family="'Courier New',monospace" font-size="9.5" fill="#abb2bf">Ver @fig-histograma.</text>
+  <text x="34" y="344" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#a78bfa">## Conclusiones</tspan></text>
+  <text x="34" y="358" font-family="'Courier New',monospace" font-size="9.5" fill="#abb2bf">Factores más relevantes:</text>
+  <text x="34" y="372" font-family="'Courier New',monospace" font-size="9.5" fill="#abb2bf">glucosa, edad e IMC.</text>
+
+  <!-- knit/render button -->
+  <rect x="50" y="382" width="150" height="28" rx="6" fill="#0d9488"/>
+  <text x="125" y="400" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="white">⚙ knitr::knit()</text>
+
+  <!-- Arrow from source to render engine -->
+  <line x1="242" y1="226" x2="285" y2="226" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arr42)"/>
+
+  <!-- Render engine box -->
+  <rect x="288" y="180" width="100" height="90" rx="8" fill="#0f4c3a"/>
+  <text x="338" y="213" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="800" fill="white">knitr /</text>
+  <text x="338" y="229" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="800" fill="#34d399">Quarto</text>
+  <text x="338" y="248" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6ee7b7">Pandoc</text>
+  <text x="338" y="263" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6ee7b7">LaTeX</text>
+
+  <!-- Arrows to outputs -->
+  <line x1="390" y1="200" x2="440" y2="145" stroke="#0d9488" stroke-width="2" marker-end="url(#arr42)"/>
+  <line x1="390" y1="225" x2="440" y2="225" stroke="#0d9488" stroke-width="2" marker-end="url(#arr42)"/>
+  <line x1="390" y1="250" x2="440" y2="310" stroke="#0d9488" stroke-width="2" marker-end="url(#arr42)"/>
+  <line x1="390" y1="258" x2="440" y2="378" stroke="#0d9488" stroke-width="2" marker-end="url(#arr42)"/>
+
+  <!-- OUTPUT 1: HTML Report -->
+  <rect x="442" y="90" width="210" height="110" rx="8" fill="white" stroke="#0d9488" stroke-width="2"/>
+  <rect x="442" y="90" width="210" height="26" rx="8" fill="#d1fae5"/>
+  <text x="547" y="108" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#065f46">🌐 HTML Interactivo</text>
+  <!-- Mini HTML mockup -->
+  <rect x="454" y="120" width="186" height="16" rx="2" fill="#1d4ed8" opacity="0.7"/>
+  <text x="547" y="132" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="white">Análisis MSPBS 2025</text>
+  <rect x="454" y="140" width="80" height="8" rx="2" fill="#e5e7eb"/>
+  <rect x="454" y="152" width="186" height="24" rx="2" fill="#dbeafe"/>
+  <!-- Mini chart inside HTML -->
+  <rect x="458" y="154" width="20" height="18" rx="1" fill="#3b82f6"/>
+  <rect x="482" y="160" width="20" height="12" rx="1" fill="#3b82f6"/>
+  <rect x="506" y="150" width="20" height="22" rx="1" fill="#3b82f6"/>
+  <rect x="530" y="156" width="20" height="16" rx="1" fill="#3b82f6"/>
+  <rect x="554" y="148" width="20" height="24" rx="1" fill="#3b82f6"/>
+  <rect x="578" y="162" width="20" height="10" rx="1" fill="#3b82f6"/>
+  <rect x="600" y="153" width="20" height="19" rx="1" fill="#3b82f6"/>
+  <text x="547" y="188" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="600" fill="#0f172a">Gráficos embebidos + tablas</text>
+
+  <!-- OUTPUT 2: PDF -->
+  <rect x="442" y="210" width="210" height="70" rx="8" fill="white" stroke="#dc2626" stroke-width="2"/>
+  <rect x="442" y="210" width="210" height="24" rx="8" fill="#fee2e2"/>
+  <text x="547" y="227" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#991b1b">📕 PDF (LaTeX)</text>
+  <text x="454" y="248" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Reporte formal · citations · APA</text>
+  <text x="454" y="262" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">Apto para publicación académica</text>
+
+  <!-- OUTPUT 3: Word -->
+  <rect x="442" y="292" width="210" height="70" rx="8" fill="white" stroke="#2563eb" stroke-width="2"/>
+  <rect x="442" y="292" width="210" height="24" rx="8" fill="#dbeafe"/>
+  <text x="547" y="309" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1e40af">📘 Word / DOCX</text>
+  <text x="454" y="330" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Editable · informe ejecutivo</text>
+  <text x="454" y="344" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">Para directores y gerentes</text>
+
+  <!-- OUTPUT 4: Shiny Dashboard -->
+  <rect x="442" y="374" width="210" height="80" rx="8" fill="white" stroke="#7c3aed" stroke-width="2"/>
+  <rect x="442" y="374" width="210" height="24" rx="8" fill="#ede9fe"/>
+  <text x="547" y="391" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#5b21b6">⚡ Shiny App</text>
+  <text x="454" y="412" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Dashboard interactivo con filtros</text>
+  <text x="454" y="426" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Sliders · selectInput · plotOutput</text>
+  <text x="454" y="442" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">deploy en shinyapps.io</text>
+
+  <!-- Right panel: Shiny code example -->
+  <rect x="668" y="62" width="218" height="396" rx="8" fill="#1e1e2e" stroke="#7c3aed" stroke-width="2"/>
+  <rect x="668" y="62" width="218" height="28" rx="8" fill="#7c3aed"/>
+  <text x="777" y="80" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="white">⚡ app.R — Shiny</text>
+  <text x="678" y="110" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">library</tspan><tspan fill="#abb2bf">(shiny)</tspan></text>
+  <text x="678" y="125" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">library</tspan><tspan fill="#abb2bf">(ggplot2)</tspan></text>
+  <text x="678" y="142" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#61afef">ui</tspan><tspan fill="#abb2bf"> &lt;- </tspan><tspan fill="#c678dd">fluidPage</tspan><tspan fill="#abb2bf">(</tspan></text>
+  <text x="678" y="156" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">  titlePanel</tspan><tspan fill="#abb2bf">(</tspan></text>
+  <text x="678" y="170" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#98c379">    "Dashboard MSPBS"</tspan><tspan fill="#abb2bf">),</tspan></text>
+  <text x="678" y="184" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">  sliderInput</tspan><tspan fill="#abb2bf">(</tspan></text>
+  <text x="678" y="198" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#98c379">    "edad_min"</tspan><tspan fill="#abb2bf">,</tspan></text>
+  <text x="678" y="212" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#abb2bf">    min=</tspan><tspan fill="#d19a66">18</tspan><tspan fill="#abb2bf">, max=</tspan><tspan fill="#d19a66">90</tspan><tspan fill="#abb2bf">),</tspan></text>
+  <text x="678" y="226" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">  plotOutput</tspan><tspan fill="#abb2bf">(</tspan><tspan fill="#98c379">"grafico"</tspan><tspan fill="#abb2bf">)</tspan></text>
+  <text x="678" y="240" font-family="'Courier New',monospace" font-size="9.5" fill="#abb2bf">)</text>
+  <text x="678" y="258" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#61afef">server</tspan><tspan fill="#abb2bf"> &lt;- </tspan><tspan fill="#c678dd">function</tspan><tspan fill="#abb2bf">(i,o,s)\{</tspan></text>
+  <text x="678" y="272" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#61afef">  o$grafico</tspan><tspan fill="#abb2bf"> &lt;- </tspan><tspan fill="#c678dd">renderPlot</tspan><tspan fill="#abb2bf">(\{</tspan></text>
+  <text x="678" y="286" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#abb2bf">    d |&gt; </tspan><tspan fill="#c678dd">filter</tspan><tspan fill="#abb2bf">(</tspan></text>
+  <text x="678" y="300" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#abb2bf">      edad &gt;= </tspan><tspan fill="#c678dd">input$</tspan><tspan fill="#61afef">edad_min</tspan></text>
+  <text x="678" y="314" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#abb2bf">    ) |&gt; </tspan><tspan fill="#c678dd">ggplot</tspan><tspan fill="#abb2bf">(</tspan></text>
+  <text x="678" y="328" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">      aes</tspan><tspan fill="#abb2bf">(x=IMC)) +</tspan></text>
+  <text x="678" y="342" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">      geom_histogram</tspan><tspan fill="#abb2bf">()</tspan></text>
+  <text x="678" y="356" font-family="'Courier New',monospace" font-size="9.5" fill="#abb2bf">  \})</text>
+  <text x="678" y="370" font-family="'Courier New',monospace" font-size="9.5" fill="#abb2bf">\}</text>
+  <text x="678" y="388" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">shinyApp</tspan><tspan fill="#abb2bf">(ui, server)</tspan></text>
+  <!-- Deploy arrow -->
+  <rect x="678" y="404" width="198" height="44" rx="6" fill="#2d3748"/>
+  <text x="777" y="422" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#34d399">🚀 rsconnect::</text>
+  <text x="777" y="438" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#34d399">deployApp()</text>
+</svg>

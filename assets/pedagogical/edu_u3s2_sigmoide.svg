@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 490">
+  <defs>
+    <linearGradient id="bg32" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <linearGradient id="zoneP1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#dcfce7" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#dcfce7" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="zoneP0" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fee2e2" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#fee2e2" stop-opacity="0.6"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="490" fill="url(#bg32)"/>
+  <rect width="900" height="50" fill="#14532d"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Regresión Logística — Función Sigmoide</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#86efac">Unidad 3.2 · Clasificación binaria · Log-odds · Umbral de decisión · FACEN-UNA 2026</text>
+
+  <!-- Chart area -->
+  <rect x="70" y="68" width="500" height="340" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="6"/>
+
+  <!-- Prediction zones -->
+  <!-- Right zone: P > 0.5 → Predict Y=1 (green) -->
+  <rect x="320" y="68" width="250" height="340" fill="url(#zoneP1)" rx="0 6 6 0"/>
+  <!-- Left zone: P < 0.5 → Predict Y=0 (red) -->
+  <rect x="70" y="68" width="250" height="340" fill="url(#zoneP0)" rx="6 0 0 6"/>
+
+  <!-- Zone labels -->
+  <text x="195" y="110" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="700" fill="#dc2626" opacity="0.7">Predice Ŷ = 0</text>
+  <text x="445" y="110" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="700" fill="#16a34a" opacity="0.7">Predice Ŷ = 1</text>
+
+  <!-- Grid lines -->
+  <line x1="70" y1="118" x2="570" y2="118" stroke="#f3f4f6" stroke-width="1"/>
+  <line x1="70" y1="168" x2="570" y2="168" stroke="#f3f4f6" stroke-width="1"/>
+  <line x1="70" y1="218" x2="570" y2="218" stroke="#f3f4f6" stroke-width="1"/>
+  <line x1="70" y1="268" x2="570" y2="268" stroke="#f3f4f6" stroke-width="1"/>
+  <line x1="70" y1="318" x2="570" y2="318" stroke="#f3f4f6" stroke-width="1"/>
+  <line x1="70" y1="368" x2="570" y2="368" stroke="#f3f4f6" stroke-width="1"/>
+
+  <!-- Y-axis line -->
+  <line x1="120" y1="72" x2="120" y2="405" stroke="#374151" stroke-width="1.5"/>
+  <!-- X-axis at P=0 → y=405 -->
+  <line x1="70" y1="405" x2="570" y2="405" stroke="#374151" stroke-width="1.5"/>
+
+  <!-- Threshold horizontal line at P=0.5 → y = 408 - 0.5*340 = 408-170 = 238 -->
+  <!-- Chart y-range: 72 (P=1) to 408 (P=0); scale = (408-72) = 336px for P 0→1 -->
+  <!-- y(P) = 408 - P*336 -->
+  <!-- P=0 → y=408,  P=0.5 → y=240,  P=1 → y=72 -->
+  <!-- Decision threshold at y=240 -->
+  <line x1="70" y1="240" x2="570" y2="240" stroke="#f97316" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="572" y="244" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#ea580c">P = 0.5 (umbral)</text>
+
+  <!-- X-axis: z from -6 to +6 centered at x=(70+570)/2=320 -->
+  <!-- x(z) = 320 + z*41.67  → at z=-6: x=70, at z=+6: x=570 -->
+  <!-- Decision boundary at z=0 → x=320 -->
+  <line x1="320" y1="68" x2="320" y2="408" stroke="#6b7280" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+
+  <!-- Sigmoid curve -->
+  <!-- Points: z=-6→P=0.0025, z=-4→P=0.018, z=-3→P=0.047, z=-2→P=0.119,
+       z=-1→P=0.269, z=0→P=0.5, z=1→P=0.731, z=2→P=0.881,
+       z=3→P=0.953, z=4→P=0.982, z=6→P=0.9975
+       x(z) = 70 + (z+6)/12*500,  y(P) = 408 - P*336 -->
+  <polyline
+    points="70,407 112,402 154,392 196,368 237,318 278,241 320,240 362,163 404,115 445,94 487,83 570,73"
+    fill="none" stroke="#0d9488" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Scatter data points along the curve -->
+  <!-- Y=0 cases (bottom, left side) -->
+  <circle cx="90" cy="408" r="5" fill="#dc2626" opacity="0.85"/>
+  <circle cx="115" cy="408" r="5" fill="#dc2626" opacity="0.85"/>
+  <circle cx="140" cy="408" r="5" fill="#dc2626" opacity="0.85"/>
+  <circle cx="168" cy="408" r="5" fill="#dc2626" opacity="0.85"/>
+  <circle cx="195" cy="408" r="5" fill="#dc2626" opacity="0.85"/>
+  <circle cx="220" cy="408" r="5" fill="#dc2626" opacity="0.85"/>
+  <circle cx="248" cy="408" r="5" fill="#dc2626" opacity="0.85"/>
+  <circle cx="272" cy="408" r="5" fill="#dc2626" opacity="0.85"/>
+  <!-- Y=1 cases (top, right side) -->
+  <circle cx="365" cy="72" r="5" fill="#16a34a" opacity="0.85"/>
+  <circle cx="390" cy="72" r="5" fill="#16a34a" opacity="0.85"/>
+  <circle cx="415" cy="72" r="5" fill="#16a34a" opacity="0.85"/>
+  <circle cx="440" cy="72" r="5" fill="#16a34a" opacity="0.85"/>
+  <circle cx="465" cy="72" r="5" fill="#16a34a" opacity="0.85"/>
+  <circle cx="495" cy="72" r="5" fill="#16a34a" opacity="0.85"/>
+  <circle cx="520" cy="72" r="5" fill="#16a34a" opacity="0.85"/>
+  <circle cx="548" cy="72" r="5" fill="#16a34a" opacity="0.85"/>
+  <!-- Misclassified cases -->
+  <circle cx="295" cy="72" r="5" fill="#16a34a" opacity="0.5"/>
+  <circle cx="345" cy="408" r="5" fill="#dc2626" opacity="0.5"/>
+
+  <!-- Y-axis tick labels -->
+  <text x="110" y="76" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">1.0</text>
+  <text x="110" y="156" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">0.75</text>
+  <text x="110" y="244" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#ea580c">0.50</text>
+  <text x="110" y="324" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">0.25</text>
+  <text x="110" y="409" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">0.0</text>
+
+  <!-- X-axis tick labels -->
+  <text x="70" y="422" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">−6</text>
+  <text x="154" y="422" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">−4</text>
+  <text x="237" y="422" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">−2</text>
+  <text x="320" y="422" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">0</text>
+  <text x="404" y="422" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">+2</text>
+  <text x="487" y="422" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">+4</text>
+  <text x="570" y="422" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">+6</text>
+
+  <!-- Axis labels -->
+  <text x="320" y="440" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#374151">z = β₀ + β₁x₁ + β₂x₂ + … (log-odds)</text>
+  <text x="60" y="240" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#374151" transform="rotate(-90,60,240)">P(Y=1 | X)</text>
+
+  <!-- Formula panel on right -->
+  <rect x="590" y="68" width="296" height="340" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="738" y="90" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#14532d">Función Sigmoide σ(z)</text>
+
+  <!-- Main formula -->
+  <rect x="606" y="100" width="264" height="44" rx="6" fill="#dcfce7"/>
+  <text x="738" y="118" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="700" fill="#15803d">         1</text>
+  <text x="738" y="136" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" fill="#15803d">P(Y=1) = ————————</text>
+  <text x="738" y="152" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" fill="#15803d">       1 + e⁻ᶻ</text>
+
+  <!-- Log-odds formula -->
+  <rect x="606" y="162" width="264" height="36" rx="6" fill="#f0fdf4"/>
+  <text x="738" y="178" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#374151">Log-odds (logit):</text>
+  <text x="738" y="193" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#374151">log(P / (1-P)) = β₀ + β₁x₁ + …</text>
+
+  <!-- Properties -->
+  <text x="606" y="218" font-family="Inter,Arial,sans-serif" font-size="11.5" font-weight="700" fill="#0f172a">Propiedades clave:</text>
+  <text x="610" y="236" font-family="Inter,Arial,sans-serif" font-size="11" fill="#374151">• Salida siempre entre 0 y 1</text>
+  <text x="610" y="252" font-family="Inter,Arial,sans-serif" font-size="11" fill="#374151">• Punto de inflexión en z = 0</text>
+  <text x="610" y="268" font-family="Inter,Arial,sans-serif" font-size="11" fill="#374151">• Umbral típico: P ≥ 0.5 → Clase 1</text>
+  <text x="610" y="284" font-family="Inter,Arial,sans-serif" font-size="11" fill="#374151">• Interpretación: odds ratio (e^β)</text>
+
+  <!-- Metrics box -->
+  <rect x="606" y="296" width="264" height="62" rx="6" fill="#eff6ff"/>
+  <text x="738" y="314" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">Métricas de evaluación</text>
+  <text x="610" y="330" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#374151">• Accuracy = (TP+TN) / Total</text>
+  <text x="610" y="344" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#374151">• AUC-ROC (curva de discriminación)</text>
+  <text x="610" y="358" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#374151">• Log-loss = −Σ [y·log(p̂) + (1-y)·log(1-p̂)]</text>
+
+  <!-- Code snippet -->
+  <rect x="590" y="418" width="296" height="56" fill="#1e1e2e" rx="6"/>
+  <text x="604" y="433" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># R:</tspan></text>
+  <text x="604" y="447" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">glm</tspan><tspan fill="#abb2bf">(diabetes ~ edad+IMC, data=d, family=</tspan><tspan fill="#98c379">"binomial"</tspan><tspan fill="#abb2bf">)</tspan></text>
+  <text x="604" y="462" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># Python: </tspan><tspan fill="#c678dd">LogisticRegression</tspan><tspan fill="#abb2bf">().fit(X, y)</tspan></text>
+</svg>

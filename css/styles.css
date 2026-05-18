@@ -1637,7 +1637,11 @@ a:hover { text-decoration: underline; }
 
 .learning-focus-card.has-art {
   align-items: start;
-  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.34fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 0.82fr);
+}
+
+.learning-focus-card.technical-art {
+  grid-template-columns: 1fr;
 }
 
 .learning-focus-main {
@@ -1660,12 +1664,93 @@ a:hover { text-decoration: underline; }
   min-width: 0;
   overflow: hidden;
   padding: 0.9rem;
+  position: relative;
 }
 
 .learning-pedagogical-img {
   height: clamp(150px, 18vw, 220px);
   object-fit: contain;
   width: 100%;
+}
+
+.learning-pedagogical-figure.is-technical {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.98), color-mix(in srgb, var(--sublevel-soft) 46%, white));
+  padding: 0.7rem;
+}
+
+.learning-pedagogical-img.technical {
+  height: auto;
+  max-height: none;
+}
+
+.diagram-zoom-button {
+  align-self: center;
+  background: var(--sublevel-color);
+  border: 0;
+  border-radius: var(--radius-full);
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 900;
+  justify-self: center;
+  padding: 0.48rem 0.75rem;
+  transition: var(--transition-fast);
+}
+
+.diagram-zoom-button:hover {
+  background: var(--sublevel-color-dark);
+  transform: translateY(-1px);
+}
+
+.pedagogical-lightbox {
+  align-items: center;
+  background: rgba(9, 22, 36, 0.78);
+  display: none;
+  inset: 0;
+  justify-content: center;
+  padding: clamp(0.75rem, 3vw, 2rem);
+  position: fixed;
+  z-index: 260;
+}
+
+.pedagogical-lightbox.show {
+  display: flex;
+}
+
+.pedagogical-lightbox-panel {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.28);
+  max-height: 94vh;
+  max-width: min(1180px, 96vw);
+  overflow: auto;
+  padding: 1rem;
+  position: relative;
+}
+
+.pedagogical-lightbox-panel img {
+  display: block;
+  height: auto;
+  max-width: none;
+  min-width: min(940px, calc(96vw - 2rem));
+  width: 100%;
+}
+
+.pedagogical-lightbox-close {
+  background: #17364f;
+  border: 0;
+  border-radius: var(--radius-full);
+  color: #fff;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 0.5rem 0.8rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .learning-pedagogical-figure figcaption {
@@ -5314,6 +5399,23 @@ a:hover { text-decoration: underline; }
 
   .learning-pedagogical-img {
     height: 150px;
+  }
+
+  .learning-pedagogical-img.technical {
+    height: auto;
+  }
+
+  .pedagogical-lightbox {
+    padding: 0.5rem;
+  }
+
+  .pedagogical-lightbox-panel {
+    max-width: 100%;
+    padding: 0.7rem;
+  }
+
+  .pedagogical-lightbox-panel img {
+    min-width: 820px;
   }
 
   .learning-step {
