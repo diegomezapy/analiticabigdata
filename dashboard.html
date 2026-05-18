@@ -1395,6 +1395,7 @@
             const nextUnit = UNITS.find(unit => !STATE.quizResults[`u${unit.id}`]) || UNITS[0];
             const completedUnits = UNITS.filter(unit => STATE.quizResults[`u${unit.id}`]).length;
             const coursePct = Math.round((completedUnits / TOTAL_UNITS) * 100);
+            const heroImage = pedagogicalHeroMeta(nextUnit.id);
             const passwordPrompt = STATE.user.passwordChanged === false ? `
               <div class="smart-card warning">
                 <div>
