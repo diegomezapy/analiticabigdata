@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
+  <defs>
+    <linearGradient id="bg12d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eff6ff"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="500" fill="url(#bg12d)"/>
+  <rect width="900" height="50" fill="#1e3a5f"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Tipos de Objetos en R</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#93c5fd">Unidad 1.2 · Vector · Factor · Matrix · data.frame · List · FACEN-UNA 2026</text>
+
+  <!-- LEFT PANEL -->
+  <rect x="18" y="58" width="430" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+
+  <!-- 1. VECTOR -->
+  <rect x="26" y="66" width="414" height="112" rx="6" fill="#f0f9ff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="36" y="82" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="#1d4ed8">Vector</text>
+  <text x="90" y="82" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#6b7280">— secuencia de elementos del mismo tipo (1D)</text>
+  <!-- Index labels -->
+  <text x="102" y="97"  text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#9ca3af">[1]</text>
+  <text x="140" y="97"  text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#9ca3af">[2]</text>
+  <text x="178" y="97"  text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#9ca3af">[3]</text>
+  <text x="216" y="97"  text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#9ca3af">[4]</text>
+  <text x="254" y="97"  text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#9ca3af">[5]</text>
+  <!-- Cells -->
+  <rect x="84"  y="101" width="36" height="24" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <rect x="122" y="101" width="36" height="24" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <rect x="160" y="101" width="36" height="24" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <rect x="198" y="101" width="36" height="24" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <rect x="236" y="101" width="36" height="24" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="102" y="117" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#1d4ed8">25</text>
+  <text x="140" y="117" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#1d4ed8">31</text>
+  <text x="178" y="117" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#1d4ed8">45</text>
+  <text x="216" y="117" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#1d4ed8">28</text>
+  <text x="254" y="117" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="600" fill="#1d4ed8">52</text>
+  <rect x="282" y="103" width="74" height="16" rx="8" fill="#dbeafe"/>
+  <text x="319" y="114" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#1d4ed8">numeric [5]</text>
+  <text x="36" y="142" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">edad</tspan><tspan fill="#abb2bf"> &lt;- </tspan><tspan fill="#c678dd">c</tspan><tspan fill="#abb2bf">(25, 31, 45, 28, 52)</tspan><tspan fill="#6b7280">  # numeric[5]</tspan></text>
+  <text x="36" y="156" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">También: integer · character · logical · complex</text>
+  <text x="36" y="168" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">edad[3] → 45  |  edad[edad&gt;30] → 31 45 52  (indexación)</text>
+
+  <!-- 2. FACTOR -->
+  <rect x="26" y="184" width="414" height="108" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1"/>
+  <text x="36" y="200" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="#c2410c">Factor</text>
+  <text x="88" y="200" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#6b7280">— variable categórica con niveles (levels) fijos</text>
+  <rect x="84"  y="208" width="36" height="24" fill="#3b82f6" rx="2"/>
+  <rect x="122" y="208" width="36" height="24" fill="#f97316" rx="2"/>
+  <rect x="160" y="208" width="36" height="24" fill="#3b82f6" rx="2"/>
+  <rect x="198" y="208" width="36" height="24" fill="#dc2626" rx="2"/>
+  <rect x="236" y="208" width="36" height="24" fill="#f97316" rx="2"/>
+  <text x="102" y="224" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="white">Urb</text>
+  <text x="140" y="224" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="white">Rur</text>
+  <text x="178" y="224" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="white">Urb</text>
+  <text x="216" y="224" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="white">Ind</text>
+  <text x="254" y="224" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="white">Rur</text>
+  <!-- Int codes below cells -->
+  <text x="102" y="242" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#9ca3af">3</text>
+  <text x="140" y="242" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#9ca3af">2</text>
+  <text x="178" y="242" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#9ca3af">3</text>
+  <text x="216" y="242" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#9ca3af">1</text>
+  <text x="254" y="242" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#9ca3af">2</text>
+  <text x="102" y="252" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#9ca3af">int</text>
+  <!-- Levels legend -->
+  <rect x="285" y="209" width="8" height="8" rx="1" fill="#dc2626"/>
+  <text x="297" y="217" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#374151">Ind (1)</text>
+  <rect x="285" y="222" width="8" height="8" rx="1" fill="#f97316"/>
+  <text x="297" y="230" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#374151">Rur (2)</text>
+  <rect x="285" y="235" width="8" height="8" rx="1" fill="#3b82f6"/>
+  <text x="297" y="243" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#374151">Urb (3)</text>
+  <text x="36" y="260" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">zona</tspan><tspan fill="#abb2bf"> &lt;- </tspan><tspan fill="#c678dd">factor</tspan><tspan fill="#abb2bf">(c(</tspan><tspan fill="#98c379">"Urb","Rur","Urb","Ind","Rur"</tspan><tspan fill="#abb2bf">))</tspan></text>
+  <text x="36" y="274" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Levels: Ind &lt; Rur &lt; Urb (orden alfabético por defecto) · table(zona)</text>
+  <text x="36" y="286" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Internamente son enteros · ahorra memoria vs. character</text>
+
+  <!-- 3. MATRIX -->
+  <rect x="26" y="298" width="414" height="120" rx="6" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="36" y="314" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="#6d28d9">Matrix</text>
+  <text x="92" y="314" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#6b7280">— arreglo 2D, un solo tipo de datos, relleno por columna</text>
+  <!-- Column headers -->
+  <text x="118" y="330" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#9ca3af">[,1]</text>
+  <text x="148" y="330" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#9ca3af">[,2]</text>
+  <text x="178" y="330" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#9ca3af">[,3]</text>
+  <!-- Row 1 -->
+  <text x="84"  y="346" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#9ca3af">[1,]</text>
+  <rect x="88"  y="333" width="28" height="22" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <rect x="118" y="333" width="28" height="22" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <rect x="148" y="333" width="28" height="22" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="102" y="348" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">1</text>
+  <text x="132" y="348" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">4</text>
+  <text x="162" y="348" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">7</text>
+  <!-- Row 2 -->
+  <text x="84"  y="368" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#9ca3af">[2,]</text>
+  <rect x="88"  y="355" width="28" height="22" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <rect x="118" y="355" width="28" height="22" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <rect x="148" y="355" width="28" height="22" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="102" y="370" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">2</text>
+  <text x="132" y="370" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">5</text>
+  <text x="162" y="370" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">8</text>
+  <!-- Row 3 -->
+  <text x="84"  y="390" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#9ca3af">[3,]</text>
+  <rect x="88"  y="377" width="28" height="22" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <rect x="118" y="377" width="28" height="22" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <rect x="148" y="377" width="28" height="22" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="102" y="392" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">3</text>
+  <text x="132" y="392" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">6</text>
+  <text x="162" y="392" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">9</text>
+  <!-- Matrix annotations -->
+  <text x="196" y="348" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">nrow=3 · ncol=3 · dim=c(3,3)</text>
+  <text x="196" y="362" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Rellena por columna (col-major)</text>
+  <text x="196" y="376" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Álgebra lineal: t(), %*%, solve()</text>
+  <text x="36" y="410" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">mat</tspan><tspan fill="#abb2bf"> &lt;- </tspan><tspan fill="#c678dd">matrix</tspan><tspan fill="#abb2bf">(1:9, nrow=</tspan><tspan fill="#d19a66">3</tspan><tspan fill="#abb2bf">)  · mat[2,3] → 8</tspan></text>
+
+  <!-- RIGHT PANEL -->
+  <rect x="462" y="58" width="424" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+
+  <!-- DATA.FRAME -->
+  <rect x="470" y="66" width="408" height="196" rx="6" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="480" y="82" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="#16a34a">data.frame</text>
+  <text x="562" y="82" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#6b7280">— tabla 2D, columnas de distinto tipo</text>
+  <!-- Table header -->
+  <rect x="480" y="88" width="390" height="20" fill="#052e16"/>
+  <text x="510" y="101" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="white">id</text>
+  <text x="580" y="101" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="white">edad</text>
+  <text x="670" y="101" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="white">zona</text>
+  <text x="810" y="101" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="white">imc</text>
+  <!-- Vertical separators -->
+  <line x1="540" y1="88" x2="540" y2="168" stroke="#d1fae5" stroke-width="1"/>
+  <line x1="620" y1="88" x2="620" y2="168" stroke="#d1fae5" stroke-width="1"/>
+  <line x1="760" y1="88" x2="760" y2="168" stroke="#d1fae5" stroke-width="1"/>
+  <!-- Row 1 -->
+  <rect x="480" y="108" width="390" height="20" fill="#f8fafc"/>
+  <text x="510" y="121" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">1</text>
+  <text x="580" y="121" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">25</text>
+  <text x="670" y="121" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Urbano</text>
+  <text x="810" y="121" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">24.1</text>
+  <!-- Row 2 -->
+  <rect x="480" y="128" width="390" height="20" fill="white"/>
+  <text x="510" y="141" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">2</text>
+  <text x="580" y="141" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">31</text>
+  <text x="670" y="141" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Rural</text>
+  <text x="810" y="141" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">28.7</text>
+  <!-- Row 3 -->
+  <rect x="480" y="148" width="390" height="20" fill="#f8fafc"/>
+  <text x="510" y="161" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">3</text>
+  <text x="580" y="161" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">45</text>
+  <text x="670" y="161" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Indígena</text>
+  <text x="810" y="161" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">31.2</text>
+  <!-- Type annotations -->
+  <text x="510" y="181" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#6b7280">integer</text>
+  <text x="580" y="181" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#6b7280">numeric</text>
+  <text x="670" y="181" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#c2410c">factor</text>
+  <text x="810" y="181" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#6b7280">numeric</text>
+  <!-- Code -->
+  <text x="480" y="200" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">df</tspan><tspan fill="#abb2bf"> &lt;- </tspan><tspan fill="#c678dd">data.frame</tspan><tspan fill="#abb2bf">(id=1:3, edad=c(25,31,45), ...)</tspan></text>
+  <text x="480" y="215" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">df$zona · df[1:2, "edad"] · nrow() · ncol() · str(df)</text>
+  <text x="480" y="254" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">data.table: dt[zona=="Rural", .(media=mean(imc))]</text>
+
+  <!-- LIST -->
+  <rect x="470" y="270" width="408" height="110" rx="6" fill="#fefce8" stroke="#fef08a" stroke-width="1"/>
+  <text x="480" y="286" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="#b45309">List</text>
+  <text x="518" y="286" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#6b7280">— contenedor heterogéneo, puede anidar cualquier objeto</text>
+  <!-- 3 nested item boxes -->
+  <rect x="480" y="294" width="118" height="52" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="539" y="308" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#1d4ed8">[[1]] $valores</text>
+  <text x="539" y="321" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#374151">c(1,2,3,4,5)</text>
+  <text x="539" y="334" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#6b7280">numeric[5]</text>
+
+  <rect x="606" y="294" width="118" height="52" rx="4" fill="#fde68a" stroke="#fbbf24" stroke-width="1"/>
+  <text x="665" y="308" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#92400e">[[2]] $nombre</text>
+  <text x="665" y="321" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#374151">"Diego"</text>
+  <text x="665" y="334" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#6b7280">character[1]</text>
+
+  <rect x="732" y="294" width="138" height="52" rx="4" fill="#d1fae5" stroke="#6ee7b7" stroke-width="1"/>
+  <text x="801" y="308" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#065f46">[[3]] $modelo</text>
+  <text x="801" y="321" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#374151">lm(imc ~ edad)</text>
+  <text x="801" y="334" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#6b7280">lm object</text>
+  <text x="480" y="360" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#c678dd">lista</tspan><tspan fill="#abb2bf"> &lt;- </tspan><tspan fill="#c678dd">list</tspan><tspan fill="#abb2bf">(valores=1:5, nombre=</tspan><tspan fill="#98c379">"Diego"</tspan><tspan fill="#abb2bf">, modelo=</tspan><tspan fill="#c678dd">lm</tspan><tspan fill="#abb2bf">(imc~edad))</tspan></text>
+  <text x="480" y="374" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">lista[[2]] → "Diego"  ·  lista$nombre → "Diego"  ·  lapply(), sapply()</text>
+
+  <!-- Summary table -->
+  <rect x="470" y="388" width="408" height="72" rx="6" fill="#f8fafc" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="674" y="403" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#374151">Resumen: ¿cuándo usar cada objeto?</text>
+  <text x="476" y="418" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">• <tspan font-weight="700">vector/factor:</tspan> una sola variable   • <tspan font-weight="700">matrix:</tspan> álgebra lineal, datos numéricos 2D</text>
+  <text x="476" y="432" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">• <tspan font-weight="700">data.frame:</tspan> tabla con tipos mixtos (análisis EDA)   • <tspan font-weight="700">data.table:</tspan> Big Data &gt;1M filas</text>
+  <text x="476" y="446" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">• <tspan font-weight="700">list:</tspan> agrupar objetos heterogéneos, resultados de modelos, parámetros</text>
+</svg>

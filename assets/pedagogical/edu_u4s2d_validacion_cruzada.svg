@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
+  <defs>
+    <linearGradient id="bg42d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="500" fill="url(#bg42d)"/>
+  <rect width="900" height="50" fill="#052e16"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Validación Cruzada K-Fold</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#86efac">Unidad 4.2 · K-fold CV · Estimación del error generalización · Selección de modelo · FACEN-UNA 2026</text>
+
+  <!-- LEFT: K-fold diagram -->
+  <rect x="18" y="58" width="520" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="278" y="78" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#052e16">Validación Cruzada con K=5</text>
+  <text x="278" y="93" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">El conjunto de datos se divide en 5 pliegues (folds) iguales</text>
+
+  <!-- Header row: fold labels -->
+  <text x="105" y="114" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#374151">Fold 1</text>
+  <text x="200" y="114" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#374151">Fold 2</text>
+  <text x="295" y="114" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#374151">Fold 3</text>
+  <text x="390" y="114" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#374151">Fold 4</text>
+  <text x="485" y="114" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#374151">Fold 5</text>
+  <text x="30"  y="114" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#374151">Iteración</text>
+
+  <!-- Row separator dimensions: fold_w=90, fold_h=40, start_x=60, start_y=120 -->
+  <!-- Each row: 5 blocks, one red (TEST), four blue (TRAIN) -->
+
+  <!-- ITER 1: TEST=Fold1 -->
+  <text x="46" y="145" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">1</text>
+  <rect x="60"  y="122" width="90" height="40" rx="4" fill="#fee2e2" stroke="#fca5a5" stroke-width="2"/>
+  <text x="105" y="146" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#dc2626">TEST</text>
+  <rect x="155" y="122" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="200" y="146" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="250" y="122" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="295" y="146" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="345" y="122" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="390" y="146" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="440" y="122" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="485" y="146" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <text x="540" y="145" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#16a34a">Acc=0.88</text>
+
+  <!-- ITER 2: TEST=Fold2 -->
+  <text x="46" y="185" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">2</text>
+  <rect x="60"  y="167" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="105" y="191" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="155" y="167" width="90" height="40" rx="4" fill="#fee2e2" stroke="#fca5a5" stroke-width="2"/>
+  <text x="200" y="191" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#dc2626">TEST</text>
+  <rect x="250" y="167" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="295" y="191" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="345" y="167" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="390" y="191" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="440" y="167" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="485" y="191" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <text x="540" y="190" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#16a34a">Acc=0.85</text>
+
+  <!-- ITER 3: TEST=Fold3 -->
+  <text x="46" y="230" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">3</text>
+  <rect x="60"  y="212" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="105" y="236" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="155" y="212" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="200" y="236" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="250" y="212" width="90" height="40" rx="4" fill="#fee2e2" stroke="#fca5a5" stroke-width="2"/>
+  <text x="295" y="236" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#dc2626">TEST</text>
+  <rect x="345" y="212" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="390" y="236" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="440" y="212" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="485" y="236" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <text x="540" y="235" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#16a34a">Acc=0.91</text>
+
+  <!-- ITER 4: TEST=Fold4 -->
+  <text x="46" y="275" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">4</text>
+  <rect x="60"  y="257" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="105" y="281" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="155" y="257" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="200" y="281" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="250" y="257" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="295" y="281" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="345" y="257" width="90" height="40" rx="4" fill="#fee2e2" stroke="#fca5a5" stroke-width="2"/>
+  <text x="390" y="281" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#dc2626">TEST</text>
+  <rect x="440" y="257" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="485" y="281" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <text x="540" y="280" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#16a34a">Acc=0.87</text>
+
+  <!-- ITER 5: TEST=Fold5 -->
+  <text x="46" y="320" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">5</text>
+  <rect x="60"  y="302" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="105" y="326" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="155" y="302" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="200" y="326" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="250" y="302" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="295" y="326" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="345" y="302" width="90" height="40" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="390" y="326" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1d4ed8">TRAIN</text>
+  <rect x="440" y="302" width="90" height="40" rx="4" fill="#fee2e2" stroke="#fca5a5" stroke-width="2"/>
+  <text x="485" y="326" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#dc2626">TEST</text>
+  <text x="540" y="325" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#16a34a">Acc=0.86</text>
+
+  <!-- Results summary row -->
+  <rect x="60" y="354" width="470" height="36" rx="6" fill="#052e16"/>
+  <text x="295" y="368" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="white">Resultado CV: Accuracy = 0.874 ± 0.021</text>
+  <text x="295" y="382" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#86efac">Media de [0.88, 0.85, 0.91, 0.87, 0.86] = 0.874 · std = 0.021</text>
+
+  <!-- Legend -->
+  <rect x="60" y="400" width="20" height="16" rx="3" fill="#fee2e2" stroke="#fca5a5" stroke-width="2"/>
+  <text x="86" y="412" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Conjunto de prueba (test) — 1 pliegue = 20% del total</text>
+  <rect x="280" y="400" width="20" height="16" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="306" y="412" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Conjunto de entrenamiento (train) — 4 pliegues = 80%</text>
+
+  <!-- Code -->
+  <rect x="26" y="428" width="504" height="34" fill="#1e1e2e" rx="6"/>
+  <text x="36" y="443" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># R: </tspan><tspan fill="#c678dd">cv.glm</tspan><tspan fill="#abb2bf">(data, glm.fit, K=5)  |  </tspan><tspan fill="#c678dd">train</tspan><tspan fill="#abb2bf">(y~., data, method=</tspan><tspan fill="#98c379">"rf"</tspan><tspan fill="#abb2bf">, trControl=</tspan><tspan fill="#c678dd">trainControl</tspan><tspan fill="#abb2bf">(method=</tspan><tspan fill="#98c379">"cv"</tspan><tspan fill="#abb2bf">, number=5))</tspan></text>
+  <text x="36" y="457" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># Python: </tspan><tspan fill="#c678dd">cross_val_score</tspan><tspan fill="#abb2bf">(model, X, y, cv=</tspan><tspan fill="#d19a66">5</tspan><tspan fill="#abb2bf">, scoring=</tspan><tspan fill="#98c379">"accuracy"</tspan><tspan fill="#abb2bf">)</tspan><tspan fill="#6b7280">  # sklearn.model_selection</tspan></text>
+
+  <!-- RIGHT: Concepts panel -->
+  <rect x="552" y="58" width="330" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="717" y="78" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#052e16">¿Por qué usar CV?</text>
+
+  <!-- Problem with simple split -->
+  <rect x="562" y="88" width="310" height="70" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
+  <text x="717" y="103" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#dc2626">Problema del split simple (70/30)</text>
+  <text x="570" y="118" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">• Estimación del error depende del azar</text>
+  <text x="570" y="131" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">• Un split "favorable" → sobreestima rendimiento</text>
+  <text x="570" y="144" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">• Desaprovecha datos para entrenamiento</text>
+  <text x="570" y="155" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Con n pequeño: grande sesgo en la estimación</text>
+
+  <!-- CV advantages -->
+  <rect x="562" y="166" width="310" height="70" rx="6" fill="#d1fae5" stroke="#6ee7b7" stroke-width="1"/>
+  <text x="717" y="181" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#065f46">Ventajas de K-Fold CV</text>
+  <text x="570" y="196" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">• Todos los datos se usan para test (una vez)</text>
+  <text x="570" y="209" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">• Estimación de varianza del modelo (± std)</text>
+  <text x="570" y="222" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">• Más confiable para comparar modelos</text>
+  <text x="570" y="233" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Típico K=5 o K=10 (compromiso sesgo-varianza)</text>
+
+  <!-- K selection -->
+  <rect x="562" y="244" width="310" height="58" rx="6" fill="#fefce8" stroke="#fef08a" stroke-width="1"/>
+  <text x="717" y="259" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#b45309">¿Qué K elegir?</text>
+  <text x="570" y="274" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">• K=5: rápido, buena estimación · K=10: más preciso</text>
+  <text x="570" y="287" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">• K=n (LOO): muy preciso pero lento (n modelos)</text>
+  <text x="570" y="298" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">K grande → menor sesgo, mayor varianza de estimación</text>
+
+  <!-- Stratified CV -->
+  <rect x="562" y="310" width="310" height="52" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="717" y="325" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">Stratified K-Fold</text>
+  <text x="570" y="340" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Mantiene la proporción de clases en cada fold</text>
+  <text x="570" y="353" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Esencial con clases desbalanceadas (ej: 95%/5%)</text>
+  <text x="570" y="360" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">StratifiedKFold en sklearn · default en caret (R)</text>
+
+  <!-- Nested CV -->
+  <rect x="562" y="370" width="310" height="52" rx="6" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1"/>
+  <text x="717" y="385" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#6d28d9">CV anidado (nested CV)</text>
+  <text x="570" y="400" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">CV externo: estimación del error real del pipeline</text>
+  <text x="570" y="413" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">CV interno: selección de hiperparámetros (grid search)</text>
+  <text x="570" y="426" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Evita "data leakage" en la selección del modelo</text>
+
+  <!-- Tip box -->
+  <rect x="552" y="432" width="330" height="34" rx="6" fill="#052e16"/>
+  <text x="717" y="447" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" font-weight="700" fill="white">Regla: siempre CV para comparar modelos</text>
+  <text x="717" y="460" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#86efac">Usar el modelo final en datos de test nunca vistos antes</text>
+</svg>

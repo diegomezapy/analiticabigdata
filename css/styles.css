@@ -1637,7 +1637,7 @@ a:hover { text-decoration: underline; }
 
 .learning-focus-card.has-art {
   align-items: start;
-  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 0.82fr);
+  grid-template-columns: minmax(280px, 0.78fr) minmax(420px, 1.12fr);
 }
 
 .learning-focus-card.technical-art {
@@ -1682,6 +1682,19 @@ a:hover { text-decoration: underline; }
 .learning-pedagogical-img.technical {
   height: auto;
   max-height: none;
+}
+
+.learning-focus-card.has-art .learning-pedagogical-figure {
+  height: 100%;
+}
+
+.learning-focus-card.has-art .learning-pedagogical-img {
+  height: clamp(260px, 48vh, 560px);
+}
+
+.learning-focus-card.has-art .learning-pedagogical-img.technical {
+  height: auto;
+  max-height: min(58vh, 620px);
 }
 
 .diagram-zoom-button {
@@ -1759,6 +1772,124 @@ a:hover { text-decoration: underline; }
   font-weight: 800;
   line-height: 1.35;
   text-align: center;
+}
+
+.visual-atlas {
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), color-mix(in srgb, var(--unit-color) 10%, white));
+  border: 1px solid color-mix(in srgb, var(--unit-color) 22%, var(--glass-border));
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.visual-atlas-head {
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.visual-atlas-head span {
+  color: var(--unit-color);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.visual-atlas-head h3 {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  margin: 0.2rem 0;
+}
+
+.visual-atlas-head p {
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.visual-atlas-head > strong {
+  background: color-mix(in srgb, var(--unit-color) 12%, white);
+  border: 1px solid color-mix(in srgb, var(--unit-color) 24%, white);
+  border-radius: var(--radius-full);
+  color: var(--unit-color);
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  padding: 0.45rem 0.7rem;
+}
+
+.visual-atlas-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.visual-atlas-card {
+  background: rgba(255,255,255,0.88);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 0.75rem;
+}
+
+.visual-atlas-preview {
+  background: linear-gradient(180deg, #f8fafc, color-mix(in srgb, var(--unit-color) 8%, white));
+  border: 1px solid color-mix(in srgb, var(--unit-color) 18%, var(--glass-border));
+  border-radius: 12px;
+  cursor: zoom-in;
+  height: 150px;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+
+.visual-atlas-preview img {
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.visual-atlas-copy {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.visual-atlas-copy span {
+  color: var(--unit-color);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.visual-atlas-copy strong {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.visual-atlas-copy code {
+  background: #f1f5f9;
+  border-radius: 10px;
+  color: var(--text-muted);
+  display: block;
+  font-size: 0.68rem;
+  overflow: hidden;
+  padding: 0.42rem 0.55rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.visual-atlas-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
 }
 
 .learning-card-canvas.micro-definition .learning-focus-card,
@@ -6240,8 +6371,34 @@ a:hover { text-decoration: underline; }
     height: 150px;
   }
 
+  .learning-focus-card.has-art .learning-pedagogical-figure {
+    height: auto;
+  }
+
+  .learning-focus-card.has-art .learning-pedagogical-img {
+    height: 210px;
+  }
+
   .learning-pedagogical-img.technical {
     height: auto;
+  }
+
+  .learning-focus-card.has-art .learning-pedagogical-img.technical {
+    max-height: 380px;
+  }
+
+  .visual-atlas-head {
+    flex-direction: column;
+  }
+
+  .visual-atlas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .visual-atlas-actions .btn-secondary,
+  .visual-atlas-actions .as-link {
+    justify-content: center;
+    width: 100%;
   }
 
   .pedagogical-lightbox {

@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
+  <defs>
+    <linearGradient id="bg41d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0fdf4"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect width="900" height="500" fill="url(#bg41d)"/>
+  <rect width="900" height="50" fill="#052e16"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Árbol de Decisión — Anatomía</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#86efac">Unidad 4.1 · Nodo raíz · Splits · Hojas · Impureza Gini · Profundidad · FACEN-UNA 2026</text>
+
+  <!-- LEFT: Tree diagram -->
+  <rect x="18" y="58" width="520" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="278" y="78" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#052e16">Árbol: Predicción de Riesgo Cardíaco</text>
+
+  <!-- ROOT NODE (depth=0) cx=278, y=102 -->
+  <rect x="178" y="88" width="200" height="42" rx="8" fill="#1e3a5f" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="278" y="105" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="white">glucosa &gt; 126?</text>
+  <text x="278" y="119" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#93c5fd">Nodo raíz · Gini=0.47 · n=400</text>
+  <!-- Root label annotation -->
+  <rect x="28" y="91" width="72" height="18" rx="9" fill="#1d4ed8"/>
+  <text x="64" y="102" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="white">Nodo raíz</text>
+
+  <!-- Branch lines from root -->
+  <!-- Left branch (No): root→left_node at cx=145 -->
+  <line x1="218" y1="130" x2="145" y2="175" stroke="#374151" stroke-width="1.5"/>
+  <text x="164" y="160" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#16a34a">No</text>
+  <!-- Right branch (Sí): root→right_node at cx=420 -->
+  <line x1="338" y1="130" x2="420" y2="175" stroke="#374151" stroke-width="1.5"/>
+  <text x="398" y="160" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#dc2626">Sí</text>
+
+  <!-- LEFT subtree (glucosa ≤ 126) — depth 1, cx=145 -->
+  <rect x="68" y="175" width="154" height="42" rx="6" fill="#14532d" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="145" y="192" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" font-weight="700" fill="white">IMC &gt; 30?</text>
+  <text x="145" y="206" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#86efac">Gini=0.38 · n=240</text>
+  <!-- Depth label -->
+  <text x="30" y="200" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#6b7280">prof. 1</text>
+
+  <!-- RIGHT subtree (glucosa > 126) — depth 1, cx=420 -->
+  <rect x="344" y="175" width="152" height="42" rx="6" fill="#7f1d1d" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="420" y="192" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" font-weight="700" fill="white">hipertensión = Sí?</text>
+  <text x="420" y="206" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#fca5a5">Gini=0.41 · n=160</text>
+
+  <!-- Left-left: IMC ≤ 30 → leaf BAJO RIESGO cx=82 -->
+  <line x1="105" y1="217" x2="82"  y2="268" stroke="#374151" stroke-width="1.5"/>
+  <text x="80"  y="258" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#16a34a">No</text>
+  <rect x="26" y="268" width="112" height="50" rx="6" fill="#d1fae5" stroke="#6ee7b7" stroke-width="2"/>
+  <text x="82" y="285" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#065f46">BAJO RIESGO</text>
+  <text x="82" y="298" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#374151">n=142 · P=0.12</text>
+  <text x="82" y="310" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#6b7280">Gini=0.08</text>
+  <rect x="26" y="324" width="112" height="14" rx="7" fill="#16a34a"/>
+  <text x="82" y="334" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" font-weight="700" fill="white">Hoja (leaf)</text>
+
+  <!-- Left-right: IMC > 30 → internal node → edad cx=210 -->
+  <line x1="185" y1="217" x2="210" y2="268" stroke="#374151" stroke-width="1.5"/>
+  <text x="212" y="258" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#dc2626">Sí</text>
+  <rect x="146" y="268" width="128" height="42" rx="6" fill="#78350f" stroke="#f97316" stroke-width="1.5"/>
+  <text x="210" y="285" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" font-weight="700" fill="white">edad &gt; 45?</text>
+  <text x="210" y="299" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#fed7aa">Gini=0.44 · n=98</text>
+  <!-- Depth label depth 2 -->
+  <text x="30" y="294" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#6b7280">prof. 2</text>
+
+  <!-- edad ≤ 45 → BAJO RIESGO -->
+  <line x1="182" y1="310" x2="170" y2="355" stroke="#374151" stroke-width="1.5"/>
+  <text x="162" y="344" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#16a34a">No</text>
+  <rect x="118" y="355" width="104" height="46" rx="6" fill="#d1fae5" stroke="#6ee7b7" stroke-width="2"/>
+  <text x="170" y="372" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#065f46">BAJO RIESGO</text>
+  <text x="170" y="385" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#374151">n=52 · P=0.28</text>
+  <rect x="118" y="406" width="104" height="14" rx="7" fill="#16a34a"/>
+  <text x="170" y="416" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" font-weight="700" fill="white">Hoja (leaf)</text>
+
+  <!-- edad > 45 → ALTO RIESGO -->
+  <line x1="238" y1="310" x2="255" y2="355" stroke="#374151" stroke-width="1.5"/>
+  <text x="258" y="344" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#dc2626">Sí</text>
+  <rect x="204" y="355" width="102" height="46" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-width="2"/>
+  <text x="255" y="372" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#991b1b">ALTO RIESGO</text>
+  <text x="255" y="385" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#374151">n=46 · P=0.74</text>
+  <rect x="204" y="406" width="102" height="14" rx="7" fill="#dc2626"/>
+  <text x="255" y="416" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" font-weight="700" fill="white">Hoja (leaf)</text>
+
+  <!-- Right tree leaves: hipertensión -->
+  <!-- No hipert: ALTO RIESGO -->
+  <line x1="384" y1="217" x2="360" y2="268" stroke="#374151" stroke-width="1.5"/>
+  <text x="355" y="256" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#16a34a">No</text>
+  <rect x="308" y="268" width="104" height="46" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-width="2"/>
+  <text x="360" y="285" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="#991b1b">ALTO RIESGO</text>
+  <text x="360" y="298" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#374151">n=68 · P=0.72</text>
+  <rect x="308" y="319" width="104" height="14" rx="7" fill="#dc2626"/>
+  <text x="360" y="329" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" font-weight="700" fill="white">Hoja (leaf)</text>
+
+  <!-- Sí hipert: MUY ALTO RIESGO -->
+  <line x1="456" y1="217" x2="480" y2="268" stroke="#374151" stroke-width="1.5"/>
+  <text x="482" y="256" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#dc2626">Sí</text>
+  <rect x="426" y="268" width="108" height="46" rx="6" fill="#7f1d1d" stroke="#dc2626" stroke-width="2"/>
+  <text x="480" y="285" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="800" fill="white">MUY ALTO</text>
+  <text x="480" y="298" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#fca5a5">n=92 · P=0.91</text>
+  <rect x="426" y="319" width="108" height="14" rx="7" fill="#7f1d1d"/>
+  <text x="480" y="329" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" font-weight="700" fill="white">Hoja (leaf)</text>
+
+  <!-- Depth indicator on right -->
+  <line x1="520" y1="110" x2="520" y2="340" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="528" y="114" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">d=0</text>
+  <text x="528" y="200" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">d=1</text>
+  <text x="528" y="293" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">d=2</text>
+  <text x="528" y="388" font-family="Inter,Arial,sans-serif" font-size="9" fill="#9ca3af">d=3</text>
+
+  <!-- Footer inside left panel -->
+  <rect x="26" y="440" width="504" height="22" rx="4" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+  <text x="278" y="454" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Gini=0 → nodo puro · Gini=0.5 → máxima impureza · El árbol elige el split que más reduce Gini</text>
+
+  <!-- RIGHT: Anatomy legend + formulas -->
+  <rect x="552" y="58" width="330" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="717" y="78" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#052e16">Conceptos clave</text>
+
+  <!-- Anatomy items -->
+  <rect x="562" y="88" width="310" height="44" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="570" y="103" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">Nodo raíz</text>
+  <text x="570" y="117" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Primer split, usa la variable más informativa</text>
+  <text x="570" y="128" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Criterio: mayor reducción de Gini o Entropía</text>
+
+  <rect x="562" y="140" width="310" height="44" rx="6" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  <text x="570" y="155" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#16a34a">Nodo interno</text>
+  <text x="570" y="169" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Pregunta binaria sobre una variable</text>
+  <text x="570" y="180" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Genera dos ramas: Sí/No · izquierda/derecha</text>
+
+  <rect x="562" y="192" width="310" height="44" rx="6" fill="#fef3c7" stroke="#fde68a" stroke-width="1"/>
+  <text x="570" y="207" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#b45309">Nodo hoja (leaf)</text>
+  <text x="570" y="221" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Predicción final: clase mayoritaria (clase.)</text>
+  <text x="570" y="232" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">O promedio (regresión) · Gini ≈ 0 si puro</text>
+
+  <rect x="562" y="244" width="310" height="44" rx="6" fill="#fdf4ff" stroke="#e9d5ff" stroke-width="1"/>
+  <text x="570" y="259" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#7c3aed">Impureza Gini</text>
+  <text x="570" y="273" font-family="Inter,Arial,sans-serif" font-size="10.5" fill="#374151">G = 1 − Σ pᵢ²  (pᵢ = proporción de clase i)</text>
+  <text x="570" y="284" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">G=0 nodo puro · G=0.5 máxima impureza</text>
+
+  <rect x="562" y="296" width="310" height="44" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1"/>
+  <text x="570" y="311" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#c2410c">Profundidad (depth)</text>
+  <text x="570" y="325" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">Niveles del árbol · mayor prof. = más complejo</text>
+  <text x="570" y="336" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">max_depth limita overfitting · tipico: 3-10</text>
+
+  <!-- Hyperparameters box -->
+  <rect x="562" y="348" width="310" height="60" rx="6" fill="#052e16"/>
+  <text x="717" y="364" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" font-weight="700" fill="white">Hiperparámetros clave</text>
+  <text x="570" y="379" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#86efac">• max_depth · min_samples_split · min_samples_leaf</text>
+  <text x="570" y="393" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#86efac">• criterion: "gini" o "entropy" (ganancia de info.)</text>
+  <text x="570" y="407" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#86efac">• ccp_alpha: poda por complejidad-coste</text>
+
+  <!-- Code snippet -->
+  <rect x="552" y="418" width="330" height="48" fill="#1e1e2e" rx="6"/>
+  <text x="564" y="433" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># R: </tspan><tspan fill="#c678dd">library</tspan><tspan fill="#abb2bf">(rpart); </tspan><tspan fill="#c678dd">rpart</tspan><tspan fill="#abb2bf">(riesgo ~ ., data, method=</tspan><tspan fill="#98c379">"class"</tspan><tspan fill="#abb2bf">)</tspan></text>
+  <text x="564" y="449" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># Python: </tspan><tspan fill="#c678dd">DecisionTreeClassifier</tspan><tspan fill="#abb2bf">(max_depth=</tspan><tspan fill="#d19a66">3</tspan><tspan fill="#abb2bf">).fit(X, y)</tspan></text>
+  <text x="564" y="461" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># Visualizar: </tspan><tspan fill="#c678dd">rpart.plot</tspan><tspan fill="#abb2bf">(m)  |  </tspan><tspan fill="#c678dd">plot_tree</tspan><tspan fill="#abb2bf">(model)</tspan></text>
+</svg>

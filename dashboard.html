@@ -232,7 +232,7 @@
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
         const NOTEBOOK_CONTENT_URL = 'recursos/notebooklm/contenido_fichas.json';
-        const APP_VERSION = 'v39';
+        const APP_VERSION = 'v40';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -485,17 +485,17 @@
                 4: { file: 'edu_u4s1_shap.svg', alt: 'Valores SHAP e interpretacion de modelos' }
             },
             sublevels: {
-                '1.1': { diagram: 'edu_u1s1_5v_bigdata.svg', primary: 'u1_data.svg', secondary: 'u1_circuit_board.svg', alt: 'Las 5V del Big Data y sus implicancias analiticas', caption: 'Lamina tecnica: 5V del Big Data, ejemplos y criterios de lectura.' },
-                '1.2': { diagram: 'edu_u1s2_rstudio.svg', primary: 'u1_developer.svg', secondary: 'u1_cloud_hosting.svg', alt: 'Entorno RStudio y organizacion de un proyecto reproducible', caption: 'Lamina tecnica: IDE RStudio, paneles y flujo de trabajo reproducible.' },
+                '1.1': { diagram: 'edu_u1s1_5v_bigdata.svg', concept: 'edu_u1s1d_escala_datos.svg', primary: 'u1_data.svg', secondary: 'u1_circuit_board.svg', alt: 'Las 5V del Big Data y sus implicancias analiticas', caption: 'Lamina tecnica: 5V del Big Data, ejemplos y criterios de lectura.', conceptAlt: 'Escalas de datos desde byte hasta zettabyte con ejemplos concretos', conceptCaption: 'Figura conceptual: escala logaritmica de datos y umbral practico de Big Data.' },
+                '1.2': { diagram: 'edu_u1s2_rstudio.svg', concept: 'edu_u1s2d_tipos_objetos_r.svg', primary: 'u1_developer.svg', secondary: 'u1_cloud_hosting.svg', alt: 'Entorno RStudio y organizacion de un proyecto reproducible', caption: 'Lamina tecnica: IDE RStudio, paneles y flujo de trabajo reproducible.', conceptAlt: 'Tipos de objetos en R: vector, factor, matriz, data frame y lista', conceptCaption: 'Figura conceptual: objetos basicos de R y cuando conviene usar cada tipo.' },
                 '1.3': { diagram: 'edu_u1s3_pipeline.svg', primary: 'u1_data_input.svg', secondary: 'u1_data_processing.svg', alt: 'Pipeline de datos desde lectura hasta validacion', caption: 'Lamina tecnica: pipeline de carga, limpieza, transformacion y control.' },
                 '2.1': { diagram: 'edu_u2s1_grammar_graficos.svg', primary: 'u2_charts.svg', secondary: 'u2_analytics.svg', alt: 'Grammar of Graphics y capas de un grafico', caption: 'Lamina tecnica: datos, aesthetics, geometria, escalas y facetas.' },
-                '2.2': { diagram: 'edu_u2s2_boxplot.svg', primary: 'u2_data_trends.svg', secondary: 'u2_statistics.svg', alt: 'Boxplot anatomico y lectura de distribuciones', caption: 'Lamina tecnica: mediana, IQR, bigotes, atipicos y comparacion.' },
+                '2.2': { diagram: 'edu_u2s2_boxplot.svg', concept: 'edu_u2s2d_distribuciones.svg', primary: 'u2_data_trends.svg', secondary: 'u2_statistics.svg', alt: 'Boxplot anatomico y lectura de distribuciones', caption: 'Lamina tecnica: mediana, IQR, bigotes, atipicos y comparacion.', conceptAlt: 'Histogramas de distribuciones normal, sesgada positiva, sesgada negativa y bimodal', conceptCaption: 'Figura conceptual: formas de distribucion, media, mediana, moda y diagnosticos iniciales.' },
                 '2.3': { diagram: 'edu_u2s3_correlacion.svg', primary: 'u2_data_points.svg', secondary: 'u2_research.svg', alt: 'Correlacion y patrones de dispersion', caption: 'Lamina tecnica: direccion, fuerza, outliers y advertencias de causalidad.' },
-                '3.1': { diagram: 'edu_u3s1_knn.svg', primary: 'u3_ai.svg', secondary: 'u3_predictive.svg', alt: 'KNN, distancia y frontera de decision', caption: 'Lamina tecnica: vecinos, metrica de distancia, valor de K y decision.' },
-                '3.2': { diagram: 'edu_u3s2_sigmoide.svg', primary: 'u3_programming.svg', secondary: 'u3_solution.svg', alt: 'Regresion logistica y funcion sigmoide', caption: 'Lamina tecnica: logit, probabilidad, umbral, odds y evaluacion.' },
+                '3.1': { diagram: 'edu_u3s1_knn.svg', concept: 'edu_u3s1d_bias_variance.svg', primary: 'u3_ai.svg', secondary: 'u3_predictive.svg', alt: 'KNN, distancia y frontera de decision', caption: 'Lamina tecnica: vecinos, metrica de distancia, valor de K y decision.', conceptAlt: 'Dianas y curvas para explicar sesgo, varianza, underfitting y overfitting', conceptCaption: 'Figura conceptual: equilibrio sesgo-varianza y complejidad optima del modelo.' },
+                '3.2': { diagram: 'edu_u3s2_sigmoide.svg', concept: 'edu_u3s2d_feature_encoding.svg', primary: 'u3_programming.svg', secondary: 'u3_solution.svg', alt: 'Regresion logistica y funcion sigmoide', caption: 'Lamina tecnica: logit, probabilidad, umbral, odds y evaluacion.', conceptAlt: 'Codificacion de variables categoricas y escalado numerico para modelos', conceptCaption: 'Figura conceptual: label encoding, one-hot, min-max, z-score y regla fit en train.' },
                 '3.3': { diagram: 'edu_u3s3_roc_confusion.svg', primary: 'u3_code_review.svg', secondary: 'u3_data_reports.svg', alt: 'Curva ROC y matriz de confusion', caption: 'Lamina tecnica: TP, FP, FN, TN, sensibilidad, especificidad y AUC.' },
-                '4.1': { diagram: 'edu_u4s1_shap.svg', primary: 'u4_data_extraction.svg', secondary: 'u4_analyze.svg', alt: 'Valores SHAP para interpretar importancia de variables', caption: 'Lamina tecnica: contribuciones locales, importancia global y lectura de signos.' },
-                '4.2': { diagram: 'edu_u4s2_rmarkdown.svg', primary: 'u4_presentation.svg', secondary: 'u4_data_report.svg', alt: 'R Markdown y Quarto para reportes reproducibles', caption: 'Lamina tecnica: codigo, narrativa, salida HTML/PDF y comunicacion.' },
+                '4.1': { diagram: 'edu_u4s1_shap.svg', concept: 'edu_u4s1d_arbol_decision.svg', primary: 'u4_data_extraction.svg', secondary: 'u4_analyze.svg', alt: 'Valores SHAP para interpretar importancia de variables', caption: 'Lamina tecnica: contribuciones locales, importancia global y lectura de signos.', conceptAlt: 'Arbol de decision con nodos, hojas, criterio Gini e hiperparametros', conceptCaption: 'Figura conceptual: estructura de arbol de decision y lectura de nodos.' },
+                '4.2': { diagram: 'edu_u4s2_rmarkdown.svg', concept: 'edu_u4s2d_validacion_cruzada.svg', primary: 'u4_presentation.svg', secondary: 'u4_data_report.svg', alt: 'R Markdown y Quarto para reportes reproducibles', caption: 'Lamina tecnica: codigo, narrativa, salida HTML/PDF y comunicacion.', conceptAlt: 'Validacion cruzada K igual a 5 con folds de entrenamiento y prueba', conceptCaption: 'Figura conceptual: validacion cruzada, accuracy promedio, dispersion y uso estratificado.' },
                 '4.3': { diagram: 'edu_u4s3_sesgo_algoritmico.svg', primary: 'u4_security.svg', secondary: 'u4_knowledge.svg', alt: 'Sesgo algoritmico, metricas de equidad y mitigacion', caption: 'Lamina tecnica: brechas por grupo, fairness, fuentes de sesgo y mitigacion.' }
             },
             fallback: {
@@ -744,11 +744,13 @@
             const item = PEDAGOGICAL_ILLUSTRATIONS.sublevels[key] || {};
             const file = item[variant] || item.diagram || item.primary || PEDAGOGICAL_ILLUSTRATIONS.fallback[unitNum] || 'gen_business_analytics.svg';
             const unit = UNITS[unitNum - 1] || UNITS[0];
+            const variantLabel = String(variant || 'primary');
             return {
                 src: pedagogicalAsset(file),
-                alt: item.alt || `Ilustracion pedagogica de ${unit.title}`,
-                caption: item.caption || 'Figura didactica del subnivel.',
-                isDiagram: Boolean(item.diagram && file === item.diagram)
+                alt: item[`${variantLabel}Alt`] || item.alt || `Ilustracion pedagogica de ${unit.title}`,
+                caption: item[`${variantLabel}Caption`] || item.caption || 'Figura didactica del subnivel.',
+                variant: variantLabel,
+                isDiagram: Boolean(['diagram', 'concept'].includes(variantLabel) && item[variantLabel] && file === item[variantLabel])
             };
         }
 
@@ -757,6 +759,81 @@
             const alt = decorative ? '' : meta.alt;
             const hidden = decorative ? ' aria-hidden="true"' : '';
             return `<img class="${className}" src="${escapeHtml(meta.src)}" alt="${escapeHtml(alt)}" loading="lazy"${hidden}>`;
+        }
+
+        function publicAssetUrl(path) {
+            return new URL(path, COURSE_CONFIG.publicBaseUrl).href;
+        }
+
+        function unitVisualResources(unitNum) {
+            const prefix = `${Number(unitNum)}.`;
+            const seen = new Set();
+            return Object.entries(PEDAGOGICAL_ILLUSTRATIONS.sublevels)
+                .filter(([key]) => key.startsWith(prefix))
+                .flatMap(([key, item]) => ([
+                    item.diagram ? {
+                        key: `${key}-diagram`,
+                        sublevel: key,
+                        kind: 'Lamina central',
+                        src: pedagogicalAsset(item.diagram),
+                        alt: item.alt || `Figura del subnivel ${key}`,
+                        caption: item.caption || 'Figura tecnica del subnivel.'
+                    } : null,
+                    item.concept ? {
+                        key: `${key}-concept`,
+                        sublevel: key,
+                        kind: 'Concepto visual',
+                        src: pedagogicalAsset(item.concept),
+                        alt: item.conceptAlt || item.alt || `Figura conceptual del subnivel ${key}`,
+                        caption: item.conceptCaption || 'Figura conceptual del subnivel.'
+                    } : null
+                ].filter(Boolean)))
+                .filter(item => {
+                    if (seen.has(item.src)) return false;
+                    seen.add(item.src);
+                    return true;
+                });
+        }
+
+        function copyPedagogicalUrl(url) {
+            navigator.clipboard?.writeText(url);
+            showToast('URL de la figura copiada.', 'success');
+        }
+
+        function renderUnitVisualAtlas(unitNum) {
+            const figures = unitVisualResources(unitNum);
+            if (!figures.length) return '';
+            return `
+      <section class="visual-atlas unit-theme-u${unitNum}">
+        <div class="visual-atlas-head">
+          <div>
+            <span>Galeria visual</span>
+            <h3>Figuras didacticas listas para usar</h3>
+            <p>Laminas centrales y figuras conceptuales ubicadas tambien dentro de las fichas secuenciales.</p>
+          </div>
+          <strong>${figures.length} SVG</strong>
+        </div>
+        <div class="visual-atlas-grid">
+          ${figures.map(item => {
+                const url = publicAssetUrl(item.src);
+                return `
+            <article class="visual-atlas-card">
+              <button type="button" class="visual-atlas-preview" onclick="openPedagogicalLightbox(${jsArg(item.src)}, ${jsArg(item.alt)})">
+                <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}" loading="lazy">
+              </button>
+              <div class="visual-atlas-copy">
+                <span>${escapeHtml(item.kind)} - Subnivel ${escapeHtml(item.sublevel)}</span>
+                <strong>${escapeHtml(compactLearningText(item.caption, 92))}</strong>
+                <code>${escapeHtml(url)}</code>
+              </div>
+              <div class="visual-atlas-actions">
+                <a class="btn-secondary as-link" href="${escapeHtml(item.src)}" target="_blank" rel="noopener">Abrir SVG</a>
+                <button class="btn-secondary" type="button" onclick="copyPedagogicalUrl(${jsArg(url)})">Copiar URL</button>
+              </div>
+            </article>`;
+            }).join('')}
+        </div>
+      </section>`;
         }
 
         function openPedagogicalLightbox(src, alt = 'Figura didactica') {
@@ -3412,10 +3489,13 @@
         </figure>`;
         }
 
-        function shouldShowSublevelDiagram(slide) {
-            return slide?.microKind === 'definition'
-                && Number(slide.baseStageOrder || slide.stageOrder || 0) === 1
-                && Number(slide.microOrder || 0) === 1;
+        function learningPedagogicalVariantForSlide(unitNum, slide) {
+            if (slide?.microKind !== 'definition' || Number(slide.microOrder || 0) !== 1) return '';
+            const meta = PEDAGOGICAL_ILLUSTRATIONS.sublevels[`${Number(unitNum)}.${Number(slide.sublevelIndex || 1)}`] || {};
+            const baseKind = slide.baseKind || slide.kind;
+            if (baseKind === 'intro' && meta.diagram) return 'diagram';
+            if (baseKind === 'concept' && meta.concept) return 'concept';
+            return '';
         }
 
         function renderLearningCaseStoryboard(slide) {
@@ -3548,8 +3628,8 @@
             const previewNote = previewOnly
                 ? '<div class="learning-preview-note">Puedes mirar esta ficha, pero el boton de completado se habilita cuando cierres las fichas anteriores.</div>'
                 : '';
-            const shell = (className, body) => `
-            <section class="learning-card-copy learning-focus-card ${className}">
+            const shell = (className, body, art = '') => `
+            <section class="learning-card-copy learning-focus-card ${className} ${art ? 'has-art' : ''}">
               <div class="learning-focus-main">
                 <span class="learning-card-eyebrow">${escapeHtml(slide.baseStage || slide.stage)}</span>
                 <h3>${escapeHtml(slide.title)}</h3>
@@ -3557,19 +3637,20 @@
                 ${previewNote}
                 ${body}
               </div>
+              ${art || ''}
             </section>`;
 
             if (slide.microKind === 'definition') {
-                const visual = shouldShowSublevelDiagram(slide)
-                    ? renderLearningPedagogicalFigure(unitNum, slide, 'diagram')
-                    : renderLearningConceptCanvas(slide);
+                const figureVariant = learningPedagogicalVariantForSlide(unitNum, slide);
+                const art = figureVariant ? renderLearningPedagogicalFigure(unitNum, slide, figureVariant) : '';
+                const visual = art ? '' : renderLearningConceptCanvas(slide);
                 return shell('micro-definition', `
               <div class="learning-card-definition learning-feature-block">
                 <span>Definicion corta</span>
                 <p>${escapeHtml(definition)}</p>
               </div>
               ${visual}
-              ${renderNotebookContentIdeas(slide, 3)}`);
+              ${renderNotebookContentIdeas(slide, 3)}`, art);
             }
 
             if (slide.microKind === 'example') {
@@ -4014,7 +4095,11 @@
       </div>
     `;
             } else if (activeTab === 'recursos') {
-                tabContent.innerHTML = renderNotebookUnitResources(n) || `
+                const notebookResources = renderNotebookUnitResources(n);
+                const visualAtlas = renderUnitVisualAtlas(n);
+                tabContent.innerHTML = (notebookResources || visualAtlas)
+                    ? `${notebookResources}${visualAtlas}`
+                    : `
       <div class="card" style="text-align:center;padding:2rem">
         <p>Los recursos de esta unidad aun no estan indexados.</p>
       </div>`;

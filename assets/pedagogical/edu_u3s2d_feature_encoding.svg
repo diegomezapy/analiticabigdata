@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
+  <defs>
+    <linearGradient id="bg32d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f5f3ff"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="500" fill="url(#bg32d)"/>
+  <rect width="900" height="50" fill="#3b0764"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Feature Engineering — Encoding y Escalado</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#d8b4fe">Unidad 3.2 · One-hot encoding · Label encoding · Min-Max · Z-score · FACEN-UNA 2026</text>
+
+  <!-- LEFT: Encoding categorical variables -->
+  <rect x="18" y="58" width="430" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="233" y="78" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#3b0764">Encoding de Variables Categóricas</text>
+  <text x="233" y="93" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">Transformar texto → números para el modelo</text>
+
+  <!-- Original data column -->
+  <text x="80" y="115" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#374151">Original</text>
+  <rect x="44" y="120" width="72" height="24" fill="#1e3a5f"/>
+  <text x="80" y="136" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="white">zona</text>
+  <!-- Data rows -->
+  <rect x="44" y="144" width="72" height="22" fill="#dbeafe"/>
+  <text x="80" y="158" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#1d4ed8">Urbano</text>
+  <rect x="44" y="166" width="72" height="22" fill="#fef3c7"/>
+  <text x="80" y="180" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#92400e">Rural</text>
+  <rect x="44" y="188" width="72" height="22" fill="#fee2e2"/>
+  <text x="80" y="202" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#991b1b">Indígena</text>
+  <rect x="44" y="210" width="72" height="22" fill="#fef3c7"/>
+  <text x="80" y="224" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#92400e">Rural</text>
+  <rect x="44" y="232" width="72" height="22" fill="#dbeafe"/>
+  <text x="80" y="246" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#1d4ed8">Urbano</text>
+
+  <!-- Arrow 1: Original → Label Encoding -->
+  <polygon points="128,186 142,181 142,191" fill="#7c3aed"/>
+  <line x1="116" y1="186" x2="142" y2="186" stroke="#7c3aed" stroke-width="1.5"/>
+
+  <!-- Label Encoding column -->
+  <text x="196" y="115" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#7c3aed">Label Encoding</text>
+  <rect x="148" y="120" width="96" height="24" fill="#3b0764"/>
+  <text x="196" y="136" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="white">zona_cod</text>
+  <rect x="148" y="144" width="96" height="22" fill="#ede9fe"/>
+  <text x="196" y="158" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">2</text>
+  <rect x="148" y="166" width="96" height="22" fill="#ede9fe"/>
+  <text x="196" y="180" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">1</text>
+  <rect x="148" y="188" width="96" height="22" fill="#ede9fe"/>
+  <text x="196" y="202" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">0</text>
+  <rect x="148" y="210" width="96" height="22" fill="#ede9fe"/>
+  <text x="196" y="224" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">1</text>
+  <rect x="148" y="232" width="96" height="22" fill="#ede9fe"/>
+  <text x="196" y="246" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6d28d9">2</text>
+
+  <!-- Label Encoding warning -->
+  <rect x="148" y="258" width="96" height="32" rx="4" fill="#fef3c7" stroke="#fbbf24" stroke-width="1"/>
+  <text x="196" y="270" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#92400e">Cuidado:</text>
+  <text x="196" y="283" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#92400e">implica orden (0&lt;1&lt;2)</text>
+
+  <!-- Arrow 2: Original → One-Hot -->
+  <polygon points="128,230 142,225 142,235" fill="#16a34a"/>
+  <line x1="116" y1="230" x2="142" y2="230" stroke="#16a34a" stroke-width="1.5"/>
+
+  <!-- One-Hot Encoding columns (3 dummy variables) -->
+  <text x="328" y="115" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#16a34a">One-Hot Encoding (recomendado)</text>
+  <rect x="254" y="120" width="56" height="24" fill="#052e16"/>
+  <rect x="316" y="120" width="48" height="24" fill="#052e16"/>
+  <rect x="370" y="120" width="56" height="24" fill="#052e16"/>
+  <text x="282" y="136" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="white">z_Urb</text>
+  <text x="340" y="136" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="white">z_Rur</text>
+  <text x="398" y="136" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="white">z_Ind</text>
+  <!-- Row 1: Urbano → 1,0,0 -->
+  <rect x="254" y="144" width="56" height="22" fill="#d1fae5"/>
+  <rect x="316" y="144" width="48" height="22" fill="#fee2e2"/>
+  <rect x="370" y="144" width="56" height="22" fill="#fee2e2"/>
+  <text x="282" y="158" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#16a34a">1</text>
+  <text x="340" y="158" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#9ca3af">0</text>
+  <text x="398" y="158" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#9ca3af">0</text>
+  <!-- Row 2: Rural → 0,1,0 -->
+  <rect x="254" y="166" width="56" height="22" fill="#fee2e2"/>
+  <rect x="316" y="166" width="48" height="22" fill="#d1fae5"/>
+  <rect x="370" y="166" width="56" height="22" fill="#fee2e2"/>
+  <text x="282" y="180" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#9ca3af">0</text>
+  <text x="340" y="180" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#16a34a">1</text>
+  <text x="398" y="180" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#9ca3af">0</text>
+  <!-- Row 3: Indígena → 0,0,1 -->
+  <rect x="254" y="188" width="56" height="22" fill="#fee2e2"/>
+  <rect x="316" y="188" width="48" height="22" fill="#fee2e2"/>
+  <rect x="370" y="188" width="56" height="22" fill="#d1fae5"/>
+  <text x="282" y="202" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#9ca3af">0</text>
+  <text x="340" y="202" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#9ca3af">0</text>
+  <text x="398" y="202" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#16a34a">1</text>
+  <!-- Rows 4,5 repeated -->
+  <rect x="254" y="210" width="56" height="22" fill="#fee2e2"/>
+  <rect x="316" y="210" width="48" height="22" fill="#d1fae5"/>
+  <rect x="370" y="210" width="56" height="22" fill="#fee2e2"/>
+  <text x="282" y="224" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#9ca3af">0</text>
+  <text x="340" y="224" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#16a34a">1</text>
+  <text x="398" y="224" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#9ca3af">0</text>
+  <rect x="254" y="232" width="56" height="22" fill="#d1fae5"/>
+  <rect x="316" y="232" width="48" height="22" fill="#fee2e2"/>
+  <rect x="370" y="232" width="56" height="22" fill="#fee2e2"/>
+  <text x="282" y="246" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#16a34a">1</text>
+  <text x="340" y="246" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#9ca3af">0</text>
+  <text x="398" y="246" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#9ca3af">0</text>
+  <!-- One-Hot note -->
+  <rect x="254" y="258" width="172" height="32" rx="4" fill="#d1fae5" stroke="#86efac" stroke-width="1"/>
+  <text x="340" y="270" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#065f46">Sin orden implícito</text>
+  <text x="340" y="283" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8" fill="#065f46">Crear k-1 columnas (evitar multicolinealidad)</text>
+
+  <!-- Code section -->
+  <rect x="26" y="298" width="414" height="60" rx="6" fill="#1e1e2e"/>
+  <text x="36" y="314" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># R: </tspan><tspan fill="#c678dd">model.matrix</tspan><tspan fill="#abb2bf">(~zona-1, df)  |  </tspan><tspan fill="#c678dd">fastDummies</tspan><tspan fill="#abb2bf">::dummy_cols(df, "zona")</tspan></text>
+  <text x="36" y="329" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># Python: </tspan><tspan fill="#c678dd">pd.get_dummies</tspan><tspan fill="#abb2bf">(df, columns=[</tspan><tspan fill="#98c379">"zona"</tspan><tspan fill="#abb2bf">], drop_first=</tspan><tspan fill="#d19a66">True</tspan><tspan fill="#abb2bf">)</tspan></text>
+  <text x="36" y="344" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># sklearn: </tspan><tspan fill="#c678dd">OneHotEncoder</tspan><tspan fill="#abb2bf">(drop=</tspan><tspan fill="#98c379">"first"</tspan><tspan fill="#abb2bf">).fit_transform(X)</tspan></text>
+
+  <!-- When to use summary -->
+  <text x="233" y="378" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#374151">¿Cuándo usar cada encoding?</text>
+  <text x="26"  y="394" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">• <tspan font-weight="700">Label:</tspan> variables ordinales (Bajo&lt;Medio&lt;Alto) o árboles de decisión</text>
+  <text x="26"  y="410" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">• <tspan font-weight="700">One-Hot:</tspan> variables nominales en regresión, redes neuronales, SVM</text>
+  <text x="26"  y="426" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">• <tspan font-weight="700">Target/Frequency:</tspan> alta cardinalidad (&gt;50 categorías)</text>
+
+  <!-- RIGHT: Scaling numeric variables -->
+  <rect x="462" y="58" width="424" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="674" y="78" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#3b0764">Escalado de Variables Numéricas</text>
+  <text x="674" y="93" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">Poner todas las variables en la misma escala</text>
+
+  <!-- Original values -->
+  <text x="545" y="112" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#374151">Ingreso (Gs.)</text>
+  <text x="545" y="126" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">original</text>
+  <!-- Value cells -->
+  <rect x="480" y="130" width="130" height="22" fill="#1e3a5f"/>
+  <text x="545" y="144" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="white">ingreso</text>
+  <rect x="480" y="152" width="130" height="22" fill="#f8fafc" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="545" y="166" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">1,500,000</text>
+  <rect x="480" y="174" width="130" height="22" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="545" y="188" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">3,200,000</text>
+  <rect x="480" y="196" width="130" height="22" fill="#f8fafc" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="545" y="210" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">6,800,000</text>
+  <rect x="480" y="218" width="130" height="22" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="545" y="232" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">4,100,000</text>
+  <rect x="480" y="240" width="130" height="22" fill="#f8fafc" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="545" y="254" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">900,000</text>
+
+  <!-- Arrow to Min-Max -->
+  <polygon points="614,196 628,191 628,201" fill="#1d4ed8"/>
+  <line x1="610" y1="196" x2="628" y2="196" stroke="#1d4ed8" stroke-width="1.5"/>
+
+  <!-- Min-Max Normalization column -->
+  <text x="700" y="112" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#1d4ed8">Min-Max [0,1]</text>
+  <text x="700" y="126" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">(x−min)/(max−min)</text>
+  <rect x="638" y="130" width="124" height="22" fill="#1e3a5f"/>
+  <text x="700" y="144" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="white">ingr_norm</text>
+  <rect x="638" y="152" width="124" height="22" fill="#dbeafe"/>
+  <text x="700" y="166" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#1d4ed8">0.10</text>
+  <rect x="638" y="174" width="124" height="22" fill="#dbeafe"/>
+  <text x="700" y="188" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#1d4ed8">0.39</text>
+  <rect x="638" y="196" width="124" height="22" fill="#dbeafe"/>
+  <text x="700" y="210" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#1d4ed8">1.00</text>
+  <rect x="638" y="218" width="124" height="22" fill="#dbeafe"/>
+  <text x="700" y="232" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#1d4ed8">0.55</text>
+  <rect x="638" y="240" width="124" height="22" fill="#dbeafe"/>
+  <text x="700" y="254" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#1d4ed8">0.00</text>
+  <!-- Min-Max bar visual at bottom -->
+  <rect x="638" y="266" width="124" height="6" rx="2" fill="#e0e7ff"/>
+  <rect x="638" y="266" width="12"  height="6" rx="2" fill="#1d4ed8"/>
+  <text x="638" y="282" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#6b7280">0</text>
+  <text x="762" y="282" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#6b7280">1</text>
+
+  <!-- Z-score explanation -->
+  <rect x="472" y="296" width="404" height="108" rx="6" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1.5"/>
+  <text x="674" y="314" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="#6d28d9">Z-score (Estandarización)</text>
+  <text x="674" y="330" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#374151">z = (x − μ) / σ → Media=0, Desv.Est.=1</text>
+  <!-- Mini table showing z values -->
+  <text x="480" y="348" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Ingreso: 1.5M → z=−0.82 · 3.2M → z=−0.25 · 6.8M → z=+1.22</text>
+  <text x="480" y="364" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Valores positivos = sobre la media · negativos = bajo la media</text>
+  <!-- Comparison -->
+  <rect x="480" y="372" width="186" height="26" rx="4" fill="#dbeafe"/>
+  <text x="573" y="383" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#1d4ed8">Min-Max: rango fijo [0,1]</text>
+  <text x="573" y="394" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#374151">Sensible a outliers</text>
+  <rect x="674" y="372" width="194" height="26" rx="4" fill="#ede9fe"/>
+  <text x="771" y="383" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#6d28d9">Z-score: distribución estándar</text>
+  <text x="771" y="394" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#374151">Más robusto a outliers</text>
+
+  <!-- Code -->
+  <rect x="462" y="414" width="424" height="52" fill="#1e1e2e" rx="6"/>
+  <text x="474" y="430" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># R: </tspan><tspan fill="#c678dd">scale</tspan><tspan fill="#abb2bf">(x)  # z-score  |  </tspan><tspan fill="#c678dd">rescale</tspan><tspan fill="#abb2bf">(x, to=c(0,1))  # library(scales)</tspan></text>
+  <text x="474" y="446" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># Python: </tspan><tspan fill="#c678dd">StandardScaler</tspan><tspan fill="#abb2bf">().fit_transform(X)  |  </tspan><tspan fill="#c678dd">MinMaxScaler</tspan><tspan fill="#abb2bf">().fit_transform(X)</tspan></text>
+  <text x="474" y="460" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># Siempre fit en train, transform en train+test (evitar data leakage)</tspan></text>
+</svg>
