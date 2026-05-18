@@ -925,10 +925,46 @@ a:hover { text-decoration: underline; }
    Unit Detail View
    ================================================ */
 .unit-detail-header {
-  display: flex;
   align-items: center;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.96), var(--unit-soft, #edf6fb));
+  border: 1px solid var(--unit-border, var(--glass-border));
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
   gap: 1rem;
+  justify-content: space-between;
   margin-bottom: 1.5rem;
+  overflow: hidden;
+  padding: 0.85rem 1rem;
+  position: relative;
+}
+
+.unit-detail-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.unit-hero-illustration {
+  align-items: center;
+  background: rgba(255,255,255,0.58);
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 16px;
+  display: flex;
+  flex: 0 0 clamp(140px, 18vw, 250px);
+  height: clamp(92px, 12vw, 150px);
+  justify-content: center;
+  margin: 0 0 0 auto;
+  overflow: hidden;
+  padding: 0.6rem;
+}
+
+.unit-hero-img {
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
 }
 
 .btn-back {
@@ -1143,16 +1179,16 @@ a:hover { text-decoration: underline; }
   align-items: center;
   background: rgba(255,255,255,0.9);
   border: 1px solid rgba(255,255,255,0.76);
-  border-radius: 999px;
+  border-radius: 18px;
   box-shadow: var(--shadow-sm);
   color: var(--text-secondary);
   cursor: pointer;
   display: flex;
   flex: 0 0 auto;
   gap: 0.45rem;
-  min-height: 38px;
+  min-height: 46px;
   max-width: 430px;
-  padding: 0.45rem 0.75rem;
+  padding: 0.4rem 0.72rem 0.4rem 0.48rem;
   text-align: left;
   transition: var(--transition-fast);
   white-space: nowrap;
@@ -1173,6 +1209,24 @@ a:hover { text-decoration: underline; }
 .learning-sublevel-card.locked {
   cursor: pointer;
   opacity: 0.72;
+}
+
+.learning-sublevel-thumb {
+  background: color-mix(in srgb, var(--sublevel-soft) 76%, white);
+  border: 1px solid var(--sublevel-border);
+  border-radius: 12px;
+  flex: 0 0 38px;
+  height: 38px;
+  object-fit: contain;
+  padding: 0.18rem;
+  width: 38px;
+}
+
+.learning-sublevel-text {
+  align-items: center;
+  display: flex;
+  gap: 0.45rem;
+  min-width: 0;
 }
 
 .learning-sublevel-card span {
@@ -1579,6 +1633,47 @@ a:hover { text-decoration: underline; }
   display: grid;
   gap: 0.9rem;
   min-height: min(68vh, 760px);
+}
+
+.learning-focus-card.has-art {
+  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.34fr);
+}
+
+.learning-focus-main {
+  align-content: start;
+  display: grid;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.learning-pedagogical-figure {
+  align-self: start;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.94), color-mix(in srgb, var(--sublevel-soft) 64%, white));
+  border: 1px solid var(--sublevel-border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0.9rem;
+}
+
+.learning-pedagogical-img {
+  height: clamp(150px, 18vw, 220px);
+  object-fit: contain;
+  width: 100%;
+}
+
+.learning-pedagogical-figure figcaption {
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: center;
 }
 
 .learning-card-canvas.micro-definition .learning-focus-card,
@@ -5075,9 +5170,22 @@ a:hover { text-decoration: underline; }
     align-items: flex-start;
   }
 
+  .unit-detail-header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
   .unit-detail-icon {
     height: 36px;
     width: 36px;
+  }
+
+  .unit-hero-illustration {
+    flex: 0 0 auto;
+    height: 104px;
+    margin: 0;
+    width: 100%;
   }
 
   .page-heading {
@@ -5120,6 +5228,7 @@ a:hover { text-decoration: underline; }
 
   .practice-detail,
   .learning-slide,
+  .learning-focus-card.has-art,
   .calendar-item,
   .lab-embed-card,
   .resource-workspace,
@@ -5189,8 +5298,22 @@ a:hover { text-decoration: underline; }
   }
 
   .learning-sublevel-card {
-    min-height: 38px;
+    min-height: 46px;
     scroll-snap-align: start;
+  }
+
+  .learning-sublevel-thumb {
+    flex-basis: 34px;
+    height: 34px;
+    width: 34px;
+  }
+
+  .learning-sublevel-text strong {
+    max-width: 150px;
+  }
+
+  .learning-pedagogical-img {
+    height: 150px;
   }
 
   .learning-step {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'analitica-bigdata-v33';
+const CACHE_NAME = 'analitica-bigdata-v34';
 
 const APP_SHELL = [
   './',
@@ -28,7 +28,41 @@ const APP_SHELL = [
   'icons/unit-3.svg',
   'icons/unit-4.svg',
   'assets/academic/facen-header.png',
-  'assets/academic/facen-footer.png'
+  'assets/academic/facen-footer.png',
+  'assets/pedagogical/gen_all_data.svg',
+  'assets/pedagogical/gen_business_analytics.svg',
+  'assets/pedagogical/gen_education.svg',
+  'assets/pedagogical/u1_circuit_board.svg',
+  'assets/pedagogical/u1_cloud_hosting.svg',
+  'assets/pedagogical/u1_data.svg',
+  'assets/pedagogical/u1_data_input.svg',
+  'assets/pedagogical/u1_data_processing.svg',
+  'assets/pedagogical/u1_developer.svg',
+  'assets/pedagogical/u1_online_learning.svg',
+  'assets/pedagogical/u1_server.svg',
+  'assets/pedagogical/u2_analytics.svg',
+  'assets/pedagogical/u2_charts.svg',
+  'assets/pedagogical/u2_dashboard.svg',
+  'assets/pedagogical/u2_data_points.svg',
+  'assets/pedagogical/u2_data_trends.svg',
+  'assets/pedagogical/u2_design_stats.svg',
+  'assets/pedagogical/u2_research.svg',
+  'assets/pedagogical/u2_statistics.svg',
+  'assets/pedagogical/u3_ai.svg',
+  'assets/pedagogical/u3_code_review.svg',
+  'assets/pedagogical/u3_cohort.svg',
+  'assets/pedagogical/u3_data_reports.svg',
+  'assets/pedagogical/u3_predictive.svg',
+  'assets/pedagogical/u3_programming.svg',
+  'assets/pedagogical/u3_solution.svg',
+  'assets/pedagogical/u4_analyze.svg',
+  'assets/pedagogical/u4_data_extraction.svg',
+  'assets/pedagogical/u4_data_report.svg',
+  'assets/pedagogical/u4_detailed_analysis.svg',
+  'assets/pedagogical/u4_knowledge.svg',
+  'assets/pedagogical/u4_presentation.svg',
+  'assets/pedagogical/u4_security.svg',
+  'assets/pedagogical/u4_sharing.svg'
 ];
 
 self.addEventListener('install', event => {

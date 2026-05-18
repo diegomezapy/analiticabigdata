@@ -228,7 +228,7 @@
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
         const NOTEBOOK_CONTENT_URL = 'recursos/notebooklm/contenido_fichas.json';
-        const APP_VERSION = 'v33';
+        const APP_VERSION = 'v34';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -473,6 +473,35 @@
             },
         ];
 
+        const PEDAGOGICAL_ILLUSTRATIONS = {
+            hero: {
+                1: { file: 'u1_data.svg', alt: 'Analisis de datos masivos y ecosistema Big Data' },
+                2: { file: 'u2_analytics.svg', alt: 'Visualizacion y exploracion de datos' },
+                3: { file: 'u3_ai.svg', alt: 'Modelos predictivos y aprendizaje automatico' },
+                4: { file: 'u4_presentation.svg', alt: 'Interpretacion y comunicacion de modelos' }
+            },
+            sublevels: {
+                '1.1': { primary: 'u1_data.svg', secondary: 'u1_circuit_board.svg', alt: 'Big Data, 5V e infraestructura de datos' },
+                '1.2': { primary: 'u1_developer.svg', secondary: 'u1_cloud_hosting.svg', alt: 'Entorno de trabajo con R, RStudio y datos en la nube' },
+                '1.3': { primary: 'u1_data_input.svg', secondary: 'u1_data_processing.svg', alt: 'Ingreso, lectura y procesamiento inicial de datos' },
+                '2.1': { primary: 'u2_charts.svg', secondary: 'u2_analytics.svg', alt: 'Graficos y principios de visualizacion' },
+                '2.2': { primary: 'u2_data_trends.svg', secondary: 'u2_statistics.svg', alt: 'Estadisticos descriptivos y limpieza de datos' },
+                '2.3': { primary: 'u2_data_points.svg', secondary: 'u2_research.svg', alt: 'Correlacion, dispersion y exploracion visual' },
+                '3.1': { primary: 'u3_ai.svg', secondary: 'u3_predictive.svg', alt: 'Clasificacion con KNN y Naive Bayes' },
+                '3.2': { primary: 'u3_programming.svg', secondary: 'u3_solution.svg', alt: 'Regresion logistica y construccion de modelos' },
+                '3.3': { primary: 'u3_code_review.svg', secondary: 'u3_data_reports.svg', alt: 'Evaluacion, validacion y reportes de modelos' },
+                '4.1': { primary: 'u4_data_extraction.svg', secondary: 'u4_analyze.svg', alt: 'Importancia de variables e interpretabilidad' },
+                '4.2': { primary: 'u4_presentation.svg', secondary: 'u4_data_report.svg', alt: 'Comunicacion de resultados y reportes reproducibles' },
+                '4.3': { primary: 'u4_security.svg', secondary: 'u4_knowledge.svg', alt: 'Etica, privacidad y uso responsable de modelos' }
+            },
+            fallback: {
+                1: 'u1_data_processing.svg',
+                2: 'u2_dashboard.svg',
+                3: 'u3_predictive.svg',
+                4: 'u4_analyze.svg'
+            }
+        };
+
         const BADGES_DEF = [
             { id: 'first_login', emoji: '👋', name: 'Bienvenido', desc: 'Primer acceso a la plataforma' },
             { id: 'quiz_u1', emoji: '🎯', name: 'Base Big Data', desc: 'Completar quiz Unidad 1' },
@@ -688,6 +717,38 @@
             const src = unit?.iconSrc || `icons/unit-${unit?.id || 1}.svg`;
             const alt = unit?.title ? `Unidad ${unit.id}: ${unit.title}` : 'Unidad';
             return `<img class="${className}" src="${escapeHtml(src)}" alt="${escapeHtml(alt)}">`;
+        }
+
+        function pedagogicalAsset(file) {
+            return file ? `assets/pedagogical/${file}` : '';
+        }
+
+        function pedagogicalHeroMeta(unitNum) {
+            const unit = UNITS[unitNum - 1] || UNITS[0];
+            const meta = PEDAGOGICAL_ILLUSTRATIONS.hero[unitNum] || {};
+            const file = meta.file || PEDAGOGICAL_ILLUSTRATIONS.fallback[unitNum] || 'gen_all_data.svg';
+            return {
+                src: pedagogicalAsset(file),
+                alt: meta.alt || `Ilustracion de la unidad ${unitNum}: ${unit.title}`
+            };
+        }
+
+        function pedagogicalImageMeta(unitNum, sublevelIndex = 1, variant = 'primary') {
+            const key = `${Number(unitNum) || 1}.${Number(sublevelIndex) || 1}`;
+            const item = PEDAGOGICAL_ILLUSTRATIONS.sublevels[key] || {};
+            const file = item[variant] || item.primary || PEDAGOGICAL_ILLUSTRATIONS.fallback[unitNum] || 'gen_business_analytics.svg';
+            const unit = UNITS[unitNum - 1] || UNITS[0];
+            return {
+                src: pedagogicalAsset(file),
+                alt: item.alt || `Ilustracion pedagogica de ${unit.title}`
+            };
+        }
+
+        function renderPedagogicalImg(meta, className = 'pedagogical-img', decorative = false) {
+            if (!meta?.src) return '';
+            const alt = decorative ? '' : meta.alt;
+            const hidden = decorative ? ' aria-hidden="true"' : '';
+            return `<img class="${className}" src="${escapeHtml(meta.src)}" alt="${escapeHtml(alt)}" loading="lazy"${hidden}>`;
         }
 
         function formatFileSize(bytes) {
@@ -1298,10 +1359,13 @@
     </div>
 
     <div class="course-section-title">
-      <div>
+      <div class="unit-detail-copy">
         <span>Plan de estudio</span>
         <h2>Unidades del curso</h2>
       </div>
+      <figure class="unit-hero-illustration">
+        ${renderPedagogicalImg(heroImage, 'unit-hero-img')}
+      </figure>
     </div>
     <div class="units-grid">
       ${UNITS.map(u => {
@@ -3298,6 +3362,18 @@
         </section>`;
         }
 
+        function renderLearningPedagogicalFigure(unitNum, slide, variant = 'primary') {
+            const meta = pedagogicalImageMeta(unitNum, slide.sublevelIndex || 1, variant);
+            const caption = slide.microKind === 'example'
+                ? 'Representacion visual del ejemplo antes de pasar al procedimiento.'
+                : 'Imagen guia para fijar la idea central de esta ficha.';
+            return `
+        <figure class="learning-pedagogical-figure">
+          ${renderPedagogicalImg(meta, 'learning-pedagogical-img')}
+          <figcaption>${escapeHtml(caption)}</figcaption>
+        </figure>`;
+        }
+
         function renderLearningCaseStoryboard(slide) {
             const example = learningCardExample(slide, learningSupportContent(STATE.currentUnit || 1, slide));
             const ideas = contentSnippets(slide, 3);
@@ -3428,14 +3504,21 @@
             const previewNote = previewOnly
                 ? '<div class="learning-preview-note">Puedes mirar esta ficha, pero el boton de completado se habilita cuando cierres las fichas anteriores.</div>'
                 : '';
-            const shell = (className, body) => `
-            <section class="learning-card-copy learning-focus-card ${className}">
-              <span class="learning-card-eyebrow">${escapeHtml(slide.baseStage || slide.stage)}</span>
-              <h3>${escapeHtml(slide.title)}</h3>
-              <p class="learning-card-lead">${escapeHtml(slide.lead)}</p>
-              ${previewNote}
-              ${body}
+            const shell = (className, body, withArt = true) => {
+                const artVariant = slide.microKind === 'example' ? 'secondary' : 'primary';
+                const art = withArt ? renderLearningPedagogicalFigure(unitNum, slide, artVariant) : '';
+                return `
+            <section class="learning-card-copy learning-focus-card ${className} ${art ? 'has-art' : ''}">
+              <div class="learning-focus-main">
+                <span class="learning-card-eyebrow">${escapeHtml(slide.baseStage || slide.stage)}</span>
+                <h3>${escapeHtml(slide.title)}</h3>
+                <p class="learning-card-lead">${escapeHtml(slide.lead)}</p>
+                ${previewNote}
+                ${body}
+              </div>
+              ${art}
             </section>`;
+            };
 
             if (slide.microKind === 'definition') {
                 return shell('micro-definition', `
@@ -3466,7 +3549,7 @@
                 const resource = renderLearningInlineResource(unitNum, slide, slideIndex, active, true);
                 return shell('micro-resource', `
               ${renderLearningEvidencePanel(slide, 'Que buscar en esta lectura')}
-              ${resource || '<div class="learning-inline-resource-placeholder">No hay un recurso embebible para esta ficha.</div>'}`);
+              ${resource || '<div class="learning-inline-resource-placeholder">No hay un recurso embebible para esta ficha.</div>'}`, false);
             }
 
             if (slide.microKind === 'execution') {
@@ -3476,13 +3559,13 @@
                 <p>Trabaja en el laboratorio embebido. Puedes alternar R/data.table y Python/Polars sin salir de esta diapositiva.</p>
               </div>
               ${renderLearningProcessRibbon(slide)}
-              ${renderLearningInlineLab(unitNum, slide, slideIndex, active)}`);
+              ${renderLearningInlineLab(unitNum, slide, slideIndex, active)}`, false);
             }
 
             if (slide.microKind === 'formative') {
                 return shell('micro-formative', `
               ${renderLearningEvidencePanel(slide, 'Antes de responder')}
-              ${renderLearningInlineEvaluation(unitNum, slide, slideIndex)}`);
+              ${renderLearningInlineEvaluation(unitNum, slide, slideIndex)}`, false);
             }
 
             if (slide.microKind === 'summary') {
@@ -3498,7 +3581,7 @@
             if (slide.microKind === 'summative') {
                 return shell('micro-summative', `
               ${renderLearningEvidencePanel(slide, 'Criterios de cierre')}
-              ${renderLearningInlineEvaluation(unitNum, slide, slideIndex)}`);
+              ${renderLearningInlineEvaluation(unitNum, slide, slideIndex)}`, false);
             }
 
             return shell('micro-default', `
@@ -3621,12 +3704,16 @@
                 const completed = group.filter(slide => isUnitPathSlideComplete(unitNum, slide, slide.globalIndex)).length;
                 const locked = firstIndex > maxUnlocked;
                 const active = currentSlide?.sublevelIndex === sublevelIndex;
+                const image = pedagogicalImageMeta(unitNum, sublevelIndex, 'primary');
                 return `
             <button class="learning-sublevel-card sublevel-theme-s${sublevelIndex} ${active ? 'active' : ''} ${locked ? 'locked' : ''}"
               onclick="goToUnitPathSlide(${unitNum}, ${firstIndex})">
-              <span>Subnivel ${sublevelIndex}</span>
-              <strong>${escapeHtml(group[0]?.sublevelTitle || `Subnivel ${sublevelIndex}`)}</strong>
-              <em>${locked ? 'Vista previa · ' : ''}${completed}/${group.length} pasos</em>
+              ${renderPedagogicalImg(image, 'learning-sublevel-thumb', true)}
+              <div class="learning-sublevel-text">
+                <span>Subnivel ${sublevelIndex}</span>
+                <strong>${escapeHtml(group[0]?.sublevelTitle || `Subnivel ${sublevelIndex}`)}</strong>
+                <em>${locked ? 'Vista previa · ' : ''}${completed}/${group.length} pasos</em>
+              </div>
             </button>`;
             }).join('')}
         </div>`;
@@ -3776,18 +3863,22 @@
             const files = UNIT_FILES[n];
             const quizKey = `u${n}`;
             const quizDone = STATE.quizResults[quizKey];
+            const heroImage = pedagogicalHeroMeta(n);
 
             const content = document.getElementById('pageContent');
             content.innerHTML = `
     <div class="unit-detail-header unit-theme-u${n}">
       <button class="btn-back" onclick="showPage('home')">← Volver</button>
-      <div>
+      <div class="unit-detail-copy">
         <div class="unit-detail-title">
           ${unitIconHTML(unit, 'unit-detail-icon')}
           <h2>Unidad ${n}: ${unit.title}</h2>
         </div>
         <p style="font-size:0.8rem;color:var(--text-muted)">${unit.subtitle}</p>
       </div>
+      <figure class="unit-hero-illustration">
+        ${renderPedagogicalImg(heroImage, 'unit-hero-img')}
+      </figure>
     </div>
 
     <div class="unit-tabs">
