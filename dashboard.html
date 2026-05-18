@@ -232,7 +232,7 @@
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
         const NOTEBOOK_CONTENT_URL = 'recursos/notebooklm/contenido_fichas.json';
-        const APP_VERSION = 'v38';
+        const APP_VERSION = 'v39';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -5117,7 +5117,7 @@
             }
         };
 
-        let simulatorState = { unit: 1, timer: null, payload: null };
+        let simulatorState = { unit: 1, timer: null, payload: null, u3Mode: 'kmeans' };
 
         function openSimulatorUnit(unitNum) {
             STATE.currentUnit = Number(unitNum) || 1;
@@ -5134,6 +5134,28 @@
         function getSimulatorUnit(unitNum) {
             const requested = Number(unitNum || simulatorState?.unit || STATE.currentUnit || 1);
             return SIMULATOR_CONFIG[requested] ? requested : 1;
+        }
+
+        function getU3SimulatorMode() {
+            return simulatorState.u3Mode || 'kmeans';
+        }
+
+        function setU3SimulatorMode(mode) {
+            simulatorState.u3Mode = mode === 'knn' ? 'knn' : 'kmeans';
+            renderSimulators(3);
+        }
+
+        function activeSimulatorConfig(unitNum) {
+            const base = SIMULATOR_CONFIG[getSimulatorUnit(unitNum)];
+            if (Number(unitNum) !== 3) return base;
+            if (getU3SimulatorMode() === 'knn') return base;
+            return {
+                ...base,
+                title: 'K-means: laboratorio de clustering',
+                subtitle: 'Explora aprendizaje no supervisado con centroides, WCSS, silueta y convergencia iterativa.',
+                image: 'assets/pedagogical/u3_ai.svg',
+                question: 'Como cambian WCSS y silueta cuando ajustas K, dispersion e iteraciones?'
+            };
         }
 
         function simValue(id, fallback, min, max) {
@@ -5338,6 +5360,136 @@
             ctx.globalAlpha = 1;
         }
 
+        const SIM_CLUSTER_COLORS = ['#2d5f87', '#b45309', '#047857', '#7c3aed', '#be123c', '#0891b2'];
+
+        function simDrawKmeans(canvasId, frame, title) {
+            const target = simCanvas(canvasId);
+            if (!target) return;
+            const { ctx, width, height } = target;
+            simDrawPanel(ctx, width, height, title);
+            const left = 36;
+            const right = 18;
+            const top = 44;
+            const bottom = 30;
+            const plotW = width - left - right;
+            const plotH = height - top - bottom;
+            const sx = x => left + x * plotW;
+            const sy = y => top + plotH - y * plotH;
+            ctx.strokeStyle = 'rgba(36,52,71,0.14)';
+            for (let i = 0; i <= 5; i++) {
+                const x = left + (i / 5) * plotW;
+                const y = top + (i / 5) * plotH;
+                ctx.beginPath();
+                ctx.moveTo(x, top);
+                ctx.lineTo(x, top + plotH);
+                ctx.moveTo(left, y);
+                ctx.lineTo(left + plotW, y);
+                ctx.stroke();
+            }
+            ctx.strokeStyle = 'rgba(36,52,71,0.22)';
+            ctx.strokeRect(left, top, plotW, plotH);
+            frame.points.forEach(point => {
+                const centroid = frame.centroids[point.cluster];
+                if (!centroid) return;
+                ctx.globalAlpha = 0.16;
+                ctx.strokeStyle = SIM_CLUSTER_COLORS[point.cluster % SIM_CLUSTER_COLORS.length];
+                ctx.beginPath();
+                ctx.moveTo(sx(point.x), sy(point.y));
+                ctx.lineTo(sx(centroid.x), sy(centroid.y));
+                ctx.stroke();
+            });
+            frame.points.forEach(point => {
+                const color = SIM_CLUSTER_COLORS[(point.cluster ?? point.trueCluster ?? 0) % SIM_CLUSTER_COLORS.length];
+                ctx.globalAlpha = 0.78;
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(sx(point.x), sy(point.y), 4.4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.strokeStyle = 'rgba(255,255,255,0.72)';
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+            });
+            frame.centroids.forEach((centroid, index) => {
+                const x = sx(centroid.x);
+                const y = sy(centroid.y);
+                ctx.globalAlpha = 0.22;
+                ctx.fillStyle = SIM_CLUSTER_COLORS[index % SIM_CLUSTER_COLORS.length];
+                ctx.beginPath();
+                ctx.arc(x, y, 18, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.fillStyle = SIM_CLUSTER_COLORS[index % SIM_CLUSTER_COLORS.length];
+                ctx.beginPath();
+                ctx.arc(x, y, 11, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '800 10px Inter, Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(`C${index + 1}`, x, y + 3.5);
+            });
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#64748b';
+            ctx.font = '600 11px Inter, Arial';
+            ctx.fillText(`Iteracion ${frame.iteration}`, left, height - 10);
+        }
+
+        function simDrawConvergence(canvasId, history, title) {
+            const target = simCanvas(canvasId);
+            if (!target) return;
+            const { ctx, width, height } = target;
+            simDrawPanel(ctx, width, height, title);
+            if (!history.length) return;
+            const left = 42;
+            const right = 16;
+            const top = 48;
+            const bottom = 36;
+            const plotW = width - left - right;
+            const plotH = height - top - bottom;
+            const wcss = history.map(item => item.wcss);
+            const sil = history.map(item => item.silhouette);
+            const minW = Math.min(...wcss);
+            const maxW = Math.max(...wcss);
+            const minS = Math.min(...sil);
+            const maxS = Math.max(...sil);
+            const xFor = index => left + (index / Math.max(1, history.length - 1)) * plotW;
+            const yW = value => top + plotH - ((value - minW) / Math.max(maxW - minW, 1e-9)) * plotH;
+            const yS = value => top + plotH - ((value - minS) / Math.max(maxS - minS, 1e-9)) * plotH;
+            ctx.strokeStyle = 'rgba(36,52,71,0.2)';
+            ctx.strokeRect(left, top, plotW, plotH);
+            ctx.strokeStyle = '#2d5f87';
+            ctx.lineWidth = 2.4;
+            ctx.beginPath();
+            history.forEach((item, index) => {
+                const x = xFor(index);
+                const y = yW(item.wcss);
+                if (index === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            ctx.strokeStyle = '#047857';
+            ctx.beginPath();
+            history.forEach((item, index) => {
+                const x = xFor(index);
+                const y = yS(item.silhouette);
+                if (index === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            ctx.fillStyle = '#2d5f87';
+            ctx.font = '800 11px Inter, Arial';
+            ctx.fillText('WCSS', left, top - 12);
+            ctx.fillStyle = '#047857';
+            ctx.fillText('Silueta', left + 56, top - 12);
+            const last = history[history.length - 1];
+            ctx.fillStyle = '#64748b';
+            ctx.font = '600 11px Inter, Arial';
+            ctx.fillText(`Final: WCSS ${last.wcss.toFixed(2)} · silueta ${last.silhouette.toFixed(3)}`, left, height - 12);
+        }
+
         function simSetMetrics(metrics) {
             const target = document.getElementById('simMetricGrid');
             if (!target) return;
@@ -5376,10 +5528,25 @@
           <option value="zero">Cero tecnico</option>
         </select>
       </label>`;
-            if (unitNum === 3) return `
+            if (unitNum === 3) {
+                const mode = getU3SimulatorMode();
+                const modeSelect = `
+      <label>Modo
+        <select id="simU3Mode" onchange="setU3SimulatorMode(this.value)">
+          <option value="kmeans" ${mode === 'kmeans' ? 'selected' : ''}>K-means clustering</option>
+          <option value="knn" ${mode === 'knn' ? 'selected' : ''}>KNN clasificacion</option>
+        </select>
+      </label>`;
+                if (mode === 'knn') return `${modeSelect}
       <label>k vecinos <input id="simK" type="number" value="5" min="1" max="25"></label>
       <label>Solapamiento % <input id="simOverlap" type="number" value="36" min="5" max="90"></label>
       <label>Entrenamiento % <input id="simTrain" type="number" value="68" min="35" max="90"></label>`;
+                return `${modeSelect}
+      <label>K clusters <input id="simKMeansK" type="number" value="3" min="2" max="6"></label>
+      <label>Puntos/cluster <input id="simKMeansN" type="number" value="55" min="20" max="140"></label>
+      <label>Dispersion % <input id="simKMeansSpread" type="number" value="11" min="4" max="28"></label>
+      <label>Iteraciones <input id="simKMeansIter" type="number" value="9" min="2" max="18"></label>`;
+            }
             return `
       <label>Umbral % <input id="simThreshold" type="number" value="56" min="20" max="85"></label>
       <label>Brecha inicial % <input id="simGap" type="number" value="16" min="0" max="40"></label>
@@ -5395,7 +5562,7 @@
         function renderSimulators(unitNum = null) {
             stopSimulatorTimer();
             const selectedUnit = getSimulatorUnit(unitNum);
-            const config = SIMULATOR_CONFIG[selectedUnit];
+            const config = activeSimulatorConfig(selectedUnit);
             const unit = UNITS[selectedUnit - 1];
             simulatorState.unit = selectedUnit;
             STATE.currentUnit = selectedUnit;
@@ -5447,7 +5614,7 @@
         <button class="btn-primary" onclick="completeSimulator()">Guardar evidencia</button>
       </section>
     </div>`;
-            trackEvent('simulador_abierto', { unidad: selectedUnit, detalle: unit.title });
+            trackEvent('simulador_abierto', { unidad: selectedUnit, detalle: config.title || unit.title });
             window.setTimeout(() => runSimulator(selectedUnit, false), 0);
         }
 
@@ -5456,6 +5623,7 @@
             stopSimulatorTimer();
             if (selectedUnit === 1) runSamplingSimulator(animate);
             else if (selectedUnit === 2) runCleaningSimulator();
+            else if (selectedUnit === 3 && getU3SimulatorMode() === 'kmeans') runKmeansSimulator(animate);
             else if (selectedUnit === 3) runKnnSimulator();
             else runFairnessSimulator();
         }
@@ -5570,6 +5738,175 @@
             simulatorState.payload = { tipo: 'knn', k, overlap, trainPct, accuracy, precision, recall, falsosPositivos: fp };
         }
 
+        function simKmeansTrueCenters(k) {
+            const radius = 0.31;
+            return Array.from({ length: k }, (_, index) => {
+                const angle = (index / k) * Math.PI * 2 + Math.random() * 0.28;
+                return {
+                    x: 0.5 + Math.cos(angle) * radius + simNormal(0, 0.035),
+                    y: 0.5 + Math.sin(angle) * radius + simNormal(0, 0.035)
+                };
+            }).map(center => ({
+                x: Math.max(0.12, Math.min(0.88, center.x)),
+                y: Math.max(0.12, Math.min(0.88, center.y))
+            }));
+        }
+
+        function simKmeansData(k, n, spread) {
+            const centers = simKmeansTrueCenters(k);
+            const points = [];
+            centers.forEach((center, trueCluster) => {
+                for (let i = 0; i < n; i++) {
+                    points.push({
+                        x: Math.max(0.04, Math.min(0.96, center.x + simNormal(0, spread))),
+                        y: Math.max(0.04, Math.min(0.96, center.y + simNormal(0, spread))),
+                        trueCluster,
+                        cluster: -1
+                    });
+                }
+            });
+            return points.sort(() => Math.random() - 0.5);
+        }
+
+        function simSquaredDistance(a, b) {
+            return (a.x - b.x) ** 2 + (a.y - b.y) ** 2;
+        }
+
+        function simInitKmeansCentroids(points, k) {
+            const chosen = new Set();
+            while (chosen.size < k && chosen.size < points.length) chosen.add(Math.floor(Math.random() * points.length));
+            return Array.from(chosen).map(index => ({ x: points[index].x, y: points[index].y }));
+        }
+
+        function simAssignKmeans(points, centroids) {
+            return points.map(point => {
+                let cluster = 0;
+                let best = Infinity;
+                centroids.forEach((centroid, index) => {
+                    const d = simSquaredDistance(point, centroid);
+                    if (d < best) {
+                        best = d;
+                        cluster = index;
+                    }
+                });
+                return { ...point, cluster };
+            });
+        }
+
+        function simUpdateKmeansCentroids(points, centroids, k) {
+            let movement = 0;
+            const next = Array.from({ length: k }, (_, index) => {
+                const group = points.filter(point => point.cluster === index);
+                if (!group.length) return { ...centroids[index] };
+                const centroid = {
+                    x: simMean(group.map(point => point.x)),
+                    y: simMean(group.map(point => point.y))
+                };
+                movement += Math.sqrt(simSquaredDistance(centroids[index], centroid));
+                return centroid;
+            });
+            return { centroids: next, movement };
+        }
+
+        function simKmeansWcss(points, centroids) {
+            return points.reduce((sum, point) => {
+                const centroid = centroids[point.cluster];
+                return centroid ? sum + simSquaredDistance(point, centroid) : sum;
+            }, 0);
+        }
+
+        function simKmeansSilhouette(points, k) {
+            const groups = Array.from({ length: k }, (_, index) => points.filter(point => point.cluster === index));
+            let total = 0;
+            let count = 0;
+            points.forEach(point => {
+                const own = groups[point.cluster] || [];
+                if (own.length < 2) return;
+                const a = own.reduce((sum, other) => other === point ? sum : sum + Math.sqrt(simSquaredDistance(point, other)), 0) / (own.length - 1);
+                let b = Infinity;
+                groups.forEach((group, index) => {
+                    if (index === point.cluster || !group.length) return;
+                    const avg = group.reduce((sum, other) => sum + Math.sqrt(simSquaredDistance(point, other)), 0) / group.length;
+                    if (avg < b) b = avg;
+                });
+                if (!Number.isFinite(b)) return;
+                total += (b - a) / Math.max(a, b);
+                count++;
+            });
+            return count ? total / count : 0;
+        }
+
+        function simBuildKmeansHistory(points, k, maxIterations) {
+            let centroids = simInitKmeansCentroids(points, k);
+            let assigned = simAssignKmeans(points, centroids);
+            const history = [];
+            let previousWcss = null;
+            for (let iteration = 1; iteration <= maxIterations; iteration++) {
+                const update = simUpdateKmeansCentroids(assigned, centroids, k);
+                centroids = update.centroids;
+                assigned = simAssignKmeans(assigned, centroids);
+                const wcss = simKmeansWcss(assigned, centroids);
+                const silhouette = simKmeansSilhouette(assigned, k);
+                history.push({
+                    iteration,
+                    points: assigned.map(point => ({ ...point })),
+                    centroids: centroids.map(centroid => ({ ...centroid })),
+                    wcss,
+                    delta: previousWcss === null ? 0 : wcss - previousWcss,
+                    silhouette,
+                    movement: update.movement
+                });
+                previousWcss = wcss;
+                if (update.movement < 0.004) break;
+            }
+            return history;
+        }
+
+        function renderKmeansFrame(frame, history) {
+            simSetMetrics([
+                { label: 'Iteracion', value: String(frame.iteration), note: `${history.length} pasos` },
+                { label: 'WCSS', value: frame.wcss.toFixed(2), note: 'distancias internas' },
+                { label: 'Silueta', value: frame.silhouette.toFixed(3), note: 'separacion promedio' },
+                { label: 'Delta WCSS', value: frame.delta.toFixed(2), note: 'cambio ultimo paso' },
+                { label: 'Movimiento', value: frame.movement.toFixed(3), note: 'centroides' }
+            ]);
+            simDrawKmeans('simCanvasA', frame, 'K-means: puntos, centroides y asignaciones');
+            simDrawConvergence('simCanvasB', history, 'Convergencia: WCSS y silueta');
+            simulatorState.payload = {
+                tipo: 'kmeans',
+                k: frame.centroids.length,
+                iteraciones: frame.iteration,
+                wcss: frame.wcss,
+                silhouette: frame.silhouette,
+                movimiento: frame.movement,
+                puntos: frame.points.length
+            };
+        }
+
+        function runKmeansSimulator(animate = false) {
+            const k = Math.round(simValue('simKMeansK', 3, 2, 6));
+            const n = Math.round(simValue('simKMeansN', 55, 20, 140));
+            const spread = simValue('simKMeansSpread', 11, 4, 28) / 100;
+            const maxIterations = Math.round(simValue('simKMeansIter', 9, 2, 18));
+            const points = simKmeansData(k, n, spread);
+            const history = simBuildKmeansHistory(points, k, maxIterations);
+            if (!history.length) return;
+            if (!animate) {
+                renderKmeansFrame(history[history.length - 1], history);
+                return;
+            }
+            let index = 0;
+            renderKmeansFrame(history[index], history.slice(0, index + 1));
+            simulatorState.timer = setInterval(() => {
+                index++;
+                if (index >= history.length) {
+                    stopSimulatorTimer();
+                    return;
+                }
+                renderKmeansFrame(history[index], history.slice(0, index + 1));
+            }, 520);
+        }
+
         function runFairnessSimulator() {
             const threshold = simValue('simThreshold', 56, 20, 85) / 100;
             const gap = simValue('simGap', 16, 0, 40) / 100;
@@ -5630,7 +5967,7 @@
 
         function completeSimulator() {
             const unitNum = simulatorState.unit;
-            const config = SIMULATOR_CONFIG[unitNum];
+            const config = activeSimulatorConfig(unitNum);
             const evidence = (document.getElementById('simEvidence')?.value || '').trim();
             if (evidence.length < 24) {
                 showToast('Escribe una evidencia breve antes de guardar.', 'info');

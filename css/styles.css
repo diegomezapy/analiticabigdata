@@ -4545,6 +4545,10 @@ a:hover { text-decoration: underline; }
   gap: 0.45rem;
 }
 
+.sim-hero > div > * {
+  min-width: 0;
+}
+
 .sim-hero span,
 .sim-reflection span {
   color: var(--unit-color);
@@ -4562,6 +4566,8 @@ a:hover { text-decoration: underline; }
 
 .sim-hero p,
 .sim-hero em {
+  width: 100%;
+  min-width: 0;
   max-width: 760px;
   color: var(--text-secondary);
   font-size: 0.94rem;
