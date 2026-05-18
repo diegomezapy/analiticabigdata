@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
+  <defs>
+    <linearGradient id="bg22d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fefce8"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="500" fill="url(#bg22d)"/>
+  <rect width="900" height="50" fill="#78350f"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Formas de Distribuciones Estadísticas</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#fcd34d">Unidad 2.2 · Normal · Sesgo positivo · Sesgo negativo · Bimodal · Media, Mediana, Moda · FACEN-UNA 2026</text>
+
+  <!-- 4 panels side by side: x=10,232,454,676 each w=216 -->
+
+  <!-- ====== PANEL 1: NORMAL ====== -->
+  <rect x="10" y="58" width="216" height="340" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <rect x="10" y="58" width="216" height="28" fill="#3b82f6" rx="8 8 0 0"/>
+  <text x="118" y="76" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="white">Distribución Normal</text>
+  <!-- Bars: base y=300, heights [6,16,34,56,70,56,34,16,6] bar_w=18, gap=2, x_start=22 -->
+  <!-- x_lefts: 22,42,62,82,102,122,142,162,182 -->
+  <line x1="20" y1="300" x2="218" y2="300" stroke="#374151" stroke-width="1"/>
+  <rect x="22"  y="294" width="18" height="6"  rx="1" fill="#3b82f6" opacity="0.7"/>
+  <rect x="42"  y="284" width="18" height="16" rx="1" fill="#3b82f6" opacity="0.8"/>
+  <rect x="62"  y="266" width="18" height="34" rx="1" fill="#3b82f6" opacity="0.85"/>
+  <rect x="82"  y="244" width="18" height="56" rx="1" fill="#3b82f6"/>
+  <rect x="102" y="230" width="18" height="70" rx="1" fill="#3b82f6"/>
+  <rect x="122" y="244" width="18" height="56" rx="1" fill="#3b82f6"/>
+  <rect x="142" y="266" width="18" height="34" rx="1" fill="#3b82f6" opacity="0.85"/>
+  <rect x="162" y="284" width="18" height="16" rx="1" fill="#3b82f6" opacity="0.8"/>
+  <rect x="182" y="294" width="18" height="6"  rx="1" fill="#3b82f6" opacity="0.7"/>
+  <!-- Mean=Median=Mode vertical line at x=111 (center) -->
+  <line x1="111" y1="225" x2="111" y2="302" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="111" y="220" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#dc2626">Media=Mediana=Moda</text>
+  <!-- Properties -->
+  <text x="118" y="320" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#1d4ed8">Simétrica</text>
+  <text x="118" y="334" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#374151">Media = Mediana = Moda</text>
+  <text x="118" y="348" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Regla 68-95-99.7%</text>
+  <text x="118" y="362" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Ejemplo: alturas, errores</text>
+  <rect x="18" y="374" width="198" height="18" rx="4" fill="#dbeafe"/>
+  <text x="117" y="386" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#1e40af">shapiro.test(x) · qqnorm(x)</text>
+
+  <!-- ====== PANEL 2: RIGHT-SKEWED ====== -->
+  <rect x="232" y="58" width="216" height="340" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <rect x="232" y="58" width="216" height="28" fill="#f97316" rx="8 8 0 0"/>
+  <text x="340" y="76" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="white">Sesgo Positivo (→)</text>
+  <!-- Bars heights [70,54,40,29,20,13,8,4,2] x_start=244 -->
+  <line x1="242" y1="300" x2="440" y2="300" stroke="#374151" stroke-width="1"/>
+  <rect x="244" y="230" width="18" height="70" rx="1" fill="#f97316"/>
+  <rect x="264" y="246" width="18" height="54" rx="1" fill="#f97316" opacity="0.9"/>
+  <rect x="284" y="260" width="18" height="40" rx="1" fill="#f97316" opacity="0.85"/>
+  <rect x="304" y="271" width="18" height="29" rx="1" fill="#f97316" opacity="0.8"/>
+  <rect x="324" y="280" width="18" height="20" rx="1" fill="#f97316" opacity="0.75"/>
+  <rect x="344" y="287" width="18" height="13" rx="1" fill="#f97316" opacity="0.7"/>
+  <rect x="364" y="292" width="18" height="8"  rx="1" fill="#f97316" opacity="0.65"/>
+  <rect x="384" y="296" width="18" height="4"  rx="1" fill="#f97316" opacity="0.55"/>
+  <rect x="404" y="298" width="18" height="2"  rx="1" fill="#f97316" opacity="0.45"/>
+  <!-- Mode line (bar 1 center) -->
+  <line x1="253" y1="225" x2="253" y2="302" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="253" y="221" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#dc2626">Mo</text>
+  <!-- Median line (bar 3-4) -->
+  <line x1="299" y1="225" x2="299" y2="302" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="299" y="221" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#16a34a">Me</text>
+  <!-- Mean line (bar 5) -->
+  <line x1="343" y1="225" x2="343" y2="302" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="343" y="221" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#7c3aed">X̄</text>
+  <!-- Properties -->
+  <text x="340" y="320" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#c2410c">Cola larga a la derecha</text>
+  <text x="340" y="334" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#374151">Moda &lt; Mediana &lt; Media</text>
+  <text x="340" y="348" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">La media sube por valores extremos</text>
+  <text x="340" y="362" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Ejemplo: ingresos, precios</text>
+  <rect x="240" y="374" width="198" height="18" rx="4" fill="#fed7aa"/>
+  <text x="339" y="386" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#92400e">log(x) corrige el sesgo</text>
+
+  <!-- ====== PANEL 3: LEFT-SKEWED ====== -->
+  <rect x="454" y="58" width="216" height="340" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <rect x="454" y="58" width="216" height="28" fill="#16a34a" rx="8 8 0 0"/>
+  <text x="562" y="76" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="white">Sesgo Negativo (←)</text>
+  <!-- Bars heights [2,4,8,13,20,29,40,54,70] x_start=466 -->
+  <line x1="464" y1="300" x2="662" y2="300" stroke="#374151" stroke-width="1"/>
+  <rect x="466" y="298" width="18" height="2"  rx="1" fill="#16a34a" opacity="0.45"/>
+  <rect x="486" y="296" width="18" height="4"  rx="1" fill="#16a34a" opacity="0.55"/>
+  <rect x="506" y="292" width="18" height="8"  rx="1" fill="#16a34a" opacity="0.65"/>
+  <rect x="526" y="287" width="18" height="13" rx="1" fill="#16a34a" opacity="0.7"/>
+  <rect x="546" y="280" width="18" height="20" rx="1" fill="#16a34a" opacity="0.75"/>
+  <rect x="566" y="271" width="18" height="29" rx="1" fill="#16a34a" opacity="0.8"/>
+  <rect x="586" y="260" width="18" height="40" rx="1" fill="#16a34a" opacity="0.85"/>
+  <rect x="606" y="246" width="18" height="54" rx="1" fill="#16a34a" opacity="0.9"/>
+  <rect x="626" y="230" width="18" height="70" rx="1" fill="#16a34a"/>
+  <!-- Mean (bar 5) -->
+  <line x1="519" y1="225" x2="519" y2="302" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="519" y="221" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#7c3aed">X̄</text>
+  <!-- Median (bar 7) -->
+  <line x1="563" y1="225" x2="563" y2="302" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="563" y="221" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#16a34a">Me</text>
+  <!-- Mode (last bar) -->
+  <line x1="635" y1="225" x2="635" y2="302" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="635" y="221" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#dc2626">Mo</text>
+  <!-- Properties -->
+  <text x="562" y="320" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#15803d">Cola larga a la izquierda</text>
+  <text x="562" y="334" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#374151">Media &lt; Mediana &lt; Moda</text>
+  <text x="562" y="348" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Valores extremos bajos arrastran la media</text>
+  <text x="562" y="362" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Ejemplo: notas de examen fácil</text>
+  <rect x="462" y="374" width="198" height="18" rx="4" fill="#d1fae5"/>
+  <text x="561" y="386" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#065f46">Mediana más robusta que media</text>
+
+  <!-- ====== PANEL 4: BIMODAL ====== -->
+  <rect x="676" y="58" width="216" height="340" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <rect x="676" y="58" width="216" height="28" fill="#7c3aed" rx="8 8 0 0"/>
+  <text x="784" y="76" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" fill="white">Distribución Bimodal</text>
+  <!-- Bars heights [12,38,60,40,14,10,34,60,52] x_start=688 -->
+  <line x1="686" y1="300" x2="884" y2="300" stroke="#374151" stroke-width="1"/>
+  <rect x="688" y="288" width="18" height="12" rx="1" fill="#7c3aed" opacity="0.65"/>
+  <rect x="708" y="262" width="18" height="38" rx="1" fill="#7c3aed" opacity="0.8"/>
+  <rect x="728" y="240" width="18" height="60" rx="1" fill="#7c3aed"/>
+  <rect x="748" y="260" width="18" height="40" rx="1" fill="#7c3aed" opacity="0.85"/>
+  <rect x="768" y="286" width="18" height="14" rx="1" fill="#7c3aed" opacity="0.6"/>
+  <rect x="788" y="290" width="18" height="10" rx="1" fill="#7c3aed" opacity="0.6"/>
+  <rect x="808" y="266" width="18" height="34" rx="1" fill="#7c3aed" opacity="0.8"/>
+  <rect x="828" y="240" width="18" height="60" rx="1" fill="#7c3aed"/>
+  <rect x="848" y="252" width="18" height="48" rx="1" fill="#7c3aed" opacity="0.9"/>
+  <!-- Mode 1 and Mode 2 lines -->
+  <line x1="737" y1="236" x2="737" y2="302" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="737" y="232" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#dc2626">Mo₁</text>
+  <line x1="837" y1="236" x2="837" y2="302" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <text x="837" y="232" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#dc2626">Mo₂</text>
+  <!-- Properties -->
+  <text x="784" y="320" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#6d28d9">Dos picos (dos modas)</text>
+  <text x="784" y="334" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#374151">Dos poblaciones mezcladas</text>
+  <text x="784" y="348" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Media no representa al grupo</text>
+  <text x="784" y="362" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" fill="#6b7280">Ej: alturas hombre+mujer</text>
+  <rect x="684" y="374" width="198" height="18" rx="4" fill="#ede9fe"/>
+  <text x="783" y="386" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="700" fill="#5b21b6">Segmentar por subgrupo</text>
+
+  <!-- Bottom row: legend and R code -->
+  <rect x="10" y="405" width="880" height="84" fill="white" stroke="#e5e7eb" stroke-width="1" rx="8"/>
+  <text x="450" y="422" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#374151">Leyenda de líneas centrales</text>
+  <!-- Legend items -->
+  <line x1="36" y1="436" x2="70" y2="436" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="76" y="440" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Moda (Mo) — valor más frecuente</text>
+  <line x1="280" y1="436" x2="314" y2="436" stroke="#16a34a" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="320" y="440" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Mediana (Me) — valor central (50%)</text>
+  <line x1="548" y1="436" x2="582" y2="436" stroke="#7c3aed" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="588" y="440" font-family="Inter,Arial,sans-serif" font-size="10" fill="#374151">Media (X̄) — promedio aritmético</text>
+  <!-- Code -->
+  <text x="20" y="458" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># R: </tspan><tspan fill="#c678dd">hist</tspan><tspan fill="#abb2bf">(x, breaks=20)  |  </tspan><tspan fill="#c678dd">density</tspan><tspan fill="#abb2bf">(x)  |  </tspan><tspan fill="#c678dd">skewness</tspan><tspan fill="#abb2bf">(x)  # library(e1071)</tspan></text>
+  <text x="20" y="474" font-family="'Courier New',monospace" font-size="9.5"><tspan fill="#6b7280"># Python: </tspan><tspan fill="#c678dd">plt.hist</tspan><tspan fill="#abb2bf">(x, bins=20)  |  </tspan><tspan fill="#c678dd">scipy.stats.skew</tspan><tspan fill="#abb2bf">(x)  |  </tspan><tspan fill="#c678dd">sns.histplot</tspan><tspan fill="#abb2bf">(x, kde=True)</tspan></text>
+</svg>

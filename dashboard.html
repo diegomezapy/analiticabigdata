@@ -106,6 +106,10 @@
                     <span class="nav-item-icon">🔗</span>
                     <span>Clasificador interactivo</span>
                 </div>
+                <div class="nav-item" onclick="showPage('simulators')" id="nav-simulators">
+                    <span class="nav-item-icon">🧪</span>
+                    <span>Simuladores</span>
+                </div>
                 <div class="nav-item" onclick="showPage('guia')" id="nav-guia">
                     <span class="nav-item-icon">📖</span>
                     <span>Guía Didáctica</span>
@@ -228,7 +232,7 @@
 
         const NOTEBOOKLM_INDEX_URL = 'recursos/notebooklm/indice.json';
         const NOTEBOOK_CONTENT_URL = 'recursos/notebooklm/contenido_fichas.json';
-        const APP_VERSION = 'v37';
+        const APP_VERSION = 'v38';
 
         const NOTEBOOK_STAGE_CONFIG = [
             {
@@ -554,7 +558,7 @@
             await loadNotebookContentIndex();
 
             const route = (window.location.hash || '').replace('#', '');
-            if (['progress', 'badges', 'calendar', 'community', 'practices', 'lab', 'flashcards', 'matching', 'guia', 'account', 'admin'].includes(route)) showPage(route);
+            if (['progress', 'badges', 'calendar', 'community', 'practices', 'lab', 'flashcards', 'matching', 'simulators', 'guia', 'account', 'admin'].includes(route)) showPage(route);
             else if (/^u[1-4]$/.test(route)) showUnit(Number(route.slice(1)));
             else showPage('home');
             checkReminders();
@@ -634,6 +638,7 @@
         // NAVIGATION
         // ================================================================
         function showPage(page) {
+            if (page !== 'simulators' && typeof stopSimulatorTimer === 'function') stopSimulatorTimer();
             if (page === 'admin' && STATE.user?.rol !== 'profesor') {
                 showToast('La administración está disponible solo para el profesor.', 'error');
                 page = 'home';
@@ -658,7 +663,7 @@
                 home: 'Inicio', progress: 'Mi Progreso', badges: 'Mis Logros',
                 calendar: 'Calendario', community: 'Comunidad', practices: 'Prácticas guiadas',
                 lab: 'Laboratorio R/Python',
-                flashcards: 'Flashcards', matching: 'Clasificador interactivo', guia: 'Guía Didáctica',
+                flashcards: 'Flashcards', matching: 'Clasificador interactivo', simulators: 'Simuladores', guia: 'Guía Didáctica',
                 account: 'Cuenta', admin: 'Administración'
             };
             document.getElementById('topbarTitle').textContent = titles[page] || page;
@@ -672,6 +677,7 @@
             else if (page === 'lab') renderLab();
             else if (page === 'flashcards') renderFlashcards();
             else if (page === 'matching') renderMatching();
+            else if (page === 'simulators') renderSimulators();
             else if (page === 'guia') renderGuia();
             else if (page === 'account') renderAccount();
             else if (page === 'admin') renderAdmin();
@@ -1430,6 +1436,11 @@
         <div style="font-size:2rem;margin-bottom:0.5rem">🔗</div>
         <h3>Clasificador interactivo</h3>
         <p style="font-size:0.8rem;margin-top:0.3rem">Ubica casos reales en la categoría correcta</p>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="showPage('simulators')">
+        <div style="font-size:2rem;margin-bottom:0.5rem">🧪</div>
+        <h3>Simuladores</h3>
+        <p style="font-size:0.8rem;margin-top:0.3rem">Experimenta con muestras, limpieza, modelos y sesgo</p>
       </div>
       <div class="card" style="cursor:pointer" onclick="showPage('badges')">
         <div style="font-size:2rem;margin-bottom:0.5rem">🏆</div>
@@ -3990,6 +4001,14 @@
             } else if (activeTab === 'practica') {
                 const labs = PRACTICES.filter(lab => lab.unit === n);
                 tabContent.innerHTML = `
+      <div class="unit-simulator-cta unit-theme-u${n}">
+        <div>
+          <span>Simulador experimental</span>
+          <h3>Explora la Unidad ${n} manipulando datos y parametros</h3>
+          <p>Cambia controles, observa graficos y guarda una evidencia breve de lo aprendido.</p>
+        </div>
+        <button class="btn-primary" onclick="openSimulatorUnit(${n})">Abrir simulador</button>
+      </div>
       <div class="practice-grid">
         ${labs.map(lab => practiceCardHTML(lab)).join('')}
       </div>
@@ -5062,6 +5081,586 @@
             classifierState = newClassifierState(unitNum);
             saveClassifierState();
             renderMatching(unitNum);
+        }
+
+        // ================================================================
+        // LEARNING SIMULATORS
+        // ================================================================
+        const SIMULATOR_CONFIG = {
+            1: {
+                unit: 1,
+                title: 'Distribucion muestral de medias',
+                subtitle: 'Observa como una poblacion irregular puede producir medias cada vez mas estables al aumentar n.',
+                image: 'assets/pedagogical/edu_u1s1d_escala_datos.svg',
+                question: 'Que ocurre con la dispersion de las medias cuando crece el tamano de muestra?'
+            },
+            2: {
+                unit: 2,
+                title: 'Calidad de datos e imputacion',
+                subtitle: 'Experimenta con faltantes, valores extremos y metodos de correccion antes de graficar.',
+                image: 'assets/pedagogical/edu_u2s2d_distribuciones.svg',
+                question: 'Cuando una media imputada puede deformar la lectura de una distribucion?'
+            },
+            3: {
+                unit: 3,
+                title: 'KNN bajo ruido y solapamiento',
+                subtitle: 'Cambia k, solapamiento y tamano de entrenamiento para ver errores y aciertos.',
+                image: 'assets/pedagogical/edu_u3s1_knn.svg',
+                question: 'Que valor de k parece equilibrar sesgo y varianza en el escenario simulado?'
+            },
+            4: {
+                unit: 4,
+                title: 'Umbrales, decision y equidad',
+                subtitle: 'Ajusta el umbral de decision y mira como cambian aprobacion, TPR, FPR y brechas.',
+                image: 'assets/pedagogical/edu_u4s3_sesgo_algoritmico.svg',
+                question: 'Que metrica de equidad cambiaria antes de recomendar el modelo?'
+            }
+        };
+
+        let simulatorState = { unit: 1, timer: null, payload: null };
+
+        function openSimulatorUnit(unitNum) {
+            STATE.currentUnit = Number(unitNum) || 1;
+            showPage('simulators');
+        }
+
+        function stopSimulatorTimer() {
+            if (simulatorState?.timer) {
+                clearInterval(simulatorState.timer);
+                simulatorState.timer = null;
+            }
+        }
+
+        function getSimulatorUnit(unitNum) {
+            const requested = Number(unitNum || simulatorState?.unit || STATE.currentUnit || 1);
+            return SIMULATOR_CONFIG[requested] ? requested : 1;
+        }
+
+        function simValue(id, fallback, min, max) {
+            const raw = Number(document.getElementById(id)?.value);
+            const value = Number.isFinite(raw) ? raw : fallback;
+            return Math.max(min, Math.min(max, value));
+        }
+
+        function simSelect(id, fallback) {
+            return document.getElementById(id)?.value || fallback;
+        }
+
+        function simMean(values) {
+            return values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : 0;
+        }
+
+        function simStdev(values) {
+            if (values.length < 2) return 0;
+            const avg = simMean(values);
+            const variance = values.reduce((sum, value) => sum + (value - avg) ** 2, 0) / (values.length - 1);
+            return Math.sqrt(variance);
+        }
+
+        function simMedian(values) {
+            if (!values.length) return 0;
+            const sorted = [...values].sort((a, b) => a - b);
+            const mid = Math.floor(sorted.length / 2);
+            return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+        }
+
+        function simNormal(mean = 0, sd = 1) {
+            const u1 = Math.max(Math.random(), 1e-12);
+            const u2 = Math.random();
+            return mean + sd * Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+        }
+
+        function simPoisson(lambda = 3) {
+            const limit = Math.exp(-lambda);
+            let p = 1;
+            let k = 0;
+            do {
+                k++;
+                p *= Math.random();
+            } while (p > limit);
+            return k - 1;
+        }
+
+        function simBinomial(trials = 10, p = 0.5) {
+            let count = 0;
+            for (let i = 0; i < trials; i++) if (Math.random() < p) count++;
+            return count;
+        }
+
+        function simPopulation(distribution, size = 6000) {
+            return Array.from({ length: size }, () => {
+                if (distribution === 'uniforme') return Math.random() * 6 - 3;
+                if (distribution === 'exponencial') return -Math.log(Math.max(Math.random(), 1e-12));
+                if (distribution === 'binomial') return simBinomial(10, 0.45);
+                if (distribution === 'poisson') return simPoisson(3);
+                if (distribution === 'mixta') return Math.random() < 0.72 ? simNormal(-0.8, 0.75) : simNormal(1.8, 0.45);
+                return simNormal(0, 1);
+            });
+        }
+
+        function simSampleMean(population, n) {
+            let sum = 0;
+            for (let i = 0; i < n; i++) sum += population[Math.floor(Math.random() * population.length)];
+            return sum / n;
+        }
+
+        function simHistogram(values, bins = 24) {
+            const clean = values.filter(value => Number.isFinite(value));
+            if (!clean.length) return { min: 0, max: 1, bins: Array(bins).fill(0) };
+            let min = Math.min(...clean);
+            let max = Math.max(...clean);
+            if (min === max) {
+                min -= 0.5;
+                max += 0.5;
+            }
+            const width = (max - min) / bins;
+            const counts = Array(bins).fill(0);
+            clean.forEach(value => {
+                const index = Math.max(0, Math.min(bins - 1, Math.floor((value - min) / width)));
+                counts[index]++;
+            });
+            return { min, max, bins: counts };
+        }
+
+        function simCanvas(id) {
+            const canvas = document.getElementById(id);
+            if (!canvas) return null;
+            const rect = canvas.getBoundingClientRect();
+            const width = Math.max(320, rect.width || canvas.clientWidth || 640);
+            const height = Math.max(240, rect.height || canvas.clientHeight || 320);
+            const ratio = window.devicePixelRatio || 1;
+            canvas.width = Math.round(width * ratio);
+            canvas.height = Math.round(height * ratio);
+            const ctx = canvas.getContext('2d');
+            ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+            ctx.clearRect(0, 0, width, height);
+            return { canvas, ctx, width, height };
+        }
+
+        function simDrawPanel(ctx, width, height, title) {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+            ctx.strokeStyle = 'rgba(40,55,72,0.15)';
+            ctx.strokeRect(0.5, 0.5, width - 1, height - 1);
+            ctx.fillStyle = '#243447';
+            ctx.font = '700 14px Inter, Arial';
+            ctx.fillText(title, 18, 26);
+        }
+
+        function simDrawHistogram(canvasId, values, title, color = '#2d5f87') {
+            const target = simCanvas(canvasId);
+            if (!target) return;
+            const { ctx, width, height } = target;
+            simDrawPanel(ctx, width, height, title);
+            const hist = simHistogram(values, 28);
+            const maxCount = Math.max(...hist.bins, 1);
+            const left = 36;
+            const right = 14;
+            const top = 46;
+            const bottom = 34;
+            const plotW = width - left - right;
+            const plotH = height - top - bottom;
+            ctx.strokeStyle = 'rgba(36,52,71,0.22)';
+            ctx.beginPath();
+            ctx.moveTo(left, top);
+            ctx.lineTo(left, top + plotH);
+            ctx.lineTo(left + plotW, top + plotH);
+            ctx.stroke();
+            hist.bins.forEach((count, index) => {
+                const barW = plotW / hist.bins.length;
+                const barH = (count / maxCount) * plotH;
+                ctx.fillStyle = color;
+                ctx.globalAlpha = 0.76;
+                ctx.fillRect(left + index * barW + 1, top + plotH - barH, Math.max(2, barW - 2), barH);
+            });
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = '#64748b';
+            ctx.font = '600 11px Inter, Arial';
+            ctx.fillText(hist.min.toFixed(2), left, height - 12);
+            ctx.fillText(hist.max.toFixed(2), left + plotW - 38, height - 12);
+        }
+
+        function simDrawBars(canvasId, rows, title) {
+            const target = simCanvas(canvasId);
+            if (!target) return;
+            const { ctx, width, height } = target;
+            simDrawPanel(ctx, width, height, title);
+            const maxValue = Math.max(...rows.map(row => row.value), 1);
+            const left = 128;
+            const top = 48;
+            const gap = 14;
+            const barH = Math.min(34, (height - top - 24) / rows.length - gap);
+            rows.forEach((row, index) => {
+                const y = top + index * (barH + gap);
+                const barW = ((width - left - 40) * row.value) / maxValue;
+                ctx.fillStyle = '#334155';
+                ctx.font = '700 12px Inter, Arial';
+                ctx.fillText(row.label, 18, y + barH * 0.68);
+                ctx.fillStyle = row.color || '#2d5f87';
+                ctx.fillRect(left, y, barW, barH);
+                ctx.fillStyle = '#243447';
+                ctx.fillText(row.text || String(Math.round(row.value)), left + barW + 8, y + barH * 0.68);
+            });
+        }
+
+        function simDrawScatter(canvasId, points, title) {
+            const target = simCanvas(canvasId);
+            if (!target) return;
+            const { ctx, width, height } = target;
+            simDrawPanel(ctx, width, height, title);
+            const left = 34;
+            const right = 18;
+            const top = 44;
+            const bottom = 26;
+            const plotW = width - left - right;
+            const plotH = height - top - bottom;
+            const xs = points.map(p => p.x);
+            const ys = points.map(p => p.y);
+            const minX = Math.min(...xs, -3), maxX = Math.max(...xs, 3);
+            const minY = Math.min(...ys, -3), maxY = Math.max(...ys, 3);
+            const sx = x => left + ((x - minX) / Math.max(maxX - minX, 1e-9)) * plotW;
+            const sy = y => top + plotH - ((y - minY) / Math.max(maxY - minY, 1e-9)) * plotH;
+            ctx.strokeStyle = 'rgba(36,52,71,0.18)';
+            ctx.strokeRect(left, top, plotW, plotH);
+            points.forEach(point => {
+                const correct = point.pred === undefined || point.pred === point.cls;
+                ctx.beginPath();
+                ctx.fillStyle = point.cls ? '#b45309' : '#2d5f87';
+                ctx.globalAlpha = point.train ? 0.32 : (correct ? 0.84 : 0.96);
+                ctx.arc(sx(point.x), sy(point.y), point.train ? 3 : 4.5, 0, Math.PI * 2);
+                ctx.fill();
+                if (!correct) {
+                    ctx.strokeStyle = '#be123c';
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+                }
+            });
+            ctx.globalAlpha = 1;
+        }
+
+        function simSetMetrics(metrics) {
+            const target = document.getElementById('simMetricGrid');
+            if (!target) return;
+            target.innerHTML = metrics.map(metric => `
+        <article class="sim-metric-card">
+          <span>${escapeHtml(metric.label)}</span>
+          <strong>${escapeHtml(metric.value)}</strong>
+          <small>${escapeHtml(metric.note || '')}</small>
+        </article>
+      `).join('');
+        }
+
+        function renderSimulatorControls(unitNum) {
+            if (unitNum === 1) return `
+      <label>Distribucion
+        <select id="simDist">
+          <option value="normal">Normal</option>
+          <option value="uniforme">Uniforme</option>
+          <option value="exponencial">Exponencial</option>
+          <option value="binomial">Binomial</option>
+          <option value="poisson">Poisson</option>
+          <option value="mixta">Mixta</option>
+        </select>
+      </label>
+      <label>Tamano n <input id="simSampleSize" type="number" value="30" min="2" max="400"></label>
+      <label>Muestras <input id="simSamples" type="number" value="240" min="20" max="1500"></label>`;
+            if (unitNum === 2) return `
+      <label>Filas <input id="simRows" type="number" value="420" min="80" max="2000"></label>
+      <label>Faltantes % <input id="simMissing" type="number" value="18" min="0" max="60"></label>
+      <label>Extremos % <input id="simOutliers" type="number" value="6" min="0" max="25"></label>
+      <label>Metodo
+        <select id="simImpute">
+          <option value="median">Mediana</option>
+          <option value="mean">Media</option>
+          <option value="drop">Eliminar filas</option>
+          <option value="zero">Cero tecnico</option>
+        </select>
+      </label>`;
+            if (unitNum === 3) return `
+      <label>k vecinos <input id="simK" type="number" value="5" min="1" max="25"></label>
+      <label>Solapamiento % <input id="simOverlap" type="number" value="36" min="5" max="90"></label>
+      <label>Entrenamiento % <input id="simTrain" type="number" value="68" min="35" max="90"></label>`;
+            return `
+      <label>Umbral % <input id="simThreshold" type="number" value="56" min="20" max="85"></label>
+      <label>Brecha inicial % <input id="simGap" type="number" value="16" min="0" max="40"></label>
+      <label>Estrategia
+        <select id="simFairness">
+          <option value="same">Umbral unico</option>
+          <option value="group">Ajuste por grupo</option>
+          <option value="review">Revision humana</option>
+        </select>
+      </label>`;
+        }
+
+        function renderSimulators(unitNum = null) {
+            stopSimulatorTimer();
+            const selectedUnit = getSimulatorUnit(unitNum);
+            const config = SIMULATOR_CONFIG[selectedUnit];
+            const unit = UNITS[selectedUnit - 1];
+            simulatorState.unit = selectedUnit;
+            STATE.currentUnit = selectedUnit;
+            document.getElementById('pageContent').innerHTML = `
+    <div class="sim-shell unit-theme-u${selectedUnit}">
+      <section class="sim-hero">
+        <div>
+          <span>Laboratorio visual · Unidad ${selectedUnit}</span>
+          <h2>${escapeHtml(config.title)}</h2>
+          <p>${escapeHtml(config.subtitle)}</p>
+          <em>${escapeHtml(config.question)}</em>
+        </div>
+        <img src="${escapeHtml(config.image)}" alt="${escapeHtml(config.title)}" loading="lazy">
+      </section>
+      <div class="sim-tabs">
+        ${UNITS.map(item => `
+          <button type="button" class="${item.id === selectedUnit ? 'active' : ''}" onclick="renderSimulators(${item.id})">
+            ${unitIconHTML(item, 'classifier-tab-icon')}
+            <span>U${item.id}</span>
+          </button>
+        `).join('')}
+      </div>
+      <section class="sim-console">
+        <div class="sim-controls">
+          ${renderSimulatorControls(selectedUnit)}
+        </div>
+        <div class="sim-actions">
+          <button class="btn-primary" onclick="runSimulator(${selectedUnit}, true)">Iniciar simulacion</button>
+          <button class="btn-secondary" onclick="runSimulator(${selectedUnit}, false)">Actualizar</button>
+          <button class="btn-secondary" onclick="resetSimulatorView()">Reiniciar</button>
+        </div>
+      </section>
+      <div id="simMetricGrid" class="sim-metric-grid"></div>
+      <section class="sim-visual-grid">
+        <article>
+          <canvas id="simCanvasA"></canvas>
+        </article>
+        <article>
+          <canvas id="simCanvasB"></canvas>
+        </article>
+      </section>
+      <section class="sim-reflection">
+        <div>
+          <span>Evidencia breve</span>
+          <h3>Escribe que observaste en este simulador</h3>
+          <p>La evidencia se guarda en el libro en linea junto con la unidad y el tipo de simulador.</p>
+        </div>
+        <textarea id="simEvidence" rows="3" placeholder="Ejemplo: al aumentar n, la dispersion de las medias bajo y el error estandar se acerco a la formula..."></textarea>
+        <button class="btn-primary" onclick="completeSimulator()">Guardar evidencia</button>
+      </section>
+    </div>`;
+            trackEvent('simulador_abierto', { unidad: selectedUnit, detalle: unit.title });
+            window.setTimeout(() => runSimulator(selectedUnit, false), 0);
+        }
+
+        function runSimulator(unitNum = null, animate = false) {
+            const selectedUnit = getSimulatorUnit(unitNum);
+            stopSimulatorTimer();
+            if (selectedUnit === 1) runSamplingSimulator(animate);
+            else if (selectedUnit === 2) runCleaningSimulator();
+            else if (selectedUnit === 3) runKnnSimulator();
+            else runFairnessSimulator();
+        }
+
+        function runSamplingSimulator(animate = false) {
+            const distribution = simSelect('simDist', 'normal');
+            const n = simValue('simSampleSize', 30, 2, 400);
+            const repetitions = simValue('simSamples', 240, 20, 1500);
+            const population = simPopulation(distribution, 7000);
+            const means = [];
+            const render = () => {
+                const popSd = simStdev(population);
+                const meanSd = simStdev(means);
+                const expected = popSd / Math.sqrt(n);
+                simSetMetrics([
+                    { label: 'Muestras generadas', value: `${means.length}/${repetitions}`, note: `n = ${n}` },
+                    { label: 'SD poblacional', value: popSd.toFixed(3), note: 'sigma estimada' },
+                    { label: 'SD medias', value: meanSd.toFixed(3), note: 'dispersion observada' },
+                    { label: 'SE teorico', value: expected.toFixed(3), note: 'sigma / sqrt(n)' }
+                ]);
+                simDrawHistogram('simCanvasA', population, `Poblacion: ${distribution}`, '#b45309');
+                simDrawHistogram('simCanvasB', means, 'Medias muestrales', '#2d5f87');
+                simulatorState.payload = { tipo: 'distribucion_muestral', distribucion: distribution, n, muestras: means.length, sdPoblacion: popSd, sdMedias: meanSd, seTeorico: expected };
+            };
+            if (!animate) {
+                for (let i = 0; i < repetitions; i++) means.push(simSampleMean(population, n));
+                render();
+                return;
+            }
+            render();
+            simulatorState.timer = setInterval(() => {
+                for (let i = 0; i < 8 && means.length < repetitions; i++) means.push(simSampleMean(population, n));
+                render();
+                if (means.length >= repetitions) stopSimulatorTimer();
+            }, 60);
+        }
+
+        function runCleaningSimulator() {
+            const rows = simValue('simRows', 420, 80, 2000);
+            const missingRate = simValue('simMissing', 18, 0, 60) / 100;
+            const outlierRate = simValue('simOutliers', 6, 0, 25) / 100;
+            const method = simSelect('simImpute', 'median');
+            const raw = Array.from({ length: rows }, () => {
+                let value = simNormal(70, 12) + (Math.random() < 0.18 ? simNormal(18, 8) : 0);
+                const outlier = Math.random() < outlierRate;
+                if (outlier) value += simNormal(70, 18);
+                const missing = Math.random() < missingRate;
+                return { value: missing ? null : value, outlier };
+            });
+            const observed = raw.filter(row => row.value !== null).map(row => row.value);
+            const fill = method === 'mean' ? simMean(observed) : (method === 'median' ? simMedian(observed) : 0);
+            const cleaned = raw
+                .filter(row => method !== 'drop' || row.value !== null)
+                .map(row => row.value === null ? fill : row.value);
+            const missing = raw.filter(row => row.value === null).length;
+            const outliers = raw.filter(row => row.outlier).length;
+            simSetMetrics([
+                { label: 'Filas', value: String(rows), note: `${missing} faltantes` },
+                { label: 'Media observada', value: simMean(observed).toFixed(2), note: 'sin imputar' },
+                { label: 'Media corregida', value: simMean(cleaned).toFixed(2), note: method },
+                { label: 'SD corregida', value: simStdev(cleaned).toFixed(2), note: `${outliers} extremos` }
+            ]);
+            simDrawHistogram('simCanvasA', observed, 'Datos observados', '#b45309');
+            simDrawHistogram('simCanvasB', cleaned, 'Datos luego de correccion', '#047857');
+            simulatorState.payload = { tipo: 'calidad_datos', rows, missingRate, outlierRate, method, missing, outliers, mediaObservada: simMean(observed), mediaCorregida: simMean(cleaned) };
+        }
+
+        function runKnnSimulator() {
+            const k = Math.round(simValue('simK', 5, 1, 25));
+            const overlap = simValue('simOverlap', 36, 5, 90) / 100;
+            const trainPct = simValue('simTrain', 68, 35, 90) / 100;
+            const points = [];
+            for (let i = 0; i < 260; i++) {
+                const cls = i % 2;
+                const center = cls ? 0.82 : -0.82;
+                points.push({
+                    x: simNormal(center, 0.42 + overlap),
+                    y: simNormal(cls ? 0.74 : -0.74, 0.42 + overlap),
+                    cls,
+                    train: Math.random() < trainPct
+                });
+            }
+            const train = points.filter(p => p.train);
+            const test = points.filter(p => !p.train);
+            test.forEach(point => {
+                const neighbors = train
+                    .map(candidate => ({ cls: candidate.cls, d: (candidate.x - point.x) ** 2 + (candidate.y - point.y) ** 2 }))
+                    .sort((a, b) => a.d - b.d)
+                    .slice(0, k);
+                point.pred = simMean(neighbors.map(item => item.cls)) >= 0.5 ? 1 : 0;
+            });
+            const correct = test.filter(p => p.pred === p.cls).length;
+            const tp = test.filter(p => p.pred === 1 && p.cls === 1).length;
+            const fp = test.filter(p => p.pred === 1 && p.cls === 0).length;
+            const fn = test.filter(p => p.pred === 0 && p.cls === 1).length;
+            const accuracy = correct / Math.max(test.length, 1);
+            const precision = tp / Math.max(tp + fp, 1);
+            const recall = tp / Math.max(tp + fn, 1);
+            simSetMetrics([
+                { label: 'Accuracy', value: `${Math.round(accuracy * 100)}%`, note: `${correct}/${test.length} test` },
+                { label: 'Precision', value: `${Math.round(precision * 100)}%`, note: 'clase positiva' },
+                { label: 'Sensibilidad', value: `${Math.round(recall * 100)}%`, note: 'recall' },
+                { label: 'k', value: String(k), note: `solapamiento ${Math.round(overlap * 100)}%` }
+            ]);
+            simDrawScatter('simCanvasA', points, 'Datos simulados y errores KNN');
+            simDrawBars('simCanvasB', [
+                { label: 'Accuracy', value: accuracy * 100, text: `${Math.round(accuracy * 100)}%`, color: '#2d5f87' },
+                { label: 'Precision', value: precision * 100, text: `${Math.round(precision * 100)}%`, color: '#7c3aed' },
+                { label: 'Recall', value: recall * 100, text: `${Math.round(recall * 100)}%`, color: '#047857' },
+                { label: 'Falsos +', value: fp, text: String(fp), color: '#be123c' }
+            ], 'Metricas de clasificacion');
+            simulatorState.payload = { tipo: 'knn', k, overlap, trainPct, accuracy, precision, recall, falsosPositivos: fp };
+        }
+
+        function runFairnessSimulator() {
+            const threshold = simValue('simThreshold', 56, 20, 85) / 100;
+            const gap = simValue('simGap', 16, 0, 40) / 100;
+            const strategy = simSelect('simFairness', 'same');
+            const rows = [];
+            ['urbano', 'rural'].forEach((group, groupIndex) => {
+                for (let i = 0; i < 420; i++) {
+                    const trueRisk = Math.random() < (groupIndex ? 0.48 : 0.56);
+                    let score = trueRisk ? simNormal(0.68, 0.14) : simNormal(0.38, 0.16);
+                    if (groupIndex) score -= gap;
+                    score = Math.max(0.02, Math.min(0.98, score));
+                    let cut = threshold;
+                    if (strategy === 'group' && groupIndex) cut -= gap * 0.45;
+                    if (strategy === 'review' && Math.abs(score - threshold) < 0.08) cut = threshold - 0.04;
+                    rows.push({ group, score, y: trueRisk ? 1 : 0, approved: score >= cut });
+                }
+            });
+            const groupStats = ['urbano', 'rural'].map(group => {
+                const data = rows.filter(row => row.group === group);
+                const positives = data.filter(row => row.y === 1);
+                const negatives = data.filter(row => row.y === 0);
+                const approval = data.filter(row => row.approved).length / data.length;
+                const tpr = positives.filter(row => row.approved).length / Math.max(positives.length, 1);
+                const fpr = negatives.filter(row => row.approved).length / Math.max(negatives.length, 1);
+                return { group, data, approval, tpr, fpr };
+            });
+            const approvalGap = Math.abs(groupStats[0].approval - groupStats[1].approval);
+            const tprGap = Math.abs(groupStats[0].tpr - groupStats[1].tpr);
+            simSetMetrics([
+                { label: 'Umbral', value: `${Math.round(threshold * 100)}%`, note: strategy },
+                { label: 'Brecha aprobacion', value: `${Math.round(approvalGap * 100)} pp`, note: 'paridad demografica' },
+                { label: 'Brecha TPR', value: `${Math.round(tprGap * 100)} pp`, note: 'igualdad oportunidad' },
+                { label: 'Casos', value: String(rows.length), note: 'simulados' }
+            ]);
+            simDrawHistogram('simCanvasA', rows.map(row => row.score), 'Distribucion de puntajes', '#65508d');
+            simDrawBars('simCanvasB', [
+                { label: 'Aprob. urbano', value: groupStats[0].approval * 100, text: `${Math.round(groupStats[0].approval * 100)}%`, color: '#2d5f87' },
+                { label: 'Aprob. rural', value: groupStats[1].approval * 100, text: `${Math.round(groupStats[1].approval * 100)}%`, color: '#b45309' },
+                { label: 'TPR urbano', value: groupStats[0].tpr * 100, text: `${Math.round(groupStats[0].tpr * 100)}%`, color: '#047857' },
+                { label: 'TPR rural', value: groupStats[1].tpr * 100, text: `${Math.round(groupStats[1].tpr * 100)}%`, color: '#be123c' }
+            ], 'Metricas por grupo');
+            simulatorState.payload = {
+                tipo: 'fairness',
+                threshold,
+                gap,
+                strategy,
+                approvalGap,
+                tprGap,
+                urbano: { approval: groupStats[0].approval, tpr: groupStats[0].tpr, fpr: groupStats[0].fpr },
+                rural: { approval: groupStats[1].approval, tpr: groupStats[1].tpr, fpr: groupStats[1].fpr }
+            };
+        }
+
+        function resetSimulatorView() {
+            stopSimulatorTimer();
+            renderSimulators(simulatorState.unit);
+        }
+
+        function completeSimulator() {
+            const unitNum = simulatorState.unit;
+            const config = SIMULATOR_CONFIG[unitNum];
+            const evidence = (document.getElementById('simEvidence')?.value || '').trim();
+            if (evidence.length < 24) {
+                showToast('Escribe una evidencia breve antes de guardar.', 'info');
+                return;
+            }
+            const key = `simulator_u${unitNum}`;
+            const firstCompletion = !STATE.completedActivities[key];
+            STATE.completedActivities[key] = true;
+            if (firstCompletion) addXP(14, `Simulador Unidad ${unitNum}`);
+            else saveProgress();
+            sendToSheets({
+                kind: 'calificacion',
+                timestamp: new Date().toISOString(),
+                usuario: STATE.user.username,
+                nombre: STATE.user.nombre,
+                unidad: unitNum,
+                actividad: config.title,
+                tipo: 'simulador_interactivo',
+                puntaje: 100,
+                porcentaje: 100,
+                correctas: 1,
+                total: 1,
+                xp: firstCompletion ? 14 : 0,
+                detalle: {
+                    evidencia: evidence,
+                    resultado: simulatorState.payload
+                }
+            });
+            syncProgressSnapshot();
+            showToast('Evidencia del simulador guardada.', 'success');
         }
 
         // ================================================================

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
+  <defs>
+    <linearGradient id="bg1d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eff6ff"/><stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="500" fill="url(#bg1d)"/>
+  <rect width="900" height="50" fill="#1e3a5f"/>
+  <text x="450" y="29" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="800" fill="white">Escala de Volumen de Datos</text>
+  <text x="450" y="44" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" fill="#93c5fd">Unidad 1.1 · De bytes a zettabytes · Escala logarítmica · FACEN-UNA 2026</text>
+
+  <!-- LEFT: log-scale bar chart -->
+  <rect x="18" y="58" width="430" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="233" y="78" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#1e3a5f">Escala logarítmica de unidades</text>
+  <text x="233" y="93" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280">Cada paso multiplica por 1,000 — escala log₁₀</text>
+
+  <line x1="80" y1="120" x2="80" y2="432" stroke="#374151" stroke-width="1.5"/>
+  <line x1="80" y1="432" x2="445" y2="432" stroke="#374151" stroke-width="1.5"/>
+  <text x="32" y="276" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#6b7280" transform="rotate(-90,32,276)">Escala (log₁₀ bytes)</text>
+
+  <!-- Gridlines at log=6,12,18 → y=432−n/21×312 -->
+  <line x1="80" y1="343" x2="445" y2="343" stroke="#dbeafe" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="80" y1="254" x2="445" y2="254" stroke="#dbeafe" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="80" y1="165" x2="445" y2="165" stroke="#dbeafe" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="74" y="436" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="8" fill="#9ca3af">10⁰</text>
+  <text x="74" y="347" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="8" fill="#6b7280">10⁶</text>
+  <text x="74" y="258" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="8" fill="#6b7280">10¹²</text>
+  <text x="74" y="169" text-anchor="end" font-family="Inter,Arial,sans-serif" font-size="8" fill="#6b7280">10¹⁸</text>
+
+  <!-- Bars: x_lefts=84,128,172,216,260,304,348,392 w=34 h=log/21×312 -->
+  <rect x="84"  y="424" width="34" height="8"   rx="2" fill="#dbeafe"/>
+  <rect x="128" y="387" width="34" height="45"  rx="2" fill="#bfdbfe"/>
+  <rect x="172" y="343" width="34" height="89"  rx="2" fill="#93c5fd"/>
+  <rect x="216" y="298" width="34" height="134" rx="2" fill="#60a5fa"/>
+  <rect x="260" y="254" width="34" height="178" rx="2" fill="#3b82f6"/>
+  <rect x="304" y="209" width="34" height="223" rx="2" fill="#2563eb"/>
+  <rect x="348" y="165" width="34" height="267" rx="2" fill="#1d4ed8"/>
+  <rect x="392" y="120" width="34" height="312" rx="2" fill="#1e40af"/>
+
+  <!-- Power labels above bars -->
+  <text x="101" y="420" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#6b7280">10⁰</text>
+  <text x="145" y="383" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#374151">10³</text>
+  <text x="189" y="339" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#374151">10⁶</text>
+  <text x="233" y="294" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#374151">10⁹</text>
+  <text x="277" y="250" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="#1e3a8a">10¹²</text>
+  <text x="321" y="205" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="white">10¹⁵</text>
+  <text x="365" y="161" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="white">10¹⁸</text>
+  <text x="409" y="116" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="white">10²¹</text>
+
+  <!-- X axis unit labels -->
+  <text x="101" y="448" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">B</text>
+  <text x="145" y="448" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">KB</text>
+  <text x="189" y="448" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">MB</text>
+  <text x="233" y="448" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">GB</text>
+  <text x="277" y="448" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">TB</text>
+  <text x="321" y="448" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">PB</text>
+  <text x="365" y="448" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">EB</text>
+  <text x="409" y="448" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" font-weight="700" fill="#374151">ZB</text>
+  <!-- Big Data zone bracket -->
+  <line x1="258" y1="460" x2="430" y2="460" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="344" y="456" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="8.5" font-weight="700" fill="#1d4ed8">BIG DATA</text>
+
+  <!-- RIGHT: Reference table -->
+  <rect x="462" y="58" width="424" height="410" fill="white" stroke="#e5e7eb" stroke-width="1.5" rx="8"/>
+  <text x="674" y="78" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="800" fill="#1e3a5f">Referencia de escalas de datos</text>
+
+  <rect x="472" y="88"  width="404" height="36" rx="4" fill="#f0f9ff"/>
+  <text x="480" y="102" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">1 Byte (B) · 10⁰</text>
+  <text x="480" y="116" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6b7280">Un solo carácter: 'A', '1', espacio en memoria</text>
+
+  <rect x="472" y="129" width="404" height="36" rx="4" fill="#eff6ff"/>
+  <text x="480" y="143" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">1 Kilobyte (KB) · 10³</text>
+  <text x="480" y="157" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#6b7280">1 correo electrónico de texto plano</text>
+
+  <rect x="472" y="170" width="404" height="36" rx="4" fill="#dbeafe"/>
+  <text x="480" y="184" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">1 Megabyte (MB) · 10⁶</text>
+  <text x="480" y="198" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">1 fotografía digital JPEG de calidad media</text>
+
+  <rect x="472" y="211" width="404" height="36" rx="4" fill="#bfdbfe"/>
+  <text x="480" y="225" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1e40af">1 Gigabyte (GB) · 10⁹</text>
+  <text x="480" y="239" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#374151">1 película en alta definición (HD completa)</text>
+
+  <rect x="472" y="252" width="404" height="36" rx="4" fill="#93c5fd"/>
+  <text x="480" y="266" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="#1e40af">1 Terabyte (TB) · 10¹²</text>
+  <text x="480" y="280" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#1e3a8a">Base de datos MSPBS · 500 horas de video HD</text>
+
+  <rect x="472" y="293" width="404" height="36" rx="4" fill="#60a5fa"/>
+  <text x="480" y="307" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="white">1 Petabyte (PB) · 10¹⁵</text>
+  <text x="480" y="321" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#dbeafe">Twitter: 1 mes de tweets · Google: búsquedas en 1 día</text>
+
+  <rect x="472" y="334" width="404" height="36" rx="4" fill="#2563eb"/>
+  <text x="480" y="348" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="white">1 Exabyte (EB) · 10¹⁸</text>
+  <text x="480" y="362" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#bfdbfe">Tráfico global de Internet en 1 día (2022)</text>
+
+  <rect x="472" y="375" width="404" height="36" rx="4" fill="#1e40af"/>
+  <text x="480" y="389" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="white">1 Zettabyte (ZB) · 10²¹</text>
+  <text x="480" y="403" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#93c5fd">Todos los datos del mundo en 2023 ≈ 120 ZB</text>
+
+  <rect x="462" y="420" width="424" height="46" rx="6" fill="#1e3a5f"/>
+  <text x="674" y="437" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="11" font-weight="700" fill="white">Big Data: TB · PB · EB · ZB — Hadoop, Spark, cloud storage</text>
+  <text x="674" y="453" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10" fill="#93c5fd">La humanidad genera ≈2.5 quintillones de bytes por día</text>
+</svg>

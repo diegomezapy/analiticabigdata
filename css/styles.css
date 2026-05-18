@@ -4515,6 +4515,315 @@ a:hover { text-decoration: underline; }
 }
 
 /* ================================================
+   Learning Simulators
+   ================================================ */
+.sim-shell {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.sim-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 300px);
+  gap: 1rem;
+  align-items: center;
+  padding: 1.1rem;
+  border: 1px solid var(--unit-border, var(--glass-border));
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(circle at 92% 18%, color-mix(in srgb, var(--unit-color) 16%, transparent), transparent 34%),
+    linear-gradient(135deg, rgba(255,255,255,0.96), color-mix(in srgb, var(--unit-soft) 76%, white));
+  box-shadow: var(--shadow-sm);
+}
+
+.sim-hero > div {
+  min-width: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.sim-hero span,
+.sim-reflection span {
+  color: var(--unit-color);
+  font-size: 0.74rem;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.sim-hero h2 {
+  color: var(--text-primary);
+  font-size: clamp(1.35rem, 2.25vw, 2.12rem);
+  line-height: 1.12;
+}
+
+.sim-hero p,
+.sim-hero em {
+  max-width: 760px;
+  color: var(--text-secondary);
+  font-size: 0.94rem;
+  line-height: 1.52;
+  overflow-wrap: anywhere;
+}
+
+.sim-hero em {
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.5rem 0.7rem;
+  border-left: 4px solid var(--unit-color);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--unit-soft) 72%, white);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.sim-hero img {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  padding: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--unit-color) 25%, transparent);
+  border-radius: var(--radius-lg);
+  background: rgba(255,255,255,0.76);
+}
+
+.sim-tabs {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.sim-tabs button {
+  min-width: 92px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.58rem 0.75rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-weight: 800;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.sim-tabs button:hover,
+.sim-tabs button.active {
+  border-color: var(--unit-color);
+  background: color-mix(in srgb, var(--unit-soft) 74%, white);
+  color: var(--unit-color-dark);
+}
+
+.sim-console {
+  position: sticky;
+  top: 4.75rem;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  align-items: end;
+  padding: 0.85rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: rgba(255,255,255,0.88);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(12px);
+}
+
+.sim-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.sim-controls label {
+  display: grid;
+  gap: 0.28rem;
+  min-width: 132px;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.sim-controls input,
+.sim-controls select {
+  min-height: 40px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: white;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.48rem 0.58rem;
+}
+
+.sim-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: flex-end;
+}
+
+.sim-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.sim-metric-card {
+  min-height: 104px;
+  display: grid;
+  gap: 0.26rem;
+  align-content: center;
+  padding: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--unit-color) 22%, transparent);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, white, color-mix(in srgb, var(--unit-soft) 54%, white));
+}
+
+.sim-metric-card span {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.sim-metric-card strong {
+  color: var(--unit-color-dark);
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.sim-metric-card small {
+  color: var(--text-secondary);
+  font-weight: 650;
+}
+
+.sim-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.sim-visual-grid article {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.sim-visual-grid canvas {
+  display: block;
+  width: 100%;
+  height: 340px;
+}
+
+.sim-reflection,
+.unit-simulator-cta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.9fr) auto;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--unit-color) 26%, transparent);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), color-mix(in srgb, var(--unit-soft) 62%, white));
+  box-shadow: var(--shadow-sm);
+}
+
+.unit-simulator-cta {
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: 1rem;
+}
+
+.sim-reflection h3,
+.unit-simulator-cta h3 {
+  color: var(--text-primary);
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.sim-reflection p,
+.unit-simulator-cta p {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.42;
+}
+
+.sim-reflection textarea {
+  width: 100%;
+  min-height: 82px;
+  resize: vertical;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.75rem;
+}
+
+@media (max-width: 980px) {
+  .sim-hero,
+  .sim-console,
+  .sim-visual-grid,
+  .sim-reflection,
+  .unit-simulator-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-hero img {
+    display: none;
+  }
+
+  .sim-console {
+    position: static;
+  }
+
+  .sim-actions {
+    justify-content: stretch;
+  }
+
+  .sim-actions .btn-primary,
+  .sim-actions .btn-secondary,
+  .sim-reflection .btn-primary,
+  .unit-simulator-cta .btn-primary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .sim-shell {
+    width: calc(100vw - 1.7rem);
+    max-width: calc(100vw - 1.7rem);
+    overflow-x: clip;
+  }
+
+  .sim-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sim-visual-grid canvas {
+    height: 280px;
+  }
+
+  .sim-controls label {
+    min-width: min(100%, 152px);
+    flex: 1 1 140px;
+  }
+}
+
+/* ================================================
    Notification Toast
    ================================================ */
 .toast-container {

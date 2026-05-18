@@ -1,4 +1,4 @@
-const CACHE_NAME = 'analitica-bigdata-v37';
+const CACHE_NAME = 'analitica-bigdata-v38';
 
 const APP_SHELL = [
   './',
@@ -33,10 +33,12 @@ const APP_SHELL = [
   'assets/pedagogical/gen_business_analytics.svg',
   'assets/pedagogical/gen_education.svg',
   'assets/pedagogical/edu_u1s1_5v_bigdata.svg',
+  'assets/pedagogical/edu_u1s1d_escala_datos.svg',
   'assets/pedagogical/edu_u1s2_rstudio.svg',
   'assets/pedagogical/edu_u1s3_pipeline.svg',
   'assets/pedagogical/edu_u2s1_grammar_graficos.svg',
   'assets/pedagogical/edu_u2s2_boxplot.svg',
+  'assets/pedagogical/edu_u2s2d_distribuciones.svg',
   'assets/pedagogical/edu_u2s3_correlacion.svg',
   'assets/pedagogical/edu_u3s1_knn.svg',
   'assets/pedagogical/edu_u3s2_sigmoide.svg',
