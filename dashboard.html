@@ -7830,12 +7830,14 @@
     </div>
     <div class="admin-tabs">
       <button class="${tab === 'students' ? 'active' : ''}" onclick="renderAdmin('students')">Estudiantes</button>
+      <button class="${tab === 'seguimiento' ? 'active' : ''}" onclick="renderAdmin('seguimiento')">Seguimiento</button>
       <button class="${tab === 'calendar' ? 'active' : ''}" onclick="renderAdmin('calendar')">Fechas</button>
       <button class="${tab === 'semester' ? 'active' : ''}" onclick="renderAdmin('semester')">Semestre</button>
       <button class="${tab === 'data' ? 'active' : ''}" onclick="renderAdmin('data')">Datos</button>
     </div>
     <div id="adminPanel"></div>`;
             if (tab === 'students') renderAdminStudents();
+            if (tab === 'seguimiento') renderAdminSeguimiento();
             if (tab === 'calendar') renderAdminCalendar();
             if (tab === 'semester') renderAdminSemester();
             if (tab === 'data') renderAdminData();
@@ -8265,6 +8267,405 @@
                 showToast('No se pudo actualizar ahora. Revisa la conexion e intenta de nuevo.', 'error');
                 setAppUpdateBusy(false);
             }
+        }
+
+        // ================================================================
+        // ADMIN — SEGUIMIENTO DE ESTUDIANTES
+        // ================================================================
+
+        const EMAIL_TEMPLATES = {
+            bienvenida: {
+                label: 'Bienvenida / Inicio tardio', icon: '👋',
+                subject: 'Analitica de Big Data 2026 — Te esperamos en el aula',
+                body: n => `Hola ${n},\n\nTe escribo porque notamos que todavia no exploraste el aula virtual de Analitica de Big Data 2026.\n\nTodo el material, lecturas, practicas y evaluaciones esta disponible y es de acceso libre:\nhttps://diegomezapy.github.io/analiticabigdata/\n\nSi tenes alguna dificultad de acceso o dudas para comenzar, responde este correo.\n\nSaludos,\nProf. Diego Meza — FACEN UNA`
+            },
+            felicitaciones: {
+                label: 'Felicitaciones', icon: '🏆',
+                subject: 'Analitica de Big Data 2026 — Excelente trabajo',
+                body: n => `Hola ${n},\n\nQuiero reconocer tu destacada participacion en el curso Analitica de Big Data 2026. Tu dedicacion en foros y actividades refleja un compromiso real con el aprendizaje.\n\nSeguí así! El material que viene te va a interesar mucho.\n\nSaludos,\nProf. Diego Meza — FACEN UNA`
+            },
+            refuerzo: {
+                label: 'Refuerzo academico', icon: '💪',
+                subject: 'Analitica de Big Data 2026 — Apoyo personalizado',
+                body: n => `Hola ${n},\n\nMe comunico para ofrecerte apoyo personalizado en el curso Analitica de Big Data 2026.\n\nTe recomiendo retomar las lecturas y participar en el foro: es el espacio donde puedo orientarte directamente sobre cualquier duda.\n\nRecorda que la practica con R/Python en el aula es guiada paso a paso — no necesitas experiencia previa.\n\nEste correo es personal, podes responder con cualquier consulta concreta.\n\nSaludos,\nProf. Diego Meza — FACEN UNA`
+            },
+            recordatorio: {
+                label: 'Recordatorio de entrega', icon: '📅',
+                subject: 'Analitica de Big Data 2026 — Actividad pendiente',
+                body: n => `Hola ${n},\n\nRecordatorio: tenes actividades pendientes en el curso Analitica de Big Data 2026. Te invito a revisar el calendario del aula para ver las fechas y consignas.\n\nAula virtual: https://diegomezapy.github.io/analiticabigdata/\n\nSaludos,\nProf. Diego Meza — FACEN UNA`
+            },
+            devolucion: {
+                label: 'Devolucion de actividad', icon: '📝',
+                subject: 'Analitica de Big Data 2026 — Devolucion personalizada',
+                body: n => `Hola ${n},\n\nTe comparto mis comentarios sobre tu ultima participacion en el curso:\n\n[Escribi aqui tu devolucion personalizada]\n\nSaludos,\nProf. Diego Meza — FACEN UNA`
+            }
+        };
+
+        let seguimientoSel    = new Set();
+        let seguimientoFilter = 'todos';
+        let seguimientoSearch = '';
+        let seguimientoOpenProfile = null;
+        let seguimientoTpl    = 'refuerzo';
+
+        function computeStudentStats(username) {
+            const allMsgs  = mergeSocialMessages(STATE.socialMessages, localSocialMessages());
+            const allGrades = localForumGrades();
+            const msgs     = allMsgs.filter(m => m.usuario === username && m.tipo !== 'anuncio');
+            const msgIds   = new Set(msgs.map(m => m.id));
+            const myGrades = allGrades.filter(g => msgIds.has(g.message_id));
+            const puntajes = myGrades.map(g => Number(g.puntaje || 0));
+            const avgGrade = puntajes.length ? Math.round(puntajes.reduce((a, b) => a + b, 0) / puntajes.length) : null;
+            const sorted   = [...msgs].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            const daysInactive = sorted[0] ? Math.floor((Date.now() - new Date(sorted[0].timestamp)) / 86400000) : null;
+            return { msgs, myGrades, avgGrade, daysInactive, foroCount: msgs.length, gradedCount: myGrades.length };
+        }
+
+        function studentRiskLevel(student, stats) {
+            if (!stats.foroCount) return 'rojo';
+            if (stats.avgGrade !== null && stats.avgGrade < 50) return 'rojo';
+            if (!student.email || stats.foroCount < 2 || stats.avgGrade === null) return 'amarillo';
+            return 'verde';
+        }
+
+        function computeClassStats(students) {
+            const statsMap = {};
+            students.forEach(s => { statsMap[s.username] = computeStudentStats(s.username); });
+            const conCorreo = students.filter(s => s.email).length;
+            const risks = students.map(s => studentRiskLevel(s, statsMap[s.username]));
+            const verde = risks.filter(r => r === 'verde').length;
+            const amarillo = risks.filter(r => r === 'amarillo').length;
+            const rojo = risks.filter(r => r === 'rojo').length;
+            const allGrades = students.flatMap(s => statsMap[s.username].myGrades.map(g => Number(g.puntaje || 0)));
+            const avgGlobal = allGrades.length ? Math.round(allGrades.reduce((a, b) => a + b, 0) / allGrades.length) : null;
+            const allPosts  = students.reduce((t, s) => t + statsMap[s.username].foroCount, 0);
+            const pendingGrade = students.reduce((t, s) => t + Math.max(0, statsMap[s.username].foroCount - statsMap[s.username].gradedCount), 0);
+            return { statsMap, conCorreo, verde, amarillo, rojo, avgGlobal, allPosts, pendingGrade };
+        }
+
+        function renderAdminSeguimiento() {
+            const students = localUsers().filter(u => u.rol !== 'profesor');
+            const cs = computeClassStats(students);
+
+            let filtered = [...students];
+            if (seguimientoSearch) {
+                const q = seguimientoSearch.toLowerCase();
+                filtered = filtered.filter(s =>
+                    (s.nombre || s.username).toLowerCase().includes(q) ||
+                    (s.cedula || s.username).includes(q) ||
+                    (s.email || '').toLowerCase().includes(q));
+            }
+            if (seguimientoFilter === 'riesgo')       filtered = filtered.filter(s => studentRiskLevel(s, cs.statsMap[s.username]) !== 'verde');
+            if (seguimientoFilter === 'sin_correo')   filtered = filtered.filter(s => !s.email);
+            if (seguimientoFilter === 'sin_calificar') filtered = filtered.filter(s => cs.statsMap[s.username].foroCount > cs.statsMap[s.username].gradedCount);
+
+            const selCount  = seguimientoSel.size;
+            const selEmails = [...seguimientoSel].map(u => students.find(s => s.username === u)?.email).filter(Boolean);
+
+            const profileStudent = students.find(s => s.username === seguimientoOpenProfile);
+
+            document.getElementById('adminPanel').innerHTML = `
+<div class="seg-page">
+
+  <div class="seg-metrics">
+    <div class="seg-metric">
+      <span class="seg-metric-val">${students.length}</span>
+      <span class="seg-metric-lbl">Estudiantes</span>
+      <span class="seg-metric-sub">${cs.conCorreo} con correo · ${students.length - cs.conCorreo} sin correo</span>
+    </div>
+    <div class="seg-metric">
+      <span class="seg-metric-val" style="color:var(--success)">${cs.verde}</span>
+      <span class="seg-metric-lbl">En buen camino</span>
+      <span class="seg-metric-sub">${cs.amarillo} con seguimiento · ${cs.rojo} en riesgo</span>
+    </div>
+    <div class="seg-metric">
+      <span class="seg-metric-val" style="color:var(--accent)">${cs.avgGlobal !== null ? cs.avgGlobal : '—'}</span>
+      <span class="seg-metric-lbl">Promedio global</span>
+      <span class="seg-metric-sub">${cs.allPosts} aportes totales en foro</span>
+    </div>
+    <div class="seg-metric ${cs.pendingGrade > 0 ? 'seg-metric-alert' : ''}">
+      <span class="seg-metric-val" style="color:${cs.pendingGrade > 0 ? 'var(--warning)' : 'var(--text-muted)'}">${cs.pendingGrade}</span>
+      <span class="seg-metric-lbl">Pendientes de calificar</span>
+      <span class="seg-metric-sub">Aportes del foro sin nota</span>
+    </div>
+  </div>
+
+  <div class="seg-toolbar">
+    <div class="seg-filters">
+      <button class="seg-filter-btn ${seguimientoFilter === 'todos' ? 'active' : ''}" onclick="setSeguimientoFilter('todos')">Todos (${students.length})</button>
+      <button class="seg-filter-btn ${seguimientoFilter === 'riesgo' ? 'active' : ''}" onclick="setSeguimientoFilter('riesgo')">En riesgo (${cs.rojo + cs.amarillo})</button>
+      <button class="seg-filter-btn ${seguimientoFilter === 'sin_correo' ? 'active' : ''}" onclick="setSeguimientoFilter('sin_correo')">Sin correo (${students.length - cs.conCorreo})</button>
+      <button class="seg-filter-btn ${seguimientoFilter === 'sin_calificar' ? 'active' : ''}" onclick="setSeguimientoFilter('sin_calificar')">Sin calificar (${cs.pendingGrade})</button>
+    </div>
+    <div class="seg-search-row">
+      <input class="seg-search" placeholder="Buscar por nombre, cedula o correo..." value="${escapeHtml(seguimientoSearch)}" oninput="setSeguimientoSearch(this.value)">
+      <button class="btn-secondary" onclick="exportSeguimientoCSV()">Exportar CSV</button>
+      <button class="btn-secondary" onclick="printClassReport()">Imprimir informe</button>
+    </div>
+  </div>
+
+  ${selCount > 0 ? `
+  <div class="seg-bulk-bar">
+    <span><strong>${selCount}</strong> estudiante${selCount > 1 ? 's' : ''} seleccionado${selCount > 1 ? 's' : ''} · <strong>${selEmails.length}</strong> con correo</span>
+    <div class="seg-bulk-actions">
+      <select id="bulkTplSelect" onchange="seguimientoTpl=this.value">
+        ${Object.entries(EMAIL_TEMPLATES).map(([k, t]) => `<option value="${k}" ${seguimientoTpl === k ? 'selected' : ''}>${t.icon} ${t.label}</option>`).join('')}
+      </select>
+      <button class="btn-primary" onclick="sendBulkEmail()" ${selEmails.length === 0 ? 'disabled' : ''}>Enviar correo a ${selEmails.length} estudiante${selEmails.length !== 1 ? 's' : ''}</button>
+      <button class="btn-secondary" onclick="clearSeguimientoSelection()">Cancelar seleccion</button>
+    </div>
+  </div>` : ''}
+
+  <div class="seg-table-wrap">
+    <table class="seg-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox" onchange="toggleSelectAllStudents(this.checked)" ${selCount > 0 && selCount === filtered.length ? 'checked' : ''}></th>
+          <th>Estudiante</th><th>Correo</th><th>Foro</th><th>Nota</th><th>Inactividad</th><th>Estado</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${filtered.length === 0
+          ? `<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--text-muted)">Sin resultados para el filtro activo.</td></tr>`
+          : filtered.map(s => renderStudentTableRow(s, cs.statsMap[s.username])).join('')}
+      </tbody>
+    </table>
+  </div>
+
+  ${seguimientoOpenProfile && profileStudent
+    ? renderStudentProfile(profileStudent, cs.statsMap[seguimientoOpenProfile])
+    : ''}
+
+</div>`;
+        }
+
+        function renderStudentTableRow(student, stats) {
+            const risk = studentRiskLevel(student, stats);
+            const riskMark = { verde: '🟢 Activo', amarillo: '🟡 Seguimiento', rojo: '🔴 Riesgo' }[risk];
+            const riskColor = { verde: 'var(--success)', amarillo: 'var(--warning)', rojo: 'var(--error)' }[risk];
+            const nombre = escapeHtml(student.nombre || student.username);
+            const uname  = escapeHtml(student.username);
+            const inact  = stats.daysInactive !== null ? (stats.daysInactive === 0 ? 'Hoy' : stats.daysInactive + 'd') : '—';
+            const isOpen = seguimientoOpenProfile === student.username;
+            const isSel  = seguimientoSel.has(student.username);
+            return `
+    <tr class="seg-row ${isOpen ? 'seg-row-open' : ''}">
+      <td><input type="checkbox" ${isSel ? 'checked' : ''} onchange="toggleStudentSelect(&quot;${uname}&quot;,this.checked)"></td>
+      <td>
+        <strong>${nombre}</strong>
+        <span style="display:block;font-size:0.74rem;color:var(--text-muted)">${escapeHtml(student.cedula || student.username)}</span>
+      </td>
+      <td style="font-size:0.82rem">
+        ${student.email ? `<a href="mailto:${escapeHtml(student.email)}">${escapeHtml(student.email)}</a>` : '<span style="color:var(--text-disabled)">Sin correo</span>'}
+      </td>
+      <td style="text-align:center">
+        <strong>${stats.foroCount}</strong>
+        ${stats.gradedCount ? `<span style="display:block;font-size:0.7rem;color:var(--text-muted)">${stats.gradedCount} calif.</span>` : ''}
+      </td>
+      <td style="text-align:center">
+        ${stats.avgGrade !== null
+          ? `<strong style="color:${stats.avgGrade >= 70 ? 'var(--success)' : stats.avgGrade >= 50 ? 'var(--warning)' : 'var(--error)'}">${stats.avgGrade}</strong><span style="font-size:0.7rem;color:var(--text-muted)">/100</span>`
+          : '<span style="color:var(--text-disabled)">—</span>'}
+      </td>
+      <td style="text-align:center;font-size:0.85rem;color:${stats.daysInactive !== null && stats.daysInactive > 14 ? 'var(--warning)' : 'var(--text-muted)'}">${inact}</td>
+      <td style="font-size:0.8rem;color:${riskColor}">${riskMark}</td>
+      <td>
+        <div style="display:flex;gap:0.3rem">
+          <button class="btn-secondary" style="padding:0.28rem 0.65rem;font-size:0.78rem" onclick="toggleSeguimientoProfile(&quot;${uname}&quot;)">${isOpen ? 'Cerrar' : 'Ver ficha'}</button>
+          ${student.email ? `<button class="btn-secondary" style="padding:0.28rem 0.65rem;font-size:0.78rem" title="Enviar correo" onclick="openEmailTo(&quot;${escapeHtml(student.email)}&quot;,&quot;${nombre}&quot;)">✉</button>` : ''}
+        </div>
+      </td>
+    </tr>`;
+        }
+
+        function renderStudentProfile(student, stats) {
+            const nombre   = student.nombre || student.username;
+            const risk     = studentRiskLevel(student, stats);
+            const riskLbl  = { verde: 'Activo — buen camino', amarillo: 'Necesita seguimiento', rojo: 'En riesgo — requiere atencion' }[risk];
+            const riskColor= { verde: 'var(--success)', amarillo: 'var(--warning)', rojo: 'var(--error)' }[risk];
+            const msgsOrd  = [...stats.msgs].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            const tpl      = EMAIL_TEMPLATES[seguimientoTpl] || EMAIL_TEMPLATES.refuerzo;
+            return `
+<div class="seg-profile">
+  <div class="seg-profile-header">
+    <div>
+      <h3>${escapeHtml(nombre)} <span style="font-size:0.85rem;color:${riskColor};font-weight:600">${riskLbl}</span></h3>
+      <div class="seg-profile-meta">
+        <span>Cedula: ${escapeHtml(student.cedula || student.username)}</span>
+        ${student.email ? `<a href="mailto:${escapeHtml(student.email)}">${escapeHtml(student.email)}</a>` : '<span style="color:var(--text-disabled)">Sin correo registrado</span>'}
+        ${student.created_at ? `<span>Inscripto: ${new Date(student.created_at).toLocaleDateString('es-PY')}</span>` : ''}
+      </div>
+    </div>
+    <div style="display:flex;gap:0.45rem;flex-wrap:wrap;align-items:flex-start">
+      ${student.email ? `<button class="btn-primary" onclick="openEmailTo(&quot;${escapeHtml(student.email)}&quot;,&quot;${escapeHtml(nombre)}&quot;)">Enviar correo</button>` : ''}
+      <button class="btn-secondary" onclick="printStudentReport(&quot;${escapeHtml(student.username)}&quot;)">Imprimir ficha</button>
+      <button class="btn-secondary" onclick="toggleSeguimientoProfile(null)">Cerrar</button>
+    </div>
+  </div>
+
+  <div class="seg-profile-stats">
+    <div class="seg-profile-stat"><span>${stats.foroCount}</span><small>Posts en foro</small></div>
+    <div class="seg-profile-stat"><span>${stats.gradedCount}</span><small>Calificados</small></div>
+    <div class="seg-profile-stat"><span>${stats.avgGrade !== null ? stats.avgGrade : '—'}</span><small>Nota promedio</small></div>
+    <div class="seg-profile-stat"><span>${stats.daysInactive !== null ? (stats.daysInactive === 0 ? 'Hoy' : stats.daysInactive + 'd') : '—'}</span><small>Ultima actividad</small></div>
+  </div>
+
+  <div class="seg-profile-body">
+    <div>
+      <h4 style="margin:0 0 0.65rem">Actividad en el foro</h4>
+      ${msgsOrd.length === 0 ? '<p style="color:var(--text-muted);font-size:0.88rem">Sin aportes registrados todavia.</p>' :
+        msgsOrd.slice(0, 8).map(m => {
+          const g = stats.myGrades.find(gr => gr.message_id === m.id);
+          return `<div class="seg-post-item">
+            <div class="seg-post-meta">
+              <span>${new Date(m.timestamp).toLocaleDateString('es-PY')}</span>
+              <span style="color:var(--text-muted)">${escapeHtml((m.canal || m.tipo || '').toUpperCase())}</span>
+              ${g ? `<span style="color:${Number(g.puntaje) >= 70 ? 'var(--success)' : 'var(--warning)'}">Nota: ${g.puntaje}/100</span>` : '<span style="color:var(--text-disabled)">Sin calificar</span>'}
+            </div>
+            <p style="margin:0 0 0.2rem">${escapeHtml(m.mensaje.slice(0, 200))}${m.mensaje.length > 200 ? '…' : ''}</p>
+            ${g?.feedback ? `<p style="font-size:0.78rem;color:var(--text-muted);border-left:2px solid var(--primary);padding-left:0.5rem;margin:0.25rem 0 0">Retro: ${escapeHtml(g.feedback)}</p>` : ''}
+          </div>`;
+        }).join('')}
+      ${msgsOrd.length > 8 ? `<p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.4rem">+${msgsOrd.length - 8} aportes adicionales.</p>` : ''}
+    </div>
+    <div>
+      <h4 style="margin:0 0 0.65rem">Enviar correo a ${escapeHtml(nombre)}</h4>
+      ${student.email ? `
+      <div class="seg-email-mini">
+        <div class="seg-tpl-pills">
+          ${Object.entries(EMAIL_TEMPLATES).map(([k, t]) =>
+            `<button class="seg-tpl-pill ${seguimientoTpl === k ? 'active' : ''}" onclick="setSeguimientoTpl(&quot;${k}&quot;)">${t.icon} ${t.label}</button>`
+          ).join('')}
+        </div>
+        <div class="seg-email-preview">
+          <div class="seg-email-subject"><strong>Asunto:</strong> ${escapeHtml(tpl.subject)}</div>
+          <pre class="seg-email-body">${escapeHtml(tpl.body(nombre))}</pre>
+        </div>
+        <button class="btn-primary" onclick="openEmailTo(&quot;${escapeHtml(student.email)}&quot;,&quot;${escapeHtml(nombre)}&quot;)">Abrir en cliente de correo</button>
+      </div>` : `<p style="color:var(--text-muted);font-size:0.88rem">Este estudiante no tiene correo registrado.<br>Pedile que lo agregue desde su pagina Cuenta.</p>`}
+    </div>
+  </div>
+</div>`;
+        }
+
+        function setSeguimientoFilter(f) { seguimientoFilter = f; seguimientoOpenProfile = null; renderAdminSeguimiento(); }
+        function setSeguimientoSearch(q) { seguimientoSearch = q; renderAdminSeguimiento(); }
+        function setSeguimientoTpl(tpl)  { seguimientoTpl = tpl; renderAdminSeguimiento(); }
+
+        function toggleStudentSelect(username, checked) {
+            if (checked) seguimientoSel.add(username); else seguimientoSel.delete(username);
+            renderAdminSeguimiento();
+        }
+
+        function toggleSelectAllStudents(checked) {
+            const students = localUsers().filter(u => u.rol !== 'profesor');
+            if (checked) students.forEach(s => seguimientoSel.add(s.username)); else seguimientoSel.clear();
+            renderAdminSeguimiento();
+        }
+
+        function clearSeguimientoSelection() { seguimientoSel.clear(); renderAdminSeguimiento(); }
+
+        function toggleSeguimientoProfile(username) {
+            seguimientoOpenProfile = seguimientoOpenProfile === username ? null : username;
+            renderAdminSeguimiento();
+            if (username) setTimeout(() => document.querySelector('.seg-profile')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+        }
+
+        function openEmailTo(email, nombre) {
+            const tpl = EMAIL_TEMPLATES[seguimientoTpl] || EMAIL_TEMPLATES.refuerzo;
+            window.open(`mailto:${email}?subject=${encodeURIComponent(tpl.subject)}&body=${encodeURIComponent(tpl.body(nombre))}`);
+        }
+
+        function sendBulkEmail() {
+            const students  = localUsers().filter(u => u.rol !== 'profesor');
+            const emails    = [...seguimientoSel].map(u => students.find(s => s.username === u)?.email).filter(Boolean);
+            if (!emails.length) { showToast('Ningun estudiante seleccionado tiene correo registrado.', 'error'); return; }
+            const tpl = EMAIL_TEMPLATES[seguimientoTpl] || EMAIL_TEMPLATES.refuerzo;
+            window.open(`mailto:${emails.join(',')}?subject=${encodeURIComponent(tpl.subject)}&body=${encodeURIComponent(tpl.body('estudiante'))}`);
+        }
+
+        function exportSeguimientoCSV() {
+            const students = localUsers().filter(u => u.rol !== 'profesor');
+            const cs = computeClassStats(students);
+            const riskLbl = { verde: 'Activo', amarillo: 'Seguimiento', rojo: 'En riesgo' };
+            const rows = [['Cedula','Nombre','Correo','Posts Foro','Calificados','Nota Promedio','Dias Inactivo','Estado']];
+            students.forEach(s => {
+                const st = cs.statsMap[s.username];
+                rows.push([s.cedula||s.username, s.nombre||s.username, s.email||'', st.foroCount, st.gradedCount,
+                    st.avgGrade!==null?st.avgGrade:'', st.daysInactive!==null?st.daysInactive:'', riskLbl[studentRiskLevel(s,st)]]);
+            });
+            const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'}));
+            a.download = `ABD_seguimiento_${new Date().toISOString().slice(0,10)}.csv`;
+            a.click();
+            showToast('CSV descargado.', 'success');
+        }
+
+        function printClassReport() {
+            const students = localUsers().filter(u => u.rol !== 'profesor');
+            const cs = computeClassStats(students);
+            const riskLbl = { verde: 'Activo', amarillo: 'Seguimiento', rojo: 'En riesgo' };
+            const now = new Date().toLocaleDateString('es-PY',{year:'numeric',month:'long',day:'numeric'});
+            const rows = students.map(s => {
+                const st = cs.statsMap[s.username];
+                const r = studentRiskLevel(s,st);
+                return `<tr><td>${escapeHtml(s.cedula||s.username)}</td><td>${escapeHtml(s.nombre||s.username)}</td><td>${escapeHtml(s.email||'—')}</td><td style="text-align:center">${st.foroCount}</td><td style="text-align:center">${st.avgGrade!==null?st.avgGrade:'—'}</td><td style="text-align:center">${st.daysInactive!==null?st.daysInactive+'d':'—'}</td><td>${riskLbl[r]}</td></tr>`;
+            }).join('');
+            const win = window.open('','_blank','width=960,height=720');
+            win.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe ABD 2026</title><style>body{font-family:'Segoe UI',Arial,sans-serif;margin:2cm;color:#111;font-size:10.5pt}h1{color:#1e3a5f;margin:0 0 .15em}p{color:#555;font-size:9.5pt;margin:0 0 1.2em}.kpis{display:flex;gap:1.5em;margin-bottom:1.4em}.kpi{border:1px solid #ddd;padding:.5em .9em;border-radius:6px;text-align:center}.kpi strong{display:block;font-size:20pt;color:#1e3a5f}table{width:100%;border-collapse:collapse}th{background:#1e3a5f;color:#fff;padding:.45em .6em;text-align:left;font-size:9pt}td{padding:.4em .6em;border-bottom:1px solid #eee;font-size:9pt}tr:nth-child(even)td{background:#f8f8f8}.foot{margin-top:1.8em;font-size:8.5pt;color:#999;border-top:1px solid #ddd;padding-top:.4em}@media print{body{margin:1cm}}</style></head><body>
+<h1>Analitica de Big Data 2026 — FACEN UNA</h1>
+<p>Informe de seguimiento · ${now} · Prof. Diego Meza</p>
+<div class="kpis">
+  <div class="kpi"><strong>${students.length}</strong>Estudiantes</div>
+  <div class="kpi"><strong>${cs.conCorreo}</strong>Con correo</div>
+  <div class="kpi"><strong>${cs.avgGlobal!==null?cs.avgGlobal:'—'}</strong>Promedio</div>
+  <div class="kpi"><strong style="color:#16a34a">${cs.verde}</strong>Activos</div>
+  <div class="kpi"><strong style="color:#d97706">${cs.amarillo}</strong>Seguimiento</div>
+  <div class="kpi"><strong style="color:#dc2626">${cs.rojo}</strong>En riesgo</div>
+</div>
+<table><thead><tr><th>Cedula</th><th>Nombre</th><th>Correo</th><th>Posts</th><th>Nota</th><th>Inactividad</th><th>Estado</th></tr></thead><tbody>${rows}</tbody></table>
+<div class="foot">Analitica de Big Data · FACEN UNA · https://diegomezapy.github.io/analiticabigdata/</div>
+</body></html>`);
+            win.document.close(); setTimeout(() => win.print(), 500);
+        }
+
+        function printStudentReport(username) {
+            const students = localUsers().filter(u => u.rol !== 'profesor');
+            const student  = students.find(s => s.username === username);
+            if (!student) return;
+            const cs     = computeClassStats(students);
+            const st     = cs.statsMap[username];
+            const nombre = student.nombre || student.username;
+            const risk   = studentRiskLevel(student, st);
+            const riskLbl= { verde: 'Activo', amarillo: 'Necesita seguimiento', rojo: 'En riesgo' }[risk];
+            const now    = new Date().toLocaleDateString('es-PY',{year:'numeric',month:'long',day:'numeric'});
+            const msgsOrd = [...st.msgs].sort((a,b) => new Date(b.timestamp)-new Date(a.timestamp));
+            const gradeRows = msgsOrd.map(m => {
+                const g = st.myGrades.find(gr => gr.message_id === m.id);
+                return `<tr><td>${new Date(m.timestamp).toLocaleDateString('es-PY')}</td><td>${escapeHtml((m.canal||m.tipo||'').toUpperCase())}</td><td>${escapeHtml(m.mensaje.slice(0,130))}${m.mensaje.length>130?'…':''}</td><td style="text-align:center">${g?g.puntaje+'/100':'Pendiente'}</td><td>${g?.feedback?escapeHtml(g.feedback):'—'}</td></tr>`;
+            }).join('');
+            const win = window.open('','_blank','width=960,height=720');
+            win.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Ficha — ${escapeHtml(nombre)}</title><style>body{font-family:'Segoe UI',Arial,sans-serif;margin:2cm;color:#111;font-size:10.5pt}h1{color:#1e3a5f;margin:0 0 .1em}p.sub{color:#555;font-size:9pt;margin:0 0 1.2em}.info{display:grid;grid-template-columns:140px 1fr;gap:.3em 1em;margin-bottom:1.2em;font-size:9.5pt}.info span:nth-child(odd){color:#888}.stats{display:flex;gap:1.2em;margin-bottom:1.4em}.stat{border:1px solid #ddd;padding:.45em .85em;border-radius:6px;text-align:center}.stat strong{display:block;font-size:16pt;color:#1e3a5f}table{width:100%;border-collapse:collapse}th{background:#1e3a5f;color:#fff;padding:.4em .6em;text-align:left;font-size:9pt}td{padding:.38em .6em;border-bottom:1px solid #eee;font-size:8.8pt;vertical-align:top}.sig{margin-top:2.5em;display:flex;justify-content:flex-end}.sig div{border-top:1px solid #333;padding-top:.25em;text-align:center;width:180px;font-size:9.5pt}.foot{margin-top:1.5em;font-size:8pt;color:#aaa;border-top:1px solid #ddd;padding-top:.35em}@media print{body{margin:1cm}}</style></head><body>
+<h1>${escapeHtml(nombre)}</h1>
+<p class="sub">Ficha individual · Analitica de Big Data 2026 · FACEN UNA · ${now}</p>
+<div class="info">
+  <span>Cedula</span><span>${escapeHtml(student.cedula||student.username)}</span>
+  <span>Correo</span><span>${escapeHtml(student.email||'No registrado')}</span>
+  <span>Inscripcion</span><span>${student.created_at?new Date(student.created_at).toLocaleDateString('es-PY'):'—'}</span>
+  <span>Estado</span><span>${riskLbl}</span>
+</div>
+<div class="stats">
+  <div class="stat"><strong>${st.foroCount}</strong>Posts</div>
+  <div class="stat"><strong>${st.gradedCount}</strong>Calificados</div>
+  <div class="stat"><strong>${st.avgGrade!==null?st.avgGrade:'—'}</strong>Nota promedio</div>
+  <div class="stat"><strong>${st.daysInactive!==null?(st.daysInactive===0?'Hoy':st.daysInactive+'d'):'—'}</strong>Ult. actividad</div>
+</div>
+<table><thead><tr><th>Fecha</th><th>Canal</th><th>Aporte</th><th>Nota</th><th>Retroalimentacion</th></tr></thead>
+<tbody>${gradeRows||'<tr><td colspan="5" style="text-align:center;color:#aaa;padding:1em">Sin actividad registrada.</td></tr>'}</tbody></table>
+<div class="sig"><div>Prof. Diego Meza<br>FACEN UNA</div></div>
+<div class="foot">Analitica de Big Data · FACEN UNA · https://diegomezapy.github.io/analiticabigdata/</div>
+</body></html>`);
+            win.document.close(); setTimeout(() => win.print(), 500);
         }
 
         // ================================================================

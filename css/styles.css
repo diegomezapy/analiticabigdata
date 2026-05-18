@@ -7071,6 +7071,239 @@ a:hover { text-decoration: underline; }
   .progress-grid { grid-template-columns: 1fr 1fr; }
 }
 
+/* ================================================
+   SEGUIMIENTO DE ESTUDIANTES (Admin)
+   ================================================ */
+
+.seg-page { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.seg-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 1rem;
+}
+
+.seg-metric {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.seg-metric-alert {
+  background: color-mix(in srgb, var(--warning) 6%, var(--glass-bg));
+  border-color: color-mix(in srgb, var(--warning) 38%, var(--glass-border));
+}
+
+.seg-metric-val {
+  color: var(--text-primary);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.seg-metric-lbl { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+.seg-metric-sub { font-size: 0.75rem; color: var(--text-muted); }
+
+.seg-toolbar { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.seg-filters { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.seg-filter-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.9rem;
+  transition: all 0.18s;
+}
+.seg-filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+.seg-filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+
+.seg-search-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.seg-search {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  flex: 1;
+  font: inherit;
+  font-size: 0.9rem;
+  min-width: 180px;
+  padding: 0.45rem 0.9rem;
+}
+.seg-search:focus { border-color: var(--primary); outline: none; }
+
+.seg-bulk-bar {
+  background: color-mix(in srgb, var(--primary) 8%, var(--glass-bg));
+  border: 1px solid color-mix(in srgb, var(--primary) 28%, var(--glass-border));
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+}
+
+.seg-bulk-actions { align-items: center; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.seg-bulk-actions select {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.83rem;
+  padding: 0.35rem 0.6rem;
+}
+
+.seg-table-wrap {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+}
+
+.seg-table { border-collapse: collapse; font-size: 0.88rem; width: 100%; }
+
+.seg-table thead th {
+  background: color-mix(in srgb, var(--primary) 10%, var(--glass-bg));
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.65rem 0.9rem;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.seg-table td {
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0.7rem 0.9rem;
+  vertical-align: middle;
+}
+
+.seg-row:hover td { background: color-mix(in srgb, var(--primary) 4%, transparent); }
+.seg-row-open td { background: color-mix(in srgb, var(--primary) 7%, transparent); }
+
+.seg-profile {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+}
+
+.seg-profile-header {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.seg-profile-header h3 { font-size: 1.2rem; margin: 0 0 0.35rem; }
+
+.seg-profile-meta {
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.83rem;
+  gap: 0.75rem;
+}
+
+.seg-profile-stats {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 1.5rem;
+}
+
+.seg-profile-stat {
+  background: color-mix(in srgb, var(--primary) 6%, var(--glass-bg));
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  text-align: center;
+}
+.seg-profile-stat span { color: var(--primary); display: block; font-size: 1.5rem; font-weight: 900; }
+.seg-profile-stat small { color: var(--text-muted); font-size: 0.73rem; }
+
+.seg-profile-body {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.seg-post-item {
+  border-bottom: 1px solid var(--glass-border);
+  font-size: 0.84rem;
+  padding: 0.6rem 0;
+}
+.seg-post-item:last-child { border-bottom: none; }
+.seg-post-meta { display: flex; flex-wrap: wrap; font-size: 0.75rem; gap: 0.6rem; margin-bottom: 0.25rem; }
+
+.seg-email-mini { display: flex; flex-direction: column; gap: 0.75rem; }
+.seg-tpl-pills { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.seg-tpl-pill {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.25rem 0.7rem;
+  transition: all 0.15s;
+}
+.seg-tpl-pill:hover { border-color: var(--primary); color: var(--primary); }
+.seg-tpl-pill.active { background: var(--primary); border-color: var(--primary); color: white; }
+
+.seg-email-preview {
+  background: color-mix(in srgb, var(--primary) 4%, var(--glass-bg));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 0.75rem 1rem;
+}
+
+.seg-email-subject { margin-bottom: 0.5rem; }
+
+.seg-email-body {
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.8rem;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (max-width: 900px) {
+  .seg-profile-body { grid-template-columns: 1fr; }
+  .seg-profile-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .seg-metrics { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ================================================ */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
