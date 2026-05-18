@@ -1626,7 +1626,7 @@ a:hover { text-decoration: underline; }
   border-radius: 16px;
   box-shadow: var(--shadow-sm);
   min-width: 0;
-  padding: 1rem;
+  padding: clamp(1rem, 2.5vw, 1.75rem);
 }
 
 .learning-focus-card {
@@ -2679,12 +2679,12 @@ a:hover { text-decoration: underline; }
   border: 1px solid var(--sublevel-border);
   border-radius: 16px;
   box-shadow: var(--shadow-sm);
-  padding: 1rem;
+  padding: 1.25rem 1.5rem;
 }
 
 .learning-flashcard-deck {
   display: grid;
-  gap: 0.85rem;
+  gap: 1rem;
 }
 
 .learning-flashcard-card {
@@ -2695,11 +2695,14 @@ a:hover { text-decoration: underline; }
   color: var(--text-primary);
   cursor: pointer;
   display: grid;
+  font: inherit;
   gap: 0.65rem;
   min-height: 240px;
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  place-items: center;
   text-align: center;
   transition: transform 0.34s ease, box-shadow 0.34s ease;
+  width: 100%;
 }
 
 .learning-flashcard-card:hover {
@@ -6765,7 +6768,12 @@ a:hover { text-decoration: underline; }
   }
 
   .learning-flashcard-card {
-    min-height: 210px;
+    min-height: 190px;
+    padding: 1.25rem 1rem;
+  }
+
+  .learning-flashcards-tool {
+    padding: 1rem;
   }
 
   .learning-inline-lab-head .btn-secondary {
